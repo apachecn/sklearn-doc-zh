@@ -71,28 +71,28 @@
         <div class="navbar" id="scikit-navbar">
             <ul>
                 <li><a href="{{pathto('index')}}">Home</a></li>
-                <li><a href="{{pathto('install')}}">Installation</a></li>
+                <li><a href="{{pathto('install')}}">部署</a></li>
                 <li class="btn-li"><div class="btn-group">
-              <a href="{{pathto('documentation')}}">Documentation</a>
+              <a href="{{pathto('documentation')}}">文档</a>
               <a class="btn dropdown-toggle" data-toggle="dropdown">
                  <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
             <li class="link-title">Scikit-learn 0.19</li>
-            <li><a href="{{ pathto('tutorial/index') }}">Tutorials</a></li>
-            <li><a href="{{ pathto('user_guide') }}">User guide</a></li>
+            <li><a href="{{ pathto('tutorial/index') }}">教程</a></li>
+            <li><a href="{{ pathto('user_guide') }}">用户指南</a></li>
             <li><a href="{{ pathto('modules/classes') }}">API</a></li>
             <li><a href="{{ pathto('faq') }}">FAQ</a></li>
-            <li><a href="{{ pathto('developers/contributing') }}">Contributing</a></li>
+            <li><a href="{{ pathto('developers/contributing') }}">贡献</a></li>
             <li class="divider"></li>
                 <li><a href="http://scikit-learn.org/stable/documentation.html">Scikit-learn 0.19 (stable)</a></li>
                 <li><a href="http://scikit-learn.org/0.18/documentation.html">Scikit-learn 0.18</a></li>
                 <li><a href="http://scikit-learn.org/0.17/documentation.html">Scikit-learn 0.17</a></li>
-				<li><a href="{{ pathto('_downloads/scikit-learn-docs.pdf', 1) }}">PDF documentation</a></li>
+				<li><a href="{{ pathto('_downloads/scikit-learn-docs.pdf', 1) }}">PDF 文档</a></li>
               </ul>
             </div>
         </li>
-            <li><a href="{{pathto('auto_examples/index')}}">Examples</a></li>
+            <li><a href="{{pathto('auto_examples/index')}}">示例</a></li>
             </ul>
             <a href="javascript:void(0);" onclick="showMenu()">
                 <div class="nav-icon">
@@ -188,12 +188,12 @@
     </div>
     <div id="intro_to_sklearn_p" class="span6">
       <h1>scikit-learn</h1>
-      <h2>Machine Learning in Python</h2>
+      <h2>Python 中的机器学习</h2>
       <ul>
-        <li>Simple and efficient tools for data mining and data analysis</li>
-        <li>Accessible to everybody, and reusable in various contexts</li>
-        <li>Built on NumPy, SciPy, and matplotlib</li>
-        <li>Open source, commercially usable - BSD license</li>
+        <li>简单高效的数据挖掘和数据分析工具</li>
+        <li>可供大家使用，可在各种环境中重复使用</li>
+        <li>建立在 NumPy，SciPy 和 matplotlib 上</li>
+        <li>开放源码，可商业使用 - BSD license</li>
       </ul>
     </div>
   </div>
@@ -207,8 +207,8 @@
 <a href="https://github.com/scikit-learn/scikit-learn">
   <img class="fork-me"
        style="position: absolute; top: 0; right: 0; border: 0;"
-       src="{{ pathto('_static/img/forkme.png', 1) }}"
-       alt="Fork me on GitHub" />
+       src="{{ pathto('_static/img/starme.png', 1) }}"
+       alt="Star me on GitHub" />
 </a>
 
 <div class="content-wrapper">
@@ -333,25 +333,26 @@
     {% endif %}
      </div>
 
-    {% if theme_google_analytics|tobool %}
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-22606712-2']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-    {% endif %}
+    <!-- google analytics -->
     <script>
-      (function() {
-        var cx = '016639176250731907682:tjtqbvtvij0';
-        var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
-        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
-      })();
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-102475051-5', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+    
+    <!-- baidu tongji -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9cbab13b4d28a9811ae1d2d2176dab66";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
     </script>
 {%- endblock %}
