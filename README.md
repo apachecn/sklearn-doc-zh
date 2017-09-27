@@ -35,6 +35,9 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 简易的使用指南请参阅: [VSCode Windows 平台入门使用指南](help/vscode-windows-usage.md), 介绍了 `VSCode` 与 `github` 一起搭配的简易使用的方法.  
 如果要将 VSCode 的 Markdown 预览风格切换为 github 的风格，请参阅: [VSCode 修改 markdown 的预览风格为 github 的风格](help/vscode-markdown-preview-github-style.md).
 
+**注意注意注意:**  
+为了尽量正规化各顶级项目的翻译，更便于以后的迭代更新，我们在 `scikit-learn` 文档翻译中使用了 `Git` 的分支，具体应用方法请参阅: [使用 Git 分支进行迭代翻译](help/git-branch-usage.md).
+
 ## 角色分配
 目前有如下可分配的角色: 
 
