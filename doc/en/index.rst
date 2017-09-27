@@ -322,7 +322,7 @@
         <div class="row-fluid">
           <div class="footer">
               <div class="span3">
-                INRIA 等提供的资金.
+                Funding provided by INRIA and others.
               </div>
               <div class="span6">
                  <a class="reference internal" href="about.html#funding" style="text-decoration: none; white-space: nowrap" >
@@ -338,7 +338,7 @@
              </div>
              <div class="span3">
                 <a class="reference internal" href="about.html#funding">
-                   关于我们贡献者的更多信息
+                   More information on our contributors
                 </a>
              </div>
           </div>
