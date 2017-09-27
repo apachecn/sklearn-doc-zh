@@ -20,7 +20,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 [scikit-learn(sklearn) 0.19](http://scikit-learn.org/stable/documentation.html)
 
 ## 历史版本
-[scikit-learn(sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181): <http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181>
+* [scikit-learn(sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181): <http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181>
 
 ## 参与翻译 & 发现错误
     1. 在 github 上 fork 该 repository.
