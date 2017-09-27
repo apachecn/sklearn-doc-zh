@@ -11,15 +11,15 @@
         <div class="span4 box">
         <h2 >
 
-    :ref:`分类<supervised-learning>`
+    :ref:`分类 <supervised-learning>`
 
     .. raw:: html
 
         </h2>
         <blockquote>
-        <p>识别对象属于哪个类别</p>
+        <p>识别某个对象属于哪个类别.</p>
         <div class="box-links">
-        <strong>应用</strong>: 垃圾邮件检测，图像识别</br>
+        <strong>应用</strong>: 垃圾邮件检测，图像识别.</br>
         <strong>算法</strong>:&nbsp;
 
     :ref:`SVM<svm>`, :ref:`nearest neighbors<classification>`, :ref:`random forest<forest>`, ...
@@ -28,7 +28,7 @@
 
         <small class="float-right box-example-links">
 
-    :ref:`示例<general_examples>`
+    :ref:`示例 <general_examples>`
 
     .. raw:: html
 
@@ -41,7 +41,7 @@
         <div class="span4 box">
         <h2>
 
-    :ref:`回归<supervised-learning>`
+    :ref:`回归 <supervised-learning>`
 
     .. raw:: html
 
@@ -58,7 +58,7 @@
 
         <small class="float-right box-example-links">
 
-    :ref:`示例<general_examples>`
+    :ref:`示例 <general_examples>`
 
     .. raw:: html
 
@@ -71,13 +71,13 @@
         <div class="span4 box">
         <h2>
 
-    :ref:`聚类<clustering>`
+    :ref:`聚类 <clustering>`
 
     .. raw:: html
 
         </h2>
         <blockquote>
-        <p>将类似对象自动分组成集合</p>
+        <p>将相似对象自动分组</p>
         <div class="box-links">
         <strong>应用</strong>: 客户细分，分组实验结果</br>
         <strong>算法</strong>:&nbsp;
@@ -88,7 +88,7 @@
 
         <small class="float-right example-links">
 
-    :ref:`示例<cluster_examples>`
+    :ref:`示例 <cluster_examples>`
 
     .. raw:: html
 
@@ -105,7 +105,7 @@
         <div class="span4 box">
         <h2>
 
-    :ref:`降维<decompositions>`
+    :ref:`降维 <decompositions>`
 
     .. raw:: html
 
@@ -122,7 +122,7 @@
 
         <small class="float-right example-links">
 
-    :ref:`示例<decomposition_examples>`
+    :ref:`示例 <decomposition_examples>`
 
     .. raw:: html
 
@@ -135,13 +135,13 @@
         <div class="span4 box">
         <h2>
 
-    :ref:`模型选择<model_selection>`
+    :ref:`模型选择 <model_selection>`
 
     .. raw:: html
 
         </h2>
         <blockquote>
-        <p>比较，验证和选择参数和模型</p>
+        <p>比较，验证，选择参数和模型</p>
         <div class="box-links">
         <strong>目标</strong>: 通过参数调整提高精度</br>
         <strong>模型</strong>:&nbsp;
@@ -152,7 +152,7 @@
 
         <small class="float-right example-links">
 
-    :ref:`示例<general_examples>`
+    :ref:`示例 <general_examples>`
 
     .. raw:: html
 
@@ -166,7 +166,7 @@
         <div class="span4 box">
         <h2>
 
-    :ref:`预处理<preprocessing>`
+    :ref:`预处理 <preprocessing>`
 
     .. raw:: html
 
@@ -184,7 +184,7 @@
         <span class="example-links">
         <small class="float-right example-links">
 
-    :ref:`示例<general_examples>`
+    :ref:`示例 <general_examples>`
 
     .. raw:: html
 
@@ -252,7 +252,7 @@
                     <a class="btn btn-warning btn-big" onclick="document.getElementById('paypal-form').submit(); return false;">帮助我们, <strong>捐赠!</strong></a>
                     <a class="btn btn-warning btn-big cite-us" href="./about.html#citing-scikit-learn"><strong>引用我们!</strong></a>
 
-                    <small style="display: block; margin-top: 10px"><a href="about.html#funding">阅读更多关于捐款</a></small>
+                    <small style="display: block; margin-top: 10px"><a href="about.html#funding">阅读更多关于捐款的细节</a></small>
                 </div>
 
                 <!-- who using -->
