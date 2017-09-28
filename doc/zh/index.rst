@@ -17,9 +17,9 @@
 
         </h2>
         <blockquote>
-        <p>识别某个对象属于哪个类别.</p>
+        <p>识别某个对象属于哪个类别</p>
         <div class="box-links">
-        <strong>应用</strong>: 垃圾邮件检测，图像识别.</br>
+        <strong>应用</strong>: 垃圾邮件检测，图像识别</br>
         <strong>算法</strong>:&nbsp;
 
     :ref:`SVM<svm>`, :ref:`nearest neighbors<classification>`, :ref:`random forest<forest>`, ...
@@ -174,7 +174,7 @@
         <blockquote>
         <p>特征提取和归一化</p>
         <div class="box-links">
-        <strong>应用</strong>: 转换输入数据，如文本，用于机器学习算法</br>
+        <strong>应用</strong>: 把输入数据（如文本）转换为机器学习算法可用的数据</br>
         <strong>算法</strong>:&nbsp;
 
     :ref:`preprocessing<preprocessing>`, :ref:`feature extraction<feature_extraction>`.
@@ -239,7 +239,7 @@
                     <ul>
                     <li><em>关于我们</em> 请参阅 <a href="about.html#people">作者</a> 和 <a href="developers/contributing.html">贡献</a></li>
                     <li><em>更多机器学习</em> 查找 <a href="related_projects.html">相关项目</a></li>
-                    <li><em>问题?</em> 请参阅 <a href="faq.html">FAQ</a> 和 <a href="http://stackoverflow.com/questions/tagged/scikit-learn">stackoverflow</a></li>
+                    <li><em>疑惑?</em> 请参阅 <a href="faq.html">FAQ</a> 和 <a href="http://stackoverflow.com/questions/tagged/scikit-learn">stackoverflow</a></li>
                     <li><em>邮件列表:</em> <a href="https://mail.python.org/mailman/listinfo/scikit-learn">scikit-learn@python.org</a></li>
                     <li><em>IRC:</em> #scikit-learn @ <a href="http://webchat.freenode.net/">freenode</a></li>
                     </ul>
