@@ -1,7 +1,7 @@
 .. _text_data_tutorial:
 
 ======================
-Working With Text Data
+使用文本数据
 ======================
 
 The goal of this guide is to explore some of the main ``scikit-learn``
@@ -21,7 +21,7 @@ In this section we will see how to:
 
 
 
-Tutorial setup
+教程设置
 --------------
 
 To get started with this tutorial, you firstly must have the
@@ -64,7 +64,7 @@ For instance::
     % python fetch_data.py
 
 
-Loading the 20 newsgroups dataset
+加载20个新闻组数据集
 ---------------------------------
 
 The dataset is called "Twenty Newsgroups". Here is the official
@@ -160,7 +160,7 @@ samples to quickly train a model and get a first idea of the results
 before re-training on the complete dataset later.
 
 
-Extracting features from text files
+从文本文件中提取特征
 -----------------------------------
 
 In order to perform machine learning on text documents, we first need to
@@ -276,7 +276,7 @@ in the previous section::
   (2257, 35788)
 
 
-Training a classifier
+训练分类器
 ---------------------
 
 Now that we have our features, we can train a classifier to try to predict
@@ -307,7 +307,7 @@ on the transformers, since they have already been fit to the training set::
   'OpenGL on the GPU is fast' => comp.graphics
 
 
-Building a pipeline
+建一条管道
 -------------------
 
 In order to make the vectorizer => transformer => classifier easier
@@ -328,7 +328,7 @@ We can now train the model with a single command::
   Pipeline(...)
 
 
-Evaluation of the performance on the test set
+评估测试集上的性能
 ---------------------------------------------
 
 Evaluating the predictive accuracy of the model is equally easy::
@@ -407,7 +407,7 @@ with computer graphics.
 .. _liblinear: http://www.csie.ntu.edu.tw/~cjlin/liblinear/
 
 
-Parameter tuning using grid search
+使用网格搜索的参数调优
 ----------------------------------
 
 We've already encountered some parameters such as ``use_idf`` in the
@@ -498,7 +498,7 @@ statements, boilerplate code to load the data and sample code to evaluate
 the predictive accurracy of the model.**
 
 
-Exercise 1: Language identification
+练习1：语言识别
 -----------------------------------
 
 - Write a text classification pipeline using a custom preprocessor and
@@ -511,7 +511,7 @@ ipython command line::
   %run workspace/exercise_01_language_train_model.py data/languages/paragraphs/
 
 
-Exercise 2: Sentiment Analysis on movie reviews
+练习2：情绪分析电影评论
 -----------------------------------------------
 
 - Write a text classification pipeline to classify movie reviews as either
@@ -526,7 +526,7 @@ ipython command line::
   %run workspace/exercise_02_sentiment.py data/movie_reviews/txt_sentoken/
 
 
-Exercise 3: CLI text classification utility
+练习3：CLI文本分类实用程序
 -------------------------------------------
 
 Using the results of the previous exercises and the ``cPickle``
@@ -539,7 +539,7 @@ Bonus point if the utility is able to give a confidence level for its
 predictions.
 
 
-Where to from here
+从哪里来
 ------------------
 
 Here are a few suggestions to help further your scikit-learn intuition

@@ -3,7 +3,7 @@
 
 .. include:: ../../includes/big_toc_css.rst
 
-Choosing the right estimator
+选择正确的估计器
 =======================================================
 
 

@@ -1,45 +1,29 @@
 .. _introduction:
 
-An introduction to machine learning with scikit-learn
+使用 scikit-learn 的机器学习介绍
 =====================================================
 
-.. topic:: Section contents
+.. topic:: 章节内容
 
-    In this section, we introduce the `machine learning
-    <https://en.wikipedia.org/wiki/Machine_learning>`_
-    vocabulary that we use throughout scikit-learn and give a
-    simple learning example.
+    在本节中，我们介绍了在 scikit-learn 中使用的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并给出了一个简单的学习示例。
 
 
-Machine learning: the problem setting
+机器学习：问题设置
 -------------------------------------
 
-In general, a learning problem considers a set of n
-`samples <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ of
-data and then tries to predict properties of unknown data. If each sample is
-more than a single number and, for instance, a multi-dimensional entry
-(aka `multivariate <https://en.wikipedia.org/wiki/Multivariate_random_variable>`_
-data), it is said to have several attributes or **features**.
+一般来说，学习问题考虑了一组n 个数据 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
+如果每个样本多于单个数字，并且例如多维条目（也称为 `多变量 <https://en.wikipedia.org/wiki/Multivariate_random_variable>`_ 数据），则称其具有多个属性或**特征**.
 
-We can separate learning problems in a few large categories:
+我们可以在几个大类上分解学习问题:
 
- * `supervised learning <https://en.wikipedia.org/wiki/Supervised_learning>`_,
-   in which the data comes with additional attributes that we want to predict
-   (:ref:`Click here <supervised-learning>`
-   to go to the scikit-learn supervised learning page).This problem
-   can be either:
+ * `监督学习 <https://en.wikipedia.org/wiki/Supervised_learning>`_,
+   其中数据带有我们想要预测的附加属性（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
 
-    * `classification
-      <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_:
-      samples belong to two or more classes and we
-      want to learn from already labeled data how to predict the class
-      of unlabeled data. An example of classification problem would
-      be the handwritten digit recognition example, in which the aim is
-      to assign each input vector to one of a finite number of discrete
-      categories.  Another way to think of classification is as a discrete
-      (as opposed to continuous) form of supervised learning where one has a
-      limited number of categories and for each of the n samples provided,
-      one is to try to label them with the correct category or class.
+    * `分类 <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_:
+      样本属于两个或更多个类，我们想从已经标记的数据中学习如何预测未标记数据的类别。
+      分类问题的一个例子是手写数字识别示例，其目的是将每个输入向量分配给有限数目的离散类别之一。
+      考虑分类的另一种方法是作为监督学习的离散形式（而不是连续的），其中有一个 categories(类型)数量有限，
+      并且是针对于所提供的 n 个样本中的每一个样本，一个是尝试用正确的 category（范畴）或 class （类别）来 label （标记）它们。
 
     * `regression <https://en.wikipedia.org/wiki/Regression_analysis>`_:
       if the desired output consists of one or more
@@ -70,7 +54,7 @@ We can separate learning problems in a few large categories:
 
 .. _loading_example_dataset:
 
-Loading an example dataset
+加载一个示例数据集
 --------------------------
 
 `scikit-learn` comes with a few standard datasets, for instance the
@@ -141,7 +125,7 @@ learn::
 
     To load from an external dataset, please refer to :ref:`loading external datasets <external_datasets>`.
 
-Learning and predicting
+学习和预测
 ------------------------
 
 In the case of the digits dataset, the task is to predict, given an image,
@@ -206,7 +190,7 @@ example that you can run and study:
 :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`.
 
 
-Model persistence
+模型持久性
 -----------------
 
 It is possible to save a model in the scikit by using Python's built-in
@@ -255,7 +239,7 @@ section :ref:`model_persistence` for more detailed information about model
 persistence with scikit-learn.
 
 
-Conventions
+规定
 -----------
 
 scikit-learn estimators follow certain rules to make their behavior more
