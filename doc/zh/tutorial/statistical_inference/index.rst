@@ -1,7 +1,7 @@
 .. _stat_learn_tut_index:
 
 ==========================================================================
-A tutorial on statistical-learning for scientific data processing
+关于科学数据处理的统计学习教程
 ==========================================================================
 
 .. topic:: Statistical learning 

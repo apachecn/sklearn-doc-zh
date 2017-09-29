@@ -1,11 +1,11 @@
 ===========================================
-External Resources, Videos and Talks
+外部资源，视频和谈话
 ===========================================
 
 For written tutorials, see the :ref:`Tutorial section <tutorial_menu>` of
 the documentation.
 
-New to Scientific Python?
+新科学Python？
 ==========================
 For those that are still new to the scientific Python ecosystem, we highly
 recommend the `Python Scientific Lecture Notes
@@ -13,7 +13,7 @@ recommend the `Python Scientific Lecture Notes
 bit and will definitely improve your scikit-learn experience.  A basic
 understanding of NumPy arrays is recommended to make the most of scikit-learn.
 
-External Tutorials
+外部教程
 ===================
 
 There are several online tutorials available which are geared toward
@@ -24,7 +24,7 @@ specific subject areas:
 
 .. _videos:
 
-Videos
+视频
 ======
 
 - An introduction to scikit-learn `Part
