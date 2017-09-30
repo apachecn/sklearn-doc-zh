@@ -12,7 +12,7 @@
 
 ## 参考步骤
 
-1. 参考 [VSCode Windows 平台入门使用指南](help/vscode-windows-usage.md) 文档，将 `ApacheCN/scikit-learn-doc-zh` 库 `fork` 到自己的仓库。
+1. 参考 [VSCode Windows 平台入门使用指南](vscode-windows-usage.md) 文档，将 `ApacheCN/scikit-learn-doc-zh` 库 `fork` 到自己的仓库。
 
 2. 将 fork 的库，使用 git clone 命令克隆到本地。
 
