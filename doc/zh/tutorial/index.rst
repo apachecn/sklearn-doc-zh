@@ -6,7 +6,7 @@
 .. include:: ../tune_toc.rst
 
 ======================
-scikit-learn Tutorials
+scikit-learn 教程
 ======================
 
 |
@@ -22,14 +22,10 @@ scikit-learn Tutorials
 
 |
 
-.. note:: **Doctest Mode**
+.. note:: **Doctest 模式**
 
-   The code-examples in the above tutorials are written in a
-   *python-console* format. If you wish to easily execute these examples
-   in **IPython**, use::
+   上述教程中的代码示例使用 *python-console* 格式编写。如果您希望在 **IPython** 中轻松执行这些示例，请使用:
 
 	%doctest_mode
 
-   in the IPython-console. You can then simply copy and paste the examples
-   directly into IPython without having to worry about removing the **>>>**
-   manually.
+   在 IPython 控制台中。然后，您可以将示例直接复制并粘贴到 IPython 中，而无需担心手动删除 **>>>**.
