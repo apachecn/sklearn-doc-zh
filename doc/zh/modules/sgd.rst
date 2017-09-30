@@ -1,7 +1,7 @@
 .. _sgd:
 
 ===========================
-Stochastic Gradient Descent
+随即梯度下降
 ===========================
 
 .. currentmodule:: sklearn.linear_model
