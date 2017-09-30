@@ -16,7 +16,7 @@ Documentation of scikit-learn |release|
                 </div>
                 <div class="span4 box">
                     <h2><a href="user_guide.html">用户指南</a></h2>
-                    <blockquote>最主要的文档：包含对所有算法的深入描述以及如何应用它们.</blockquote>
+                    <blockquote>主要的文档：包含对所有算法的深入描述以及如何应用它们.</blockquote>
                 </div>
                 <div class="span4 box">
                 <!-- doc versions -->
