@@ -57,7 +57,7 @@ Documentation of scikit-learn |release|
                 </div>
 
                 <div class="span4 box">
-                    <h2><a href="tutorial/machine_learning_map/index.html">流程图</a></h2>
+                    <h2><a href="tutorial/machine_learning_map/index.html">学习路线图</a></h2>
                     <blockquote>机器学习的基本领域的图形概述, 以及在给定情况下使用哪种算法的指导.</blockquote>
                 </div>
                 <div class="span4 box">
