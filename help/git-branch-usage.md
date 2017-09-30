@@ -10,7 +10,7 @@
 
 上图中，学习Git中 和 学习SVN 中，就相当于两个分支。
 
-## 进行 Git 分支管理
+## 参考步骤
 
 1. 参考 [VSCode Windows 平台入门使用指南](help/vscode-windows-usage.md) 文档，将 `ApacheCN/scikit-learn-doc-zh` 库 `fork` 到自己的仓库。
 
@@ -25,6 +25,29 @@
 ![](img/git-branch_9.png) 
 
 然后点击 `Create pull request` 即可。
+
+## 具体步骤
+
+1. fork `apachecn/scikit-learn-doc-zh` 该repo 到你的 repo 中去。
+2. git clone 你自己的 repo ，注意我的 repo 是 chenyyx :  
+```shell
+git clone https://github.com/chenyyx/scikit-learn-doc-zh.git
+```
+3. 切换分支到 0.19.X 分支:
+```shell
+cd scikit-learn-doc-zh
+git checkout 0.19.X
+```
+4. 翻译自己负责的文档章节
+5. 推送到你自己的 repo 中：
+```shell
+git push
+```
+6. 在你的 github 的 repo 页面中，提一个 pull request ，可参考下图：  
+![](img/git-branch_9.png) 
+
+7. 等待 ApacheCN 审核合并
+
 
 ## 等待 apachecn 审核
 
