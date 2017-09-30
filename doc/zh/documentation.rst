@@ -36,7 +36,7 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="tutorial/index.html">教程</a></h2>
-                    <blockquote>有用的教程用于开发机器学习领域中一些 scikit-learn 应用程序的感觉.</blockquote>
+                    <blockquote>在用于机器学习的领域中的一些 scikit-learn 应用，有用的教程会让开发有所察觉.</blockquote>
                 </div>
                 <div class="span4 box">
                     <h2><a href="modules/classes.html">API</a></h2>
