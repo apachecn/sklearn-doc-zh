@@ -539,7 +539,7 @@ Bonus point if the utility is able to give a confidence level for its
 predictions.
 
 
-从哪里来
+接下来要去哪里
 ------------------
 
 Here are a few suggestions to help further your scikit-learn intuition

@@ -5,7 +5,7 @@
 For written tutorials, see the :ref:`Tutorial section <tutorial_menu>` of
 the documentation.
 
-新科学Python？
+Scientific Python 的新手？
 ==========================
 For those that are still new to the scientific Python ecosystem, we highly
 recommend the `Python Scientific Lecture Notes
