@@ -12,11 +12,11 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="tutorial/basic/tutorial.html">快速入门</a></h2>
-                    <blockquote>对机器学习问题的简要介绍, 以及如何使用 scikit-learn 来解决这些问题.介绍基本概念和惯例.</blockquote>
+                    <blockquote>对机器学习问题的简要介绍, 以及如何使用 scikit-learn 来解决这些问题.介绍基本概念和规定.</blockquote>
                 </div>
                 <div class="span4 box">
                     <h2><a href="user_guide.html">用户指南</a></h2>
-                    <blockquote>主要文件.这包含对所有算法的深入描述以及如何应用它们.</blockquote>
+                    <blockquote>主要的文档：包含对所有算法的深入描述以及如何应用它们.</blockquote>
                 </div>
                 <div class="span4 box">
                 <!-- doc versions -->
@@ -36,11 +36,11 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="tutorial/index.html">教程</a></h2>
-                    <blockquote>有用的教程用于开发机器学习领域中一些 scikit-learn 应用程序的感觉.</blockquote>
+                    <blockquote>在用于机器学习的领域中的一些 scikit-learn 应用，有用的教程会让开发有所察觉.</blockquote>
                 </div>
                 <div class="span4 box">
                     <h2><a href="modules/classes.html">API</a></h2>
-                    <blockquote>所有函数和类的确切API, 由 docstrings 给出.API会为所有功能提供预期的类型和允许的功能, 以及可用于算法的所有参数.</blockquote>
+                    <blockquote>所有函数和类的确切API, 由 docstrings 给出. API会为所有功能提供预期的类型和允许的特征, 以及可用于算法的所有参数.</blockquote>
                 </div>
 
                 <div class="span4 box">
@@ -70,6 +70,6 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="related_projects.html">相关包</a></h2>
-                    <blockquote>Python和相关项目的其他机器学习包.还有一些略微超出范围的算法, 或者尚未建立足够的 scikit-learn 算法.</blockquote>
+                    <blockquote>Python和相关项目的其他机器学习包.还有一些略微超出范围的算法, 或者尚未完全建立的 scikit-learn 算法.</blockquote>
                 </div>
             </div>
