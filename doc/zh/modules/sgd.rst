@@ -11,30 +11,29 @@
 回归 <https://en.wikipedia.org/wiki/Logistic_regression>`_.
 尽管SGD在机器学习社区已经存在了很长时间, 但是最近在大规模学习方面SGD获得了相当大的关注。
 
-SGD已成功应用于在文本分类和自然语言处理中经常遇到的大规模和稀疏的机器学习问题。考虑到数据是稀疏的，the classifiers
-in this module easily scale to problems with more than 10^5 training
-examples and more than 10^5 features.
+SGD已成功应用于在文本分类和自然语言处理中经常遇到的大规模和稀疏的机器学习问题。考虑到数据是稀疏的，本模块的分类器可以
+轻易的处理超过10^5的训练样本和超过10^5的特征。
 
-The advantages of Stochastic Gradient Descent are:
+随机梯度下降法的优势:
 
-    + Efficiency.
+    + 效率。
 
-    + Ease of implementation (lots of opportunities for code tuning).
+    + 易于实现 (有大量优化代码的机会).
 
-The disadvantages of Stochastic Gradient Descent include:
+随机梯度下降法的劣势:
 
-    + SGD requires a number of hyperparameters such as the regularization
-      parameter and the number of iterations.
+    + SGD需要一些超参数，例如正则化
+      参数和迭代次数.
 
-    + SGD is sensitive to feature scaling.
+    + SGD对特征缩放敏感.
 
-Classification
+分类
 ==============
 
-.. warning::
+.. 警告::
 
-  Make sure you permute (shuffle) your training data before fitting the
-  model or use ``shuffle=True`` to shuffle after each iteration.
+  在拟合模型前，确保你重新排列了(打乱)你的训练样本，或者
+  在每次迭代后用``shuffle=True``来打乱.
 
 The class :class:`SGDClassifier` implements a plain stochastic gradient
 descent learning routine which supports different loss functions and
