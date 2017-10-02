@@ -4,20 +4,14 @@
 随机梯度下降
 ===========================
 
-.. currentmodule:: sklearn.linear_model
+.. 当前模块:: sklearn.linear_model
 
-**Stochastic Gradient Descent (SGD)** is a simple yet very efficient
-approach to discriminative learning of linear classifiers under
-convex loss functions such as (linear) `Support Vector Machines
-<https://en.wikipedia.org/wiki/Support_vector_machine>`_ and `Logistic
-Regression <https://en.wikipedia.org/wiki/Logistic_regression>`_.
-Even though SGD has been around in the machine learning community for
-a long time, it has received a considerable amount of attention just
-recently in the context of large-scale learning.
+**随机梯度下降(SGD)** 是一个简单但又非常有效的方法，主要用在凸损失函数下对线性分类器进行学习，例如(线性) `支持向量机
+<https://en.wikipedia.org/wiki/Support_vector_machine>`_ 和 `Logistic
+回归 <https://en.wikipedia.org/wiki/Logistic_regression>`_.
+尽管SGD在机器学习社区已经存在了很长时间, 但是最近在大规模学习方面SGD获得了相当大的关注。
 
-SGD has been successfully applied to large-scale and sparse machine
-learning problems often encountered in text classification and natural
-language processing.  Given that the data is sparse, the classifiers
+SGD已成功应用于在文本分类和自然语言处理中经常遇到的大规模和稀疏的机器学习问题。考虑到数据是稀疏的，the classifiers
 in this module easily scale to problems with more than 10^5 training
 examples and more than 10^5 features.
 
