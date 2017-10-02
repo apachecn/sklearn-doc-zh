@@ -33,7 +33,7 @@ SGD已成功应用于文本分类和自然语言处理中经常遇到的大规�
 .. 警告::
 
   在拟合模型前，确保你重新排列了(打乱)你的训练样本，或者
-  在每次迭代后用 ``shuffle=True`` 来打乱.
+  在每次迭代后用 ``shuffle=True`` 来打乱。
 
 The class :class:`SGDClassifier` implements a plain stochastic gradient
 descent learning routine which supports different loss functions and
