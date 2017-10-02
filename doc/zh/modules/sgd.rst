@@ -18,14 +18,14 @@ SGD已成功应用于文本分类和自然语言处理中经常遇到的大规�
 
     + 效率。
 
-    + 易于实现 (有大量优化代码的机会).
+    + 易于实现 (有大量优化代码的机会)。
 
 随机梯度下降法的劣势:
 
     + SGD需要一些超参数，例如正则化
-      参数和迭代次数.
+      参数和迭代次数。
 
-    + SGD对特征缩放敏感.
+    + SGD对特征缩放敏感。
 
 分类
 ==============
@@ -35,7 +35,7 @@ SGD已成功应用于文本分类和自然语言处理中经常遇到的大规�
   在拟合模型前，确保你重新排列了(打乱)你的训练样本，或者
   在每次迭代后用 ``shuffle=True`` 来打乱。
 
-The class :class:`SGDClassifier` implements a plain stochastic gradient
+这个类 :class:`SGDClassifier` implements a plain stochastic gradient
 descent learning routine which supports different loss functions and
 penalties for classification.
 
