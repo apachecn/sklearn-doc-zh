@@ -6,12 +6,12 @@
 
 .. 当前模块:: sklearn.linear_model
 
-**随机梯度下降(SGD)** 是一个简单但又非常有效的方法，主要用在凸损失函数下对线性分类器进行学习，例如(线性) `支持向量机
+**随机梯度下降(SGD)** 是一个简单但又非常有效的方法，主要用于凸损失函数下对线性分类器的学习，例如(线性) `支持向量机
 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 和 `Logistic
-回归 <https://en.wikipedia.org/wiki/Logistic_regression>`_.
+回归 <https://en.wikipedia.org/wiki/Logistic_regression>`_。
 尽管SGD在机器学习社区已经存在了很长时间, 但是最近在大规模学习方面SGD获得了相当大的关注。
 
-SGD已成功应用于在文本分类和自然语言处理中经常遇到的大规模和稀疏的机器学习问题。考虑到数据是稀疏的，本模块的分类器可以
+SGD已成功应用于文本分类和自然语言处理中经常遇到的大规模和稀疏的机器学习问题。考虑到数据是稀疏的，本模块的分类器可以
 轻易的处理超过10^5的训练样本和超过10^5的特征。
 
 随机梯度下降法的优势:
@@ -33,7 +33,7 @@ SGD已成功应用于在文本分类和自然语言处理中经常遇到的大�
 .. 警告::
 
   在拟合模型前，确保你重新排列了(打乱)你的训练样本，或者
-  在每次迭代后用``shuffle=True``来打乱.
+  在每次迭代后用 ``shuffle=True`` 来打乱.
 
 The class :class:`SGDClassifier` implements a plain stochastic gradient
 descent learning routine which supports different loss functions and
