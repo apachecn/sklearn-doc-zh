@@ -376,8 +376,8 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 
   * **避免数据复制**: 对于 :class:`SVC`， :class:`SVR`， :class:`NuSVC` 和
-    :class:`NuSVR`， 如果数据是通过某些方法而不是用C有序的连续双精度， 
-   那它先会调用底层的C命令再复制。你可以通过检查它的 ``flags`` 属性，来确定给定的numpy数组是不是C连续的。
+    :class:`NuSVR`， 如果数据是通过某些方法而不是用C有序的连续双精度，那它先会调用底层的C命令再复制。
+    你可以通过检查它的 ``flags`` 属性，来确定给定的numpy数组是不是C连续的。
 
     For :class:`LinearSVC` (and :class:`LogisticRegression
     <sklearn.linear_model.LogisticRegression>`) any input passed as a numpy
