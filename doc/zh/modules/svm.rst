@@ -362,13 +362,13 @@ See, section :ref:`outlier_detection` for more details on this usage.
 ==========
 
 支持向量机是个强大的工具，不过它的计算和存储空间要求也会随着要训练向量的数目增加而快速增加。
-SVM的核心是一个二次规划问题(QP)，是将支持向量和训练数据的其余部分分离开来。在实践中(数据集相关)，
-会根据`libsvm`_的缓存有多效，在:math:`O(n_{features} \times n_{samples}^2)`和
-:math:`O(n_{features} \times n_{samples}^3)`之间基于`libsvm`_的缩放操作才会调用这个QP解析器。
-如果数据是非常稀疏，那:math:`n_{features}` 就用样本向量中非零特征的平均数量去替换。 
+SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支持向量和训练数据的其余部分分离开来。
+在实践中(数据集相关)，会根据 `libsvm`_ 的缓存有多效，在 :math:`O(n_{features} \times n_{samples}^2)` 和 
+:math:`O(n_{features} \times n_{samples}^3)` 之间基于 `libsvm`_ 的缩放操作才会调用这个 QP解析器。
+如果数据是非常稀疏，那 :math:`n_{features}`  就用样本向量中非零特征的平均数量去替换。 
 
-另外请注意，在线性情况下，由`liblinear`_操作的:class:`LinearSVC`算法要比由它的`libsvm`_对应的
-:class:`SVC`更为高效，并且它几乎可以线性缩放到数百万样本或者特征。
+另外请注意，在线性情况下，由 `liblinear`_ 操作的 :class:`LinearSVC` 算法要比由它的 `libsvm`_ 对应的 
+:class:`SVC` 更为高效，并且它几乎可以线性缩放到数百万样本或者特征。
 
 
 Tips on Practical Use
