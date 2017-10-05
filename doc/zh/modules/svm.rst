@@ -358,24 +358,17 @@ See, section :ref:`outlier_detection` for more details on this usage.
  * :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
 
 
-Complexity
+复杂度
 ==========
 
-Support Vector Machines are powerful tools, but their compute and
-storage requirements increase rapidly with the number of training
-vectors. The core of an SVM is a quadratic programming problem (QP),
-separating support vectors from the rest of the training data. The QP
-solver used by this `libsvm`_-based implementation scales between
-:math:`O(n_{features} \times n_{samples}^2)` and
-:math:`O(n_{features} \times n_{samples}^3)` depending on how efficiently
-the `libsvm`_ cache is used in practice (dataset dependent). If the data
-is very sparse :math:`n_{features}` should be replaced by the average number
-of non-zero features in a sample vector.
+支持向量机是个强大的工具，不过它的计算和存储空间要求也会随着要训练向量的数目增加而快速增加。
+SVM的核心是一个二次规划问题(QP)，是将支持向量和训练数据的其余部分分离开来。在实践中(数据集相关)，
+会根据`libsvm`_的缓存有多效，在:math:`O(n_{features} \times n_{samples}^2)`和
+:math:`O(n_{features} \times n_{samples}^3)`之间基于`libsvm`_的缩放操作才会调用这个QP解析器。
+如果数据是非常稀疏，那:math:`n_{features}` 就用样本向量中非零特征的平均数量去替换。 
 
-Also note that for the linear case, the algorithm used in
-:class:`LinearSVC` by the `liblinear`_ implementation is much more
-efficient than its `libsvm`_-based :class:`SVC` counterpart and can
-scale almost linearly to millions of samples and/or features.
+另外请注意，在线性情况下，由`liblinear`_操作的:class:`LinearSVC`算法要比由它的`libsvm`_对应的
+:class:`SVC`更为高效，并且它几乎可以线性缩放到数百万样本或者特征。
 
 
 Tips on Practical Use
