@@ -371,15 +371,13 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 :class:`SVC` 更为高效，并且它几乎可以线性缩放到数百万样本或者特征。
 
 
-Tips on Practical Use
+使用窍门
 =====================
 
 
-  * **Avoiding data copy**: For :class:`SVC`, :class:`SVR`, :class:`NuSVC` and
-    :class:`NuSVR`, if the data passed to certain methods is not C-ordered
-    contiguous, and double precision, it will be copied before calling the
-    underlying C implementation. You can check whether a given numpy array is
-    C-contiguous by inspecting its ``flags`` attribute.
+  * **避免数据复制**: 对于 :class:`SVC`， :class:`SVR`， :class:`NuSVC` 和
+    :class:`NuSVR`， 如果数据是通过某些方法而不是用C有序的连续双精度， 
+   那它先会调用底层的C命令再复制。你可以通过检查它的 ``flags`` 属性，来确定给定的numpy数组是不是C连续的。
 
     For :class:`LinearSVC` (and :class:`LogisticRegression
     <sklearn.linear_model.LogisticRegression>`) any input passed as a numpy
