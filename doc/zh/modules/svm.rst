@@ -402,8 +402,8 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
   * 在 :class:`NuSVC`/:class:`OneClassSVM`/:class:`NuSVR` 内的参数``nu``，
     近似是训练误差和支持向量的比值。
 
-  * 在 :class:`SVC`, ，如果分类器的数据不均衡（就是说，很多正例很少负例），设置
-   ``class_weight='balanced'`` 与/或尝试不同的惩罚系数C。	
+  * 在 :class:`SVC`, ，如果分类器的数据不均衡（就是说，很多正例很少负例），设置 ``class_weight='balanced'`` 
+    与/或尝试不同的惩罚系数C。	
 
   * 在拟合模型时，底层 :class:`LinearSVC` 操作使用了随机数生成器去选择特征。
     所以不要感到意外，对于相同的数据输入，也会略有不同的输出结果。如果这个发生了，
@@ -411,8 +411,8 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
   * 使用由 ``LinearSVC(loss='l2', penalty='l1',
     dual=False)`` 提供的L1惩罚去产生稀疏解，也就是说，特征权重的子集不同于零，这样做有助于决策函数。
-    随着增加 ``C`` 会产生一个更复杂的模型（要做更多的特征选择）。可以使用
-     :func:`l1_min_c`去计算 ``C``的数值，去产生一个"null" 模型（所有的权重等于零）。
+    随着增加 ``C`` 会产生一个更复杂的模型（要做更多的特征选择）。可以使用 :func:`l1_min_c`去计算
+     ``C``的数值，去产生一个"null" 模型（所有的权重等于零）。
 
 
 .. _svm_kernels:
