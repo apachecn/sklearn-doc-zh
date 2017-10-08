@@ -379,52 +379,40 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
     :class:`NuSVR`， 如果数据是通过某些方法而不是用C有序的连续双精度，那它先会调用底层的C命令再复制。
     你可以通过检查它的 ``flags`` 属性，来确定给定的numpy数组是不是C连续的。
 
-    For :class:`LinearSVC` (and :class:`LogisticRegression
-    <sklearn.linear_model.LogisticRegression>`) any input passed as a numpy
-    array will be copied and converted to the liblinear internal sparse data
-    representation (double precision floats and int32 indices of non-zero
-    components). If you want to fit a large-scale linear classifier without
-    copying a dense numpy C-contiguous double precision array as input we
-    suggest to use the :class:`SGDClassifier
-    <sklearn.linear_model.SGDClassifier>` class instead.  The objective
-    function can be configured to be almost the same as the :class:`LinearSVC`
-    model.
+    对于 :class:`LinearSVC` (和 :class:`LogisticRegression
+    <sklearn.linear_model.LogisticRegression>`) 的任何输入，都会以numpy数组形式，被复制和转换为
+    用liblinear内部稀疏数据去表达（双精度浮点型float和非零部分的int32索引）。 
+    如果你想要一个适合大规模的线性分类器，又不打算复制一个密集的C-contiguous双精度numpy数组作为输入，
+    那我们建议你去使用 :class:`SGDClassifier
+    <sklearn.linear_model.SGDClassifier>` 类作为替代。目标函数可以配置为和 :class:`LinearSVC`
+    模型差不多相同的。
 
-  * **Kernel cache size**: For :class:`SVC`, :class:`SVR`, :class:`nuSVC` and
-    :class:`NuSVR`, the size of the kernel cache has a strong impact on run
-    times for larger problems.  If you have enough RAM available, it is
-    recommended to set ``cache_size`` to a higher value than the default of
-    200(MB), such as 500(MB) or 1000(MB).
+  * **内核的缓存大小**: 在大规模问题上，对于 :class:`SVC`, :class:`SVR`, :class:`nuSVC` 和
+    :class:`NuSVR`, 内核缓存的大小会特别影响到运行时间。如果你有足够可用的RAM，不妨把它的“缓存大小”
+    设得比默认的200(MB)要高，例如为 500(MB) 或者 1000(MB)。
 
-  * **Setting C**: ``C`` is ``1`` by default and it's a reasonable default
-    choice.  If you have a lot of noisy observations you should decrease it.
-    It corresponds to regularize more the estimation.
+  * **惩罚系数C的设置**:在合理的情况下， ``C`` 的默认选择为 ``1`` 。如果你有很多混杂的观察数据，
+    你应该要去调小它。 ``C`` 越小，就能更好地去正规化估计。
 
-  * Support Vector Machine algorithms are not scale invariant, so **it
-    is highly recommended to scale your data**. For example, scale each
-    attribute on the input vector X to [0,1] or [-1,+1], or standardize it
-    to have mean 0 and variance 1. Note that the *same* scaling must be
-    applied to the test vector to obtain meaningful results. See section
-    :ref:`preprocessing` for more details on scaling and normalization.
+  * 支持向量机算法本身不是用来扩大不变性，所以 **我们强烈建议您去扩大数据量**. 举个例子，对于输入向量X，
+    规整它的每个数值范围为[0, 1]或[-1, +1]，或者标准化它的为均值为0方差为1的数据分布。请注意，
+    相同的缩放标准必须要应用到所有的测试向量，从而获得有意义的结果。 请参考章节
+    :ref:`preprocessing` ，那里会提供到更多关于缩放和规整。
 
-  * Parameter ``nu`` in :class:`NuSVC`/:class:`OneClassSVM`/:class:`NuSVR`
-    approximates the fraction of training errors and support vectors.
+  * 在 :class:`NuSVC`/:class:`OneClassSVM`/:class:`NuSVR` 内的参数``nu``，
+    近似是训练误差和支持向量的比值。
 
-  * In :class:`SVC`, if data for classification are unbalanced (e.g. many
-    positive and few negative), set ``class_weight='balanced'`` and/or try
-    different penalty parameters ``C``.
+  * 在 :class:`SVC`, ，如果分类器的数据不均衡（就是说，很多正例很少负例），设置
+   ``class_weight='balanced'`` 与/或尝试不同的惩罚系数C。	
 
-  * The underlying :class:`LinearSVC` implementation uses a random
-    number generator to select features when fitting the model. It is
-    thus not uncommon, to have slightly different results for the same
-    input data. If that happens, try with a smaller tol parameter.
+  * 在拟合模型时，底层 :class:`LinearSVC` 操作使用了随机数生成器去选择特征。
+    所以不要感到意外，对于相同的数据输入，也会略有不同的输出结果。如果这个发生了，
+    尝试用更小的tol 参数。
 
-  * Using L1 penalization as provided by ``LinearSVC(loss='l2', penalty='l1',
-    dual=False)`` yields a sparse solution, i.e. only a subset of feature
-    weights is different from zero and contribute to the decision function.
-    Increasing ``C`` yields a more complex model (more feature are selected).
-    The ``C`` value that yields a "null" model (all weights equal to zero) can
-    be calculated using :func:`l1_min_c`.
+  * 使用由 ``LinearSVC(loss='l2', penalty='l1',
+    dual=False)`` 提供的L1惩罚去产生稀疏解，也就是说，特征权重的子集不同于零，这样做有助于决策函数。
+    随着增加 ``C`` 会产生一个更复杂的模型（要做更多的特征选择）。可以使用
+     :func:`l1_min_c`去计算 ``C``的数值，去产生一个"null" 模型（所有的权重等于零）。
 
 
 .. _svm_kernels:
