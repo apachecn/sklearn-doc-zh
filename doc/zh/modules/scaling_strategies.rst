@@ -70,7 +70,7 @@
 
 .. centered:: |accuracy_over_time|
 
-现在我们来看不同部分的计算时间，我们看到矢量化的过程比学习本身耗时还多。对于不同的算法，MultinomialNB是耗时最多的，但通过增加其mini-batches的大小可以减轻开销。（练习：minibatch_size在程序中更改为100和10000，并进行比较）。
+现在我们来看不同部分的计算时间，我们看到矢量化的过程比学习本身耗时还多。对于不同的算法，MultinomialNB 是耗时最多的，但通过增加其 mini-batches 的大小可以减轻开销。（练习：minibatch_size 在程序中更改为100和10000，并进行比较）。
 
 .. |computation_time| image::  ../auto_examples/applications/images/sphx_glr_plot_out_of_core_classification_003.png
     :target: ../auto_examples/applications/plot_out_of_core_classification.html
