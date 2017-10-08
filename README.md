@@ -58,6 +58,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
 * [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
 * [@chenyyx](https://github.com/chenyyx)（Joy yx）
+* [@survivingME](https://github.com/survivingME)（Trembleguy）
 * [@mtobeiyf](https://github.com/mtobeiyf)（Fing）
 
 ### 0.18
