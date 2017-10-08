@@ -8,69 +8,46 @@ Nearest Neighbors
 
 .. currentmodule:: sklearn.neighbors
 
-:mod:`sklearn.neighbors` provides functionality for unsupervised and
-supervised neighbors-based learning methods.  Unsupervised nearest neighbors
-is the foundation of many other learning methods,
-notably manifold learning and spectral clustering.  Supervised neighbors-based
-learning comes in two flavors: `classification`_ for data with
-discrete labels, and `regression`_ for data with continuous labels.
+:mod:`sklearn.neighbors` 提供了 neighbors-based (基于邻居的) 无监督学习以及监督学习方法的功能。
+无监督的最近邻是许多其它学习方法的基础，尤其是 manifold learning (流行学习) 和 spectral clustering (谱聚类)。
+受监督的 neighbors-based (基于邻居的) 学习分为两种： `分类`_ 针对的是具有离散标签的数据，`回归`_ 针对的是具有连续标签的数据。
 
-The principle behind nearest neighbor methods is to find a predefined number
-of training samples closest in distance to the new point, and
-predict the label from these.  The number of samples can be a user-defined
-constant (k-nearest neighbor learning), or vary based
-on the local density of points (radius-based neighbor learning).
-The distance can, in general, be any metric measure: standard Euclidean
-distance is the most common choice.
-Neighbors-based methods are known as *non-generalizing* machine
-learning methods, since they simply "remember" all of its training data
-(possibly transformed into a fast indexing structure such as a
-:ref:`Ball Tree <ball_tree>` or :ref:`KD Tree <kd_tree>`.).
+最近邻方法的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。
+这些点的数量可以是用户自定义的常量（K最近邻学习），
+或是基于当前点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何方式来度量：standard Euclidean
+distance（标准欧式距离）是最常见的选择。Neighbors-based（基于邻居的）方法被称为 *非泛化* 机器学习方法，
+因为它们只是简单地"考虑"其所有的训练数据（正因如此可能需要加速，
+将其转换为一个快速索引结构，如: ref:`Ball Tree <ball_tree>` 或 :ref:`KD Tree <kd_tree>`）。
 
-Despite its simplicity, nearest neighbors has been successful in a
-large number of classification and regression problems, including
-handwritten digits or satellite image scenes. Being a non-parametric method,
-it is often successful in classification situations where the decision
-boundary is very irregular.
+尽管它很简单，但最近邻算法已经成功地适用于很多的分类和回归问题，例如手写数字或卫星图像的场景。
+作为一个 non-parametric（非参数化）方法，它经常成功地应用于决策边界非常不规则的情景下。
 
-The classes in :mod:`sklearn.neighbors` can handle either Numpy arrays or
-`scipy.sparse` matrices as input.  For dense matrices, a large number of
-possible distance metrics are supported.  For sparse matrices, arbitrary
-Minkowski metrics are supported for searches.
+:mod:`sklearn.neighbors` 可以处理 Numpy 数组或 `scipy.sparse` 矩阵中的任何一个作为其输入。
+对于密集矩阵，大多数可能距离的矩阵都是支持的。对于稀疏矩阵，任何 Minkowski 矩阵都支持被搜索。
 
-There are many learning routines which rely on nearest neighbors at their
-core.  One example is :ref:`kernel density estimation <kernel_density>`,
-discussed in the :ref:`density estimation <density_estimation>` section.
-
+有许多学习方法都是依赖最近邻作为其核心。一个例子是：:ref:`kernel density estimation <kernel_density>`（核密度估计）,
+在:ref:`density estimation <density_estimation>`（密度估计）章节中有讨论。
 
 .. _unsupervised_neighbors:
 
 Unsupervised Nearest Neighbors
 ==============================
 
-:class:`NearestNeighbors` implements unsupervised nearest neighbors learning.
-It acts as a uniform interface to three different nearest neighbors
-algorithms: :class:`BallTree`, :class:`KDTree`, and a
-brute-force algorithm based on routines in :mod:`sklearn.metrics.pairwise`.
-The choice of neighbors search algorithm is controlled through the keyword
-``'algorithm'``, which must be one of
-``['auto', 'ball_tree', 'kd_tree', 'brute']``.  When the default value
-``'auto'`` is passed, the algorithm attempts to determine the best approach
-from the training data.  For a discussion of the strengths and weaknesses
-of each option, see `Nearest Neighbor Algorithms`_.
+:class:`NearestNeighbors`（最近邻）实现了 unsupervised nearest neighbors learning（无监督的最近邻学习）。
+它为三种不同的最近邻算法提供统一的接口：:class:`BallTree`, :class:`KDTree`, 还有基于 :mod:`sklearn.metrics.pairwise`
+的 brute-force 算法。选择算法时可通过关键字 ``'algorithm'`` 来控制，
+并指定为 ``['auto', 'ball_tree', 'kd_tree', 'brute']`` 其中的一个即可。当默认值设置为 ``'auto'``
+时，算法会尝试从训练数据中确定最佳方法。有关上述每个选项的优缺点，参见 `Nearest Neighbor Algorithms`_。
+
 
     .. warning::
 
-        Regarding the Nearest Neighbors algorithms, if two
-        neighbors, neighbor :math:`k+1` and :math:`k`, have identical distances
-        but different labels, the results will depend on the ordering of the
-        training data.
+        关于最近邻算法，如果邻居 :math:`k+1` 和邻居 :math:`k` 具有相同的距离，但具有不同的标签，
+        结果将取决于训练数据的顺序。
 
 Finding the Nearest Neighbors
 -----------------------------
-For the simple task of finding the nearest neighbors between two sets of
-data, the unsupervised algorithms within :mod:`sklearn.neighbors` can be
-used:
+为了完成找到两组数据集中最近邻点的简单任务, 可以使用 :mod:`sklearn.neighbors` 中的无监督算法:
 
     >>> from sklearn.neighbors import NearestNeighbors
     >>> import numpy as np
@@ -92,11 +69,9 @@ used:
            [ 0.        ,  1.        ],
            [ 0.        ,  1.41421356]])
 
-Because the query set matches the training set, the nearest neighbor of each
-point is the point itself, at a distance of zero.
+因为查询集匹配训练集，每个点的最近邻点是其自身，距离为0。
 
-It is also possible to efficiently produce a sparse graph showing the
-connections between neighboring points:
+还可以有效地生成一个稀疏图来标识相连点之间的连接情况：
 
     >>> nbrs.kneighbors_graph(X).toarray()
     array([[ 1.,  1.,  0.,  0.,  0.,  0.],
@@ -106,20 +81,16 @@ connections between neighboring points:
            [ 0.,  0.,  0.,  1.,  1.,  0.],
            [ 0.,  0.,  0.,  0.,  1.,  1.]])
 
-Our dataset is structured such that points nearby in index order are nearby
-in parameter space, leading to an approximately block-diagonal matrix of
-K-nearest neighbors.  Such a sparse graph is useful in a variety of
-circumstances which make use of spatial relationships between points for
-unsupervised learning: in particular, see :class:`sklearn.manifold.Isomap`,
-:class:`sklearn.manifold.LocallyLinearEmbedding`, and
-:class:`sklearn.cluster.SpectralClustering`.
+我们的数据集是结构化的，因此附近索引顺序的点就在参数空间附近，从而生成了近似 K-nearest neighbors（K近邻）的块对角矩阵。
+这种稀疏图在各种情况下都是有用的，它利用点之间的空间关系进行无监督学习：特别地可参见 :class:`sklearn.manifold.Isomap`,
+:class:`sklearn.manifold.LocallyLinearEmbedding`, 和 :class:`sklearn.cluster.SpectralClustering`。
 
 KDTree and BallTree Classes
 ---------------------------
-Alternatively, one can use the :class:`KDTree` or :class:`BallTree` classes
-directly to find nearest neighbors.  This is the functionality wrapped by
-the :class:`NearestNeighbors` class used above.  The Ball Tree and KD Tree
-have the same interface; we'll show an example of using the KD Tree here:
+或者，可以使用 :class:`KDTree` 或 :class:`BallTree` 类来找最近邻。
+这是上文使用过的 :class:`NearestNeighbors` 类所包含的功能。
+:class:`KDTree` 和 :class:`BallTree` 具有相同的接口；
+我们将在这里展示使用 :class:`KDTree` 的例子：
 
     >>> from sklearn.neighbors import KDTree
     >>> import numpy as np
@@ -133,56 +104,32 @@ have the same interface; we'll show an example of using the KD Tree here:
            [4, 3],
            [5, 4]]...)
 
-Refer to the :class:`KDTree` and :class:`BallTree` class documentation
-for more information on the options available for neighbors searches,
-including specification of query strategies, of various distance metrics, etc.
-For a list of available metrics, see the documentation of the
-:class:`DistanceMetric` class.
+对于近邻搜索中选项的更多信息，包括各种度量距离的查询策略的说明等，请参阅 :class:`KDTree` 和 :class:`BallTree` 类文档。
+关于可用度量距离的列表，请参阅 :class:`DistanceMetric` 类。
 
 .. _classification:
 
 Nearest Neighbors Classification
 ================================
 
-Neighbors-based classification is a type of *instance-based learning* or
-*non-generalizing learning*: it does not attempt to construct a general
-internal model, but simply stores instances of the training data.
-Classification is computed from a simple majority vote of the nearest
-neighbors of each point: a query point is assigned the data class which
-has the most representatives within the nearest neighbors of the point.
+最近邻分类属于基于样本的学习或非泛化学习：它不试图去构造一个泛化的内部模型，而是简单地存储训练数据的实例。
+分类是由每个点的最近邻的简单多数投票中计算得到的：一个查询点的数据类型是由它最近邻点中最具代表性的数据类型来决定的。
 
-scikit-learn implements two different nearest neighbors classifiers:
-:class:`KNeighborsClassifier` implements learning based on the :math:`k`
-nearest neighbors of each query point, where :math:`k` is an integer value
-specified by the user.  :class:`RadiusNeighborsClassifier` implements learning
-based on the number of neighbors within a fixed radius :math:`r` of each
-training point, where :math:`r` is a floating-point value specified by
-the user.
+scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClassifier` 基于每个查询点的 :math:`k` 个最近邻实现，
+其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsClassifier` 基于每个训练点的固定半径 :math:`r` 内的邻居数量实现，
+其中 :math:`r` 是用户指定的浮点数值。
 
-The :math:`k`-neighbors classification in :class:`KNeighborsClassifier`
-is the more commonly used of the two techniques.  The
-optimal choice of the value :math:`k` is highly data-dependent: in general
-a larger :math:`k` suppresses the effects of noise, but makes the
-classification boundaries less distinct.
+:class:`KNeighborsClassifier` 中 :math:`k`-邻居分类是两种技术中更常使用的。:math:`k` 值的最佳选择是高度数据依赖的：
+通常较大的 :math:`k` 抑制噪声的影响，但是使得分类界限不明显。
 
-In cases where the data is not uniformly sampled, radius-based neighbors
-classification in :class:`RadiusNeighborsClassifier` can be a better choice.
-The user specifies a fixed radius :math:`r`, such that points in sparser
-neighborhoods use fewer nearest neighbors for the classification.  For
-high-dimensional parameter spaces, this method becomes less effective due
-to the so-called "curse of dimensionality".
+如果数据是不均匀采样的，那么 :class:`RadiusNeighborsClassifier` 中的基于半径的近邻分类可能是更好的选择。
+用户指定一个固定半径 :math:`r`，使得稀疏邻居中的点使用较少的最近邻来分类。
+对于高维参数空间，这个方法会由于所谓的“维度惩罚”而变得不那么有效。
 
-The basic nearest neighbors classification uses uniform weights: that is, the
-value assigned to a query point is computed from a simple majority vote of
-the nearest neighbors.  Under some circumstances, it is better to weight the
-neighbors such that nearer neighbors contribute more to the fit.  This can
-be accomplished through the ``weights`` keyword.  The default value,
-``weights = 'uniform'``, assigns uniform weights to each neighbor.
-``weights = 'distance'`` assigns weights proportional to the inverse of the
-distance from the query point.  Alternatively, a user-defined function of the
-distance can be supplied which is used to compute the weights.
-
-
+基本的最近邻分类使用统一的权重：分配给查询点的值是由一个简单的最近邻中的多数投票方法计算而来的。
+在某些环境下，最好对邻居进行加权，使得近邻更有利于拟合。这可以通过 ``weights`` 关键字来完成。
+默认值 ``weights = 'uniform'`` 为每个近邻分配统一的权重。而 ``weights = 'distance'`` 分配与查询点距离的倒数呈比例的权重。
+或者，用户定义的距离函数也可应用于权重的计算之中。
 
 .. |classification_1| image:: ../auto_examples/neighbors/images/sphx_glr_plot_classification_001.png
    :target: ../auto_examples/neighbors/plot_classification.html
@@ -194,7 +141,7 @@ distance can be supplied which is used to compute the weights.
 
 .. centered:: |classification_1| |classification_2|
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_neighbors_plot_classification.py`: an example of
     classification using nearest neighbors.
@@ -513,4 +460,4 @@ the model from 0.81 to 0.82.
 .. topic:: Examples:
 
   * :ref:`sphx_glr_auto_examples_neighbors_plot_nearest_centroid.py`: an example of
-    classification using nearest centroid with different shrink thresholds.
+    classification using nearest centroid with different shrink thresholds. 
