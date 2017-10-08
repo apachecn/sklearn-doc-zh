@@ -1,37 +1,32 @@
-Optical Recognition of Handwritten Digits Data Set
+光学识别手写数字数据集
 ===================================================
 
-Notes
+注释
 -----
-Data Set Characteristics:
-    :Number of Instances: 5620
-    :Number of Attributes: 64
-    :Attribute Information: 8x8 image of integer pixels in the range 0..16.
-    :Missing Attribute Values: None
-    :Creator: E. Alpaydin (alpaydin '@' boun.edu.tr)
-    :Date: July; 1998
+数据集特征：
+    :实例数量: 5620
+    :属性数量: 64
+    :属性信息: 8x8 范围在（0-16）的整型像素值图片
+    :缺失属性值: 无
+    :创建者: E. Alpaydin (alpaydin@boun.edu.tr)
+    :日期: 1998年7月
 
-This is a copy of the test set of the UCI ML hand-written digits datasets
+这是UCI ML（欧文加利福尼亚大学 机器学习库）手写数字数据集的测试集的副本。
 http://archive.ics.uci.edu/ml/datasets/Optical+Recognition+of+Handwritten+Digits
 
-The data set contains images of hand-written digits: 10 classes where
-each class refers to a digit.
+数据集包含手写数字的图像：10个类别中每个类都是一个数字。
 
-Preprocessing programs made available by NIST were used to extract
-normalized bitmaps of handwritten digits from a preprinted form. From a
-total of 43 people, 30 contributed to the training set and different 13
-to the test set. 32x32 bitmaps are divided into nonoverlapping blocks of
-4x4 and the number of on pixels are counted in each block. This generates
-an input matrix of 8x8 where each element is an integer in the range
-0..16. This reduces dimensionality and gives invariance to small
-distortions.
+从预印表格中提取手写数字的标准化的位图这一过程，应用了NIST提供的预处理程序。
+这些数据是从43人中得到，其中30人为训练集，13人为测试集。32x32位图被划分为4x4的非重叠块，
+并且在每个块中计数像素数。这产生8×8的输入矩阵，其中每个元素是0-16范围内的整数。
+这个过程降低了维度，并且在小的变形中提供了不变性。
 
-For info on NIST preprocessing routines, see M. D. Garris, J. L. Blue, G.
-T. Candela, D. L. Dimmick, J. Geist, P. J. Grother, S. A. Janet, and C.
+有关NIST处理程序的信息，请参见 M. D. Garris, J. L. Blue, G.T. Candela, 
+D. L. Dimmick, J. Geist, P. J. Grother, S. A. Janet, and C.
 L. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,
 1994.
 
-References
+参考资料
 ----------
   - C. Kaynak (1995) Methods of Combining Multiple Classifiers and Their
     Applications to Handwritten Digit Recognition, MSc Thesis, Institute of
