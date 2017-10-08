@@ -1,109 +1,99 @@
-Breast Cancer Wisconsin (Diagnostic) Database
+威斯康辛州乳腺癌（诊断）数据库
 =============================================
 
-Notes
+注释
 -----
-Data Set Characteristics:
-    :Number of Instances: 569
+数据集特征：
+    :实例数量: 569
 
-    :Number of Attributes: 30 numeric, predictive attributes and the class
+    :属性数量: 30 (数值型，帮助预测的属性和类)
 
-    :Attribute Information:
-        - radius (mean of distances from center to points on the perimeter)
-        - texture (standard deviation of gray-scale values)
-        - perimeter
-        - area
-        - smoothness (local variation in radius lengths)
-        - compactness (perimeter^2 / area - 1.0)
-        - concavity (severity of concave portions of the contour)
-        - concave points (number of concave portions of the contour)
-        - symmetry 
-        - fractal dimension ("coastline approximation" - 1)
+    :属性信息:
+         - radius 半径（从中心到边缘上点的距离的平均值）
+         - texture 纹理（灰度值的标准偏差）
+         - perimeter 周长
+         - area 区域
+         - smoothness 平滑度（半径长度的局部变化）
+         - compactness 紧凑度（周长 ^ 2 /面积 - 1.0）
+         - concavity 凹面（轮廓的凹部的严重性）
+         - concave points 凹点（轮廓的凹部的数量）
+         - symmetry 对称性
+         - fractal dimension 分形维数（海岸线近似 - 1）
 
-        The mean, standard error, and "worst" or largest (mean of the three
-        largest values) of these features were computed for each image,
-        resulting in 30 features.  For instance, field 3 is Mean Radius, field
-        13 is Radius SE, field 23 is Worst Radius.
+        对每个图像计算这些特征的平均值，标准误差，以及“最差”（因为是肿瘤）或最大值（最大的前三个值的平均值），得到
+        得到30个特征。例如，字段 3 是平均半径，字段 13 是半径的标准误差，字段 23 是最差半径。
+        - 类:
+                - WDBC-Malignant 威斯康辛州乳腺癌-恶性
+                - WDBC-Benign 威斯康辛州乳腺癌-良性
 
-        - class:
-                - WDBC-Malignant
-                - WDBC-Benign
-
-    :Summary Statistics:
+    :统计摘要:
 
     ===================================== ====== ======
-                                           Min    Max
+                                          最小值  最大值
     ===================================== ====== ======
-    radius (mean):                        6.981  28.11
-    texture (mean):                       9.71   39.28
-    perimeter (mean):                     43.79  188.5
-    area (mean):                          143.5  2501.0
-    smoothness (mean):                    0.053  0.163
-    compactness (mean):                   0.019  0.345
-    concavity (mean):                     0.0    0.427
-    concave points (mean):                0.0    0.201
-    symmetry (mean):                      0.106  0.304
-    fractal dimension (mean):             0.05   0.097
-    radius (standard error):              0.112  2.873
-    texture (standard error):             0.36   4.885
-    perimeter (standard error):           0.757  21.98
-    area (standard error):                6.802  542.2
-    smoothness (standard error):          0.002  0.031
-    compactness (standard error):         0.002  0.135
-    concavity (standard error):           0.0    0.396
-    concave points (standard error):      0.0    0.053
-    symmetry (standard error):            0.008  0.079
-    fractal dimension (standard error):   0.001  0.03
-    radius (worst):                       7.93   36.04
-    texture (worst):                      12.02  49.54
-    perimeter (worst):                    50.41  251.2
-    area (worst):                         185.2  4254.0
-    smoothness (worst):                   0.071  0.223
-    compactness (worst):                  0.027  1.058
-    concavity (worst):                    0.0    1.252
-    concave points (worst):               0.0    0.291
-    symmetry (worst):                     0.156  0.664
-    fractal dimension (worst):            0.055  0.208
+    半径（平均）
+    纹理 (平均):                            9.71   39.28
+    周长 (平均):                            43.79  188.5
+    面积 (平均):                            143.5  2501.0
+    平滑度 (平均):                           0.053  0.163
+    紧凑度 (平均):                           0.019  0.345
+    凹面 (平均):                             0.0    0.427
+    凹点 (平均):                             0.0    0.201
+    对称性 (平均):                           0.106  0.304
+    分形维数 (平均):                         0.05   0.097
+    半径 (标准误差):                         0.112  2.873
+    纹理 (标准误差):                         0.36   4.885
+    周长 (标准误差):                         0.757  21.98
+    面积 (标准误差):                         6.802  542.2
+    平滑度 (标准误差):                       0.002  0.031
+    紧凑度 (标准误差):                       0.002  0.135
+    凹面 (标准误差):                         0.0    0.396
+    凹点 (标准误差):                         0.0    0.053
+    对称性 (标准误差):                       0.008  0.079
+    分形维数 (标准误差):                     0.001  0.03
+    半径 (最差):                            7.93   36.04
+    纹理 (最差):                            12.02  49.54
+    周长 (最差):                            50.41  251.2
+    面积 (最差):                            185.2  4254.0
+    平滑度 (最差):                          0.071  0.223
+    紧凑度 (最差):                          0.027  1.058
+    凹面 (最差):                            0.0    1.252
+    凹点 (最差):                            0.0    0.291
+    对称性 (最差):                          0.156  0.664
+    分形维数 (最差):                        0.055  0.208
     ===================================== ====== ======
 
-    :Missing Attribute Values: None
+    :缺失属性值: 无
 
-    :Class Distribution: 212 - Malignant, 357 - Benign
+    :类别分布: 212 - 恶性, 357 - 良性
 
-    :Creator:  Dr. William H. Wolberg, W. Nick Street, Olvi L. Mangasarian
+    :创建者:  Dr. William H. Wolberg, W. Nick Street, Olvi L. Mangasarian
 
-    :Donor: Nick Street
+    :捐助者: Nick Street
 
-    :Date: November, 1995
+    :日期: 1995年11月
 
-This is a copy of UCI ML Breast Cancer Wisconsin (Diagnostic) datasets.
+这是UCI ML（欧文加利福尼亚大学 机器学习库）威斯康星州乳腺癌（诊断）数据集的副本。
 https://goo.gl/U2Uwz2
 
-Features are computed from a digitized image of a fine needle
-aspirate (FNA) of a breast mass.  They describe
-characteristics of the cell nuclei present in the image.
+这些特征是从乳房肿块的细针抽吸术（FNA）的数字图像中计算得到，描述了图像中存在的细胞核的特征。
 
-Separating plane described above was obtained using
-Multisurface Method-Tree (MSM-T) [K. P. Bennett, "Decision Tree
-Construction Via Linear Programming." Proceedings of the 4th
-Midwest Artificial Intelligence and Cognitive Science Society,
-pp. 97-101, 1992], a classification method which uses linear
-programming to construct a decision tree.  Relevant features
-were selected using an exhaustive search in the space of 1-4
-features and 1-3 separating planes.
+上述的分离平面是由多表面方法树（MSM-T）[K.P.Bennett, "Decision Tree Construction Via 
+Linear Programming." Proceedings of the 4th Midwest Artificial Intelligence and 
+Cognitive Science Society, pp.97-101, 1992], a classification method which uses 
+linear programming to construct a decision tree.  
+相关特征是在1-4的特征和1-3的分离平面中使用穷举法搜索选取出的。
 
-The actual linear program used to obtain the separating plane
-in the 3-dimensional space is that described in:
-[K. P. Bennett and O. L. Mangasarian: "Robust Linear
-Programming Discrimination of Two Linearly Inseparable Sets",
-Optimization Methods and Software 1, 1992, 23-34].
+用于分离平面的线性规划在三维空间中描述如下：
+[K. P. Bennett and O. L. Mangasarian: "Robust Linear Programming Discrimination 
+of Two Linearly Inseparable Sets", Optimization Methods and Software 1, 1992, 23-34].
 
-This database is also available through the UW CS ftp server:
+该数据库也可通过UW CS ftp服务器获得：
 
 ftp ftp.cs.wisc.edu
 cd math-prog/cpo-dataset/machine-learn/WDBC/
 
-References
+参考资料
 ----------
    - W.N. Street, W.H. Wolberg and O.L. Mangasarian. Nuclear feature extraction 
      for breast tumor diagnosis. IS&T/SPIE 1993 International Symposium on 
