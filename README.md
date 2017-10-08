@@ -59,6 +59,8 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
 * [@chenyyx](https://github.com/chenyyx)（Joy yx）
 * [@survivingME](https://github.com/survivingME)（Trembleguy）
+* [@mtobeiyf](https://github.com/mtobeiyf)（Fing）
+
 ### 0.18
 请参阅: [http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
 

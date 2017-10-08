@@ -337,24 +337,24 @@ writing data in that format.
 
 .. _boston_house_prices:
 
-.. include:: ../../sklearn/datasets/descr/boston_house_prices.rst
+.. include:: ../sklearn/datasets/descr/boston_house_prices.rst
 
 .. _breast_cancer:
 
-.. include:: ../../sklearn/datasets/descr/breast_cancer.rst
+.. include:: ../sklearn/datasets/descr/breast_cancer.rst
 
 .. _diabetes:
 
-.. include:: ../../sklearn/datasets/descr/diabetes.rst
+.. include:: ../sklearn/datasets/descr/diabetes.rst
 
 .. _digits:
 
-.. include:: ../../sklearn/datasets/descr/digits.rst
+.. include:: ../sklearn/datasets/descr/digits.rst
 
 .. _iris:
 
-.. include:: ../../sklearn/datasets/descr/iris.rst
+.. include:: ../sklearn/datasets/descr/iris.rst
 
 .. _linnerud:
 
-.. include:: ../../sklearn/datasets/descr/linnerud.rst
+.. include:: ../sklearn/datasets/descr/linnerud.rst
