@@ -116,7 +116,7 @@ Nearest Neighbors Classification
 分类是由每个点的最近邻的简单多数投票中计算得到的：一个查询点的数据类型是由它最近邻点中最具代表性的数据类型来决定的。
 
 scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClassifier` 基于每个查询点的 :math:`k` 个最近邻实现，
-其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsClassifier` 基于每个训练点的固定半径 :math:`r` 内的邻居数量实现，
+其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsClassifier` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
 其中 :math:`r` 是用户指定的浮点数值。
 
 :class:`KNeighborsClassifier` 中 :math:`k`-邻居分类是两种技术中更常使用的。:math:`k` 值的最佳选择是高度数据依赖的：
@@ -143,46 +143,31 @@ scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClas
 
 .. topic:: 示例:
 
-  * :ref:`sphx_glr_auto_examples_neighbors_plot_classification.py`: an example of
-    classification using nearest neighbors.
+  * :ref:`sphx_glr_auto_examples_neighbors_plot_classification.py`: 使用最近邻进行分类的示例。
 
 .. _regression:
 
 Nearest Neighbors Regression
 ============================
 
-Neighbors-based regression can be used in cases where the data labels are
-continuous rather than discrete variables.  The label assigned to a query
-point is computed based the mean of the labels of its nearest neighbors.
+最近邻回归是用在数据标签为连续变量，而不是离散变量的情况下。分配给查询点的标签是由它的最近邻标签的均值计算而来的。
 
-scikit-learn implements two different neighbors regressors:
-:class:`KNeighborsRegressor` implements learning based on the :math:`k`
-nearest neighbors of each query point, where :math:`k` is an integer
-value specified by the user.  :class:`RadiusNeighborsRegressor` implements
-learning based on the neighbors within a fixed radius :math:`r` of the
-query point, where :math:`r` is a floating-point value specified by the
-user.
+scikit-learn 实现了两种不同的最近邻回归：:class:`KNeighborsRegressor` 基于每个查询点的 :math:`k` 个最近邻实现，
+其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsRegressor` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
+其中 :math:`r` 是用户指定的浮点数值。
 
-The basic nearest neighbors regression uses uniform weights: that is,
-each point in the local neighborhood contributes uniformly to the
-classification of a query point.  Under some circumstances, it can be
-advantageous to weight points such that nearby points contribute more
-to the regression than faraway points.  This can be accomplished through
-the ``weights`` keyword.  The default value, ``weights = 'uniform'``,
-assigns equal weights to all points.  ``weights = 'distance'`` assigns
-weights proportional to the inverse of the distance from the query point.
-Alternatively, a user-defined function of the distance can be supplied,
-which will be used to compute the weights.
+在某些环境下，增加权重可能是有利的，使得附近点对于回归所作出的贡献多于远处点。
+这可以通过 ``weights`` 关键字来实现。默认值 ``weights = 'uniform'`` 为所有点分配同等权重。
+而 ``weights = 'distance'`` 分配与查询点距离的倒数呈比例的权重。
+或者，用户定义的距离函数也可应用于权重的计算之中。
 
 .. figure:: ../auto_examples/neighbors/images/sphx_glr_plot_regression_001.png
    :target: ../auto_examples/neighbors/plot_regression.html
    :align: center
    :scale: 75
 
-The use of multi-output nearest neighbors for regression is demonstrated in
-:ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`. In this example, the inputs
-X are the pixels of the upper half of faces and the outputs Y are the pixels of
-the lower half of those faces.
+使用多输出的最近邻进行回归在此演示 :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`。
+在这个示例中，输入 X 是脸部的上半部分像素，输出 Y 是脸部的下半部分像素。
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_multioutput_face_completion_001.png
    :target: ../auto_examples/plot_multioutput_face_completion.html
@@ -190,13 +175,11 @@ the lower half of those faces.
    :align: center
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
-  * :ref:`sphx_glr_auto_examples_neighbors_plot_regression.py`: an example of regression
-    using nearest neighbors.
+  * :ref:`sphx_glr_auto_examples_neighbors_plot_regression.py`: 使用最近邻进行回归的示例。
 
-  * :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`: an example of
-    multi-output regression using nearest neighbors.
+  * :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`: 使用最近邻进行多输出回归的示例。
 
 
 Nearest Neighbor Algorithms
@@ -460,4 +443,4 @@ the model from 0.81 to 0.82.
 .. topic:: Examples:
 
   * :ref:`sphx_glr_auto_examples_neighbors_plot_nearest_centroid.py`: an example of
-    classification using nearest centroid with different shrink thresholds. 
+    classification using nearest centroid with different shrink thresholds.
