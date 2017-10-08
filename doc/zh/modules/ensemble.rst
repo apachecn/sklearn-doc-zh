@@ -328,8 +328,8 @@ the transformation performs an implicit, non-parametric density estimation.
 AdaBoost
 ========
 
-The module :mod:`sklearn.ensemble` includes the popular boosting algorithm
-AdaBoost, introduced in 1995 by Freund and Schapire [FS1995]_.
+模型 :mod:`sklearn.ensemble` 中包含十分流行的提升算法AdaBoost, 这个算法是由Freund和
+Schapire在1995年提出的.[FS1995]_.
 
 The core principle of AdaBoost is to fit a sequence of weak learners (i.e.,
 models that are only slightly better than random guessing, such as small
