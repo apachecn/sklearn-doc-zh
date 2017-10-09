@@ -1,7 +1,7 @@
 .. _clustering:
 
 ==========
-Clustering
+Clustering（聚类）
 ==========
 
 `Clustering <https://en.wikipedia.org/wiki/Cluster_analysis>`__ of
