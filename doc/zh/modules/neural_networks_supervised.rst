@@ -15,8 +15,8 @@ Neural network models (supervised)
     as well as frameworks offering much more flexibility to build deep learning
     architectures, see  :ref:`related_projects`.
     
-    提示
-此实现不适用于大规模应用程序。 特别是scikit-learn不支持GPU。如果想要提高运行速度并使用基于GPU的实现以及为构建深度学习架构提供更多灵活性的框架，请参阅：ref：`related_projects`。
+ .. 警告:: 
+此实现不适用于大规模应用程序。 特别是scikit-learn不支持GPU。如果想要提高运行速度并使用基于GPU的实现以及为构建深度学习架构提供更多灵活性的框架，请参阅：ref:`related_projects`。
 
 .. _multilayer_perceptron:
 
@@ -34,7 +34,7 @@ between the input and the output layer, there can be one or more non-linear
 layers, called hidden layers. Figure 1 shows a one hidden layer MLP with scalar
 output.
 
-多层感知器（MLP）是一种监督学习算法，通过训练数据集来学习函数f（\ cdot）：R ^ m \ rightarrow R ^ o，其中m是输入的维数，o是数字的输出尺寸。 给定一组特征X = {x_1，x_2，...，x_m}和目标y，它可以学习用于分类或回归的非线性函数。 与逻辑回归不同，在输入和输出层之间，可以有一个或多个非线性层，称为隐藏层。 图1显示了具有标量输出的一个隐藏层MLP。
+**多层感知器（MLP）**是一种监督学习算法，通过训练数据集来学习函数math:`f(\cdot): R^m \rightarrow R^o`，其中math:m是输入的维数，math:o是数字的输出尺寸。 给定一组特征math:`X = {x_1, x_2, ..., x_m}和目标math:y，它可以学习用于分类或回归的非线性函数。 与逻辑回归不同，在输入和输出层之间，可以有一个或多个非线性层，称为隐藏层。 图1显示了具有标量输出的一个隐藏层MLP。
 
 .. figure:: ../images/multilayerperceptron_network.png
    :align: center
@@ -52,7 +52,7 @@ by a non-linear activation function :math:`g(\cdot):R \rightarrow R` - like
 the hyperbolic tan function. The output layer receives the values from the
 last hidden layer and transforms them into output values.
 
-最左层的输入层由一组神经元组成：`\ {x_i | x_1，x_2，...，x_m \}表示输入要素。 每个隐藏层中的神经元将前一层的值转换为加权线性求和：`w_1x_1 + w_2x_2 + ... + w_mx_m`通过非线性激活函数：`g（\ cdot）：R \ rightarrow R` - like双曲线tan函数。 输出层接收来自的值最后一个隐藏层并将其转换为输出值。
+最左层的输入层由一组神经元组成：math:`\{x_i | x_1, x_2, ..., x_m\}表示输入要素。 每个隐藏层中的神经元将前一层的值转换为加权线性求和：math:`w_1x_1 + w_2x_2 + ... + w_mx_m `通过非线性激活函数：math:`g（\ cdot）：R \ rightarrow R` - like双曲线tan函数。 输出层接收来自的值最后一个隐藏层并将其转换为输出值。
 
 The module contains the public attributes ``coefs_`` and ``intercepts_``.
 ``coefs_`` is a list of weight matrices, where weight matrix at index
@@ -60,7 +60,7 @@ The module contains the public attributes ``coefs_`` and ``intercepts_``.
 :math:`i+1`. ``intercepts_`` is a list of bias vectors, where the vector
 at index :math:`i` represents the bias values added to layer :math:`i+1`.
 
-该模块包含公共属性``coefs_``和``intercepts_``。``coefs_``是权重矩阵的列表，其中权重矩阵的索引“i”表示图层“i”和图层`1 +1`的权重。 ``intercepts_``是偏移向量的列表，其中的向量索引`i`表示添加到图层`i + 1`的偏差值。
+该模块包含公共属性``coefs_``和``intercepts_``。``coefs_``是权重矩阵的列表，其中权重矩阵的索引math:“i”表示图层math:“i”和图层math:`1 +1`的权重。 ``intercepts_``是偏移向量的列表，其中的向量索引math:`i`表示添加到图层math:`i + 1`的偏差值。
 
 The advantages of Multi-layer Perceptron are:
 
@@ -99,7 +99,7 @@ some of these disadvantages.
 
       MLP对特征缩放很敏感。
 
-请参阅：“实用使用技巧<mlp_tips>”部分的一些这些缺点。
+请参阅：ref:“实用使用技巧<mlp_tips>”部分的一些这些缺点。
 
 
 Classification
@@ -109,7 +109,7 @@ Classification
 Class :class:`MLPClassifier` implements a multi-layer perceptron (MLP) algorithm
 that trains using `Backpropagation <http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm>`_.
 
-class类：`MLPClassifier`实现使用Backpropagation进行训练的多层感知器
+class类：`MLPClassifier`实现使用Backpropagation进行训练的多层感知器<http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm>`_.
 
 （MLP）算法列在两个阵列上：大小为（n_samples，n_features）的阵列X，其保存表示为浮点特征向量的训练样本; 和大小（n_samples，）的数组y，它保存训练样本的目标值（类标签）：
 
@@ -165,7 +165,7 @@ of probability estimates :math:`P(y|x)` per sample :math:`x`::
 
 Currently类`MLPClassifier`只支持运行允许使用概率估计``predict_proba``方法得到交叉熵损失函数。
 
-MLP算法使用反向传播的方式。 更准确地说，它训练使用某种形式梯度下降和梯度使用反向传播计算。 对于分类，它最小化交叉熵损失函数，给出一个向量的概率估计：`P（y | x）`样本：`x` ::
+MLP算法使用反向传播的方式。 更准确地说，它训练使用某种形式梯度下降和梯度使用反向传播计算。 对于分类，它最小化交叉熵损失函数，给出一个向量的概率估计：math:`P(y|x)``样本：math:`x`:
 
     >>> clf.predict_proba([[2., 2.], [1., 2.]])  # doctest: +ELLIPSIS
     array([[  1.967...e-04,   9.998...-01],
@@ -181,9 +181,9 @@ output passes through the logistic function. Values larger or equal to `0.5`
 are rounded to `1`, otherwise to `0`. For a predicted output of a sample, the
 indices where the value is `1` represents the assigned classes of that sample::
 
-`MLPClassifier`通过应用Softmax作为输出函数来支持多类分类。
+`MLPClassifier`通过应用Softmax<https://en.wikipedia.org/wiki/Softmax_activation_function>`_作为输出函数来支持多类分类。
 
-此外，该模型支持：ref：`multi-label classification <multiclass>`，其中样本可以属于多个类。 对于每个类，原始输出通过逻辑函数。 大于或等于0.5的值将舍入为1，否则为0.对于样本的预测输出，值为1的索引表示该样本的分配类别：
+此外，该模型支持：ref:`multi-label classification <multiclass>`，其中样本可以属于多个类。 对于每个类，原始输出通过逻辑函数。 大于或等于0.5的值将舍入为1，否则为0.对于样本的预测输出，值为1的索引表示该样本的分配类别：
 
     >>> X = [[0., 0.], [1., 1.]]
     >>> y = [[0, 1], [1, 1]]
@@ -211,12 +211,12 @@ See the examples below and the doc string of
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mlp_training_curves.py`
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mnist_filters.py`
 
-有关更多信息，请参阅下面的示例和文档字符串：meth：`MLPClassifier.fit`。
+有关更多信息，请参阅下面的示例和文档字符串：meth:`MLPClassifier.fit`。
 
 例子：
 
-：REF：`sphx_glr_auto_examples_neural_networks_plot_mlp_training_curves.py`
-：REF：`sphx_glr_auto_examples_neural_networks_plot_mnist_filters.py`
+* :ref:``sphx_glr_auto_examples_neural_networks_plot_mlp_training_curves.py`
+* :ref:``sphx_glr_auto_examples_neural_networks_plot_mnist_filters.py`
 
 Regression
 ==========
@@ -274,7 +274,9 @@ MLP trains using `Stochastic Gradient Descent
 Stochastic Gradient Descent (SGD) updates parameters using the gradient of the
 loss function with respect to a parameter that needs adaptation, i.e.
 
-MLP列车使用“随机梯度下降”<https://en.wikipedia.org/wiki/Stochastic_gradient_descent>`_，`_，或_`L-BFGS <https://en.wikipedia.org/wiki/Limited-memory_BFGS>`__。随机梯度下降（SGD）使用渐变梯度更新参数相对于需要适应的参数的损失函数，即
+MLP列车使用“随机梯度下降”<https://en.wikipedia.org/wiki/Stochastic_gradient_descent>`_,
+`Adam <http://arxiv.org/abs/1412.6980>`_, 或者
+`L-BFGS <https://en.wikipedia.org/wiki/Limited-memory_BFGS>`__.随机梯度下降（SGD）使用渐变梯度更新参数相对于需要适应的参数的损失函数，即
 
 .. math::
 
@@ -327,7 +329,7 @@ of iterations. Since backpropagation has a high time complexity, it is advisable
 to start with smaller number of hidden neurons and few hidden layers for
 training.
 
-假设有：`n`训练样本，：`m`特征，：`k`隐藏层，每个包含：`h`神经元 - 为简单起见，`o`输出神经元。 反向传播的时间复杂度是：'O（n \ cdot m \ cdot h ^ k \ cdot o \ cdot i）`，其中：i是数字的迭代。 由于反向传播具有高时间复杂性，因此是可取的从较小数量的隐藏神经元和几个隐藏层开始训练。
+假设有：math:`n`训练样本，：math:`m`特征，：math:`k`隐藏层，每个包含：math:`h`神经元 - 为简单起见，math:`o`输出神经元。 反向传播的时间复杂度是：math:'O（n \ cdot m \ cdot h ^ k \ cdot o \ cdot i）`，其中：math:i是数字的迭代。 由于反向传播具有高时间复杂性，因此是可取的从较小数量的隐藏神经元和几个隐藏层开始训练。
 
 Mathematical formulation
 ========================
@@ -343,7 +345,7 @@ the hidden layer and the output layer, respectively.
 :math:`g(\cdot) : R \rightarrow R` is the activation function, set by default as
 the hyperbolic tan. It is given as,
 
-给出一组训练示例：：`（x_1，y_1），（x_2，y_2），\ ldots，（x_n，y_n）`其中：`x_i \ in \ mathbf {R} ^ n`和：`y_i \ in \ {0，1 \}`，一个隐藏第一层隐藏神经元MLP学习功能：f（x）= W_2 g（W_1 ^ T x + b_1）+ b_2`其中：`W_1 \ in \ mathbf {R} ^ m`和：`W_2，b_1，b_2 \ in \ mathbf {R}`是模型参数。 ：W_1，W_2表示输入层的权重隐藏层 和`b_1，b_2`表示添加的偏见隐藏层和输出层。：`g（\ cdot）：R \ rightarrow R`是激活函数，默认设置为双曲线。 它被赋予，
+给出一组训练示例：math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)`其中：math:`x_i \ in \ mathbf {R} ^ n`和：math:`y_i \ in \ {0，1 \}`，一个隐藏第一层隐藏神经元MLP学习功能：math:f（x）= W_2 g（W_1 ^ T x + b_1）+ b_2`其中：math:`W_1 \ in \ mathbf {R} ^ m`和：math:`W_2，b_1，b_2 \ in \ mathbf {R}`是模型参数。math: W_1，W_2表示输入层的权重隐藏层 和math:`b_1，b_2`表示添加的偏见隐藏层和输出层。math:`g（\ cdot）：R \ rightarrow R`是激活函数，默认设置为双曲线。 它被赋予，
 
 .. math::
       g(z)= \frac{e^z-e^{-z}}{e^z+e^{-z}}
@@ -357,7 +359,7 @@ If there are more than two classes, :math:`f(x)` itself would be a vector of
 size (n_classes,). Instead of passing through logistic function, it passes
 through the softmax function, which is written as,
 
-对于二进制分类，`f（x）`通过逻辑函数：`g（z）= 1 /（1 + e ^ { - z}）`来获得0到1之间的输出值。 一个阈值设置为0.5，将分配大于或等于0.5的输出样本到积极的班级，其余的到负面班。如果有两个以上的类，则：“f（x）”本身将是一个向量size（n_classes，）。 而不是通过逻辑功能，它通过通过softmax函数，它被写为，
+对于二进制分类，math:`f（x）`通过逻辑函数：math:`g（z）= 1 /（1 + e ^ { - z}）`来获得0到1之间的输出值。 一个阈值设置为0.5，将分配大于或等于0.5的输出样本到积极的班级，其余的到负面班。如果有两个以上的类，则：math:“f（x）”本身将是一个向量size（n_classes，）。 而不是通过逻辑功能，它通过通过softmax函数，它被写为，
 
 .. math::
       \text{softmax}(z)_i = \frac{\exp(z_i)}{\sum_{l=1}^k\exp(z_l)}
@@ -373,7 +375,7 @@ function is just the identity function.
 MLP uses different loss functions depending on the problem type. The loss
 function for classification is Cross-Entropy, which in binary case is given as,
 
-其中：“z_i”表示中，“i”是softmax输入的元素，它对应于类：“i”，和：“K”是类的数量。结果是一个包含可能性的向量：`x`属于每个班级。 输出是具有最高概率的类。在回归中，输出依然如下：`f（x）`; 因此，输出激活功能只是身份功能。MLP根据问题类型使用不同的丢失功能。 二进制的情况下，亏损分类的功能是交叉熵，
+其中：math:“z_i”表示中，math:“i”是softmax输入的元素，它对应于类：math:“i”，和：math:“K”是类的数量。结果是一个包含可能性的向量：math:`x`属于每个班级。 输出是具有最高概率的类。在回归中，输出依然如下：math:`f（x）`; 因此，输出激活功能只是身份功能。MLP根据问题类型使用不同的丢失功能。 二进制的情况下，亏损分类的功能是交叉熵，
 
 .. math::
 
@@ -385,7 +387,7 @@ hyperparameter that controls the magnitude of the penalty.
 
 For regression, MLP uses the Square Error loss function; written as,
 
-其中：：`\ alpha || W || _2 ^ 2`是一个L2正则化术语（又称惩罚）惩罚复杂的模型; 和：`\ alpha> 0`是非负数超参数控制惩罚的大小。为了回归，MLP使用平方误差损失函数; 写成，
+其中：math:`\ alpha || W || _2 ^ 2`是一个L2正则化术语（又称惩罚）惩罚复杂的模型; 和math:`\ alpha> 0`是非负数超参数控制惩罚的大小。为了回归，MLP使用平方误差损失函数; 写成，
 
 .. math::
 
@@ -402,7 +404,7 @@ In gradient descent, the gradient :math:`\nabla Loss_{W}` of the loss with respe
 to the weights is computed and deducted from :math:`W`.
 More formally, this is expressed as,
 
-从初始随机权重开始，多层感知器（MLP）最小化通过重复更新这些权重的损失函数。 计算后丢失，反向传递将其从输出层传播到前一个为每个权重参数提供旨在减少的更新值亏损。在渐变下降中，渐变：“\ nabla Loss_ {W}”的损失与尊重权重被计算和扣除：`W`。用公式表示为，
+从初始随机权重开始，多层感知器（MLP）最小化通过重复更新这些权重的损失函数。 计算后丢失，反向传递将其从输出层传播到前一个为每个权重参数提供旨在减少的更新值亏损。在渐变下降中，渐变：math:“\ nabla Loss_ {W}”的损失与尊重权重被计算和扣除：math:`W`。用公式表示为，
 
 .. math::
     W^{i+1} = W^i - \epsilon \nabla {Loss}_{W}^{i}
@@ -414,7 +416,7 @@ with a value larger than 0.
 The algorithm stops when it reaches a preset maximum number of iterations; or
 when the improvement in loss is below a certain, small number.
 
-其中：“i”是迭代步骤，“\ epsilon”是学习率值大于0。算法要么在达到预设的最大迭代次数时停止; 要么当损失的改善低于一定数量的时候停止。
+其中：math:“i”是迭代步骤，math:“\ epsilon”是学习率值大于0。算法要么在达到预设的最大迭代次数时停止; 要么当损失的改善低于一定数量的时候停止。
 
 .. _mlp_tips:
 
