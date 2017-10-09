@@ -4,60 +4,50 @@
 使用文本数据
 ======================
 
-The goal of this guide is to explore some of the main ``scikit-learn``
-tools on a single practical task: analysing a collection of text
-documents (newsgroups posts) on twenty different topics.
+这部分教程详细介绍了 ``scikit-learn``中在单独实际中的应用的工具：在20个不同的主题中文本文档聚集分析（新闻内容）。
 
-In this section we will see how to:
+在这个教程中，我们将会学习如何:
 
-  - load the file contents and the categories
+  - 读取文件内容以及所属的类别
 
-  - extract feature vectors suitable for machine learning
+  - 提取特征向量为机器学习算法提供数据
 
-  - train a linear model to perform categorization
+  - 训练一个线性模型来分类
 
-  - use a grid search strategy to find a good configuration of both
-    the feature extraction components and the classifier
+  - 使用网格搜索来发现较好的特征以及分类器
 
 
 
 教程设置
 --------------
 
-To get started with this tutorial, you firstly must have the
-*scikit-learn* and all of its required dependencies installed.
+开始这篇教程之前，必须首先安装*scikit-learn*以及依赖的所有库。 
 
-Please refer to the :ref:`installation instructions <installation-instructions>`
-page for more information and for per-system instructions.
+请参考:ref:`installation instructions <installation-instructions>`获取更多信息以及安装指导。
 
-The source of this tutorial can be found within your
-scikit-learn folder::
+这篇入门教程的源代码在您的scikit-learn文件夹下面::
 
     scikit-learn/doc/tutorial/text_analytics/
 
-The tutorial folder, should contain the following folders:
+在这个入门教程中，应该包含以下的子文件夹:
 
-  * ``*.rst files`` - the source of the tutorial document written with sphinx
+  * ``*.rst files`` - sphinx格式的入门教程
 
-  * ``data`` - folder to put the datasets used during the tutorial
+  * ``data`` - 入门教程所用到的数据集
 
-  * ``skeletons`` - sample incomplete scripts for the exercises
+  * ``skeletons`` - 一些练习所用到的待完成的脚本
 
-  * ``solutions`` - solutions of the exercises
+  * ``solutions`` - 练习的答案
 
-
-You can already copy the skeletons into a new folder somewhere
-on your hard-drive named ``sklearn_tut_workspace`` where you
-will edit your own files for the exercises while keeping
-the original skeletons intact::
+你也可以将这个文件夹拷贝到您的电脑的硬盘里命名为
+ ``sklearn_tut_workspace`` 来完成练习而不会破坏原始的代码结构::
 
     % cp -r skeletons work_directory/sklearn_tut_workspace
 
-Machine Learning algorithms need data. Go to each ``$TUTORIAL_HOME/data``
-sub-folder and run the ``fetch_data.py`` script from there (after
-having read them first).
+机器学习算法需要数据. 进入每一个 ``$TUTORIAL_HOME/data``
+子文件夹 并且运行 ``fetch_data.py`` 脚本 (首先确保您已经看完).
 
-For instance::
+比如::
 
     % cd $TUTORIAL_HOME/data/languages
     % less fetch_data.py
@@ -67,55 +57,39 @@ For instance::
 加载20个新闻组数据集
 ---------------------------------
 
-The dataset is called "Twenty Newsgroups". Here is the official
-description, quoted from the `website
+这个数据集被称为 "Twenty Newsgroups". 下面就是这个数据集的介绍, 来自于网站 `website
 <http://people.csail.mit.edu/jrennie/20Newsgroups/>`_:
 
-  The 20 Newsgroups data set is a collection of approximately 20,000
-  newsgroup documents, partitioned (nearly) evenly across 20 different
-  newsgroups. To the best of our knowledge, it was originally collected
-  by Ken Lang, probably for his paper "Newsweeder: Learning to filter
-  netnews," though he does not explicitly mention this collection.
-  The 20 newsgroups collection has become a popular data set for
-  experiments in text applications of machine learning techniques,
-  such as text classification and text clustering.
+20个新闻组数据集是大约20,000的集合新闻组文件，分区（几乎）平均20个不同
+新闻组。 据我们所知，这是最初收集的由Ken Lang，可能是为了他的论文“Newsweeder: Learning to filter netnews“，虽然他没有明确提及这个集合。现在20个新闻组集已成为一个流行的数据集，广泛应用于机器学习中的文本应用，如文本分类和文本聚类。
 
-In the following we will use the built-in dataset loader for 20 newsgroups
-from scikit-learn. Alternatively, it is possible to download the dataset
-manually from the web-site and use the :func:`sklearn.datasets.load_files`
-function by pointing it to the ``20news-bydate-train`` subfolder of the
-uncompressed archive folder.
+接下来我们会使用scikit-learn中的内置数据集读取函数. 当然, 也可以手动从网站上下载数据集，然后使用函数:func:`sklearn.datasets.load_files`
+以及指明 ``20news-bydate-train`` 子文件夹，该子文件夹包含了未压缩的数据集。
 
-In order to get faster execution times for this first example we will
-work on a partial dataset with only 4 categories out of the 20 available
-in the dataset::
+为了节约时间，在第一个示例中我们先简单测试20类别中4个类别::
 
   >>> categories = ['alt.atheism', 'soc.religion.christian',
   ...               'comp.graphics', 'sci.med']
 
-We can now load the list of files matching those categories as follows::
+接下来我们能够读取列表中对应的类别的文件::
 
   >>> from sklearn.datasets import fetch_20newsgroups
   >>> twenty_train = fetch_20newsgroups(subset='train',
   ...     categories=categories, shuffle=True, random_state=42)
 
-The returned dataset is a ``scikit-learn`` "bunch": a simple holder
-object with fields that can be both accessed as python ``dict``
-keys or ``object`` attributes for convenience, for instance the
-``target_names`` holds the list of the requested category names::
+返回的数据类型是 ``scikit-learn`` "簇": 一个简单的数据类型能够与python中的 ``dict``键 或 ``object`` 中属性来读取, 比如``target_names``包含了所有类别的名称 ::
 
   >>> twenty_train.target_names
   ['alt.atheism', 'comp.graphics', 'sci.med', 'soc.religion.christian']
 
-The files themselves are loaded in memory in the ``data`` attribute. For
-reference the filenames are also available::
+这些文件本身被读进内存 ``data`` 属性. 这些文件名称也可以容易获取到::
 
   >>> len(twenty_train.data)
   2257
   >>> len(twenty_train.filenames)
   2257
 
-Let's print the first lines of the first loaded file::
+让我们打印出读进的内容的第一行::
 
   >>> print("\n".join(twenty_train.data[0].split("\n")[:3]))
   From: sd345@city.ac.uk (Michael Collier)
@@ -125,20 +99,14 @@ Let's print the first lines of the first loaded file::
   >>> print(twenty_train.target_names[twenty_train.target[0]])
   comp.graphics
 
-Supervised learning algorithms will require a category label for each
-document in the training set. In this case the category is the name of the
-newsgroup which also happens to be the name of the folder holding the
-individual documents.
+监督学习需要每个类别标签以及所对应的文件在测试集中. 在这个例子中，类别是每个新闻组的名称，同时也是每个文件夹的名称，来区分不同的文本文件。
 
-For speed and space efficiency reasons ``scikit-learn`` loads the
-target attribute as an array of integers that corresponds to the
-index of the category name in the ``target_names`` list. The category
-integer id of each sample is stored in the ``target`` attribute::
+考虑到速度以及空间 ``scikit-learn`` 读取目标属性使用数字来表示类别 ``target_names`` 列表中的索引. 每个样本的类别id存放在 ``target`` 属性中::
 
   >>> twenty_train.target[:10]
   array([1, 1, 3, 3, 3, 3, 3, 2, 2, 2])
 
-It is possible to get back the category names as follows::
+当然也可以读取对应的类别属于的类型::
 
   >>> for t in twenty_train.target[:10]:
   ...     print(twenty_train.target_names[t])
@@ -154,10 +122,7 @@ It is possible to get back the category names as follows::
   sci.med
   sci.med
 
-You can notice that the samples have been shuffled randomly (with
-a fixed RNG seed): this is useful if you select only the first
-samples to quickly train a model and get a first idea of the results
-before re-training on the complete dataset later.
+你可以发现所有的样本都被随机打乱 (使用了修正的RNG种子): 这是非常有用的，在进行整个数据集训练之前，需要快速训练一个模型的时候以及验证想法。
 
 
 从文本文件中提取特征
