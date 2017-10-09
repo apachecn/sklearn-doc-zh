@@ -11,8 +11,8 @@
 
 .. 当前模块:: sklearn.pipeline
 
-:类:`Pipeline` 可以把多个评估器链接成一个。这个是很有用的，因为处理数据的步骤一般都是固定的，例如特征选择、标准化和分类。
- :类:`Pipeline` 主要有两个目的:
+:class:`Pipeline` 可以把多个评估器链接成一个。这个是很有用的，因为处理数据的步骤一般都是固定的，例如特征选择、标准化和分类。
+ :class:`Pipeline` 主要有两个目的:
 
 便捷性和封装性
     你只要对数据调用 ``fit``和 ``predict``一次来适配所有的一系列评估器。
@@ -30,7 +30,7 @@
 用法
 -----
 
- :类:`Pipeline` 使用一系列``(key, value)``对来构建,其中 ``key`` 是你给这个步骤起的名字， ``value``是一个评估器对象::
+ :class:`Pipeline` 使用一系列 ``(key, value)`` 对来构建,其中 ``key`` 是你给这个步骤起的名字， ``value`` 是一个评估器对象::
 
     >>> from sklearn.pipeline import Pipeline
     >>> from sklearn.svm import SVC
@@ -61,20 +61,20 @@
     ('reduce_dim', PCA(copy=True, iterated_power='auto', n_components=None, random_state=None,
       svd_solver='auto', tol=0.0, whiten=False))
 
-并作为``dict``保存在 ``named_steps``::
+并作为 ``dict`` 保存在 ``named_steps``::
 
     >>> pipe.named_steps['reduce_dim']
     PCA(copy=True, iterated_power='auto', n_components=None, random_state=None,
       svd_solver='auto', tol=0.0, whiten=False)
 
-管道中的评估器参数可以通过``<estimator>__<parameter>``语义来访问::
+管道中的评估器参数可以通过 ``<estimator>__<parameter>`` 语义来访问::
 
     >>> pipe.set_params(clf__C=10) # doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
     Pipeline(memory=None,
              steps=[('reduce_dim', PCA(copy=True, iterated_power='auto',...)),
                     ('clf', SVC(C=10, cache_size=200, class_weight=None,...))])
 
-named_steps 的属性映射到多个值,在交互环境支持tab补全::
+named_steps 的属性映射到多个值,在交互环境支持 tab 补全::
 
     >>> pipe.named_steps.reduce_dim is pipe.named_steps['reduce_dim']
     True
@@ -86,7 +86,7 @@ named_steps 的属性映射到多个值,在交互环境支持tab补全::
     ...                   clf__C=[0.1, 10, 100])
     >>> grid_search = GridSearchCV(pipe, param_grid=param_grid)
 
-单独的步骤可以用多个参数替换，除了最后步骤，其他步骤都可以设置为``None``来跳过 ::
+单独的步骤可以用多个参数替换，除了最后步骤，其他步骤都可以设置为 ``None`` 来跳过 ::
 
     >>> from sklearn.linear_model import LogisticRegression
     >>> param_grid = dict(reduce_dim=[None, PCA(5), PCA(10)],
@@ -112,7 +112,7 @@ named_steps 的属性映射到多个值,在交互环境支持tab补全::
 -----
 
 对管道调用 ``fit`` 效果跟轮流对每个评估器调用 ``fit`` 一样, ``transform`` 输入并传递给下个步骤。
-最后步骤有的方法，管道都有,例如，如果最后的评估器是一个分类器， :类:`Pipeline` 可以当做分类器来用。如果最后一个评估器是转换器，管道也一样可以。
+最后步骤有的方法，管道都有,例如，如果最后的评估器是一个分类器， :class:`Pipeline` 可以当做分类器来用。如果最后一个评估器是转换器，管道也一样可以。
 
 .. _pipeline_cache:
 
@@ -121,7 +121,7 @@ named_steps 的属性映射到多个值,在交互环境支持tab补全::
 
 .. 当前模块:: sklearn.pipeline
 
-适配转换器是很耗费计算资源的。设置了``memory`` 参数， :类:`Pipeline` 将会在调用``fit``方法后缓存每个转换器。
+适配转换器是很耗费计算资源的。设置了``memory`` 参数， :class:`Pipeline` 将会在调用``fit``方法后缓存每个转换器。
 这个特征用于避免在适配管道内的转换器且参数和输入数据一样时重复计算。典型的例子是网格搜索转换器，该转化器只要适配一次就可以多次使用。
 
  ``memory`` 参数用于缓存转换器。
@@ -145,7 +145,7 @@ named_steps 的属性映射到多个值,在交互环境支持tab补全::
 
 .. warning:: **Side effect of caching transfomers**
 
-   使用 :类:`Pipeline` 而不开启缓存功能,还是可以通过查看原始实例的，例如::
+   使用 :class:`Pipeline` 而不开启缓存功能,还是可以通过查看原始实例的，例如::
 
      >>> from sklearn.datasets import load_digits
      >>> digits = load_digits()
@@ -161,7 +161,7 @@ named_steps 的属性映射到多个值,在交互环境支持tab补全::
          [[ -1.77484909e-19  ... 4.07058917e-18]]
 
    开启缓存会在适配前触发转换器的克隆。因此，管道的转换器实例不能被直接查看。
-   在下面例子中， 访问 :类:`PCA` 实例 ``pca2``
+   在下面例子中， 访问 :class:`PCA` 实例 ``pca2``
    将会引发 ``AttributeError`` 因为 ``pca2`` 是一个未适配的转换器。
    这时应该使用属性 ``named_steps`` 来检查管道的评估器::
 
@@ -191,21 +191,21 @@ named_steps 的属性映射到多个值,在交互环境支持tab补全::
 
 .. 当前模块:: sklearn.pipeline
 
-:类:`FeatureUnion` 联合了多个转换器对象形成一个新的转换器，该转换器结合了他们的输出。一个 :类:`FeatureUnion` 接收多个转换器对象。在适配期间，他们独立与数据适配。
+:class:`FeatureUnion` 联合了多个转换器对象形成一个新的转换器，该转换器结合了他们的输出。一个 :class:`FeatureUnion` 接收多个转换器对象。在适配期间，他们独立与数据适配。
 对于转换数据，转换器可以并发使用，且输出的样本向量被头尾相接，串联成大的向量。
 
-:类:`FeatureUnion` 功能与 :类:`Pipeline` 一样-
+:class:`FeatureUnion` 功能与 :class:`Pipeline` 一样-
 便捷性和联合参数的估计和验证。
 
-可以结合:类:`FeatureUnion` 和 :类:`Pipeline` 来创造出复杂模型。
+可以结合:class:`FeatureUnion` 和 :class:`Pipeline` 来创造出复杂模型。
 
-(一个 :类:`FeatureUnion` 没办法检查两个转换器是否会产出相同的特征。它仅仅在特征集合不相关时产生联合并确认是调用者的职责。)
+(一个 :class:`FeatureUnion` 没办法检查两个转换器是否会产出相同的特征。它仅仅在特征集合不相关时产生联合并确认是调用者的职责。)
 
 
 用法
 -----
 
-一个 :类:`FeatureUnion` 是通过一系列 ``(key, value)`` 对来构建的,其中的 ``key`` 给转换器指定的名字
+一个 :class:`FeatureUnion` 是通过一系列 ``(key, value)`` 对来构建的,其中的 ``key`` 给转换器指定的名字
 (一个绝对的字符串; 他只是一个代号)， ``value`` 是一个评估器对象::
 
     >>> from sklearn.pipeline import FeatureUnion
