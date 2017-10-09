@@ -1,43 +1,36 @@
 .. _combining_estimators:
 
 ===============================================
-Pipeline and FeatureUnion: combining estimators
+管道和特征联合: 连接评估器
 ===============================================
 
 .. _pipeline:
 
-Pipeline: chaining estimators
+管道：链式评估器
 =============================
 
-.. currentmodule:: sklearn.pipeline
+.. 当前模块:: sklearn.pipeline
 
-:class:`Pipeline` can be used to chain multiple estimators
-into one. This is useful as there is often a fixed sequence
-of steps in processing the data, for example feature selection, normalization
-and classification. :class:`Pipeline` serves two purposes here:
+:类:`Pipeline` 可以把多个评估器链接成一个。这个是很有用的，因为处理数据的步骤一般都是固定的，例如特征选择、标准化和分类。
+ :类:`Pipeline` 主要有两个目的:
 
-Convenience and encapsulation
-    You only have to call ``fit`` and ``predict`` once on your
-    data to fit a whole sequence of estimators.
-Joint parameter selection
-    You can :ref:`grid search <grid_search>`
-    over parameters of all estimators in the pipeline at once.
-Safety
-    Pipelines help avoid leaking statistics from your test data into the
-    trained model in cross-validation, by ensuring that the same samples are
-    used to train the transformers and predictors.
+便捷性和封装性
+    你只要对数据调用 ``fit``和 ``predict``一次来适配所有的一系列评估器。
+联合的参数选择
+    你可以一次 :ref:`grid search <grid_search>`
+    管道内评估器的所有参数。
+安全性
+    管道有助于防止交叉验证中从测试数据到训练后模型的统计信息泄露，通过确认训练转换器和预测器使用的是相同样本。
 
-All estimators in a pipeline, except the last one, must be transformers
-(i.e. must have a ``transform`` method).
-The last estimator may be any type (transformer, classifier, etc.).
+除了最后一个评估器，管道的所有评估器必须是转换器。
+(例如，必须有 ``transform`` 方法).
+最后一个评估器的类型不限（转换器、分类器等等）
 
 
-Usage
+用法
 -----
 
-The :class:`Pipeline` is built using a list of ``(key, value)`` pairs, where
-the ``key`` is a string containing the name you want to give this step and ``value``
-is an estimator object::
+ :类:`Pipeline` 使用一系列``(key, value)``对来构建,其中 ``key`` 是你给这个步骤起的名字， ``value``是一个评估器对象::
 
     >>> from sklearn.pipeline import Pipeline
     >>> from sklearn.svm import SVC
@@ -49,10 +42,8 @@ is an estimator object::
              steps=[('reduce_dim', PCA(copy=True,...)),
                     ('clf', SVC(C=1.0,...))])
 
-The utility function :func:`make_pipeline` is a shorthand
-for constructing pipelines;
-it takes a variable number of estimators and returns a pipeline,
-filling in the names automatically::
+功能函数 :func:`make_pipeline` 是构建管道的缩写;
+它接收多个评估器并返回一个管道，自动填充评估器名::
 
     >>> from sklearn.pipeline import make_pipeline
     >>> from sklearn.naive_bayes import MultinomialNB
@@ -64,40 +55,38 @@ filling in the names automatically::
                                                     class_prior=None,
                                                     fit_prior=True))])
 
-The estimators of a pipeline are stored as a list in the ``steps`` attribute::
+管道中的评估器作为一个列表保存在 ``steps`` 属性内::
 
     >>> pipe.steps[0]
     ('reduce_dim', PCA(copy=True, iterated_power='auto', n_components=None, random_state=None,
       svd_solver='auto', tol=0.0, whiten=False))
 
-and as a ``dict`` in ``named_steps``::
+并作为``dict``保存在 ``named_steps``::
 
     >>> pipe.named_steps['reduce_dim']
     PCA(copy=True, iterated_power='auto', n_components=None, random_state=None,
       svd_solver='auto', tol=0.0, whiten=False)
 
-Parameters of the estimators in the pipeline can be accessed using the
-``<estimator>__<parameter>`` syntax::
+管道中的评估器参数可以通过``<estimator>__<parameter>``语义来访问::
 
     >>> pipe.set_params(clf__C=10) # doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
     Pipeline(memory=None,
              steps=[('reduce_dim', PCA(copy=True, iterated_power='auto',...)),
                     ('clf', SVC(C=10, cache_size=200, class_weight=None,...))])
 
-Attributes of named_steps map to keys, enabling tab completion in interactive environments::
+named_steps 的属性映射到多个值,在交互环境支持tab补全::
 
     >>> pipe.named_steps.reduce_dim is pipe.named_steps['reduce_dim']
     True
 
-This is particularly important for doing grid searches::
+这对网格搜索尤其重要::
 
     >>> from sklearn.model_selection import GridSearchCV
     >>> param_grid = dict(reduce_dim__n_components=[2, 5, 10],
     ...                   clf__C=[0.1, 10, 100])
     >>> grid_search = GridSearchCV(pipe, param_grid=param_grid)
 
-Individual steps may also be replaced as parameters, and non-final steps may be
-ignored by setting them to ``None``::
+单独的步骤可以用多个参数替换，除了最后步骤，其他步骤都可以设置为``None``来跳过 ::
 
     >>> from sklearn.linear_model import LogisticRegression
     >>> param_grid = dict(reduce_dim=[None, PCA(5), PCA(10)],
@@ -105,7 +94,7 @@ ignored by setting them to ``None``::
     ...                   clf__C=[0.1, 10, 100])
     >>> grid_search = GridSearchCV(pipe, param_grid=param_grid)
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_feature_selection_plot_feature_selection_pipeline.py`
  * :ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py`
@@ -119,35 +108,25 @@ ignored by setting them to ``None``::
  * :ref:`grid_search`
 
 
-Notes
+注意点
 -----
 
-Calling ``fit`` on the pipeline is the same as calling ``fit`` on
-each estimator in turn, ``transform`` the input and pass it on to the next step.
-The pipeline has all the methods that the last estimator in the pipeline has,
-i.e. if the last estimator is a classifier, the :class:`Pipeline` can be used
-as a classifier. If the last estimator is a transformer, again, so is the
-pipeline.
+对管道调用 ``fit`` 效果跟轮流对每个评估器调用 ``fit`` 一样, ``transform`` 输入并传递给下个步骤。
+最后步骤有的方法，管道都有,例如，如果最后的评估器是一个分类器， :类:`Pipeline` 可以当做分类器来用。如果最后一个评估器是转换器，管道也一样可以。
 
 .. _pipeline_cache:
 
-Caching transformers: avoid repeated computation
+缓存转换器：避免重复计算
 -------------------------------------------------
 
-.. currentmodule:: sklearn.pipeline
+.. 当前模块:: sklearn.pipeline
 
-Fitting transformers may be computationally expensive. With its
-``memory`` parameter set, :class:`Pipeline` will cache each transformer
-after calling ``fit``.
-This feature is used to avoid computing the fit transformers within a pipeline
-if the parameters and input data are identical. A typical example is the case of
-a grid search in which the transformers can be fitted only once and reused for
-each configuration.
+适配转换器是很耗费计算资源的。设置了``memory`` 参数， :类:`Pipeline` 将会在调用``fit``方法后缓存每个转换器。
+这个特征用于避免在适配管道内的转换器且参数和输入数据一样时重复计算。典型的例子是网格搜索转换器，该转化器只要适配一次就可以多次使用。
 
-The parameter ``memory`` is needed in order to cache the transformers.
-``memory`` can be either a string containing the directory where to cache the
-transformers or a `joblib.Memory <https://pythonhosted.org/joblib/memory.html>`_
-object::
+ ``memory`` 参数用于缓存转换器。
+``memory`` 可以是包含要缓存的转换器的目录的字符串或一个 `joblib.Memory <https://pythonhosted.org/joblib/memory.html>`_
+对象::
 
     >>> from tempfile import mkdtemp
     >>> from shutil import rmtree
@@ -166,8 +145,7 @@ object::
 
 .. warning:: **Side effect of caching transfomers**
 
-   Using a :class:`Pipeline` without cache enabled, it is possible to
-   inspect the original instance such as::
+   使用 :类:`Pipeline` 而不开启缓存功能,还是可以通过查看原始实例的，例如::
 
      >>> from sklearn.datasets import load_digits
      >>> digits = load_digits()
@@ -182,14 +160,10 @@ object::
      >>> print(pca1.components_) # doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
          [[ -1.77484909e-19  ... 4.07058917e-18]]
 
-   Enabling caching triggers a clone of the transformers before fitting.
-   Therefore, the transformer instance given to the pipeline cannot be
-   inspected directly.
-   In following example, accessing the :class:`PCA` instance ``pca2``
-   will raise an ``AttributeError`` since ``pca2`` will be an unfitted
-   transformer.
-   Instead, use the attribute ``named_steps`` to inspect estimators within
-   the pipeline::
+   开启缓存会在适配前触发转换器的克隆。因此，管道的转换器实例不能被直接查看。
+   在下面例子中， 访问 :类:`PCA` 实例 ``pca2``
+   将会引发 ``AttributeError`` 因为 ``pca2`` 是一个未适配的转换器。
+   这时应该使用属性 ``named_steps`` 来检查管道的评估器::
 
      >>> cachedir = mkdtemp()
      >>> pca2 = PCA()
@@ -206,43 +180,33 @@ object::
      >>> # Remove the cache directory
      >>> rmtree(cachedir)
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_plot_compare_reduction.py`
 
 .. _feature_union:
 
-FeatureUnion: composite feature spaces
+特征联合：多个特征层面
 ======================================
 
-.. currentmodule:: sklearn.pipeline
+.. 当前模块:: sklearn.pipeline
 
-:class:`FeatureUnion` combines several transformer objects into a new
-transformer that combines their output. A :class:`FeatureUnion` takes
-a list of transformer objects. During fitting, each of these
-is fit to the data independently. For transforming data, the
-transformers are applied in parallel, and the sample vectors they output
-are concatenated end-to-end into larger vectors.
+:类:`FeatureUnion` 联合了多个转换器对象形成一个新的转换器，该转换器结合了他们的输出。一个 :类:`FeatureUnion` 接收多个转换器对象。在适配期间，他们独立与数据适配。
+对于转换数据，转换器可以并发使用，且输出的样本向量被头尾相接，串联成大的向量。
 
-:class:`FeatureUnion` serves the same purposes as :class:`Pipeline` -
-convenience and joint parameter estimation and validation.
+:类:`FeatureUnion` 功能与 :类:`Pipeline` 一样-
+便捷性和联合参数的估计和验证。
 
-:class:`FeatureUnion` and :class:`Pipeline` can be combined to
-create complex models.
+可以结合:类:`FeatureUnion` 和 :类:`Pipeline` 来创造出复杂模型。
 
-(A :class:`FeatureUnion` has no way of checking whether two transformers
-might produce identical features. It only produces a union when the
-feature sets are disjoint, and making sure they are the caller's
-responsibility.)
+(一个 :类:`FeatureUnion` 没办法检查两个转换器是否会产出相同的特征。它仅仅在特征集合不相关时产生联合并确认是调用者的职责。)
 
 
-Usage
+用法
 -----
 
-A :class:`FeatureUnion` is built using a list of ``(key, value)`` pairs,
-where the ``key`` is the name you want to give to a given transformation
-(an arbitrary string; it only serves as an identifier)
-and ``value`` is an estimator object::
+一个 :类:`FeatureUnion` 是通过一系列 ``(key, value)`` 对来构建的,其中的 ``key`` 给转换器指定的名字
+(一个绝对的字符串; 他只是一个代号)， ``value`` 是一个评估器对象::
 
     >>> from sklearn.pipeline import FeatureUnion
     >>> from sklearn.decomposition import PCA
@@ -256,12 +220,10 @@ and ``value`` is an estimator object::
                  transformer_weights=None)
 
 
-Like pipelines, feature unions have a shorthand constructor called
-:func:`make_union` that does not require explicit naming of the components.
+跟管道一样，特征联合有一个精简版的构造器叫做:func:`make_union` ，该构造器不需要显式给每个组价起名字。
 
 
-Like ``Pipeline``, individual steps may be replaced using ``set_params``,
-and ignored by setting to ``None``::
+正如 ``Pipeline``, 单独的步骤可能用``set_params``替换 ,并设置为 ``None``来跳过::
 
     >>> combined.set_params(kernel_pca=None)
     ... # doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
@@ -270,7 +232,7 @@ and ignored by setting to ``None``::
                                    ('kernel_pca', None)],
                  transformer_weights=None)
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_plot_feature_stacker.py`
  * :ref:`sphx_glr_auto_examples_hetero_feature_union.py`
