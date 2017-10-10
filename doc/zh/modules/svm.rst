@@ -424,13 +424,12 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
   * 线性: :math:`\langle x, x'\rangle`.
 
   * 多项式: :math:`(\gamma \langle x, x'\rangle + r)^d`.
-    :math:`d` 是关键词 ``degree``, :math:`r` 指定 ``coef0``.
+    :math:`d` 是关键词 ``degree``, :math:`r` 指定 ``coef0``。
 
-  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键
-    词 ``gamma``, 必须大于0。
+  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键词 ``gamma``, 必须大于0。
 
   * sigmoid (:math:`\tanh(\gamma \langle x,x'\rangle + r)`),
-    where :math:`r` 指定 ``coef0``.
+    其中 :math:`r` 指定 ``coef0``。
 
 初始化时，不同内核由不同的函数名调用::
 
