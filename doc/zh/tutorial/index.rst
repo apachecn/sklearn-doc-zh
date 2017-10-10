@@ -24,7 +24,7 @@ scikit-learn 教程
 
 .. note:: **Doctest 模式**
 
-   上述教程中的代码示例使用 *python-console* 格式编写。如果您希望在 **IPython** 中轻松执行这些示例，请使用:
+   上述教程中的代码示例使用 *python-console* 格式编写。如果您希望在 **IPython** 中轻松执行这些示例，请使用::
 
 	%doctest_mode
 
