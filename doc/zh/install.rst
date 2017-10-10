@@ -51,7 +51,7 @@ Canopy and Anaconda 适用于所有支持的平台
 Anaconda 提供 scikit-learn 作为其免费分发的一部分.
 
 
-.. 警告::
+.. warning::
 
     升级或卸载使用 Anaconda 安装的 scikit-learn，或者 ``conda`` **不应该使用 pip 命令**。代替:
 
@@ -69,9 +69,9 @@ Anaconda 提供 scikit-learn 作为其免费分发的一部分.
 
 
 WinPython 适用于 Windows
------------------------
+------------------------
 
 该 `WinPython <https://winpython.github.io/>`_ 项目分布 scikit-learn 作为额外的插件。
 
 
-有关特定操作系统的安装说明或汇编出血边缘版本，请参阅 :ref:`高级安装说明`.
+有关特定操作系统的安装说明或汇编出血边缘版本，请参阅 :ref:`advanced-installation`.
