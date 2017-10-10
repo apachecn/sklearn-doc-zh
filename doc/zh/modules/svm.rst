@@ -416,23 +416,23 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 .. _svm_kernels:
 
-Kernel functions
+内核函数
 ================
 
-The *kernel function* can be any of the following:
+*内核函数* 可以是以下任何形式：:
 
-  * linear: :math:`\langle x, x'\rangle`.
+  * 线性: :math:`\langle x, x'\rangle`.
 
-  * polynomial: :math:`(\gamma \langle x, x'\rangle + r)^d`.
-    :math:`d` is specified by keyword ``degree``, :math:`r` by ``coef0``.
+  * 多项式: :math:`(\gamma \langle x, x'\rangle + r)^d`.
+    :math:`d` 是关键词 ``degree``, :math:`r` 指定 ``coef0``.
 
-  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` is
-    specified by keyword ``gamma``, must be greater than 0.
+  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键
+    词 ``gamma``, 必须大于0。
 
   * sigmoid (:math:`\tanh(\gamma \langle x,x'\rangle + r)`),
-    where :math:`r` is specified by ``coef0``.
+    where :math:`r` 指定 ``coef0``.
 
-Different kernels are specified by keyword kernel at initialization::
+初始化时，不同内核由不同的函数名调用::
 
     >>> linear_svc = svm.SVC(kernel='linear')
     >>> linear_svc.kernel
@@ -442,35 +442,29 @@ Different kernels are specified by keyword kernel at initialization::
     'rbf'
 
 
-Custom Kernels
+自定义内核
 --------------
 
-You can define your own kernels by either giving the kernel as a
-python function or by precomputing the Gram matrix.
+您可以自定义自己的内核，通过使用python函数作为内核或者通过预计算Gram矩阵。
 
-Classifiers with custom kernels behave the same way as any other
-classifiers, except that:
+自定义内核的分类器和别的分类器一样，除了下面这几点:
 
-    * Field ``support_vectors_`` is now empty, only indices of support
-      vectors are stored in ``support_``
+    * 空间 ``support_vectors_`` 现在不是空的, 只有支持向量的索引被存储在 ``support_``
 
-    * A reference (and not a copy) of the first argument in the ``fit()``
-      method is stored for future reference. If that array changes between the
-      use of ``fit()`` and ``predict()`` you will have unexpected results.
+    * 请把 ``fit()`` 模型中的第一个参数的引用（不是副本）存储为将来的引用。
+      如果在 ``fit()`` 和 ``predict()`` 之间有数组发生改变，你将会碰到意料外的结果。
 
 
-Using Python functions as kernels
+使用python函数作为内核
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also use your own defined kernels by passing a function to the
-keyword ``kernel`` in the constructor.
+在构造时，您同样可以通过一个函数传递到关键词 ``kernel`` ，来使用您自己定义的内核。
 
-Your kernel must take as arguments two matrices of shape
+您的内核必须要以两个矩阵作为参数，大小分别是
 ``(n_samples_1, n_features)``, ``(n_samples_2, n_features)``
-and return a kernel matrix of shape ``(n_samples_1, n_samples_2)``.
+和返回一个内核矩阵，大小是 ``(n_samples_1, n_samples_2)``.
 
-The following code defines a linear kernel and creates a classifier
-instance that will use that kernel::
+以下代码定义一个线性核，和构造一个使用该内核的分类器例子::
 
     >>> import numpy as np
     >>> from sklearn import svm
@@ -479,49 +473,45 @@ instance that will use that kernel::
     ...
     >>> clf = svm.SVC(kernel=my_kernel)
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_svm_plot_custom_kernel.py`.
 
-Using the Gram matrix
+使用Gram矩阵
 ~~~~~~~~~~~~~~~~~~~~~
 
-Set ``kernel='precomputed'`` and pass the Gram matrix instead of X in the fit
-method. At the moment, the kernel values between *all* training vectors and the
-test vectors must be provided.
+在适应算法中，设置 ``kernel='precomputed'`` 和把X替换为Gram矩阵。
+此时，必须要提供在 *所有* 训练矢量和测试矢量中的内核值。 
 
     >>> import numpy as np
     >>> from sklearn import svm
     >>> X = np.array([[0, 0], [1, 1]])
     >>> y = [0, 1]
     >>> clf = svm.SVC(kernel='precomputed')
-    >>> # linear kernel computation
+    >>> # 线性内核计算
     >>> gram = np.dot(X, X.T)
     >>> clf.fit(gram, y) # doctest: +NORMALIZE_WHITESPACE
     SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
         decision_function_shape='ovr', degree=3, gamma='auto',
         kernel='precomputed', max_iter=-1, probability=False,
         random_state=None, shrinking=True, tol=0.001, verbose=False)
-    >>> # predict on training examples
+    >>> # 预测训练样本
     >>> clf.predict(gram)
     array([0, 1])
 
-Parameters of the RBF Kernel
+RBF内核参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When training an SVM with the *Radial Basis Function* (RBF) kernel, two
-parameters must be considered: ``C`` and ``gamma``.  The parameter ``C``,
-common to all SVM kernels, trades off misclassification of training examples
-against simplicity of the decision surface. A low ``C`` makes the decision
-surface smooth, while a high ``C`` aims at classifying all training examples
-correctly.  ``gamma`` defines how much influence a single training example has.
-The larger ``gamma`` is, the closer other examples must be to be affected.
+当用 *径向基* (RBF)内核去训练SVM，有两个参数必须要去考虑： ``C`` 惩罚系数和 ``gamma`` 。参数 ``C`` ，
+通用在所有SVM内核，与决策表面的简单性相抗衡，可以对训练样本的误分类进行有价转换。
+较小的 ``C`` 会使决策表面更平滑，同时较高的 ``C`` 旨在正确地分类所有训练样本。 ``Gamma`` 定义了单一
+训练样本能起到多大的影响。较大的 ``gamma`` 会更让其他样本受到影响。
 
-Proper choice of ``C`` and ``gamma`` is critical to the SVM's performance.  One
-is advised to use :class:`sklearn.model_selection.GridSearchCV` with 
-``C`` and ``gamma`` spaced exponentially far apart to choose good values.
+选择合适的 ``C`` 和 ``gamma`` ，对SVM的性能起到很关键的作用。建议一点是
+使用  :class:`sklearn.model_selection.GridSearchCV` 与 ``C`` 和 ``gamma`` 相隔
+成倍差距从而选择到好的数值。
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_svm_plot_rbf_parameters.py`
 
