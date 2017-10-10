@@ -5,14 +5,14 @@
 
 .. topic:: 章节内容
 
-    在本节中，我们介绍了在 scikit-learn 中使用的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并给出了一个简单的学习示例。
+    在本节中，我们介绍了在 scikit-learn 中使用的 `机器学习 <https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并给出了一个简单的学习示例。
 
 
 机器学习：问题设置
 -------------------------------------
 
 一般来说，学习问题考虑了一组n 个数据 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
-如果每个样本多于单个数字，并且例如多维条目（也称为 `多变量 <https://en.wikipedia.org/wiki/Multivariate_random_variable>`_ 数据），则称其具有多个属性或**特征**.
+如果每个样本多于单个数字，并且例如多维条目（也称为 `多变量 <https://en.wikipedia.org/wiki/Multivariate_random_variable>`_ 数据），则称其具有多个属性或 **特征**.
 
 我们可以在几个大类上分解学习问题:
 
@@ -26,26 +26,27 @@
       并且是针对于所提供的 n 个样本中的每一个样本，一个是尝试用正确的 category（范畴）或 class （类别）来 label （标记）它们。
 
     * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_: 
-    如果期望的输出由一个或多个连续变量组成，则该任务称为*回归*。
-    回归问题的一个示例是预测鲑鱼的长度是其年龄和体重的函数。
+      如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归*.
+      回归问题的一个示例是预测鲑鱼的长度是其年龄和体重的函数。
 
  * `无监督学习 <https://en.wikipedia.org/wiki/Unsupervised_learning>`_,
-   其中训练数据由没有任何相应目标值的一组输入向量x组成。这种问题的目标可能是在数据中发现类似示例的组，称为`聚类 <https://en.wikipedia.org/wiki/Cluster_analysis>`_，
-   或者确定输入空间内的数据分布，称为 `密度估计 <https://en.wikipedia.org/wiki/Density_estimation>`_，或从高维数据投影数据空间缩小到二维或三维以进行*可视化* （:ref:`点击此处 <unsupervised-learning>` 转到 Scikit-Learn 无监督学习页面）。
+   其中训练数据由没有任何相应目标值的一组输入向量x组成。这种问题的目标可能是在数据中发现类似示例的组，称为 `聚类 <https://en.wikipedia.org/wiki/Cluster_analysis>`_,
+   或者确定输入空间内的数据分布，称为 `密度估计 <https://en.wikipedia.org/wiki/Density_estimation>`_，或从高维数据投影数据空间缩小到二维或三维以进行 *可视化* （:ref:`点击此处 <unsupervised-learning>` 转到 scikit-learn 无监督学习页面）。
 
 .. topic:: 训练集和测试集
 
     机器学习是关于学习数据集的某些属性并将其应用于新数据。
     这就是为什么在机器的普遍做法学习评价的算法是手头上的数据分成两组，
-    一个是我们所说的**训练集**上，我们了解到，我们称之为数据属性和一个**测试集**上，我们测试这些属性。
+    一个是我们所说的 **训练集** 上，我们了解到，我们称之为数据属性和一个 **测试集** 上，我们测试这些属性。
 
 .. _loading_example_dataset:
 
 加载示例数据集
 --------------------------
 
-`scikit-learn` 提供了一些标准数据集，例如 用于分类的 `iris <https://en.wikipedia.org/wiki/Iris_flower_data_set>`_ 和 `digits
-<http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits>`_ 数据集和 `波士顿房价回归数据集 <http://archive.ics.uci.edu/ml/datasets/Housing>`_ 。
+`scikit-learn` 提供了一些标准数据集，例如 用于分类的 `iris <https://en.wikipedia.org/wiki/Iris_flower_data_set>`_ 
+和 `digits <http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits>`_ 数据集
+和 `波士顿房价回归数据集 <http://archive.ics.uci.edu/ml/datasets/Housing>`_ .
 
 在下文中，我们从我们的 shell 启动一个 Python 解释器，然后加载 ``iris`` 和 ``digits`` 数据集。我们的符号约定是 ``$`` 表示shell提示符，而 ``>>>`` 表示 Python 解释器提示符::
 
@@ -55,7 +56,7 @@
   >>> digits = datasets.load_digits()
 
 数据集是一个类似字典的对象，它保存有关数据的所有数据和一些元数据。 该数据存储在 ``.data`` 成员中，它是 ``n_samples, n_features`` 数组。 
-在监督问题的情况下，一个或多个响应变量存储在 ``.target`` 成员中。 有关不同数据集的更多详细信息，请参见`专用数据集部分`。
+在监督问题的情况下，一个或多个响应变量存储在 ``.target`` 成员中。 有关不同数据集的更多详细信息，请参见 :ref:`专用数据集部分 <datasets>`.
 
 例如，在数字数据集的情况下，``digits.data`` 可以访问可用于对数字样本进行分类的功能::
 
@@ -92,7 +93,7 @@
     
 .. topic:: 从外部数据集加载
 
-    要从外部数据集加载，请参阅 :ref:`加载外部数据集`。
+    要从外部数据集加载，请参阅 :ref:`加载外部数据集 <external_datasets>`.
 
 学习和预测
 ------------------------
@@ -102,14 +103,14 @@
 
 在 scikit-learn 中，分类的估计是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 的方法。
 
-估计器的一个例子是实现 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 的类 ``sklearn.svm.SVC``。 估计器的构造函数以模型的参数为参数，但目前我们将把估计器视为黑盒子::
+估计器的一个例子是实现 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 的类 ``sklearn.svm.SVC``. 估计器的构造函数以模型的参数为参数，但目前我们将把估计器视为黑盒子::
 
   >>> from sklearn import svm
   >>> clf = svm.SVC(gamma=0.001, C=100.)
 
 .. topic:: 选择模型的参数
 
-  在这个例子中，我们设置 ``gamma`` 手动的值。通过使用 :ref:`网格搜索` 和 :ref:`交叉验证` 等工具，可以自动找到参数的良好值。
+  在这个例子中，我们设置 ``gamma`` 手动的值。通过使用 :ref:`网格搜索  <grid_search>` 和 :ref:`交叉验证 <cross_validation>` 等工具，可以自动找到参数的良好值。
 
 们称之为我们的估计器实例 ``clf``，因为它是一个分类器。它现在必须适应模型，也就是说，它必须从模型中*学习*。
 这是通过将我们的训练集传递给该 ``fit`` 方法来完成的。作为一个训练集，让我们使用除最后一个数据集的所有图像。
@@ -136,12 +137,6 @@
 正如你所看到的，这是一项具有挑战性的任务：图像分辨率差。你同意分类器吗？
 
 这个分类问题的一个完整例子可以作为一个例子来运行和学习： 识别手写数字。
-
-As you can see, it is a challenging task: the images are of poor
-resolution. Do you agree with the classifier?
-
-A complete example of this classification problem is available as an
-example that you can run and study:
 :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`.
 
 
@@ -180,7 +175,7 @@ example that you can run and study:
 
 .. 注意::
 
-    ``joblib.dump`` 并且 ``joblib.load`` 函数也接受 file-like 对象而不是文件名。有关 Joblib 的数据持久性的更多信息，请 `点击此处<https://pythonhosted.org/joblib/persistence.html>`_。
+    ``joblib.dump`` 并且 ``joblib.load`` 函数也接受 file-like 对象而不是文件名。有关 Joblib 的数据持久性的更多信息，请 `点击此处 <https://pythonhosted.org/joblib/persistence.html>`_。
 
 请注意，pickle 有一些安全性和可维护性问题。有关使用 scikit-learn 的模型持久性的更多详细信息，请参阅 :ref:`模型持久性` 部分。
 
@@ -235,7 +230,7 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
     >>> list(clf.predict(iris.data[:3]))  # doctest: +NORMALIZE_WHITESPACE
     ['setosa', 'setosa', 'setosa']
 
-这里，第一个 ``predict()`` 返回一个整数数组，因为在 ``fit`` 中使用了 ``iris.target``（一个整数数组）。 
+这里，第一个 ``predict()`` 返回一个整数数组，因为在 ``fit`` 中使用了 ``iris.target`` （一个整数数组）。 
 第二个 ``predict()`` 返回一个字符串数组，因为 ``iris.target_names`` 是用于拟合的。
 
 修改和更新参数
