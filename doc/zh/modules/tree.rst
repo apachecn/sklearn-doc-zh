@@ -6,7 +6,7 @@ Decision Trees
 
 .. currentmodule:: sklearn.tree
 
-**Decision Trees (DTs)**  是一种用来:ref:`classification <tree_classification>`和 :ref:`regression <tree_regression>`的无参监督学习方法。其目的是创建一种模型从数据特征中学习简单的决策规则来预测一个目标变量的值。
+**Decision Trees (DTs)**  是一种用来 :ref:`classification <tree_classification>`和 :ref:`regression <tree_regression>`的无参监督学习方法。其目的是创建一种模型从数据特征中学习简单的决策规则来预测一个目标变量的值。
 
 例如，在下面的图片中，决策树通过if-then-else的决策规则来学习数据从而估测数一个正弦图像。决策树越深入，决策规则就越复杂并且越符合创建的模型。
 
