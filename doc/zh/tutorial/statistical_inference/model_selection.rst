@@ -18,6 +18,7 @@
 >>> svc.fit(X_digits[:-100], y_digits[:-100]).score(X_digits[-100:], y_digits[-100:])
 0.97999999999999998
 ```
+
 为了更好地预测精度（我们可以用它作为模型的拟合优度代理），我们可以连续分解用于我们训练和测试用的 *折叠数据*。
 
 ```python
@@ -40,7 +41,7 @@
 
 .. currentmodule:: sklearn.model_selection
 
-这被称为：类：`KFold` 交叉验证.
+这被称为 :class:`KFold` 交叉验证.
 
 .. _cv_generators_tut:
 
@@ -64,7 +65,7 @@ Train: [0 1 4 5] | test: [2 3]
 Train: [0 1 2 3] | test: [4 5]
 ```
 
-然后就可以很容易地执行交叉验证了。
+然后就可以很容易地执行交叉验证了::
 
 ```python
 >>> [svc.fit(X_digits[train], y_digits[train]).score(X_digits[test], y_digits[test])
@@ -72,11 +73,11 @@ Train: [0 1 2 3] | test: [4 5]
 [0.93489148580968284, 0.95659432387312182, 0.93989983305509184]
 ```
 
-交叉验证分数可以使用函数： `cross_val_score` 直接计算出来。给定一个估计量，交叉验证对象，和输入数据集，`cross_val_score` 函数就会反复分解出训练和测试集的数据，然后使用训练集和为每次迭代交叉验证运算出的基于测试集的分数来训练估计量。
+交叉验证分数可以使用 :func: `cross_val_score` 直接计算出来。给定一个估计量，交叉验证对象，和输入数据集，`cross_val_score` 函数就会反复分解出训练和测试集的数据，然后使用训练集和为每次迭代交叉验证运算出的基于测试集的分数来训练估计量。
 
 默认情况下，估计器的 ``score`` 方法被用于运算个体分数。
 
-可以参考 `metrics 模块<metrics>` 学习更多可用的评分方法。
+可以参考 :ref:`metrics 模块<metrics>` 学习更多可用的评分方法。
 
 ```python
 >>> cross_val_score(svc, X_digits, y_digits, cv=k_fold, n_jobs=-1)
@@ -100,11 +101,11 @@ array([ 0.93969761,  0.95911415,  0.94041254])
 
    *
 
-    - 类：`KFold` **(n_splits, shuffle, random_state)**
+    - :class:`KFold` **(n_splits, shuffle, random_state)**
 
-    - 类：`StratifiedKFold` **(n_splits, shuffle, random_state)**
+    - :class:`StratifiedKFold` **(n_splits, shuffle, random_state)**
 
-    - 类：`GroupKFold` **(n_splits)**
+    - :class:`GroupKFold` **(n_splits)**
 
 
    *
@@ -120,11 +121,11 @@ array([ 0.93969761,  0.95911415,  0.94041254])
 
    *
 
-    - 类：`ShuffleSplit` **(n_splits, test_size, train_size, random_state)**
+    - :class:`ShuffleSplit` **(n_splits, test_size, train_size, random_state)**
 
-    - 类：`StratifiedShuffleSplit`
+    - :class:`StratifiedShuffleSplit`
 
-    - 类：`GroupShuffleSplit`
+    - :class:`GroupShuffleSplit`
 
    *
 
@@ -139,11 +140,11 @@ array([ 0.93969761,  0.95911415,  0.94041254])
 
    *
 
-    - 类：`LeaveOneGroupOut` **()**
+    - :class:`LeaveOneGroupOut` **()**
 
-    - 类：`LeavePGroupsOut`  **(n_groups)**
+    - :class:`LeavePGroupsOut`  **(n_groups)**
 
-    - 类：`LeaveOneOut` **()**
+    - :class:`LeaveOneOut` **()**
 
 
 
@@ -161,9 +162,9 @@ array([ 0.93969761,  0.95911415,  0.94041254])
 
    *
 
-    - 类：`LeavePOut` **(p)**
+    - :class:`LeavePOut` **(p)**
 
-    - 类：`PredefinedSplit`
+    - :class:`PredefinedSplit`
 
    *
 
@@ -182,7 +183,7 @@ array([ 0.93969761,  0.95911415,  0.94041254])
         :align: right
         :scale: 90
 
-   在数字数据集中，用一个线性内核绘制一个类：`SVC` 估计器的交叉验证分数来作为 ``C`` 参数函数（使用从1到10的点对数网格）.
+   在数字数据集中，用一个线性内核绘制一个 :class:`SVC` 估计器的交叉验证分数来作为 ``C`` 参数函数（使用从1到10的点对数网格）.
 
    .. literalinclude:: ../../auto_examples/exercises/plot_cv_digits.py
        :lines: 13-23
@@ -228,7 +229,7 @@ GridSearchCV(cv=None,...
         ...                                               # doctest: +ELLIPSIS
         array([ 0.938...,  0.963...,  0.944...])
 
-    两个交叉验证循环并行执行：一个由类： `GridSearchCV` 估计器设置 ``gamma``，另一个 ``cross_val_score`` 则是测量估计器的预期执行情况。结果分数是对新数据上的预期分数的无偏估计。
+    两个交叉验证循环并行执行：一个由 :class: `GridSearchCV` 估计器设置 ``gamma``，另一个 ``cross_val_score`` 则是测量估计器的预期执行情况。结果分数是对新数据上的预期分数的无偏估计。
 
 .. warning::
 

@@ -45,7 +45,7 @@
 K 个最近邻分类器
 -------------------------------
 
-[`最近邻`](https://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm) 也许是最简单的分类器：给定一个新的观察值 ``X_test``，用最接近的特征向量在训练集（比如，用于训练估计器的数据）找到观察值。（请看 Scikit 在线学习文档的 [`最近邻部分`]()获取更多关于这种分类器的信息）
+[`最近邻`](https://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm) 也许是最简单的分类器：给定一个新的观察值 ``X_test``，用最接近的特征向量在训练集（比如，用于训练估计器的数据）找到观察值。(请看 Scikit 在线学习文档的 :ref: `最近邻章节<neighbors>` 获取更多关于这种分类器的信息。)
 
 .. topic:: 训练集和测试集
 
@@ -104,7 +104,7 @@ K 个最近邻分类器
 
 ```python
         >>> diabetes = datasets.load_diabetes()
-        >>> diabetes_X_train = diabetes.data[:-20]
+        >>> diabetes_X_train = diabetes.data[-20]
         >>> diabetes_X_test  = diabetes.data[-20:]
         >>> diabetes_y_train = diabetes.target[:-20]
         >>> diabetes_y_test  = diabetes.target[-20:]
