@@ -7,7 +7,7 @@
 
 .. topic:: 监督学习解决的问题
 
-   [`监督学习`](http://scikit-learn.org/stable/supervised_learning.html#supervised-learning)
+   :ref: `监督学习`
    在于学习两个数据集的联系：观察数据 ``X`` 和我们正在尝试预测的额外变量 ``y``，通常称为“目标”或“标签”， 而且通常是长度为 ``n_samples`` 的一维数组。
 
    scikit 学习中所有监督的[`估计量`](https://en.wikipedia.org/wiki/Estimator)都有一个 ``fit(X, y)`` 方法来拟合模型，``predict(X)`` 方法根据给定的未标签观察值 ``X`` 返回预测的带标签的 ``y``。
@@ -18,7 +18,7 @@
 
    当在 scikit 学习中执行分类时，``y`` 是一个整数或字符型的向量。
 
-   注意：可以查看 [`用 scikit 学习进行机器学习介绍`](http://scikit-learn.org/stable/tutorial/basic/tutorial.html#introduction) 快速了解机器学习中的基础词汇。
+   注意：可以查看 :ref:`用 scikit 学习进行机器学习介绍` 快速了解机器学习中的基础词汇。
 
 最近邻和维度惩罚
 =================================================
@@ -45,7 +45,7 @@
 K 个最近邻分类器
 -------------------------------
 
-[`最近邻`](https://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm) 也许是最简单的分类器：给定一个新的观察值 ``X_test``，用最接近的特征向量在训练集（比如，用于训练估计器的数据）找到观察值。(请看 Scikit 在线学习文档的 :ref: `最近邻章节<neighbors>` 获取更多关于这种分类器的信息。)
+`最近邻 <https://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm>`_: 也许是最简单的分类器：给定一个新的观察值 ``X_test``，用最接近的特征向量在训练集（比如，用于训练估计器的数据）找到观察值。(请看 Scikit 在线学习文档的 :ref: `最近邻章节<neighbors>` 获取更多关于这种分类器的信息。)
 
 .. topic:: 训练集和测试集
 
@@ -93,7 +93,7 @@ K 个最近邻分类器
 
 比如，如果每个点只是单个数字（8个字节），那么一个 :math:`k`-NN 估计器在一个非常小的 :math:`p \sim 20` 维度下就需要比现在估计的整个互联网的大小（±1000 艾字节或更多）还要多的训练数据。
 
-这就叫做 [`维度惩罚`](https://en.wikipedia.org/wiki/Curse_of_dimensionality)，这是机器学习领域的核心问题。
+这就叫做 `维度惩罚  <https://en.wikipedia.org/wiki/Curse_of_dimensionality>`_，这是机器学习领域的核心问题。
 
 线性模型：从回归到稀疏
 ==========================================
@@ -220,7 +220,7 @@ Linear models: :math:`y = X\beta + \epsilon`
 
 .. 注意::
 
-    捕获拟合参数噪声使得模型不能归纳新的数据称为 [`过度拟合`](https://en.wikipedia.org/wiki/Overfitting)。岭回归产生的偏差被称为 [`正则化`](https://en.wikipedia.org/wiki/Regularization_%28machine_learning%29)。
+    捕获拟合参数噪声使得模型不能归纳新的数据称为 `过度拟合 <https://en.wikipedia.org/wiki/Overfitting>`_。岭回归产生的偏差被称为 `正则化 <https://en.wikipedia.org/wiki/Regularization_%28machine_learning%29>`_。
 
 .. _sparsity:
 
@@ -276,7 +276,7 @@ Linear models: :math:`y = X\beta + \epsilon`
 
 .. topic:: **同一个问题的不同算法**
 
-    不同的算法可以用于解决同一个数学问题。比如在 scikit 里 ``Lasso`` 对象使用 [`coordinate descent`](https://en.wikipedia.org/wiki/Coordinate_descent) 方法解决 lasso 回归问题，对于大型数据集很有效。但是，scikit 也提供了使用 *LARS* 算法 的:class:`LassoLars` 对象，对于处理带权向量非常稀疏的数据非常有效（比如，问题的观察值很少）。
+    不同的算法可以用于解决同一个数学问题。比如在 scikit 里 ``Lasso`` 对象使用 `coordinate descent <https://en.wikipedia.org/wiki/Coordinate_descent>`_ 方法解决 lasso 回归问题，对于大型数据集很有效。但是，scikit 也提供了使用 *LARS* 算法 的:class:`LassoLars` 对象，对于处理带权向量非常稀疏的数据非常有效（比如，问题的观察值很少）。
 
 .. _clf_tut:
 
@@ -288,7 +288,7 @@ Linear models: :math:`y = X\beta + \epsilon`
    :scale: 65
    :align: right
 
-对于分类，比如标定 [`鸢尾属植物`](https://en.wikipedia.org/wiki/Iris_flower_data_set) 任务，线性回归就不是好方法了，因为它会给数据很多远离决策边界的权值。一个线性方法是为了拟合 sigmoid 函数 或 **logistic** 函数：
+对于分类，比如标定 `鸢尾属植物 <https://en.wikipedia.org/wiki/Iris_flower_data_set>`_ 任务，线性回归就不是好方法了，因为它会给数据很多远离决策边界的权值。一个线性方法是为了拟合 sigmoid 函数 或 **logistic** 函数：
 
 .. math::
 

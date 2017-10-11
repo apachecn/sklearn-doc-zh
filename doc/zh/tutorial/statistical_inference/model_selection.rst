@@ -73,7 +73,7 @@ Train: [0 1 2 3] | test: [4 5]
 [0.93489148580968284, 0.95659432387312182, 0.93989983305509184]
 ```
 
-交叉验证分数可以使用 :func: `cross_val_score` 直接计算出来。给定一个估计量，交叉验证对象，和输入数据集，`cross_val_score` 函数就会反复分解出训练和测试集的数据，然后使用训练集和为每次迭代交叉验证运算出的基于测试集的分数来训练估计量。
+交叉验证分数可以使用 :func:`cross_val_score` 直接计算出来。给定一个估计量，交叉验证对象，和输入数据集， :func:`cross_val_score` 函数就会反复分解出训练和测试集的数据，然后使用训练集和为每次迭代交叉验证运算出的基于测试集的分数来训练估计量。
 
 默认情况下，估计器的 ``score`` 方法被用于运算个体分数。
 
@@ -188,7 +188,7 @@ array([ 0.93969761,  0.95911415,  0.94041254])
    .. literalinclude:: ../../auto_examples/exercises/plot_cv_digits.py
        :lines: 13-23
 
-   **方法：** [`sphx_glr_auto_examples_exercises_plot_cv_digits.py`](http://scikit-learn.org/stable/auto_examples/exercises/plot_cv_digits.html#sphx-glr-auto-examples-exercises-plot-cv-digits-py)
+   **方法：** :ref:`sphx_glr_auto_examples_exercises_plot_cv_digits.py`
 
 
 
@@ -219,7 +219,7 @@ GridSearchCV(cv=None,...
 0.943...
 ```
 
-默认情况下，类 `GridSearchCV` 使用一个三倍折叠交叉验证。但是，如果它检测到分类器被传递，而不是回归，它就会使用分层的三倍。
+默认情况下， :class:`GridSearchCV` 使用一个三倍折叠交叉验证。但是，如果它检测到分类器被传递，而不是回归，它就会使用分层的三倍。
 
 .. topic:: 嵌套交叉验证
 
@@ -229,7 +229,7 @@ GridSearchCV(cv=None,...
         ...                                               # doctest: +ELLIPSIS
         array([ 0.938...,  0.963...,  0.944...])
 
-    两个交叉验证循环并行执行：一个由 :class: `GridSearchCV` 估计器设置 ``gamma``，另一个 ``cross_val_score`` 则是测量估计器的预期执行情况。结果分数是对新数据上的预期分数的无偏估计。
+    两个交叉验证循环并行执行：一个由 :class:`GridSearchCV` 估计器设置 ``gamma``，另一个 ``cross_val_score`` 则是测量估计器的预期执行情况。结果分数是对新数据上的预期分数的无偏估计。
 
 .. warning::
 
@@ -240,7 +240,7 @@ GridSearchCV(cv=None,...
 交叉验证估计量
 ----------------------------
 
-设置参数的交叉验证可以更有效地完成一个基础算法。这就是为什么对某些估计量来说，scikit 学习提供了 [`交叉验证`](scikit-learn.org/stable/modules/cross_validation.html#cross-validation) 估计量自动设置它们的参数。
+设置参数的交叉验证可以更有效地完成一个基础算法。这就是为什么对某些估计量来说，scikit 学习提供了 :ref:`交叉验证` 估计量自动设置它们的参数。
 
 ```python
 >>> from sklearn import linear_model, datasets
@@ -270,4 +270,4 @@ LassoCV(alphas=None, copy_X=True, cv=None, eps=0.001, fit_intercept=True,
    .. literalinclude:: ../../auto_examples/exercises/plot_cv_diabetes.py
        :lines: 17-24
 
-   **方法：** [`sphx_glr_auto_examples_exercises_plot_cv_diabetes.py`](http://scikit-learn.org/stable/auto_examples/exercises/plot_cv_diabetes.html#sphx-glr-auto-examples-exercises-plot-cv-diabetes-py)
+   **方法：** :ref:`sphx_glr_auto_examples_exercises_plot_cv_diabetes.py`
