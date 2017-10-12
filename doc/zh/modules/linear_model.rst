@@ -1,35 +1,30 @@
 .. _linear_model:
 
 =========================
-Generalized Linear Models
+广义线性模型
 =========================
 
 .. currentmodule:: sklearn.linear_model
 
-The following are a set of methods intended for regression in which
-the target value is expected to be a linear combination of the input
-variables. In mathematical notion, if :math:`\hat{y}` is the predicted
+以下是一组用于回归的方法，其中目标值预期是输入变量的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值
 value.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
-Across the module, we designate the vector :math:`w = (w_1,
-..., w_p)` as ``coef_`` and :math:`w_0` as ``intercept_``.
+在整个模块中，我们指定向量 :math:`w = (w_1,
+..., w_p)` 作为 ``coef_`` 并且 :math:`w_0` 作为 ``intercept_``.
 
-To perform classification with generalized linear models, see
+要使用广义线性模型进行分类，请参阅
 :ref:`Logistic_regression`.
 
 
 .. _ordinary_least_squares:
 
-Ordinary Least Squares
+普通最小二乘法
 =======================
 
-:class:`LinearRegression` fits a linear model with coefficients
-:math:`w = (w_1, ..., w_p)` to minimize the residual sum
-of squares between the observed responses in the dataset, and the
-responses predicted by the linear approximation. Mathematically it
-solves a problem of the form:
+:class:`线性回归` 适合一个带有系数
+:math:`w = (w_1, ..., w_p)` 的线性模型 去最小化 (在数据集中观察到的结果) 和 (通过线性近似值预测的结果) 之间方差的和。 在数学上它解决了一个形式如下的问题：
 
 .. math:: \underset{w}{min\,} {|| X w - y||_2}^2
 
@@ -38,9 +33,8 @@ solves a problem of the form:
    :align: center
    :scale: 50%
 
-:class:`LinearRegression` will take in its ``fit`` method arrays X, y
-and will store the coefficients :math:`w` of the linear model in its
-``coef_`` member::
+:class:`线性回归` 将采用其 ``fit`` 拟合方法数组X，y并将其线性模型的系数 :math:`w` 存储在其
+``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.LinearRegression()
@@ -49,36 +43,26 @@ and will store the coefficients :math:`w` of the linear model in its
     >>> reg.coef_
     array([ 0.5,  0.5])
 
-However, coefficient estimates for Ordinary Least Squares rely on the
-independence of the model terms. When terms are correlated and the
-columns of the design matrix :math:`X` have an approximate linear
-dependence, the design matrix becomes close to singular
-and as a result, the least-squares estimate becomes highly sensitive
-to random errors in the observed response, producing a large
-variance. This situation of *multicollinearity* can arise, for
-example, when data are collected without an experimental design.
+然而，普通最小二乘的系数估计依赖于模型项的独立性；当多个项有着相互关系并且设计矩阵 :math:`X` 的列具有近似的线性依赖性时，设计的矩阵变会得接近于单一；并且作为观察到的结果，最小二乘的估计值 将会变得对随机的错误非常敏感，并且会产生很大的方差；这种多重共线性的情况可能出现，例如，当收集没有实验设计过的数据时。
 
-.. topic:: Examples:
+.. topic:: 举例:
 
    * :ref:`sphx_glr_auto_examples_linear_model_plot_ols.py`
 
 
-Ordinary Least Squares Complexity
+普通最小二乘法复杂度
 ---------------------------------
 
-This method computes the least squares solution using a singular value
-decomposition of X. If X is a matrix of size (n, p) this method has a
-cost of :math:`O(n p^2)`, assuming that :math:`n \geq p`.
+该方法使用X的奇异值分解来计算最小二乘解。如果X是大小(n，p)的矩阵，则假设 :math:`n \geq p`
+则该方法的成本为 :math:`O(n p^2)`.
 
 .. _ridge_regression:
 
-Ridge Regression
+岭回归
 ================
 
-:class:`Ridge` regression addresses some of the problems of
-:ref:`ordinary_least_squares` by imposing a penalty on the size of
-coefficients. The ridge coefficients minimize a penalized residual sum
-of squares,
+:class:`岭` 回归通过对系数的大小施加惩罚来解决
+:ref:`ordinary_least_squares` (普通最小二乘)的一些问题。 岭系数最小化一个带罚项的残差平方和，
 
 
 .. math::
@@ -86,9 +70,7 @@ of squares,
    \underset{w}{min\,} {{|| X w - y||_2}^2 + \alpha {||w||_2}^2}
 
 
-Here, :math:`\alpha \geq 0` is a complexity parameter that controls the amount
-of shrinkage: the larger the value of :math:`\alpha`, the greater the amount
-of shrinkage and thus the coefficients become more robust to collinearity.
+这里， :math:`\alpha \geq 0` 是控制收缩量的复杂性参数： :math:`\alpha`, 的值越大，收缩量越大，因此系数变得对共线性变得更加鲁棒。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ridge_path_001.png
    :target: ../auto_examples/linear_model/plot_ridge_path.html
@@ -96,9 +78,7 @@ of shrinkage and thus the coefficients become more robust to collinearity.
    :scale: 50%
 
 
-As with other linear models, :class:`Ridge` will take in its ``fit`` method
-arrays X, y and will store the coefficients :math:`w` of the linear model in
-its ``coef_`` member::
+与其他线性模型一样， :class:`Ridge` 将采用其 ``fit`` 将采用其 :math:`w` 存储在其 ``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.Ridge (alpha = .5)
@@ -111,17 +91,17 @@ its ``coef_`` member::
     0.13636...
 
 
-.. topic:: Examples:
+.. topic:: 举例:
 
-   * :ref:`sphx_glr_auto_examples_linear_model_plot_ridge_path.py`
-   * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
+   * :ref:`sphx_glr_auto_examples_linear_model_plot_ridge_path.py`( 作为正则化的函数，绘制岭系数 )
+   * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`( 使用稀疏特征的文本文档分类 )
 
 
-Ridge Complexity
+Ridge Complexity (岭复杂性)
 ----------------
 
-This method has the same order of complexity than an
-:ref:`ordinary_least_squares`.
+这种方法与
+:ref:`ordinary_least_squares`(普通最小二乘方法)的复杂度相同.
 
 .. FIXME:
 .. Not completely true: OLS is solved by an SVD, while Ridge is solved by
@@ -129,13 +109,10 @@ This method has the same order of complexity than an
 .. between these
 
 
-Setting the regularization parameter: generalized Cross-Validation
+Setting the regularization parameter: generalized Cross-Validation (设置正则化参数：广义交叉验证)
 ------------------------------------------------------------------
 
-:class:`RidgeCV` implements ridge regression with built-in
-cross-validation of the alpha parameter.  The object works in the same way
-as GridSearchCV except that it defaults to Generalized Cross-Validation
-(GCV), an efficient form of leave-one-out cross-validation::
+:class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象的工作方式与 GridSearchCV 相同，只是它默认为 Generalized Cross-Validation(通用交叉验证GCV)，这是一种有效的留一交叉验证法::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.RidgeCV(alphas=[0.1, 1.0, 10.0])
@@ -145,7 +122,7 @@ as GridSearchCV except that it defaults to Generalized Cross-Validation
     >>> reg.alpha_                                      # doctest: +SKIP
     0.1
 
-.. topic:: References
+.. topic:: 参考
 
     * "Notes on Regularized Least Squares", Rifkin & Lippert (`technical report
       <http://cbcl.mit.edu/projects/cbcl/publications/ps/MIT-CSAIL-TR-2007-025.pdf>`_,
@@ -155,31 +132,21 @@ as GridSearchCV except that it defaults to Generalized Cross-Validation
 
 .. _lasso:
 
-Lasso
+Lasso(套索)
 =====
 
-The :class:`Lasso` is a linear model that estimates sparse coefficients.
-It is useful in some contexts due to its tendency to prefer solutions
-with fewer parameter values, effectively reducing the number of variables
-upon which the given solution is dependent. For this reason, the Lasso
-and its variants are fundamental to the field of compressed sensing.
-Under certain conditions, it can recover the exact set of non-zero
-weights (see
+The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下是有用的，因为它倾向于使用具有较少参数值的解决方案，有效地减少给定解决方案所依赖的变量的数量。 为此，Lasso及其变体是压缩感测领域的基础。 在某些条件下，它可以恢复精确的非零权重集 (见
 :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`).
 
-Mathematically, it consists of a linear model trained with :math:`\ell_1` prior
-as regularizer. The objective function to minimize is:
+在数学上，它由一个线性模型组成，以 :math:`\ell_1` 为准。 目标函数最小化是:
 
 .. math::  \underset{w}{min\,} { \frac{1}{2n_{samples}} ||X w - y||_2 ^ 2 + \alpha ||w||_1}
 
-The lasso estimate thus solves the minimization of the
-least-squares penalty with :math:`\alpha ||w||_1` added, where
-:math:`\alpha` is a constant and :math:`||w||_1` is the :math:`\ell_1`-norm of
-the parameter vector.
+因此，lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法的最小化，其中，
+:math:`\alpha` 是常数， :math:`||w||_1` 是参数向量的 :math:`\ell_1`-norm 范数。
 
-The implementation in the class :class:`Lasso` uses coordinate descent as
-the algorithm to fit the coefficients. See :ref:`least_angle_regression`
-for another implementation::
+Lasso类中的实现使用坐标下降作为算法来拟合系数。 查看 :ref:`least_angle_regression`
+用于另一个实现::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.Lasso(alpha = 0.1)
@@ -190,41 +157,33 @@ for another implementation::
     >>> reg.predict([[1, 1]])
     array([ 0.8])
 
-Also useful for lower-level tasks is the function :func:`lasso_path` that
-computes the coefficients along the full path of possible values.
+对于较低级别的任务也很有用的是函数 :func:`lasso_path` 来计算可能值的完整路径上的系数。
 
-.. topic:: Examples:
+.. topic:: 举例:
 
-  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
-  * :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`
-
-
-.. note:: **Feature selection with Lasso**
-
-      As the Lasso regression yields sparse models, it can
-      thus be used to perform feature selection, as detailed in
-      :ref:`l1_feature_selection`.
+  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py` (稀疏信号的套索和弹性网)
+  * :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`(压缩感知：L1先验(Lasso)的断层扫描重建)
 
 
-Setting regularization parameter
+.. 注意:: **Feature selection with Lasso(功能套索和弹性网)**
+
+      由于Lasso拉索回归产生稀疏模型，因此可以用于执行特征选择，详见
+      :ref:`l1_feature_selection`(基于L1的特征选择).
+
+
+Setting regularization parameter(设置正则化参数)
 --------------------------------
 
-The ``alpha`` parameter controls the degree of sparsity of the coefficients
-estimated.
+ ``alpha`` 参数控制估计系数的稀疏度。
 
-Using cross-validation
+使用交叉验证
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-scikit-learn exposes objects that set the Lasso ``alpha`` parameter by
-cross-validation: :class:`LassoCV` and :class:`LassoLarsCV`.
-:class:`LassoLarsCV` is based on the :ref:`least_angle_regression` algorithm
-explained below.
+scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: :class:`LassoCV` and :class:`LassoLarsCV`。
+:class:`LassoLarsCV` 是基于下面解释的 :ref:`least_angle_regression`(最小角度回归)算法。
 
-For high-dimensional datasets with many collinear regressors,
-:class:`LassoCV` is most often preferable. However, :class:`LassoLarsCV` has
-the advantage of exploring more relevant values of `alpha` parameter, and
-if the number of samples is very small compared to the number of
-features, it is often faster than :class:`LassoCV`.
+对于具有许多线性回归的高维数据集，
+:class:`LassoCV`最常见。 然而，:class:`LassoLarsCV` 具有探索更相关的 `alpha` parameter参数值的优点，并且如果样本数量与特征数量相比非常小，则通常比 :class:`LassoCV`快。
 
 .. |lasso_cv_1| image:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_model_selection_002.png
     :target: ../auto_examples/linear_model/plot_lasso_model_selection.html
@@ -237,19 +196,10 @@ features, it is often faster than :class:`LassoCV`.
 .. centered:: |lasso_cv_1| |lasso_cv_2|
 
 
-Information-criteria based model selection
+Information-criteria based model selection(基于信息标准的模型选择)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Alternatively, the estimator :class:`LassoLarsIC` proposes to use the
-Akaike information criterion (AIC) and the Bayes Information criterion (BIC).
-It is a computationally cheaper alternative to find the optimal value of alpha
-as the regularization path is computed only once instead of k+1 times
-when using k-fold cross-validation. However, such criteria needs a
-proper estimation of the degrees of freedom of the solution, are
-derived for large samples (asymptotic results) and assume the model
-is correct, i.e. that the data are actually generated by this model.
-They also tend to break when the problem is badly conditioned
-(more features than samples).
+有多种选择时，估计器 :class:`LassoLarsIC` 建议使用Akaike信息准则（AIC）和贝叶斯信息准则（BIC）。 当使用k-fold交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_model_selection_001.png
     :target: ../auto_examples/linear_model/plot_lasso_model_selection.html
@@ -257,32 +207,25 @@ They also tend to break when the problem is badly conditioned
     :scale: 50%
 
 
-.. topic:: Examples:
+.. topic:: 举例:
 
-  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_model_selection.py`
+  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_model_selection.py`(Lasso型号选择：交叉验证/AIC/BIC)
 
-Comparison with the regularization parameter of SVM
+Comparison with the regularization parameter of SVM(与SVM的正则化参数进行比较)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The equivalence between ``alpha`` and the regularization parameter of SVM,
-``C`` is given by ``alpha = 1 / C`` or ``alpha = 1 / (n_samples * C)``,
-depending on the estimator and the exact objective function optimized by the
-model.
+根据估计器和模型优化的精确目标函数，在 ``alpha`` 和SVM的正则化参数之间是等值的,其中
+``C`` 是通过 ``alpha = 1 / C`` 或者 ``alpha = 1 / (n_samples * C)``得到的。
 
 .. _multi_task_lasso:
 
-Multi-task Lasso
+Multi-task Lasso(多任务套索)
 ================
 
-The :class:`MultiTaskLasso` is a linear model that estimates sparse
-coefficients for multiple regression problems jointly: ``y`` is a 2D array,
-of shape ``(n_samples, n_tasks)``. The constraint is that the selected
-features are the same for all the regression problems, also called tasks.
+ :class:`MultiTaskLasso` 是一个线性模型，它联合估计多个回归问题的稀疏系数： ``y`` 是 ``(n_samples, n_tasks)``的二维数组，
+约束是所选的特征对于所有回归问题（也称为任务）是相同的。
 
-The following figure compares the location of the non-zeros in W obtained
-with a simple Lasso or a MultiTaskLasso. The Lasso estimates yields
-scattered non-zeros while the non-zeros of the MultiTaskLasso are full
-columns.
+下图比较了使用简单 Lasso 或 MultiTaskLasso 获得的 W 中非零的位置。 Lasso 估计产生分散的非零，而 MultiTaskLasso 的非零是全列。
 
 .. |multi_task_lasso_1| image:: ../auto_examples/linear_model/images/sphx_glr_plot_multi_task_lasso_support_001.png
     :target: ../auto_examples/linear_model/plot_multi_task_lasso_support.html
@@ -294,30 +237,28 @@ columns.
 
 .. centered:: |multi_task_lasso_1| |multi_task_lasso_2|
 
-.. centered:: Fitting a time-series model, imposing that any active feature be active at all times.
+.. centered:: 拟合 time-series model ( 时间序列模型 )，强制任何活动的功能始终处于活动状态。
 
-.. topic:: Examples:
+.. topic:: 举例:
 
-  * :ref:`sphx_glr_auto_examples_linear_model_plot_multi_task_lasso_support.py`
+  * :ref:`sphx_glr_auto_examples_linear_model_plot_multi_task_lasso_support.py`(联合功能选择与多任务Lasso)
 
 
-Mathematically, it consists of a linear model trained with a mixed
-:math:`\ell_1` :math:`\ell_2` prior as regularizer.
-The objective function to minimize is:
+在数学上，它由一个线性模型组成，训练有混合的
+:math:`\ell_1` :math:`\ell_2` 之前的正则化。目标函数最小化是：
 
 .. math::  \underset{w}{min\,} { \frac{1}{2n_{samples}} ||X W - Y||_{Fro} ^ 2 + \alpha ||W||_{21}}
 
-where :math:`Fro` indicates the Frobenius norm:
+其中 :math:`Fro` 表示Frobenius标准：
 
 .. math:: ||A||_{Fro} = \sqrt{\sum_{ij} a_{ij}^2}
 
-and :math:`\ell_1` :math:`\ell_2` reads:
+并且 :math:`\ell_1` :math:`\ell_2` 读取为:
 
 .. math:: ||A||_{2 1} = \sum_i \sqrt{\sum_j a_{ij}^2}
 
 
-The implementation in the class :class:`MultiTaskLasso` uses coordinate descent as
-the algorithm to fit the coefficients.
+ :class:`MultiTaskLasso` 类中的实现使用坐标下降作为拟合系数的算法。
 
 
 .. _elastic_net:
