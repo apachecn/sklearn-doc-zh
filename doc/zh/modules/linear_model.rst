@@ -11,8 +11,7 @@ value.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
-在整个模块中，我们指定向量 :math:`w = (w_1,
-..., w_p)` 作为 ``coef_`` 并且 :math:`w_0` 作为 ``intercept_``.
+在整个模块中，我们指定向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 并且 :math:`w_0` 作为 ``intercept_``.
 
 要使用广义线性模型进行分类，请参阅
 :ref:`Logistic_regression`.
@@ -23,8 +22,7 @@ value.
 普通最小二乘法
 =======================
 
-:class:`线性回归` 适合一个带有系数
-:math:`w = (w_1, ..., w_p)` 的线性模型 去最小化 (在数据集中观察到的结果) 和 (通过线性近似值预测的结果) 之间方差的和。 在数学上它解决了一个形式如下的问题：
+:class:`LinearRegression` 适合一个带有系数 :math:`w = (w_1, ..., w_p)` 的线性模型 去最小化 (在数据集中观察到的结果) 和 (通过线性近似值预测的结果) 之间方差的和。 在数学上它解决了一个形式如下的问题：
 
 .. math:: \underset{w}{min\,} {|| X w - y||_2}^2
 
@@ -33,8 +31,7 @@ value.
    :align: center
    :scale: 50%
 
-:class:`线性回归` 将采用其 ``fit`` 拟合方法数组X，y并将其线性模型的系数 :math:`w` 存储在其
-``coef_`` 成员中::
+:class:`LinearRegression` 将采用其 ``fit`` 拟合方法数组 X, y 并将其线性模型的系数 :math:`w` 存储在其 ``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.LinearRegression()
@@ -53,7 +50,7 @@ value.
 普通最小二乘法复杂度
 ---------------------------------
 
-该方法使用X的奇异值分解来计算最小二乘解。如果X是大小(n，p)的矩阵，则假设 :math:`n \geq p`
+该方法使用X的奇异值分解来计算最小二乘解。如果X是 size 为 (n, p) 的矩阵，则假设 :math:`n \geq p`
 则该方法的成本为 :math:`O(n p^2)`.
 
 .. _ridge_regression:
@@ -61,7 +58,7 @@ value.
 岭回归
 ================
 
-:class:`岭` 回归通过对系数的大小施加惩罚来解决
+:class:`Ridge` 回归通过对系数的大小施加惩罚来解决
 :ref:`ordinary_least_squares` (普通最小二乘)的一些问题。 岭系数最小化一个带罚项的残差平方和，
 
 
@@ -100,8 +97,7 @@ value.
 Ridge Complexity (岭复杂性)
 ----------------
 
-这种方法与
-:ref:`ordinary_least_squares`(普通最小二乘方法)的复杂度相同.
+这种方法与 :ref:`ordinary_least_squares`(普通最小二乘方法)的复杂度相同.
 
 .. FIXME:
 .. Not completely true: OLS is solved by an SVD, while Ridge is solved by
@@ -112,7 +108,7 @@ Ridge Complexity (岭复杂性)
 Setting the regularization parameter: generalized Cross-Validation (设置正则化参数：广义交叉验证)
 ------------------------------------------------------------------
 
-:class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象的工作方式与 GridSearchCV 相同，只是它默认为 Generalized Cross-Validation(通用交叉验证GCV)，这是一种有效的留一交叉验证法::
+:class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象的工作方式与 GridSearchCV 相同，只是它默认为 Generalized Cross-Validation(通用交叉验证 GCV)，这是一种有效的留一交叉验证法::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.RidgeCV(alphas=[0.1, 1.0, 10.0])
@@ -132,21 +128,18 @@ Setting the regularization parameter: generalized Cross-Validation (设置正则
 
 .. _lasso:
 
-Lasso(套索)
+Lasso
 =====
 
-The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下是有用的，因为它倾向于使用具有较少参数值的解决方案，有效地减少给定解决方案所依赖的变量的数量。 为此，Lasso及其变体是压缩感测领域的基础。 在某些条件下，它可以恢复精确的非零权重集 (见
-:ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`).
+The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下是有用的，因为它倾向于使用具有较少参数值的解决方案，有效地减少给定解决方案所依赖的变量的数量。 为此，Lasso及其变体是压缩感测领域的基础。 在某些条件下，它可以恢复精确的非零权重集 (见 :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`).
 
 在数学上，它由一个线性模型组成，以 :math:`\ell_1` 为准。 目标函数最小化是:
 
 .. math::  \underset{w}{min\,} { \frac{1}{2n_{samples}} ||X w - y||_2 ^ 2 + \alpha ||w||_1}
 
-因此，lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法的最小化，其中，
-:math:`\alpha` 是常数， :math:`||w||_1` 是参数向量的 :math:`\ell_1`-norm 范数。
+因此，lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法的最小化，其中， :math:`\alpha` 是常数， :math:`||w||_1` 是参数向量的 :math:`\ell_1`-norm 范数。
 
-Lasso类中的实现使用坐标下降作为算法来拟合系数。 查看 :ref:`least_angle_regression`
-用于另一个实现::
+:class:`Lasso` 类中的实现使用 coordinate descent （坐标下降）作为算法来拟合系数。 查看 :ref:`least_angle_regression` 用于另一个实现::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.Lasso(alpha = 0.1)
@@ -165,9 +158,9 @@ Lasso类中的实现使用坐标下降作为算法来拟合系数。 查看 :ref
   * :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`(压缩感知：L1先验(Lasso)的断层扫描重建)
 
 
-.. 注意:: **Feature selection with Lasso(功能套索和弹性网)**
+.. 注意:: **Feature selection with Lasso(使用 Lasso 进行 Feature 的选择)**
 
-      由于Lasso拉索回归产生稀疏模型，因此可以用于执行特征选择，详见
+      由于 Lasso 回归产生稀疏模型，因此可以用于执行特征选择，详见
       :ref:`l1_feature_selection`(基于L1的特征选择).
 
 
@@ -182,8 +175,7 @@ Setting regularization parameter(设置正则化参数)
 scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: :class:`LassoCV` and :class:`LassoLarsCV`。
 :class:`LassoLarsCV` 是基于下面解释的 :ref:`least_angle_regression`(最小角度回归)算法。
 
-对于具有许多线性回归的高维数据集，
-:class:`LassoCV`最常见。 然而，:class:`LassoLarsCV` 具有探索更相关的 `alpha` parameter参数值的优点，并且如果样本数量与特征数量相比非常小，则通常比 :class:`LassoCV`快。
+对于具有许多线性回归的高维数据集， :class:`LassoCV` 最常见。 然而，:class:`LassoLarsCV` 具有探索更相关的 `alpha` parameter 参数值的优点，并且如果样本数量与特征数量相比非常小，则通常比 :class:`LassoCV` 快。
 
 .. |lasso_cv_1| image:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_model_selection_002.png
     :target: ../auto_examples/linear_model/plot_lasso_model_selection.html
@@ -199,7 +191,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 Information-criteria based model selection(基于信息标准的模型选择)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-有多种选择时，估计器 :class:`LassoLarsIC` 建议使用Akaike信息准则（AIC）和贝叶斯信息准则（BIC）。 当使用k-fold交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
+有多种选择时，估计器 :class:`LassoLarsIC` 建议使用 Akaike information criterion （Akaike 信息准则）（AIC）和 Bayes Information criterion （贝叶斯信息准则）（BIC）。 当使用 k-fold 交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_model_selection_001.png
     :target: ../auto_examples/linear_model/plot_lasso_model_selection.html
@@ -209,20 +201,20 @@ Information-criteria based model selection(基于信息标准的模型选择)
 
 .. topic:: 举例:
 
-  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_model_selection.py`(Lasso型号选择：交叉验证/AIC/BIC)
+  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_model_selection.py`(Lasso 型号选择：交叉验证/AIC/BIC)
 
-Comparison with the regularization parameter of SVM(与SVM的正则化参数进行比较)
+Comparison with the regularization parameter of SVM(与 SVM 的正则化参数进行比较)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-根据估计器和模型优化的精确目标函数，在 ``alpha`` 和SVM的正则化参数之间是等值的,其中
-``C`` 是通过 ``alpha = 1 / C`` 或者 ``alpha = 1 / (n_samples * C)``得到的。
+根据估计器和模型优化的精确目标函数，在 ``alpha`` 和 SVM 的正则化参数之间是等值的,其中
+``C`` 是通过 ``alpha = 1 / C`` 或者 ``alpha = 1 / (n_samples * C)`` 得到的。
 
 .. _multi_task_lasso:
 
-Multi-task Lasso(多任务套索)
+Multi-task Lasso(多任务 Lasso)
 ================
 
- :class:`MultiTaskLasso` 是一个线性模型，它联合估计多个回归问题的稀疏系数： ``y`` 是 ``(n_samples, n_tasks)``的二维数组，
+ :class:`MultiTaskLasso` 是一个线性模型，它联合估计多个回归问题的稀疏系数： ``y`` 是 ``(n_samples, n_tasks)`` 的二维数组，
 约束是所选的特征对于所有回归问题（也称为任务）是相同的。
 
 下图比较了使用简单 Lasso 或 MultiTaskLasso 获得的 W 中非零的位置。 Lasso 估计产生分散的非零，而 MultiTaskLasso 的非零是全列。
@@ -249,7 +241,7 @@ Multi-task Lasso(多任务套索)
 
 .. math::  \underset{w}{min\,} { \frac{1}{2n_{samples}} ||X W - Y||_{Fro} ^ 2 + \alpha ||W||_{21}}
 
-其中 :math:`Fro` 表示Frobenius标准：
+其中 :math:`Fro` 表示 Frobenius 标准：
 
 .. math:: ||A||_{Fro} = \sqrt{\sum_{ij} a_{ij}^2}
 
