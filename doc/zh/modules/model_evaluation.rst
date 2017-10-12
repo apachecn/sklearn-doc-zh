@@ -3,74 +3,54 @@
 .. _model_evaluation:
 
 ========================================================
-Model evaluation: quantifying the quality of predictions
+模型评估: 量化预测的质量
 ========================================================
 
-There are 3 different APIs for evaluating the quality of a model's
-predictions:
+有 3 种不同的 API 用于评估模型预测的质量:
 
-* **Estimator score method**: Estimators have a ``score`` method providing a
-  default evaluation criterion for the problem they are designed to solve.
-  This is not discussed on this page, but in each estimator's documentation.
+* **Estimator score method（估计器得分的方法）**: Estimators（估计器）有一个 ``score（得分）`` 方法，为其解决的问题提供了默认的 evaluation criterion （评估标准）。
+  在这个页面上没有相关讨论，但是在每个 estimator （估计器）的文档中会有相关的讨论。
 
-* **Scoring parameter**: Model-evaluation tools using
-  :ref:`cross-validation <cross_validation>` (such as
-  :func:`model_selection.cross_val_score` and
-  :class:`model_selection.GridSearchCV`) rely on an internal *scoring* strategy.
-  This is discussed in the section :ref:`scoring_parameter`.
+* **Scoring parameter（评分参数）**: Model-evaluation tools （模型评估工具）使用 :ref:`cross-validation <cross_validation>` (如 :func:`model_selection.cross_val_score` 和 :class:`model_selection.GridSearchCV`) 依靠 internal *scoring* strategy （内部 *scoring（得分）* 策略）。这在 :ref:`scoring_parameter` 部分讨论。
 
-* **Metric functions**: The :mod:`metrics` module implements functions
-  assessing prediction error for specific purposes. These metrics are detailed
-  in sections on :ref:`classification_metrics`,
-  :ref:`multilabel_ranking_metrics`, :ref:`regression_metrics` and
-  :ref:`clustering_metrics`.
+* **Metric functions（指标函数）**: :mod:`metrics` 模块实现了针对特定目的评估预测误差的函数。这些指标在以下部分部分详细介绍 :ref:`classification_metrics`, :ref:`multilabel_ranking_metrics`, :ref:`regression_metrics` 和 :ref:`clustering_metrics` 。
 
-Finally, :ref:`dummy_estimators` are useful to get a baseline
-value of those metrics for random predictions.
+最后， :ref:`dummy_estimators` 用于获取 baseline value of those metrics for random predictions （随机预测的这些指标的基准值）。
 
 .. seealso::
 
-   For "pairwise" metrics, between *samples* and not estimators or
-   predictions, see the :ref:`metrics` section.
+   对于 "pairwise（成对）" metrics（指标），*samples（样本）* 之间而不是 estimators （估计量）或者 predictions（预测值），请参阅 :ref:`metrics` 部分。
 
 .. _scoring_parameter:
 
-The ``scoring`` parameter: defining model evaluation rules
+``scoring`` 参数: defining model evaluation rules（定义模型评估规则）
 ==========================================================
 
-Model selection and evaluation using tools, such as
-:class:`model_selection.GridSearchCV` and
-:func:`model_selection.cross_val_score`, take a ``scoring`` parameter that
-controls what metric they apply to the estimators evaluated.
+Model selection （模型选择）和 evaluation （评估）使用工具，例如 :class:`model_selection.GridSearchCV` 和 :func:`model_selection.cross_val_score` ，采用 ``scoring`` 参数来控制它们对 estimators evaluated （评估的估计量）应用的指标。
 
-Common cases: predefined values
+常见场景: predefined values（预定义值）
 -------------------------------
 
-For the most common use cases, you can designate a scorer object with the
-``scoring`` parameter; the table below shows all possible values.
-All scorer objects follow the convention that **higher return values are better
-than lower return values**.  Thus metrics which measure the distance between
-the model and the data, like :func:`metrics.mean_squared_error`, are
-available as neg_mean_squared_error which return the negated value
-of the metric.
+对于最常见的用例, 您可以使用 ``scoring`` 参数指定一个 scorer object （记分对象）; 下表显示了所有可能的值。
+所有 scorer objects （记分对象）遵循惯例  **higher return values are better than lower return values（较高的返回值优于较低的返回值）** 。因此，测量模型和数据之间距离的 metrics （度量），如 :func:`metrics.mean_squared_error` 可用作返回 metric （指数）的 negated value （否定值）的 neg_mean_squared_error 。
 
 ==============================    =============================================     ==================================
-Scoring                           Function                                          Comment
+Scoring（得分）                    Function（函数）                                   Comment（注解）
 ==============================    =============================================     ==================================
-**Classification**
+**Classification（分类）**
 'accuracy'                        :func:`metrics.accuracy_score`
 'average_precision'               :func:`metrics.average_precision_score`
-'f1'                              :func:`metrics.f1_score`                          for binary targets
-'f1_micro'                        :func:`metrics.f1_score`                          micro-averaged
-'f1_macro'                        :func:`metrics.f1_score`                          macro-averaged
-'f1_weighted'                     :func:`metrics.f1_score`                          weighted average
-'f1_samples'                      :func:`metrics.f1_score`                          by multilabel sample
-'neg_log_loss'                    :func:`metrics.log_loss`                          requires ``predict_proba`` support
-'precision' etc.                  :func:`metrics.precision_score`                   suffixes apply as with 'f1'
-'recall' etc.                     :func:`metrics.recall_score`                      suffixes apply as with 'f1'
+'f1'                              :func:`metrics.f1_score`                          for binary targets（用于二进制目标）
+'f1_micro'                        :func:`metrics.f1_score`                          micro-averaged（微平均）
+'f1_macro'                        :func:`metrics.f1_score`                          macro-averaged（微平均）
+'f1_weighted'                     :func:`metrics.f1_score`                          weighted average（加权平均）
+'f1_samples'                      :func:`metrics.f1_score`                          by multilabel sample（通过 multilabel 样本）
+'neg_log_loss'                    :func:`metrics.log_loss`                          requires ``predict_proba`` support（需要 ``predict_proba`` 支持）
+'precision' etc.                  :func:`metrics.precision_score`                   suffixes apply as with 'f1'（后缀适用于 'f1'）
+'recall' etc.                     :func:`metrics.recall_score`                      suffixes apply as with 'f1'（后缀适用于 'f1'）
 'roc_auc'                         :func:`metrics.roc_auc_score`
 
-**Clustering**
+**Clustering（聚类）**
 'adjusted_mutual_info_score'      :func:`metrics.adjusted_mutual_info_score`
 'adjusted_rand_score'             :func:`metrics.adjusted_rand_score`
 'completeness_score'              :func:`metrics.completeness_score`
@@ -80,7 +60,7 @@ Scoring                           Function                                      
 'normalized_mutual_info_score'    :func:`metrics.normalized_mutual_info_score`
 'v_measure_score'                 :func:`metrics.v_measure_score`
 
-**Regression**
+**Regression（回归）**
 'explained_variance'              :func:`metrics.explained_variance_score`
 'neg_mean_absolute_error'         :func:`metrics.mean_absolute_error`
 'neg_mean_squared_error'          :func:`metrics.mean_squared_error`
@@ -90,7 +70,7 @@ Scoring                           Function                                      
 ==============================    =============================================     ==================================
 
 
-Usage examples:
+使用案例:
 
     >>> from sklearn import svm, datasets
     >>> from sklearn.model_selection import cross_val_score
@@ -106,43 +86,27 @@ Usage examples:
 
 .. note::
 
-    The values listed by the ValueError exception correspond to the functions measuring
-    prediction accuracy described in the following sections.
-    The scorer objects for those functions are stored in the dictionary
-    ``sklearn.metrics.SCORERS``.
+    ValueError exception 列出的值对应于以下部分描述的 functions measuring prediction accuracy （测量预测精度的函数）。
+    这些函数的 scorer objects （记分对象）存储在 dictionary ``sklearn.metrics.SCORERS`` 中。
 
 .. currentmodule:: sklearn.metrics
 
 .. _scoring:
 
-Defining your scoring strategy from metric functions
+Defining your scoring strategy from metric functions（根据 metric 函数定义您的评分策略）
 -----------------------------------------------------
 
-The module :mod:`sklearn.metrics` also exposes a set of simple functions
-measuring a prediction error given ground truth and prediction:
+模块 :mod:`sklearn.metrics` 还公开了一组 measuring a prediction error （测量预测误差）的简单函数，给出了基础真实的数据和预测:
 
-- functions ending with ``_score`` return a value to
-  maximize, the higher the better.
+- 函数以 ``_score`` 结尾返回一个值来最大化，越高越好。
 
-- functions ending with ``_error`` or ``_loss`` return a
-  value to minimize, the lower the better.  When converting
-  into a scorer object using :func:`make_scorer`, set
-  the ``greater_is_better`` parameter to False (True by default; see the
-  parameter description below).
+- 函数 ``_error`` 或 ``_loss`` 结尾返回一个值来 minimize （最小化），越低越好。当使用 :func:`make_scorer` 转换成 scorer object （记分对象）时，将 ``greater_is_better`` 参数设置为 False（默认为 True; 请参阅下面的参数说明）。
 
-Metrics available for various machine learning tasks are detailed in sections
-below.
+可用于各种机器学习任务的 Metrics （指标）在下面详细介绍。
 
-Many metrics are not given names to be used as ``scoring`` values,
-sometimes because they require additional parameters, such as
-:func:`fbeta_score`. In such cases, you need to generate an appropriate
-scoring object.  The simplest way to generate a callable object for scoring
-is by using :func:`make_scorer`. That function converts metrics
-into callables that can be used for model evaluation.
+许多 metrics （指标）没有被用作 ``scoring（得分）`` 值的名称，有时是因为它们需要额外的参数，例如 :func:`fbeta_score` 。在这种情况下，您需要生成一个适当的 scoring object （评分对象）。生成 callable object for scoring （可评估对象进行评分）的最简单方法是使用 :func:`make_scorer` 。该函数将 metrics （指数）转换为可用于可调用的 model evaluation （模型评估）。
 
-One typical use case is to wrap an existing metric function from the library
-with non-default values for its parameters, such as the ``beta`` parameter for
-the :func:`fbeta_score` function::
+一个典型的用例是从库中包含一个非默认值参数的 existing metric function （现有指数函数），例如 :func:`fbeta_score` 函数的 ``beta`` 参数::
 
     >>> from sklearn.metrics import fbeta_score, make_scorer
     >>> ftwo_scorer = make_scorer(fbeta_score, beta=2)
@@ -150,26 +114,18 @@ the :func:`fbeta_score` function::
     >>> from sklearn.svm import LinearSVC
     >>> grid = GridSearchCV(LinearSVC(), param_grid={'C': [1, 10]}, scoring=ftwo_scorer)
 
-The second use case is to build a completely custom scorer object
-from a simple python function using :func:`make_scorer`, which can
-take several parameters:
 
-* the python function you want to use (``my_custom_loss_func``
-  in the example below)
+第二个用例是使用 :func:`make_scorer` 从简单的 python 函数构建一个完全 custom scorer object （自定义的记分对象），可以使用几个参数 :
 
-* whether the python function returns a score (``greater_is_better=True``,
-  the default) or a loss (``greater_is_better=False``).  If a loss, the output
-  of the python function is negated by the scorer object, conforming to
-  the cross validation convention that scorers return higher values for better models.
+* 你要使用的 python 函数（在下面的例子中是 ``my_custom_loss_func``）
 
-* for classification metrics only: whether the python function you provided requires continuous decision
-  certainties (``needs_threshold=True``).  The default value is
-  False.
+* python 函数是否返回一个分数 (``greater_is_better=True``, 默认值) 或者一个 loss （损失） (``greater_is_better=False``)。 如果是一个 loss （损失），scorer object （记分对象）的 python 函数的输出被 negated （否定），符合 cross validation convention （交叉验证约定），scorers 为更好的模型返回更高的值。
 
-* any additional parameters, such as ``beta`` or ``labels`` in :func:`f1_score`.
+* 仅用于 classification metrics （分类指数）: 您提供的 python 函数是否需要连续的 continuous decision certainties （判断确定性）（``needs_threshold=True``）。默认值为 False 。
 
-Here is an example of building custom scorers, and of using the
-``greater_is_better`` parameter::
+* 任何其他参数，如 ``beta`` 或者 ``labels`` 在 函数 :func:`f1_score` 。
+
+以下是建立 custom scorers （自定义记分对象）的示例，并使用 ``greater_is_better`` 参数::
 
     >>> import numpy as np
     >>> def my_custom_loss_func(ground_truth, predictions):
@@ -194,49 +150,37 @@ Here is an example of building custom scorers, and of using the
 
 .. _diy_scoring:
 
-Implementing your own scoring object
+Implementing your own scoring object（实现自己的记分对象）
 ------------------------------------
-You can generate even more flexible model scorers by constructing your own
-scoring object from scratch, without using the :func:`make_scorer` factory.
-For a callable to be a scorer, it needs to meet the protocol specified by
-the following two rules:
+您可以通过从头开始构建自己的 scoring object （记分对象），而不使用 :func:`make_scorer` factory 来生成更加灵活的 model scorers （模型记分对象）。
+对于被叫做 scorer 来说，它需要符合以下两个规则所指定的协议:
 
-- It can be called with parameters ``(estimator, X, y)``, where ``estimator``
-  is the model that should be evaluated, ``X`` is validation data, and ``y`` is
-  the ground truth target for ``X`` (in the supervised case) or ``None`` (in the
-  unsupervised case).
+- 可以使用参数 ``(estimator, X, y)`` 来调用它，其中 ``estimator`` 是要被评估的模型，``X`` 是验证数据， ``y`` 是 ``X`` (在有监督情况下) 或 ``None`` (在无监督情况下) 已经被标注的真实数据目标。
 
-- It returns a floating point number that quantifies the
-  ``estimator`` prediction quality on ``X``, with reference to ``y``.
-  Again, by convention higher numbers are better, so if your scorer
-  returns loss, that value should be negated.
+- 它返回一个浮点数，用于对 ``X`` 进行量化 ``estimator`` 的预测质量，参考 ``y`` 。
+  再次，按照惯例，更高的数字更好，所以如果你的 scorer 返回 loss ，那么这个值应该被 negated 。
 
 .. _multimetric_scoring:
 
-Using multiple metric evaluation
+Using multiple metric evaluation（使用多个指数评估）
 --------------------------------
 
-Scikit-learn also permits evaluation of multiple metrics in ``GridSearchCV``,
-``RandomizedSearchCV`` and ``cross_validate``.
+Scikit-learn 还允许在 ``GridSearchCV``, ``RandomizedSearchCV`` 和 ``cross_validate`` 中评估 multiple metric （多个指数）。
 
-There are two ways to specify multiple scoring metrics for the ``scoring``
-parameter:
+为 ``scoring`` 参数指定多个评分指标有两种方法: 
 
-- As an iterable of string metrics::
+- As an iterable of string metrics（作为 string metrics 的迭代）::
       >>> scoring = ['accuracy', 'precision']
 
-- As a ``dict`` mapping the scorer name to the scoring function::
+- As a ``dict`` mapping the scorer name to the scoring function（作为 ``dict`` ，将 scorer 名称映射到 scoring 函数）::
       >>> from sklearn.metrics import accuracy_score
       >>> from sklearn.metrics import make_scorer
       >>> scoring = {'accuracy': make_scorer(accuracy_score),
       ...            'prec': 'precision'}
 
-Note that the dict values can either be scorer functions or one of the
-predefined metric strings.
+请注意， dict 值可以是 scorer functions （记分函数）或者 predefined metric strings （预定义 metric 字符串）之一。
 
-Currently only those scorer functions that return a single score can be passed
-inside the dict. Scorer functions that return multiple values are not
-permitted and will require a wrapper to return a single metric::
+目前，只有那些返回 single score （单一分数）的 scorer functions （记分函数）才能在 dict 内传递。不允许返回多个值的 Scorer functions （Scorer 函数），并且需要一个 wrapper 才能返回 single metric（单个指标）::
 
     >>> from sklearn.model_selection import cross_validate
     >>> from sklearn.metrics import confusion_matrix
