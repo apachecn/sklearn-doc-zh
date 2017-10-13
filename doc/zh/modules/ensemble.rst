@@ -10,7 +10,7 @@
 
 集成方法通常分为两种:
 
-- 在 **平均方法** 中，驱动原则是构建几个独立的估计器，然后平均化它们的预测结果。一般来说组合之后的估计器是会要比单个估计器要好的，因为它的方差减小了。
+- **平均方法**，该方法的驱动原则是构建几个独立的估计器，然后平均化它们的预测结果。一般来说组合之后的估计器是会要比单个估计器要好的，因为它的方差减小了。
 
   **示例:** :ref:`Bagging 方法 <bagging>`, :ref:`随机森林 <forest>`, ...
 
@@ -25,7 +25,7 @@ Bagging元估计
 ======================
 
 在集成算法中，bagging方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
-该方法通过在构建模型的过程中引入随机性，以此来减少基本估计器的方差(例如，决策树)。
+该方法通过在构建模型的过程中引入随机性，以此来减少基估计器的方差(例如，决策树)。
 在多数情况下，bagging方法提供了一种非常简单的方式来对单一模型进行改进，同时无需适应底层算法。
 因为bagging方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树），相比之下boosting方法在弱模型上表现更好（例如，浅层决策树）。
 
@@ -55,7 +55,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_bias_variance.py`
 
-.. topic:: References
+.. topic:: 参考文献
 
   .. [B1999] L. Breiman, "Pasting small votes for classification in large
          databases and on-line", Machine Learning, 36(1), 85-103, 1999.
@@ -72,7 +72,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
 .. _forest:
 
-Forests of randomized trees
+由随机树组成的森林(Forests of randomized trees)
 ===========================
 
 :mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees算法。
@@ -102,7 +102,7 @@ Forests of randomized trees
 由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于平均，其方差也会减小，通常能够补偿偏差的增加，从而产生更好的模型。
 
 
-与原始版本的实现 [B2001]_ 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对单个类进行投票。 
+与原始版本的实现 [B2001]_ 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对类别进行投票。 
 
 
 极限随机树
@@ -179,13 +179,13 @@ Forests of randomized trees
 注意由于进程间通信具有开销，这里的提速并不是线性的（即，使用 ``k`` 个作业不会快k倍）。 
 当然，在建立大量的树，或者构建单个树需要相当长的时间（例如，在大型数据集上）时，（通过并行化）仍然可以实现显著的加速。 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_iris.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_importances_faces.py`
  * :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`
 
-.. topic:: References
+.. topic:: 参考文献
 
  .. [B2001] L. Breiman, "Random Forests", Machine Learning, 45(1), 5-32, 2001.
 
@@ -236,7 +236,7 @@ Forests of randomized trees
 由于相邻数据点更可能位于树的同一叶子中，此时该变换表现为隐式非参数密度估计。 
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_random_forest_embedding.py`
 
