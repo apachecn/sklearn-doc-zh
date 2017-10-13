@@ -6,7 +6,7 @@ Ensemble methods
 
 .. currentmodule:: sklearn.ensemble
 
-**集成方法**的目标是能够把使用给定学习算法构建的几个基本估计器的预测结果给结合起来，相比于单个估计器能够提升提高泛化能力/鲁棒性。
+**集成方法** 的目标是能够把使用给定学习算法构建的几个基本估计器的预测结果给结合起来，相比于单个估计器能够提升提高泛化能力/鲁棒性。
 
 集成方法通常分为两种:
 
@@ -99,12 +99,14 @@ snippet below illustrates how to instantiate a bagging ensemble of
 Forests of randomized trees
 ===========================
 
-`sklearn.ensemble` 模块包含两个基于随机决策树的平均算法： RandomForest 算法和 Extra-Trees 方法。
-这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques） [B1998]。
+:mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees 方法。
+这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques）[B1998]_ 。
 这意味着通过在分类器构造过程中引入随机性来创建一组不同的分类器。集成分类器的预测是单个分类器预测结果的平均值。 
+
+
 与其他分类器一样，森林分类器必须拟合（fitted）两个数组：
-  保存训练样本的数组（可能稀疏或密集）X，大小为 [n_samples, n_features]
-  保存训练样本目标值（类标签）的数组Y，大小为 [n_samples] ： 
+保存训练样本的数组（可能稀疏或密集）X，大小为 [n_samples, n_features]。
+保存训练样本目标值（类标签）的数组Y，大小为 [n_samples]::
 
     >>> from sklearn.ensemble import RandomForestClassifier
     >>> X = [[0, 0], [1, 1]]
@@ -113,22 +115,22 @@ Forests of randomized trees
     >>> clf = clf.fit(X, Y)
 
 
-同决策树一样，随机森林算法（forests of trees）也能够通过扩展来解决多输出问题(multi-output problems) (如果 Y 的大小是 ``[n_samples, n_outputs])``. 
+同 :ref:`决策树 <tree>` 一样，随机森林算法（forests of trees）也能够通过扩展来解决多输出问题(multi-output problems) (如果 Y 的大小是 ``[n_samples, n_outputs])``. 
 
 随机森林
 --------------
 
-在随机森林中（参见 `RandomForestClassifier` 和 `RandomForestRegressor` 类），
+在随机森林中（参见 :class:`ExtraTreesClassifier` 和 :class:`ExtraTreesRegressor` 类），
 集成模型中的每棵树构建时的样本都是由训练集经过替换得来的（例如，自助采样法）。
 另外，在构建树的过程中进行结点分割时，选择的分割点不再是所有特征中最佳分割点，而是特征的随机子集中的最佳分割点。
 由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于平均，其方差也会减小，通常能够补偿偏差的增加，从而产生更好的模型。
-与原始版本的实现 [B2001]相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对单个类进行投票。 
+与原始版本的实现 [B2001] 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对单个类进行投票。 
 
 
 极限随机树
 --------------------------
 
-在极限随机树中（参见 `ExtraTreesClassifier 和ExtraTreesRegressor` 类)，
+在极限随机树中（参见 :class:`ExtraTreesClassifier` 和 :class:`ExtraTreesRegressor` 类)，
 计算分割点方法中的随机性进一步增强。 
 在随机森林中，使用的是候选特征的随机子集，而不是寻找最具有区分度的阈值，
 这里的阈值是针对每个候选特征而随机生成的，并且会把这些随机生成的阈值中的最佳值作为分割规则。
@@ -169,34 +171,34 @@ Forests of randomized trees
 参数
 ----------
 
-使用这些方法时要调整的参数主要是n_estimators和max_features。
+使用这些方法时要调整的参数主要是 ``n_estimators`` 和 ``max_features``。
 前者（n_estimators）是森林里的树木数量，越大越好，但是计算时间会增加。
 此外要注意树的数量超过临界值之后算法的效果并不会很显著的变好。
 后者（max_features）是分割节点时要考虑的特征的随机子集的大小。
 方差减小得越多，偏差增大得越多。
 根据经验回归问题最好使用默认值 max_features = n_features，
-分类问题最好使用 max_features = sqrt（n_features）
-（其中n_features是特征的个数）。
-max_depth = None 和 min_samples_split = 1 结合通常会有不错的效果。
+分类问题最好使用 ``max_features = sqrt（n_features``
+（其中 ``n_features`` 是特征的个数）。
+``max_depth = None 和 min_samples_split = 1`` 结合通常会有不错的效果。
 请记住，这些（默认）值通常不是最佳的，同时还可能消耗大量的内存，最佳参数值应由交叉验证获得。
-另外，请注意，在随机林中，默认使用自助采样法（bootstrap = True），
-然而extra-trees的默认策略是使用整个数据集（bootstrap = False）。
-当使用自助采样法方法抽样时，泛化精度是可以通过剩余的或者袋子外的样本来估算的，设置 oob_score = True 即可。 
+另外，请注意，在随机林中，默认使用自助采样法（``bootstrap = True``），
+然而extra-trees的默认策略是使用整个数据集（``bootstrap = False``）。
+当使用自助采样法方法抽样时，泛化精度是可以通过剩余的或者袋子外的样本来估算的，设置 ``oob_score = True`` 即可。 
 
-.. note::
+.. 提示::
 
-    默认参数下模型复杂度是：O(M*N*log(N))， 
-    其中M是树的数目，N是样本数。 
-    可以通过设置以下参数来降低模型复杂度：min_samples_split, min_samples_leaf, max_leaf_nodes and max_depth. 
+    默认参数下模型复杂度是：``O(M*N*log(N))``， 
+    其中M是树的数目，``N`` 是样本数。 
+    可以通过设置以下参数来降低模型复杂度：``min_samples_split``, ``min_samples_leaf``, ``max_leaf_nodes`` and ``max_depth``. 
 
 
 并行化 
 ---------------
 
-最后，这个模块还支持树的并行构建，可以通过n_jobs参数来规划并行计算。
-如果n_jobs = k，则计算被划分为k个作业，并运行在机器的k个核上。 
-如果n_jobs = -1，则可以使用机器的所有核。 
-注意由于进程间通信具有开销，这里的提速并不是线性的（即，使用k个作业不会快k倍）。 
+最后，这个模块还支持树的并行构建，可以通过 ``n_jobs`` 参数来规划并行计算。
+如果 ``n_jobs = k``，则计算被划分为 ``k`` 个作业，并运行在机器的 ``k`` 个核上。 
+如果 ``n_jobs = -1``，则可以使用机器的所有核。 
+注意由于进程间通信具有开销，这里的提速并不是线性的（即，使用 ``k`` 个作业不会快k倍）。 
 当然，在建立大量的树，或者构建单个树需要相当长的时间（例如，在大型数据集上）时，（通过并行化）仍然可以实现显著的加速。 
 
 .. topic:: Examples:
@@ -220,8 +222,8 @@ max_depth = None 和 min_samples_split = 1 结合通常会有不错的效果。
 -----------------------------
 
 特征对目标变量预测的重要性可以通过（树中的决策节点的）特征使用的顺序（即深度）来进行评估。
-决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该特征相对重要性。 
-通过平均多个随机树中的预期贡献率（expected activity rates），可以减少这种估计的**方差**，并将其用于特征选择。 
+决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该**特征相对重要性**。 
+通过**平均**多个随机树中的**预期贡献率*（expected activity rates），可以减少这种估计的**方差**，并将其用于特征选择。 
 以下示例显示在面部识别任务中，用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_forest_importances_faces_001.png
@@ -239,10 +241,10 @@ max_depth = None 和 min_samples_split = 1 结合通常会有不错的效果。
 
 .. _random_trees_embedding:
 
-完全随机树嵌入（编码）
+完全随机树嵌入
 ------------------------------
 
-:class:`RandomTreesEmbedding`实现了无监督的数据转换。
+:class:`RandomTreesEmbedding` 实现了无监督的数据转换。
 通过由完全随机树构成的森林，:class:`RandomTreesEmbedding` 使用数据尾部的叶子节点的索引对数据进行编码。
 该索引以one-of-K方式编码，能够形成一个高维的稀疏二进制编码。 这种编码的方式非常高效，可以作为其他学习任务的基础。
 编码的大小和稀疏度可以通过选择树的数量和每棵树的最大深度来影响。对于集成中的每棵树，编码包含一个实体。 
