@@ -1334,59 +1334,47 @@ Here is a small example of usage of this function::
 
 .. _regression_metrics:
 
-Regression metrics
+Regression metrics（回归指标）
 ===================
 
 .. currentmodule:: sklearn.metrics
 
-The :mod:`sklearn.metrics` module implements several loss, score, and utility
-functions to measure regression performance. Some of those have been enhanced
-to handle the multioutput case: :func:`mean_squared_error`,
-:func:`mean_absolute_error`, :func:`explained_variance_score` and
-:func:`r2_score`.
+该 :mod:`sklearn.metrics` 模块实现了一些 loss, score 以及 utility 函数以测量 regression（回归）的性能.
+其中一些已经被加强以处理多个输出的场景: :func:`mean_squared_error`, :func:`mean_absolute_error`, :func:`explained_variance_score` 和 :func:`r2_score`.
 
 
-These functions have an ``multioutput`` keyword argument which specifies the
-way the scores or losses for each individual target should be averaged. The
-default is ``'uniform_average'``, which specifies a uniformly weighted mean
-over outputs. If an ``ndarray`` of shape ``(n_outputs,)`` is passed, then its
-entries are interpreted as weights and an according weighted average is
-returned. If ``multioutput`` is ``'raw_values'`` is specified, then all
-unaltered individual scores or losses will be returned in an array of shape
-``(n_outputs,)``.
+这些函数有 ``multioutput`` 这样一个 keyword（关键的）参数, 它指定每一个目标的 score（得分）或 loss（损失）的平均值的方式.
+默认是 ``'uniform_average'``, 其指定了输出时一致的权重均值.
+如果一个 ``ndarray`` 的 shape ``(n_outputs,)`` 被传递, 则其中的 entries（条目）将被解释为权重，并返回相应的加权平均值.
+如果 ``multioutput`` 指定了 ``'raw_values'`` , 则所有未改变的部分 score（得分）或 loss（损失）将以 ``(n_outputs,)`` 形式的数组返回.
 
 
-The :func:`r2_score` and :func:`explained_variance_score` accept an additional
-value ``'variance_weighted'`` for the ``multioutput`` parameter. This option
-leads to a weighting of each individual score by the variance of the
-corresponding target variable. This setting quantifies the globally captured
-unscaled variance. If the target variables are of different scale, then this
-score puts more importance on well explaining the higher variance variables.
-``multioutput='variance_weighted'`` is the default value for :func:`r2_score`
-for backward compatibility. This will be changed to ``uniform_average`` in the
-future.
+该 :func:`r2_score` 和 :func:`explained_variance_score` 函数接受一个额外的值 ``'variance_weighted'`` 用于 ``multioutput`` 参数.
+该选项通过相应目标变量的方差使得每个单独的 score 进行加权.
+该设置量化了全局捕获的未缩放方差.
+如果目标变量的大小不一样, 则该 score 更好地解释了较高的方差变量.
+``multioutput='variance_weighted'`` 是 :func:`r2_score` 的默认值以向后兼容.
+以后该值会被改成 ``uniform_average``.
+
 
 .. _explained_variance_score:
 
-Explained variance score
+解释方差得分
 -------------------------
 
-The :func:`explained_variance_score` computes the `explained variance
-regression score <https://en.wikipedia.org/wiki/Explained_variation>`_.
+该 :func:`explained_variance_score` 函数计算了 `explained variance
+regression score（解释的方差回归得分） <https://en.wikipedia.org/wiki/Explained_variation>`_.
 
-If :math:`\hat{y}` is the estimated target output, :math:`y` the corresponding
-(correct) target output, and :math:`Var` is `Variance
-<https://en.wikipedia.org/wiki/Variance>`_, the square of the standard deviation,
-then the explained variance is estimated as follow:
+如果 :math:`\hat{y}` 是预估的目标输出, :math:`y` 是相应（正确的）目标输出, 并且 :math:`Var` is `方差
+<https://en.wikipedia.org/wiki/Variance>`_, 标准差的平方, 那么解释的方差预估如下:
 
 .. math::
 
   \texttt{explained\_{}variance}(y, \hat{y}) = 1 - \frac{Var\{ y - \hat{y}\}}{Var\{y\}}
 
-The best possible score is 1.0, lower values are worse.
+最好的得分是 1.0, 值越低越差.
 
-Here is a small example of usage of the :func:`explained_variance_score`
-function::
+下面是一下有关 :func:`explained_variance_score` 函数使用的一些例子::
 
     >>> from sklearn.metrics import explained_variance_score
     >>> y_true = [3, -0.5, 2, 7]
@@ -1404,23 +1392,19 @@ function::
 
 .. _mean_absolute_error:
 
-Mean absolute error
+平均绝对误差
 -------------------
 
-The :func:`mean_absolute_error` function computes `mean absolute
-error <https://en.wikipedia.org/wiki/Mean_absolute_error>`_, a risk
-metric corresponding to the expected value of the absolute error loss or
-:math:`l1`-norm loss.
+该 :func:`mean_absolute_error` 函数计算了 `平均绝对误差 <https://en.wikipedia.org/wiki/Mean_absolute_error>`_, 一个对应绝对误差损失预期值或者 :math:`l1`-norm 损失的风险度量.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample,
-and :math:`y_i` is the corresponding true value, then the mean absolute error
-(MAE) estimated over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则平均绝对误差 (MAE) 预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MAE}(y, \hat{y}) = \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}}-1} \left| y_i - \hat{y}_i \right|.
 
-Here is a small example of usage of the :func:`mean_absolute_error` function::
+下面是一个有关 :func:`mean_absolute_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import mean_absolute_error
   >>> y_true = [3, -0.5, 2, 7]
@@ -1439,24 +1423,19 @@ Here is a small example of usage of the :func:`mean_absolute_error` function::
 
 .. _mean_squared_error:
 
-Mean squared error
+均方误差
 -------------------
 
-The :func:`mean_squared_error` function computes `mean square
-error <https://en.wikipedia.org/wiki/Mean_squared_error>`_, a risk
-metric corresponding to the expected value of the squared (quadratic) error or
-loss.
+该 :func:`mean_squared_error` 函数计算了 `均方误差 <https://en.wikipedia.org/wiki/Mean_squared_error>`_, 一个对应于平方（二次）误差或损失的预期值的风险度量.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample,
-and :math:`y_i` is the corresponding true value, then the mean squared error
-(MSE) estimated over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则均方误差（MSE）预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MSE}(y, \hat{y}) = \frac{1}{n_\text{samples}} \sum_{i=0}^{n_\text{samples} - 1} (y_i - \hat{y}_i)^2.
 
-Here is a small example of usage of the :func:`mean_squared_error`
-function::
+下面是一个有关 :func:`mean_squared_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import mean_squared_error
   >>> y_true = [3, -0.5, 2, 7]
@@ -1476,30 +1455,23 @@ function::
 
 .. _mean_squared_log_error:
 
-Mean squared logarithmic error
+均方误差对数
 ------------------------------
 
-The :func:`mean_squared_log_error` function computes a risk metric
-corresponding to the expected value of the squared logarithmic (quadratic)
-error or loss.
+该 :func:`mean_squared_log_error` 函数计算了一个对应平方对数（二次）误差或损失的预估值风险度量.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample,
-and :math:`y_i` is the corresponding true value, then the mean squared
-logarithmic error (MSLE) estimated over :math:`n_{\text{samples}}` is
-defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则均方误差对数（MSLE）预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MSLE}(y, \hat{y}) = \frac{1}{n_\text{samples}} \sum_{i=0}^{n_\text{samples} - 1} (\log_e (1 + y_i) - \log_e (1 + \hat{y}_i) )^2.
 
-Where :math:`\log_e (x)` means the natural logarithm of :math:`x`. This metric
-is best to use when targets having exponential growth, such as population
-counts, average sales of a commodity over a span of years etc. Note that this
-metric penalizes an under-predicted estimate greater than an over-predicted
-estimate.
+其中 :math:`\log_e (x)` 表示 :math:`x` 的自然对数.
+当目标具有指数增长的趋势时, 该指标最适合使用, 例如人口数量, 跨年度商品的平均销售额等.
+请注意, 该指标会对低于预测的估计值进行估计.
 
-Here is a small example of usage of the :func:`mean_squared_log_error`
-function::
+下面是一个有关 :func:`mean_squared_log_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import mean_squared_log_error
   >>> y_true = [3, 5, 2.5, 7]
@@ -1513,25 +1485,22 @@ function::
 
 .. _median_absolute_error:
 
-Median absolute error
+中位绝对误差
 ---------------------
 
-The :func:`median_absolute_error` is particularly interesting because it is
-robust to outliers. The loss is calculated by taking the median of all absolute
-differences between the target and the prediction.
+该 :func:`median_absolute_error` 函数尤其有趣, 因为它的离群值很强.
+通过取目标和预测之间的所有绝对差值的中值来计算损失.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample
-and :math:`y_i` is the corresponding true value, then the median absolute error
-(MedAE) estimated over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则中位绝对误差（MedAE）预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MedAE}(y, \hat{y}) = \text{median}(\mid y_1 - \hat{y}_1 \mid, \ldots, \mid y_n - \hat{y}_n \mid).
 
-The :func:`median_absolute_error` does not support multioutput.
+该 :func:`median_absolute_error` 函数不支持多输出.
 
-Here is a small example of usage of the :func:`median_absolute_error`
-function::
+下面是一个有关 :func:`median_absolute_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import median_absolute_error
   >>> y_true = [3, -0.5, 2, 7]
@@ -1541,28 +1510,24 @@ function::
 
 .. _r2_score:
 
-R² score, the coefficient of determination
+R² score, 可决系数
 -------------------------------------------
 
-The :func:`r2_score` function computes R², the `coefficient of
-determination <https://en.wikipedia.org/wiki/Coefficient_of_determination>`_.
-It provides a measure of how well future samples are likely to
-be predicted by the model. Best possible score is 1.0 and it can be negative
-(because the model can be arbitrarily worse). A constant model that always
-predicts the expected value of y, disregarding the input features, would get a
-R^2 score of 0.0.
+该 :func:`r2_score` 函数计算了 computes R², 即 `可决系数 <https://en.wikipedia.org/wiki/Coefficient_of_determination>`_.
+它提供了将来样本如何可能被模型预测的估量.
+最佳分数为 1.0, 可以为负数（因为模型可能会更糟）.
+总是预测 y 的预期值，不考虑输入特征的常数模型将得到 R^2 得分为 0.0.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample
-and :math:`y_i` is the corresponding true value, then the score R² estimated
-over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则 R² 得分预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   R^2(y, \hat{y}) = 1 - \frac{\sum_{i=0}^{n_{\text{samples}} - 1} (y_i - \hat{y}_i)^2}{\sum_{i=0}^{n_\text{samples} - 1} (y_i - \bar{y})^2}
 
-where :math:`\bar{y} =  \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}} - 1} y_i`.
+其中 :math:`\bar{y} =  \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}} - 1} y_i`.
 
-Here is a small example of usage of the :func:`r2_score` function::
+下面是一个有关 :func:`r2_score` 函数用法的小例子::
 
   >>> from sklearn.metrics import r2_score
   >>> y_true = [3, -0.5, 2, 7]
@@ -1595,44 +1560,39 @@ Here is a small example of usage of the :func:`r2_score` function::
 
 .. _clustering_metrics:
 
-Clustering metrics
+聚类指标
 ======================
 
 .. currentmodule:: sklearn.metrics
 
-The :mod:`sklearn.metrics` module implements several loss, score, and utility
-functions. For more information see the :ref:`clustering_evaluation`
-section for instance clustering, and :ref:`biclustering_evaluation` for
-biclustering.
+该 :mod:`sklearn.metrics` 模块实现了一些 loss, score 和 utility 函数.
+更多信息请参阅 :ref:`clustering_evaluation` 部分, 例如聚类, 以及用于二分聚类的 :ref:`biclustering_evaluation`.
 
 
 .. _dummy_estimators:
 
 
-Dummy estimators
+Dummy estimators（虚拟估计）
 =================
 
 .. currentmodule:: sklearn.dummy
 
-When doing supervised learning, a simple sanity check consists of comparing
-one's estimator against simple rules of thumb. :class:`DummyClassifier`
-implements several such simple strategies for classification:
+在进行监督学习的过程中，简单的 sanity check（理性检查）包括将人的估计与简单的经验法则进行比较.
+:class:`DummyClassifier` 实现了几种简单的分类策略:
 
-- ``stratified`` generates random predictions by respecting the training
-  set class distribution.
-- ``most_frequent`` always predicts the most frequent label in the training set.
+- ``stratified`` 通过在训练集类分布方面来生成随机预测. 
+- ``most_frequent`` 总是预测训练集中最常见的标签.
 - ``prior`` always predicts the class that maximizes the class prior
   (like ``most_frequent`) and ``predict_proba`` returns the class prior.
-- ``uniform`` generates predictions uniformly at random.
-- ``constant`` always predicts a constant label that is provided by the user.
+- ``uniform`` 随机产生预测.
+- ``constant`` 总是预测用户提供的常量标签.
    A major motivation of this method is F1-scoring, when the positive class
    is in the minority.
+   这种方法的主要动机是 F1-scoring, 当 positive class（正类）较少时.
 
-Note that with all these strategies, the ``predict`` method completely ignores
-the input data!
+请注意, 这些所有的策略, ``predict`` 方法彻底的忽略了输入数据!
 
-To illustrate :class:`DummyClassifier`, first let's create an imbalanced
-dataset::
+为了说明 :class:`DummyClassifier`, 首先让我们创建一个 imbalanced dataset::
 
   >>> from sklearn.datasets import load_iris
   >>> from sklearn.model_selection import train_test_split
@@ -1641,7 +1601,7 @@ dataset::
   >>> y[y != 1] = -1
   >>> X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
-Next, let's compare the accuracy of ``SVC`` and ``most_frequent``::
+接下来, 让我们比较一下 ``SVC`` 和  ``most_frequent`` 的准确性.
 
   >>> from sklearn.dummy import DummyClassifier
   >>> from sklearn.svm import SVC
@@ -1654,31 +1614,26 @@ Next, let's compare the accuracy of ``SVC`` and ``most_frequent``::
   >>> clf.score(X_test, y_test)  # doctest: +ELLIPSIS
   0.57...
 
-We see that ``SVC`` doesn't do much better than a dummy classifier. Now, let's
-change the kernel::
+我们看到 ``SVC`` 没有比一个 dummy classifier（虚拟分类器）好很多.
+现在, 让我们来更改一下 kernel::
 
   >>> clf = SVC(kernel='rbf', C=1).fit(X_train, y_train)
   >>> clf.score(X_test, y_test)  # doctest: +ELLIPSIS
   0.97...
 
-We see that the accuracy was boosted to almost 100%.  A cross validation
-strategy is recommended for a better estimate of the accuracy, if it
-is not too CPU costly. For more information see the :ref:`cross_validation`
-section. Moreover if you want to optimize over the parameter space, it is highly
-recommended to use an appropriate methodology; see the :ref:`grid_search`
-section for details.
+我们看到准确率提升到将近 100%.
+建议采用交叉验证策略, 以更好地估计精度, 如果不是太耗 CPU 的话.
+更多信息请参阅 :ref:`cross_validation` 部分.
+此外，如果要优化参数空间，强烈建议您使用适当的方法;
+更多详情请参阅 :ref:`grid_search` 部分.
 
-More generally, when the accuracy of a classifier is too close to random, it
-probably means that something went wrong: features are not helpful, a
-hyperparameter is not correctly tuned, the classifier is suffering from class
-imbalance, etc...
+通常来说，当分类器的准确度太接近随机情况时，这可能意味着出现了一些问题: 特征没有帮助, 超参数没有正确调整, class 不平衡造成分类器有问题等...
 
-:class:`DummyRegressor` also implements four simple rules of thumb for regression:
+:class:`DummyRegressor` 还实现了四个简单的经验法则来进行回归:
 
-- ``mean`` always predicts the mean of the training targets.
-- ``median`` always predicts the median of the training targets.
-- ``quantile`` always predicts a user provided quantile of the training targets.
-- ``constant`` always predicts a constant value that is provided by the user.
+- ``mean`` 总是预测训练目标的平均值.
+- ``median`` 总是预测训练目标的中位数.
+- ``quantile`` 总是预测用户提供的训练目标的 quantile（分位数）.
+- ``constant`` 总是预测由用户提供的常数值.
 
-In all these strategies, the ``predict`` method completely ignores
-the input data.
+在以上所有的策略中, ``predict`` 方法完全忽略了输入数据.
