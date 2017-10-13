@@ -1,35 +1,30 @@
 .. _metrics:
 
-Pairwise metrics, Affinities and Kernels
+配对矩阵，类别和核函数
 ========================================
 
-The :mod:`sklearn.metrics.pairwise` submodule implements utilities to evaluate
-pairwise distances or affinity of sets of samples.
+The :mod:`sklearn.metrics.pairwise` 子模块实现了用于评估成对距离或样本集合之间的联系的实用程序。
 
-This module contains both distance metrics and kernels. A brief summary is
-given on the two here.
+本模块同时包含距离度量和核函数，对于这两者这里提供一个简短的总结。
 
-Distance metrics are functions ``d(a, b)`` such that ``d(a, b) < d(a, c)``
-if objects ``a`` and ``b`` are considered "more similar" than objects ``a``
-and ``c``. Two objects exactly alike would have a distance of zero.
-One of the most popular examples is Euclidean distance.
-To be a 'true' metric, it must obey the following four conditions::
+距离度量是形如 ``d(a, b)`` 例如 ``d(a, b) < d(a, c)``
+如果对象 ``a`` 和 ``b`` 被认为 "更加相似" 相比于 ``a``
+和 ``c``. 两个完全相同的目标的距离是零。最广泛使用的例子就是欧几里得距离。
+为了保证是 '真实的' 度量, 其必须满足以下条件:
 
-    1. d(a, b) >= 0, for all a and b
-    2. d(a, b) == 0, if and only if a = b, positive definiteness
-    3. d(a, b) == d(b, a), symmetry
-    4. d(a, c) <= d(a, b) + d(b, c), the triangle inequality
+    1. 对于所有的 a 和 b，d(a, b) >= 0
+    2. 正定性：当且仅当 a = b时，d(a, b) == 0
+    3. 对称性：d(a, b) == d(b, a)
+    4. 三角不等式：d(a, c) <= d(a, b) + d(b, c)
 
-Kernels are measures of similarity, i.e. ``s(a, b) > s(a, c)``
-if objects ``a`` and ``b`` are considered "more similar" than objects
-``a`` and ``c``. A kernel must also be positive semi-definite.
+核函数是相似度的标准. 
+如果对象 ``a`` 和 ``b`` 被认为 "更加相似" 相比对象
+``a`` 和 ``c``，那么 ``s(a, b) > s(a, c)``. 核函数必须是半正定性的.
 
-There are a number of ways to convert between a distance metric and a
-similarity measure, such as a kernel. Let ``D`` be the distance, and ``S`` be
-the kernel:
+存在许多种方法将距离度量转换为相似度标准，例如核函数。 假定 ``D`` 是距离, and ``S`` 是核函数:
 
-    1. ``S = np.exp(-D * gamma)``, where one heuristic for choosing
-       ``gamma`` is ``1 / num_features``
+    1. ``S = np.exp(-D * gamma)``, 其中
+       ``gamma`` 的一种选择是  ``1 / num_features``
     2. ``S = 1. / (D / np.max(D))``
 
 
@@ -37,27 +32,23 @@ the kernel:
 
 .. _cosine_similarity:
 
-Cosine similarity
+余弦相似度
 -----------------
-:func:`cosine_similarity` computes the L2-normalized dot product of vectors.
-That is, if :math:`x` and :math:`y` are row vectors,
-their cosine similarity :math:`k` is defined as:
+:func:`cosine_similarity`  计算L2正则化的向量的点积.
+也就是说, if :math:`x` 和 :math:`y` 都是行向量,,
+它们的余弦相似度 :math:`k` 定义为:
 
 .. math::
 
     k(x, y) = \frac{x y^\top}{\|x\| \|y\|}
 
-This is called cosine similarity, because Euclidean (L2) normalization
-projects the vectors onto the unit sphere,
-and their dot product is then the cosine of the angle between the points
-denoted by the vectors.
+这被称为余弦相似度, 因为欧几里得(L2) 正则化将向量投影到单元球内，那么它们的点积就是被向量表示的点之间的角度。
 
-This kernel is a popular choice for computing the similarity of documents
-represented as tf-idf vectors.
-:func:`cosine_similarity` accepts ``scipy.sparse`` matrices.
-(Note that the tf-idf functionality in ``sklearn.feature_extraction.text``
-can produce normalized vectors, in which case :func:`cosine_similarity`
-is equivalent to :func:`linear_kernel`, only slower.)
+这种核函数对于计算以tf-idf向量表示的文档之间的相似度是一个通常的选择.
+:func:`cosine_similarity` 接受 ``scipy.sparse`` 矩阵.
+(注意到 ``sklearn.feature_extraction.text``
+中的tf-idf函数能计算归一化的向量，在这种情况下 :func:`cosine_similarity`
+等同于 :func:`linear_kernel`, 只是慢一点而已.)
 
 .. topic:: References:
 
@@ -67,11 +58,10 @@ is equivalent to :func:`linear_kernel`, only slower.)
 
 .. _linear_kernel:
 
-Linear kernel
+线性核函数
 -------------
-The function :func:`linear_kernel` computes the linear kernel, that is, a
-special case of :func:`polynomial_kernel` with ``degree=1`` and ``coef0=0`` (homogeneous).
-If ``x`` and ``y`` are column vectors, their linear kernel is:
+函数 :func:`linear_kernel` 是计算线性核函数, 也就是一种在 ``degree=1`` 和 ``coef0=0`` (同质化) 情况下的 :func:`polynomial_kernel` 的特殊形式.
+如果 ``x`` 和 ``y`` 是列向量, 它们的线性核函数是:
 
 .. math::
 
@@ -79,35 +69,30 @@ If ``x`` and ``y`` are column vectors, their linear kernel is:
 
 .. _polynomial_kernel:
 
-Polynomial kernel
+多项式核函数
 -----------------
-The function :func:`polynomial_kernel` computes the degree-d polynomial kernel
-between two vectors. The polynomial kernel represents the similarity between two
-vectors. Conceptually, the polynomial kernels considers not only the similarity
-between vectors under the same dimension, but also across dimensions. When used
-in machine learning algorithms, this allows to account for feature interaction.
+函数 :func:`polynomial_kernel` 计算两个向量的d次方的多项式核函数. 多项式核函数代表着两个向量之间的相似度.
+ 概念上来说，多项式核函数不仅考虑相同维度还考虑跨维度的向量的相似度。当被用在机器学习中的时候，这可以原来代表着特征之间的 相互作用。
 
-The polynomial kernel is defined as:
+多项式函数定义为:
 
 .. math::
 
     k(x, y) = (\gamma x^\top y +c_0)^d
 
-where:
+其中:
 
-    * ``x``, ``y`` are the input vectors
-    * ``d`` is the kernel degree
+    * ``x``, ``y`` 是输入向量
+    * ``d``  核函数维度
 
-If :math:`c_0 = 0` the kernel is said to be homogeneous.
+如果 :math:`c_0 = 0` 那么核函数就被定义为同质化的.
 
 .. _sigmoid_kernel:
 
-Sigmoid kernel
+S型核函数
 --------------
-The function :func:`sigmoid_kernel` computes the sigmoid kernel between two
-vectors. The sigmoid kernel is also known as hyperbolic tangent, or Multilayer
-Perceptron (because, in the neural network field, it is often used as neuron
-activation function). It is defined as:
+函数 :func:`sigmoid_kernel` 计算两个向量之间的S型核函数.
+S型核函数也被称为双曲切线或者 多层感知机(因为在神经网络领域，它经常被当做激活函数). S型核函数定义为:
 
 .. math::
 
@@ -115,50 +100,46 @@ activation function). It is defined as:
 
 where:
 
-    * ``x``, ``y`` are the input vectors
-    * :math:`\gamma` is known as slope
-    * :math:`c_0` is known as intercept
+    * ``x``, ``y`` 是输入向量
+    * :math:`\gamma` 是斜度
+    * :math:`c_0` 是截距
 
 .. _rbf_kernel:
 
-RBF kernel
+RBF核函数
 ----------
-The function :func:`rbf_kernel` computes the radial basis function (RBF) kernel
-between two vectors. This kernel is defined as:
+函数 :func:`rbf_kernel` 计算计算两个向量之间的径向基函数核 (RBF) 。 其定义为:
 
 .. math::
 
     k(x, y) = \exp( -\gamma \| x-y \|^2)
 
-where ``x`` and ``y`` are the input vectors. If :math:`\gamma = \sigma^{-2}`
-the kernel is known as the Gaussian kernel of variance :math:`\sigma^2`.
+其中 ``x`` 和 ``y`` 是输入向量. 如果 :math:`\gamma = \sigma^{-2}`
+核函数就变成方差为 :math:`\sigma^2` 的高斯核函数.
 
 .. _laplacian_kernel:
 
-Laplacian kernel
+拉普拉斯核函数
 ----------------
-The function :func:`laplacian_kernel` is a variant on the radial basis 
-function kernel defined as:
+函数 :func:`laplacian_kernel` 是一种径向基函数核的变体，定义为:
 
 .. math::
 
     k(x, y) = \exp( -\gamma \| x-y \|_1)
 
-where ``x`` and ``y`` are the input vectors and :math:`\|x-y\|_1` is the 
-Manhattan distance between the input vectors.
+其中 ``x`` 和 ``y`` 是输入向量 并且 :math:`\|x-y\|_1` 是输入向量之间的曼哈顿距离.
 
-It has proven useful in ML applied to noiseless data.
-See e.g. `Machine learning for quantum mechanics in a nutshell
+已被证明在机器学习中运用到无噪声数据中是有用的.
+可见例如 `Machine learning for quantum mechanics in a nutshell
 <http://onlinelibrary.wiley.com/doi/10.1002/qua.24954/abstract/>`_.
 
 .. _chi2_kernel:
 
-Chi-squared kernel
+ 卡方核函数
 ------------------
-The chi-squared kernel is a very popular choice for training non-linear SVMs in
-computer vision applications.
-It can be computed using :func:`chi2_kernel` and then passed to an
-:class:`sklearn.svm.SVC` with ``kernel="precomputed"``::
+在计算机视觉应用中训练非线性支持向量机时，卡方核函数是一种非常流行的选择.
+ 它能以 :func:`chi2_kernel` 计算然后将参数 ``kernel="precomputed"``传递到
+:class:`sklearn.svm.SVC` :
 
     >>> from sklearn.svm import SVC
     >>> from sklearn.metrics.pairwise import chi2_kernel
@@ -175,24 +156,22 @@ It can be computed using :func:`chi2_kernel` and then passed to an
     >>> svm.predict(K)
     array([0, 1, 0, 1])
 
-It can also be directly used as the ``kernel`` argument::
+也可以直接使用 ``kernel`` 变量::
 
     >>> svm = SVC(kernel=chi2_kernel).fit(X, y)
     >>> svm.predict(X)
     array([0, 1, 0, 1])
 
 
-The chi squared kernel is given by
+卡方核函数定义为
 
 .. math::
 
         k(x, y) = \exp \left (-\gamma \sum_i \frac{(x[i] - y[i]) ^ 2}{x[i] + y[i]} \right )
 
-The data is assumed to be non-negative, and is often normalized to have an L1-norm of one.
-The normalization is rationalized with the connection to the chi squared distance,
-which is a distance between discrete probability distributions.
+数据假定为非负的，并且已经以L1正则化。 归一化随着与卡方平方距离的连接而被合理化，其是离散概率分布之间的距离。
 
-The chi squared kernel is most commonly used on histograms (bags) of visual words.
+卡方核函数最常用于可视化词汇的矩形图。
 
 .. topic:: References:
 
