@@ -105,8 +105,8 @@ Forests of randomized trees
 
 
 与其他分类器一样，森林分类器必须拟合（fitted）两个数组：
-保存训练样本的数组（可能稀疏或密集）X，大小为 [n_samples, n_features]。
-保存训练样本目标值（类标签）的数组Y，大小为 [n_samples]::
+保存训练样本的数组（可能稀疏或密集）X，大小为 ``[n_samples, n_features]``。
+保存训练样本目标值（类标签）的数组Y，大小为 ``[n_samples]``::
 
     >>> from sklearn.ensemble import RandomForestClassifier
     >>> X = [[0, 0], [1, 1]]
@@ -115,7 +115,7 @@ Forests of randomized trees
     >>> clf = clf.fit(X, Y)
 
 
-同 :ref:`决策树 <tree>` 一样，随机森林算法（forests of trees）也能够通过扩展来解决多输出问题(multi-output problems) (如果 Y 的大小是 ``[n_samples, n_outputs])``. 
+同 :ref:`决策树 <tree>` 一样，随机森林算法（forests of trees）也能够通过扩展来解决 :ref:`多输出问题 <tree_multioutput>` (如果 Y 的大小是 ``[n_samples, n_outputs])``. 
 
 随机森林
 --------------
@@ -124,7 +124,9 @@ Forests of randomized trees
 集成模型中的每棵树构建时的样本都是由训练集经过替换得来的（例如，自助采样法）。
 另外，在构建树的过程中进行结点分割时，选择的分割点不再是所有特征中最佳分割点，而是特征的随机子集中的最佳分割点。
 由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于平均，其方差也会减小，通常能够补偿偏差的增加，从而产生更好的模型。
-与原始版本的实现 [B2001] 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对单个类进行投票。 
+
+
+与原始版本的实现 [B2001]_ 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对单个类进行投票。 
 
 
 极限随机树
@@ -134,7 +136,7 @@ Forests of randomized trees
 计算分割点方法中的随机性进一步增强。 
 在随机森林中，使用的是候选特征的随机子集，而不是寻找最具有区分度的阈值，
 这里的阈值是针对每个候选特征而随机生成的，并且会把这些随机生成的阈值中的最佳值作为分割规则。
-这种做法通常能够更多地减少模型的方差，代价则是轻微地增大偏差【方差会进一步降低，而偏差会增大】：
+这种做法通常能够更多地减少模型的方差，代价则是轻微地增大偏差：
 
     >>> from sklearn.model_selection import cross_val_score
     >>> from sklearn.datasets import make_blobs
@@ -185,7 +187,7 @@ Forests of randomized trees
 然而extra-trees的默认策略是使用整个数据集（``bootstrap = False``）。
 当使用自助采样法方法抽样时，泛化精度是可以通过剩余的或者袋子外的样本来估算的，设置 ``oob_score = True`` 即可。 
 
-.. 提示::
+.. topic:: 提示:
 
     默认参数下模型复杂度是：``O(M*N*log(N))``， 
     其中M是树的数目，``N`` 是样本数。 
@@ -223,8 +225,12 @@ Forests of randomized trees
 
 特征对目标变量预测的重要性可以通过（树中的决策节点的）特征使用的顺序（即深度）来进行评估。
 决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该**特征相对重要性**。 
+
+
 通过**平均**多个随机树中的**预期贡献率*（expected activity rates），可以减少这种估计的**方差**，并将其用于特征选择。 
-以下示例显示在面部识别任务中，用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
+
+
+下面的例子展示了在面部识别中用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_forest_importances_faces_001.png
    :target: ../auto_examples/ensemble/plot_forest_importances_faces.html
@@ -250,6 +256,7 @@ Forests of randomized trees
 编码的大小和稀疏度可以通过选择树的数量和每棵树的最大深度来影响。对于集成中的每棵树，编码包含一个实体。 
 编码的大小最多为 ``n_estimators * 2 ** max_depth``，即森林中的叶子节点的最大数。 
 
+
 由于相邻数据点更可能位于树的同一叶子中，此时该变换表现为隐式非参数密度估计。 
 
 As neighboring data points are more likely to lie within the same leaf of a tree,
@@ -259,17 +266,13 @@ the transformation performs an implicit, non-parametric density estimation.
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_random_forest_embedding.py`
 
- * :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` compares non-linear
-   dimensionality reduction techniques on handwritten digits.
+ * :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` 比较手写体数字的非线性降维技术。
 
- * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` compares
-   supervised and unsupervised tree based feature transformations.
+ * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` 比较了基于特征变换的有监督和无监督的树.
 
-.. seealso::
+.. 请参阅::
 
-   :ref:`manifold` techniques can also be useful to derive non-linear
-   representations of feature space, also these approaches focus also on
-   dimensionality reduction.
+   :ref:`manifold` 也可以用于特征空间的非线性表示, 这些方法的关注点同样在降维.
 
 
 .. _adaboost:
