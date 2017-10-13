@@ -1,88 +1,64 @@
-.. _datasets:
+.. 数据集:
 
 =========================
-Dataset loading utilities
+5. 数据集加载工具
 =========================
 
-.. currentmodule:: sklearn.datasets
+.. 当前模块:: sklearn.datasets
 
-The ``sklearn.datasets`` package embeds some small toy datasets
-as introduced in the :ref:`Getting Started <loading_example_dataset>` section.
+该sklearn.datasets包装嵌入了“入门”部分中介绍的一些小型玩具数据集。
 
-To evaluate the impact of the scale of the dataset (``n_samples`` and
-``n_features``) while controlling the statistical properties of the data
-(typically the correlation and informativeness of the features), it is
-also possible to generate synthetic data.
+为了在控制数据的统计特性（通常是特征的相关性和信息性）的同时评估数据集（n_samples和 n_features）的规模的影响，也可以生成综合数据。
 
-This package also features helpers to fetch larger datasets commonly
-used by the machine learning community to benchmark algorithm on data
-that comes from the 'real world'.
+这个软件包还具有帮助用户获取更大的数据集的功能，这些数据集通常由机器学习社区使用，用于对来自“真实世界”的数据进行检测算法。
 
-General dataset API
+
+5.1 通用数据集API
 ===================
 
-There are three distinct kinds of dataset interfaces for different types
-of datasets.
-The simplest one is the interface for sample images, which is described
-below in the :ref:`sample_images` section.
+对于不同类型的数据集，有三种不同类型的数据集接口。最简单的是样品图像的界面，下面在“ 样品图像”部分中进行了描述。
 
-The dataset generation functions and the svmlight loader share a simplistic
-interface, returning a tuple ``(X, y)`` consisting of a ``n_samples`` *
-``n_features`` numpy array ``X`` and an array of length ``n_samples``
-containing the targets ``y``.
+数据集生成函数和svmlight加载器分享了一个过于简单的接口，返回一个由 n_样本 * n_特征 组成的元组(X,y) 其中的X是numpy数组 y是包含目标值的n_样本长度的数组
 
-The toy datasets as well as the 'real world' datasets and the datasets
-fetched from mldata.org have more sophisticated structure.
-These functions return a dictionary-like object holding at least two items:
-an array of shape ``n_samples`` * ``n_features`` with key ``data``
-(except for 20newsgroups)
-and a numpy array of length ``n_samples``, containing the target values,
-with key ``target``.
+玩具数据集以及“真实世界”数据集和从mldata.org获取的数据集具有更复杂的结构。这些函数返回一个类似于字典的对象包含至少两项：一个具有键的n_样本 * n_特征形状的数组（除了20个新组之外）和一个具有键的包含目标值的样本长度的numpy数组。
 
-The datasets also contain a description in ``DESCR`` and some contain
-``feature_names`` and ``target_names``.
-See the dataset descriptions below for details.
+数据集还包含一些描述DESCR，一些包含 特征_名称和目标_名称。有关详细信息，请参阅下面的数据集说明
 
-
-Toy datasets
+玩具数据集
 ============
 
-scikit-learn comes with a few small standard datasets that do not
-require to download any file from some external website.
+scikit-learn有一些小型标准数据集，不需要从某个外部网站下载任何文件。
 
 .. autosummary::
 
    :toctree: ../modules/generated/
    :template: function.rst
 
-   load_boston
-   load_iris
-   load_diabetes
-   load_digits
-   load_linnerud
-   load_wine
-   load_breast_cancer
+    load_boston 加载并返回波士顿房价数据集（回归）。
+    load_iris 加载并返回鸢尾花数据集（分类）。
+    load_diabetes 加载并返回糖尿病数据集（回归）。  
+    load_digits 加载并返回手写数字数据集（分类）。
+    load_linnerud 加载并返回linnerud数据集（多元回归）。
+    load_wine 加载并返回葡萄酒数据集（分类）。
+    load_breast_cancer 加载并返回乳腺癌威斯康星数据集（分类）。
 
-These datasets are useful to quickly illustrate the behavior of the
-various algorithms implemented in the scikit. They are however often too
-small to be representative of real world machine learning tasks.
+
+这些数据集有助于快速说明在scikit中实现的各种算法的行为。然而，它们往往太小，无法代表真实世界的机器学习任务。
 
 .. _sample_images:
 
-Sample images
+5.3 样本图片
 =============
 
-The scikit also embed a couple of sample JPEG images published under Creative
-Commons license by their authors. Those image can be useful to test algorithms
-and pipeline on 2D data.
+scikit还嵌入了几个样本JPEG图片公布了通过他们的作者共同授权。这些图像对测试算法和二维数据管道是有用的。
 
 .. autosummary::
 
    :toctree: ../modules/generated/
    :template: function.rst
 
-   load_sample_images
-   load_sample_image
+  load_sample_images 加载样本图像进行图像处理
+  load_sample_image 加载单样本图像的NumPy数组
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_color_quantization_001.png
    :target: ../auto_examples/cluster/plot_color_quantization.html
@@ -90,83 +66,56 @@ and pipeline on 2D data.
    :align: right
 
 
-.. warning::
+.. 警告::
 
-  The default coding of images is based on the ``uint8`` dtype to
-  spare memory.  Often machine learning algorithms work best if the
-  input is converted to a floating point representation first.  Also,
-  if you plan to use ``matplotlib.pyplpt.imshow`` don't forget to scale to the range
-  0 - 1 as done in the following example.
+默认编码的图像是基于uint8 dtype到空闲内存。通常，如果把输入转换为浮点数表示，机器学习算法的效果最好。另外，如果你计划使用matplotlib.pyplpt.imshow别忘了尺度范围0 - 1，如下面的示例所做的。
 
-.. topic:: Examples:
+.. 主题:: 示例:
 
     * :ref:`sphx_glr_auto_examples_cluster_plot_color_quantization.py`
 
 
 .. _sample_generators:
 
-Sample generators
+5.4 样本生成器
 =================
 
-In addition, scikit-learn includes various random sample generators that
-can be used to build artificial datasets of controlled size and complexity.
+此外，scikit-learn包括各种随机样本的生成器，可以用来建立控制的大小和复杂性人工数据集。
 
-Generators for classification and clustering
+分类和聚类生成器
 --------------------------------------------
 
-These generators produce a matrix of features and corresponding discrete
-targets.
+这些生成器产生的特征和相应的离散矩阵目标。
 
-Single label
+单标签
 ~~~~~~~~~~~~
 
-Both :func:`make_blobs` and :func:`make_classification` create multiclass
-datasets by allocating each class one or more normally-distributed clusters of
-points.  :func:`make_blobs` provides greater control regarding the centers and
-standard deviations of each cluster, and is used to demonstrate clustering.
-:func:`make_classification` specialises in introducing noise by way of:
-correlated, redundant and uninformative features; multiple Gaussian clusters
-per class; and linear transformations of the feature space.
+Both :func:`make_blobs` and :func:`make_classification` 通过分配每个类的一个或多个正态分布的点的群集创建的多类数据集。:func:`make_blobs`提供了更大的控制对于中心和各簇的标准偏差，并用于演示聚类。:func:`make_classification`专门通过引入噪声相关，多余的和均匀的特点；多高斯集群每类的特征空间上的线性变换。
 
-:func:`make_gaussian_quantiles` divides a single Gaussian cluster into
-near-equal-size classes separated by concentric hyperspheres.
-:func:`make_hastie_10_2` generates a similar binary, 10-dimensional problem.
+:func:`make_gaussian_quantiles` 分单高斯簇成近乎相等大小的同心超球面分离。:func:`make_hastie_10_2`产生类似的二进制、10维问题。
 
 .. image:: ../auto_examples/datasets/images/sphx_glr_plot_random_dataset_001.png
    :target: ../auto_examples/datasets/plot_random_dataset.html
    :scale: 50
    :align: center
 
-:func:`make_circles` and :func:`make_moons` generate 2d binary classification
-datasets that are challenging to certain algorithms (e.g. centroid-based
-clustering or linear classification), including optional Gaussian noise.
-They are useful for visualisation. produces Gaussian
-data with a spherical decision boundary for binary classification.
+:func:`make_circles` and :func:`make_moons`生成二维二分类数据集时，某些算法的挑战（如质心聚类或线性分类），包括可选的高斯噪声。它们对于可视化是有用的用球面决策边界生成二值分类高斯数据。
 
-Multilabel
+5.4.1.2. 多标签
 ~~~~~~~~~~
 
-:func:`make_multilabel_classification` generates random samples with multiple
-labels, reflecting a bag of words drawn from a mixture of topics. The number of
-topics for each document is drawn from a Poisson distribution, and the topics
-themselves are drawn from a fixed random distribution. Similarly, the number of
-words is drawn from Poisson, with words drawn from a multinomial, where each
-topic defines a probability distribution over words. Simplifications with
-respect to true bag-of-words mixtures include:
+:func:`make_multilabel_classification`生成随机样本与多个标签，反映一个词袋从混合的主题画。每个文档的主题数是从泊松分布中提取的，并且主题本身是从固定的随机分布中提取的。同样地，单词的数目是从泊松图中提取的，用多项式抽取的单词，其中每个主题定义了单词的概率分布。相对于真正的简化包括单词混合包：
 
-* Per-topic word distributions are independently drawn, where in reality all
-  would be affected by a sparse base distribution, and would be correlated.
-* For a document generated from multiple topics, all topics are weighted
-  equally in generating its bag of words.
-* Documents without labels words at random, rather than from a base
-  distribution.
+* 每个主题词分布都是独立绘制的，在现实中，所有这些都会受到稀疏基分布的影响，并将相互关联。
+* 对于从多个主题生成的文档，所有主题在生成单词包时都是同等权重的。
+* 没有标签的随机文件，而不是从基础分布的文档
 
 .. image:: ../auto_examples/datasets/images/sphx_glr_plot_random_multilabel_dataset_001.png
    :target: ../auto_examples/datasets/plot_random_multilabel_dataset.html
    :scale: 50
    :align: center
 
-Biclustering
+5.4.1.3 双聚类
 ~~~~~~~~~~~~
 
 .. autosummary::
@@ -174,38 +123,30 @@ Biclustering
    :toctree: ../modules/generated/
    :template: function.rst
 
-   make_biclusters
-   make_checkerboard
+    make_biclusters 产生恒定的块对角结构数组的聚类
+    make_checkerboard 生成块棋盘结构数组的聚类
 
 
-Generators for regression
+回归生成器
 -------------------------
 
-:func:`make_regression` produces regression targets as an optionally-sparse
-random linear combination of random features, with noise. Its informative
-features may be uncorrelated, or low rank (few features account for most of the
-variance).
+:func:`make_regression` 产生回归的目标作为一个可选择的稀疏线性组合的随机特性，噪声。它的信息特征可能是不相关的，或低秩（少数特征占大多数的方差）。
 
-Other regression generators generate functions deterministically from
-randomized features.  :func:`make_sparse_uncorrelated` produces a target as a
-linear combination of four features with fixed coefficients.
-Others encode explicitly non-linear relations:
-:func:`make_friedman1` is related by polynomial and sine transforms;
-:func:`make_friedman2` includes feature multiplication and reciprocation; and
-:func:`make_friedman3` is similar with an arctan transformation on the target.
+其他回归生成器产生确定性的随机特征函数。:func:`make_sparse_uncorrelated` 产生目标为四具有固定系数的线性组合。其他编码明确的非线性关系：:func:`make_friedman1` 通过多项式和正弦相关变换；:func:`make_friedman2`包括特征相乘与交互；和:func:`make_friedman3`类似目标的反正切变换。
 
-Generators for manifold learning
+
+5.4.3. 流形学习生成器
 --------------------------------
 
 .. autosummary::
 
    :toctree: ../modules/generated/
    :template: function.rst
+   
+    make_s_curve 生成一个的S曲线数据集
+    make_swiss_roll 生成一个swiss_roll数据集
 
-   make_s_curve
-   make_swiss_roll
-
-Generators for decomposition
+5.4.4. 生成器分解
 ----------------------------
 
 .. autosummary::
@@ -213,10 +154,10 @@ Generators for decomposition
    :toctree: ../modules/generated/
    :template: function.rst
 
-   make_low_rank_matrix
-   make_sparse_coded_signal
-   make_spd_matrix
-   make_sparse_spd_matrix
+    make_low_rank_matrix 产生一个钟形的奇异值的低秩矩阵
+    make_sparse_coded_signal 产生一个信号是稀疏字典元素的组合
+    make_spd_matrix 生成一个随机的对称正定矩阵
+    make_sparse_spd_matrix 生成一个稀疏对称正矩阵
 
 
 .. _libsvm_loader:
