@@ -6,50 +6,41 @@ Support Vector Machines
 
 .. currentmodule:: sklearn.svm
 
-**Support vector machines (SVMs)** are a set of supervised learning
-methods used for :ref:`classification <svm_classification>`,
-:ref:`regression <svm_regression>` and :ref:`outliers detection
+**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`分类 <svm_classification>`,
+:ref:`回归 <svm_regression>` and :ref:`异常检测
 <svm_outlier_detection>`.
 
-The advantages of support vector machines are:
+支持向量机的优势在于:
 
-    - Effective in high dimensional spaces.
+    - 在高维空间中非常高效.
 
-    - Still effective in cases where number of dimensions is greater
-      than the number of samples.
+    - 即使在数据维度比样本数量大的情况下仍然有效.
 
-    - Uses a subset of training points in the decision function (called
-      support vectors), so it is also memory efficient.
+    - 在决策函数（称为支持向量）中使用训练集的子集,因此它也是高效利用内存的.
 
-    - Versatile: different :ref:`svm_kernels` can be
-      specified for the decision function. Common kernels are
-      provided, but it is also possible to specify custom kernels.
+    - 通用性: 不同的核函数 :ref:`svm_kernels` 与特定的决策函数一一对应.常见的内核已
+    经提供,也可以指定定制的内核.
 
-The disadvantages of support vector machines include:
+支持向量机的缺点包括:
 
-    - If the number of features is much greater than the number of
-      samples, avoid over-fitting in choosing :ref:`svm_kernels` and regularization
-      term is crucial.
+    - 如果特征数量比样本数量大得多,在选择核函数 :ref:`svm_kernels` 时要避免过拟合,
+    而且正则化项是非常重要的.
 
-    - SVMs do not directly provide probability estimates, these are
-      calculated using an expensive five-fold cross-validation
-      (see :ref:`Scores and probabilities <scores_probabilities>`, below).
+    - 支持向量机不直接提供概率估计,这些都是使用昂贵的五次交叉验算计算的.
+      (详情见 :ref:`Scores and probabilities <scores_probabilities>`, 在下文中).
 
-The support vector machines in scikit-learn support both dense
-(``numpy.ndarray`` and convertible to that by ``numpy.asarray``) and
-sparse (any ``scipy.sparse``) sample vectors as input. However, to use
-an SVM to make predictions for sparse data, it must have been fit on such
-data. For optimal performance, use C-ordered ``numpy.ndarray`` (dense) or
-``scipy.sparse.csr_matrix`` (sparse) with ``dtype=float64``.
+在scikit-learn中,支持向量机提供dense(``numpy.ndarray`` ,可以通过 ``numpy.asarray`` 
+进行转换) 和 sparse (任何 ``scipy.sparse``) 样例向量作为输出.然而,要使用支持向量机来
+对sparse数据作预测,它必须已经拟合这样的数据.使用C代码的 ``numpy.ndarray`` (dense) 或者
+带有 ``dtype=float64`` 的 ``scipy.sparse.csr_matrix`` (sparse) 来优化性能.
 
 
 .. _svm_classification:
 
-Classification
+分类
 ==============
 
-:class:`SVC`, :class:`NuSVC` and :class:`LinearSVC` are classes
-capable of performing multi-class classification on a dataset.
+:class:`SVC`, :class:`NuSVC` and :class:`LinearSVC` 能在数据集中实现多元分类.
 
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_iris_001.png
@@ -57,19 +48,15 @@ capable of performing multi-class classification on a dataset.
    :align: center
 
 
-:class:`SVC` and :class:`NuSVC` are similar methods, but accept
-slightly different sets of parameters and have different mathematical
-formulations (see section :ref:`svm_mathematical_formulation`). On the
-other hand, :class:`LinearSVC` is another implementation of Support
-Vector Classification for the case of a linear kernel. Note that
-:class:`LinearSVC` does not accept keyword ``kernel``, as this is
-assumed to be linear. It also lacks some of the members of
-:class:`SVC` and :class:`NuSVC`, like ``support_``.
+:class:`SVC` and :class:`NuSVC` 是相似的方法, 但是接受稍许不同的参数设置并且
+有不同的数学方程(在这部分看 :ref:`svm_mathematical_formulation`). 另一方面, 
+:class:`LinearSVC` 是另一个实现线性核函数的支持向量分类. 记住 :class:`LinearSVC` 
+不接受关键词 ``kernel``, 因为它被假设为线性的. 它也缺少一些:class:`SVC` 和
+ :class:`NuSVC` 的成员(members) 比如 ``support_``.
 
-As other classifiers, :class:`SVC`, :class:`NuSVC` and
-:class:`LinearSVC` take as input two arrays: an array X of size ``[n_samples,
-n_features]`` holding the training samples, and an array y of class labels
-(strings or integers), size ``[n_samples]``::
+和其他分类器一样, :class:`SVC`, :class:`NuSVC` 和 :class:`LinearSVC` 将两个
+数组作为输入:  ``[n_samples, n_features]`` 大小的数组X作为训练样本, 
+``[n_samples]`` 大小的数组y作为类别标签(字符串或者整数)::
 
 
     >>> from sklearn import svm
@@ -82,40 +69,35 @@ n_features]`` holding the training samples, and an array y of class labels
         max_iter=-1, probability=False, random_state=None, shrinking=True,
         tol=0.001, verbose=False)
 
-After being fitted, the model can then be used to predict new values::
+在拟合后, 这个模型可以用来预测新的值::
 
     >>> clf.predict([[2., 2.]])
     array([1])
 
-SVMs decision function depends on some subset of the training data,
-called the support vectors. Some properties of these support vectors
-can be found in members ``support_vectors_``, ``support_`` and
-``n_support``::
+SVMs决策函数取决于训练集的一些子集, 称作支持向量. 这些支持向量的部分特性可以在
+ ``support_vectors_``, ``support_`` 和 ``n_support``找到::
 
-    >>> # get support vectors
+    >>> # 获得支持向量
     >>> clf.support_vectors_
     array([[ 0.,  0.],
            [ 1.,  1.]])
-    >>> # get indices of support vectors
+    >>> # 获得支持向量的索引get indices of support vectors
     >>> clf.support_ # doctest: +ELLIPSIS
     array([0, 1]...)
-    >>> # get number of support vectors for each class
+    >>> # 为每一个类别获得支持向量的数量
     >>> clf.n_support_ # doctest: +ELLIPSIS
     array([1, 1]...)
 
 .. _svm_multi_class:
 
-Multi-class classification
+多元分类
 --------------------------
 
-:class:`SVC` and :class:`NuSVC` implement the "one-against-one"
-approach (Knerr et al., 1990) for multi- class classification. If
-``n_class`` is the number of classes, then ``n_class * (n_class - 1) / 2``
-classifiers are constructed and each one trains data from two classes.
-To provide a consistent interface with other classifiers, the
-``decision_function_shape`` option allows to aggregate the results of the
-"one-against-one" classifiers to a decision function of shape ``(n_samples,
-n_classes)``::
+:class:`SVC` 和 :class:`NuSVC`为多元分类实现了"one-against-one"的方法
+(Knerr et al., 1990) If ``n_class`` 是类别的数量, 那么 ``n_class * (n_class - 1) / 2``
+分类器被重构, 而且每一个从两个类别中训练数据. 为了给其他分类器提供一致的交互, 
+``decision_function_shape`` 选项允许聚合"one-against-one" 分类器的结果成
+``(n_samples, n_classes)`` 的大小到决策函数::
 
     >>> X = [[0], [1], [2], [3]]
     >>> Y = [0, 1, 2, 3]
@@ -133,9 +115,8 @@ n_classes)``::
     >>> dec.shape[1] # 4 classes
     4
 
-On the other hand, :class:`LinearSVC` implements "one-vs-the-rest"
-multi-class strategy, thus training n_class models. If there are only
-two classes, only one model is trained::
+另一方面, :class:`LinearSVC`实现 "one-vs-the-rest"多类别策略, 从而训练n类
+别的模型. 如果只有两类, 只训练一个模型.::
 
     >>> lin_clf = svm.LinearSVC()
     >>> lin_clf.fit(X, Y) # doctest: +NORMALIZE_WHITESPACE
@@ -147,48 +128,36 @@ two classes, only one model is trained::
     >>> dec.shape[1]
     4
 
-See :ref:`svm_mathematical_formulation` for a complete description of
-the decision function.
+参见 :ref:`svm_mathematical_formulation` 查看决策函数的完整描述.
 
-Note that the :class:`LinearSVC` also implements an alternative multi-class
-strategy, the so-called multi-class SVM formulated by Crammer and Singer, by
-using the option ``multi_class='crammer_singer'``. This method is consistent,
-which is not true for one-vs-rest classification.
-In practice, one-vs-rest classification is usually preferred, since the results
-are mostly similar, but the runtime is significantly less.
+记住Note that the :class:`LinearSVC` 也实现了可选择的多类别策略, 通过使用
+选项``multi_class='crammer_singer'``, 所谓的多元SVM由Crammer和Singer明确
+表达. 这个方法是一致的, 对于 one-vs-rest是不正确的. 实际上, one-vs-rest 分
+类通常收到青睐, 因为结果大多数是相似的, 但是运行时间却显著减少.
 
-For "one-vs-rest" :class:`LinearSVC` the attributes ``coef_`` and ``intercept_``
-have the shape ``[n_class, n_features]`` and ``[n_class]`` respectively.
-Each row of the coefficients corresponds to one of the ``n_class`` many
-"one-vs-rest" classifiers and similar for the intercepts, in the
-order of the "one" class.
+对于 "one-vs-rest" :class:`LinearSVC`, 属性 ``coef_`` 和 ``intercept_``
+分别具有 ``[n_class, n_features]`` 和 ``[n_class]`` 尺寸.
+系数的每一行符合 ``n_class`` 的许多 one-vs-rest 分类器之一, 并且就以这一类
+的顺序与拦截器(intercepts)相似.
 
-In the case of "one-vs-one" :class:`SVC`, the layout of the attributes
-is a little more involved. In the case of having a linear kernel,
-The layout of ``coef_`` and ``intercept_`` is similar to the one
-described for :class:`LinearSVC` described above, except that the shape of
-``coef_`` is ``[n_class * (n_class - 1) / 2, n_features]``, corresponding to as
-many binary classifiers. The order for classes
-0 to n is "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", "1 vs 3", "1 vs n", . .
-. "n-1 vs n".
+至于 one-vs-one :class:`SVC`, 属性特征的布局(layout)有少多些复杂. 考虑到有一种线性
+核函数,``coef_`` 和 ``intercept_`` 的布局(layout)与上文描述成 :class:`LinearSVC` 
+相似, 除了 ``coef_`` 的形状 ``[n_class * (n_class - 1) / 2, n_features]``, 与许多
+二元的分类器相似. 0到n的类别顺序是 "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", 
+"1 vs 3", "1 vs n", . . . "n-1 vs n".
 
-The shape of ``dual_coef_`` is ``[n_class-1, n_SV]`` with
-a somewhat hard to grasp layout.
-The columns correspond to the support vectors involved in any
-of the ``n_class * (n_class - 1) / 2`` "one-vs-one" classifiers.
-Each of the support vectors is used in ``n_class - 1`` classifiers.
-The ``n_class - 1`` entries in each row correspond to the dual coefficients
-for these classifiers.
+``dual_coef_`` 的形状是 ``[n_class-1, n_SV]``, 这个结构有些难以理解.
+对应于支持向量的列与 ``n_class * (n_class - 1) / 2`` "one-vs-one" 分类器相关.
+每一个支持向量用于 ``n_class - 1`` 分类器中.对于这些分类器,每一行的 ``n_class - 1`` 
+条目对应于对偶系数(dual coefficients).
 
-This might be made more clear by an example:
+通过这个例子更容易说明:
 
-Consider a three class problem with class 0 having three support vectors
-:math:`v^{0}_0, v^{1}_0, v^{2}_0` and class 1 and 2 having two support vectors
-:math:`v^{0}_1, v^{1}_1` and :math:`v^{0}_2, v^{1}_2` respectively.  For each
-support vector :math:`v^{j}_i`, there are two dual coefficients.  Let's call
-the coefficient of support vector :math:`v^{j}_i` in the classifier between
-classes :math:`i` and :math:`k` :math:`\alpha^{j}_{i,k}`.
-Then ``dual_coef_`` looks like this:
+考虑一个三类的问题,类0有三个支持向量 :math:`v^{0}_0, v^{1}_0, v^{2}_0` 而类1和2分别有
+如下两个支持向量 :math:`v^{0}_1, v^{1}_1` and :math:`v^{0}_2, v^{1}_2`.对于每个支持
+向量 :math:`v^{j}_i`, 有两个对偶系数.在类别 :math:`i` 和 :math:`k` :math:`\alpha^{j}_{i,k}`中,
+我们将支持向量的系数记录为 :math:`v^{j}_i` 
+那么 ``dual_coef_`` 可以表示为:
 
 +------------------------+------------------------+------------------+
 |:math:`\alpha^{0}_{0,1}`|:math:`\alpha^{0}_{0,2}`|Coefficients      |
@@ -209,55 +178,48 @@ Then ``dual_coef_`` looks like this:
 
 .. _scores_probabilities:
 
-Scores and probabilities
+Scores and 可能性(probability)
 ------------------------
 
-The :class:`SVC` method ``decision_function`` gives per-class scores 
-for each sample (or a single score per sample in the binary case).
-When the constructor option ``probability`` is set to ``True``,
-class membership probability estimates
-(from the methods ``predict_proba`` and ``predict_log_proba``) are enabled.
-In the binary case, the probabilities are calibrated using Platt scaling:
-logistic regression on the SVM's scores,
-fit by an additional cross-validation on the training data.
-In the multiclass case, this is extended as per Wu et al. (2004).
+:class:`SVC` 方法的 ``decision_function`` 给每一个样例每一个类别分
+值(scores)(或者在一个二元类中每一个样例一个分值).
+当构造器(constructor)选项 ``probability`` 设置为 ``True``的时候,
+类成员可能性评估开启.(来自 ``predict_proba`` 和 ``predict_log_proba`` 方法)
+在二元分类中,概率使用Platt scaling进行标准化:在SVM分数上的逻辑回归,在训练集上用额外的交
+叉验证来拟合.在多类情况下,这可以扩展为per Wu et al.(2004)
 
-Needless to say, the cross-validation involved in Platt scaling
-is an expensive operation for large datasets.
-In addition, the probability estimates may be inconsistent with the scores,
-in the sense that the "argmax" of the scores
-may not be the argmax of the probabilities.
-(E.g., in binary classification,
-a sample may be labeled by ``predict`` as belonging to a class
-that has probability <½ according to ``predict_proba``.)
-Platt's method is also known to have theoretical issues.
-If confidence scores are required, but these do not have to be probabilities,
-then it is advisable to set ``probability=False``
-and use ``decision_function`` instead of ``predict_proba``.
+不用说,对于大数据集来说,在Platt scaling中进行交叉验证是一项昂贵的操作.
+另外,可能性预测可能与scores不一致,因为scores的"argmax"可能不是可能性的argmax.
+(例如,在二元分类中,
+一个样本可能被标记为一个有可能性的类``predict`` <½ according to ``predict_proba``.)
+Platt的方法也有理论问题.
+如果 confidence scores 必要,但是这些没必要是可能性,
+那么建议设置 ``probability=False``
+并使用 ``decision_function`` 而不是 ``predict_proba``.
 
-.. topic:: References:
+.. topic:: 参考:
 
  * Wu, Lin and Weng,
    `"Probability estimates for multi-class classification by pairwise coupling"
+   成对耦合的多类分类的概率估计
    <http://www.csie.ntu.edu.tw/~cjlin/papers/svmprob/svmprob.pdf>`_,
    JMLR 5:975-1005, 2004.
  
  
  * Platt
    `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods"
+   SVMs的概率输出和与规则化似然方法的比较
    <http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`.
 
-Unbalanced problems
+Unbalanced problems非均衡问题
 --------------------
 
-In problems where it is desired to give more importance to certain
-classes or certain individual samples keywords ``class_weight`` and
-``sample_weight`` can be used.
+这个问题期望给予某一类或某个别样例能使用的关键词 ``class_weight`` and
+``sample_weight`` 提高权重(importance).
 
-:class:`SVC` (but not :class:`NuSVC`) implement a keyword
-``class_weight`` in the ``fit`` method. It's a dictionary of the form
-``{class_label : value}``, where value is a floating point number > 0
-that sets the parameter ``C`` of class ``class_label`` to ``C * value``.
+:class:`SVC` (而不是 :class:`NuSVC`) 在 ``fit`` 方法中生成了一个关键词
+``class_weight``. 它是形如``{class_label : value}`` 的字典, value是浮点数大于0的值,
+把类 ``class_label`` 的参数``C`` 设置为 ``C * value``.
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_separating_hyperplane_unbalanced_001.png
    :target: ../auto_examples/svm/plot_separating_hyperplane_unbalanced.html
@@ -265,10 +227,10 @@ that sets the parameter ``C`` of class ``class_label`` to ``C * value``.
    :scale: 75
 
 
-:class:`SVC`, :class:`NuSVC`, :class:`SVR`, :class:`NuSVR` and
-:class:`OneClassSVM` implement also weights for individual samples in method
-``fit`` through keyword ``sample_weight``. Similar to ``class_weight``, these
-set the parameter ``C`` for the i-th example to ``C * sample_weight[i]``.
+:class:`SVC`, :class:`NuSVC`, :class:`SVR`, :class:`NuSVR` 和
+:class:`OneClassSVM` 在 ``fit`` 方法中通过关键词 ``sample_weight`` 
+为单一样例实现权重weights.与 ``class_weight`` 相似, 这些把第i个样例的参数 ``C`` 换
+成 ``C * sample_weight[i]``.
 
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_weighted_samples_001.png
@@ -277,7 +239,7 @@ set the parameter ``C`` for the i-th example to ``C * sample_weight[i]``.
    :scale: 75
 
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_svm_plot_iris.py`,
  * :ref:`sphx_glr_auto_examples_svm_plot_separating_hyperplane.py`,
@@ -289,30 +251,21 @@ set the parameter ``C`` for the i-th example to ``C * sample_weight[i]``.
 
 .. _svm_regression:
 
-Regression
+回归
 ==========
 
-The method of Support Vector Classification can be extended to solve
-regression problems. This method is called Support Vector Regression.
+支持向量分类的方法可以被扩展用作解决回归问题. 这个方法被称作支持向量回归.
 
-The model produced by support vector classification (as described
-above) depends only on a subset of the training data, because the cost
-function for building the model does not care about training points
-that lie beyond the margin. Analogously, the model produced by Support
-Vector Regression depends only on a subset of the training data,
-because the cost function for building the model ignores any training
-data close to the model prediction.
+支持向量分类生成的模型(如前描述)只依赖于训练集的子集,因为构建模型的cost function
+不在乎边缘之外的训练点. 类似的,支持向量回归生成的模型只依赖于训练集的子集, 因为构建
+模型的cost function忽略任何接近于模型预测的训练数据.
 
-There are three different implementations of Support Vector Regression: 
-:class:`SVR`, :class:`NuSVR` and :class:`LinearSVR`. :class:`LinearSVR` 
-provides a faster implementation than :class:`SVR` but only considers
-linear kernels, while :class:`NuSVR` implements a slightly different
-formulation than :class:`SVR` and :class:`LinearSVR`. See
-:ref:`svm_implementation_details` for further details.
+支持向量分类有三种不同的实现形式: 
+:class:`SVR`, :class:`NuSVR` 和 :class:`LinearSVR`. 在只考虑线性核的情况下, :class:`LinearSVR` 
+比 :class:`SVR` 提供一个更快的实现形式, 然而比起 :class:`SVR` 和 :class:`LinearSVR`, :class:`NuSVR`
+实现一个稍微不同的构思(formulation).细节参见 :ref:`svm_implementation_details`.
 
-As with classification classes, the fit method will take as
-argument vectors X, y, only that in this case y is expected to have
-floating point values instead of integer values::
+与分类的类别一样, fit方法会调用参数向量X, y, 只在y是浮点数而不是整数型.::
 
     >>> from sklearn import svm
     >>> X = [[0, 0], [2, 2]]
@@ -325,7 +278,7 @@ floating point values instead of integer values::
     array([ 1.5])
 
 
-.. topic:: Examples:
+.. topic:: 样例:
 
  * :ref:`sphx_glr_auto_examples_svm_plot_svm_regression.py`
 
@@ -333,18 +286,15 @@ floating point values instead of integer values::
 
 .. _svm_outlier_detection:
 
-Density estimation, novelty detection
+密度估计, 异常(novelty)检测
 =======================================
 
-One-class SVM is used for novelty detection, that is, given a set of
-samples, it will detect the soft boundary of that set so as to
-classify new points as belonging to that set or not. The class that
-implements this is called :class:`OneClassSVM`.
+但类别的SVM用于异常检测, 即给予一个样例集, 它会检测这个样例集的soft boundary以便给新的数据点分类,
+看它是否属于这个样例集. 生成的类称作 :class:`OneClassSVM`.
 
-In this case, as it is a type of unsupervised learning, the fit method
-will only take as input an array X, as there are no class labels.
+这种情况下, 因为它属于非监督学习的一类, 没有类标签, fit方法只会考虑输入数组X,.
 
-See, section :ref:`outlier_detection` for more details on this usage.
+在章节 :ref:`outlier_detection` 查看这个应用的更多细节.
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_oneclass_001.png
    :target: ../auto_examples/svm/plot_oneclass.html
@@ -356,7 +306,6 @@ See, section :ref:`outlier_detection` for more details on this usage.
 
  * :ref:`sphx_glr_auto_examples_svm_plot_oneclass.py`
  * :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
-
 
 Complexity
 ==========
