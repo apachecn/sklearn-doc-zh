@@ -1137,35 +1137,24 @@ set [0,1] has an error: ::
 
 .. _brier_score_loss:
 
-Brier score loss
+Brier 分数损失
 ----------------
 
-The :func:`brier_score_loss` function computes the
-`Brier score <https://en.wikipedia.org/wiki/Brier_score>`_
-for binary classes. Quoting Wikipedia:
+:func:`brier_score_loss` 函数计算二进制类的 `Brier 分数 <https://en.wikipedia.org/wiki/Brier_score>`_ 。引用维基百科：
 
-    "The Brier score is a proper score function that measures the accuracy of
-    probabilistic predictions. It is applicable to tasks in which predictions
-    must assign probabilities to a set of mutually exclusive discrete outcomes."
+    "Brier 分数是一个特有的分数函数，用于衡量概率预测的准确性。它适用于预测必须将概率分配给一组相互排斥的离散结果的任务。"
 
-This function returns a score of the mean square difference between the actual
-outcome and the predicted probability of the possible outcome. The actual
-outcome has to be 1 or 0 (true or false), while the predicted probability of
-the actual outcome can be a value between 0 and 1.
+该函数返回的是 实际结果与可能结果 的预测概率之间均方差的得分。 实际结果必须为1或0（真或假），而实际结果的预测概率可以是0到1之间的值。
 
-The brier score loss is also between 0 to 1 and the lower the score (the mean
-square difference is smaller), the more accurate the prediction is. It can be
-thought of as a measure of the "calibration" of a set of probabilistic
-predictions.
+Brier 分数损失也在0到1之间，分数越低（均方差越小），预测越准确。它可以被认为是对一组概率预测的 "校准" 的度量。
 
 .. math::
 
    BS = \frac{1}{N} \sum_{t=1}^{N}(f_t - o_t)^2
 
-where : :math:`N` is the total number of predictions, :math:`f_t` is the
-predicted probability of the actual outcome :math:`o_t`.
+其中: :math:`N` 是预测的总数， :math:`f_t` 是实际结果 :math:`o_t` 的预测概率。
 
-Here is a small example of usage of this function:::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import brier_score_loss
@@ -1183,61 +1172,46 @@ Here is a small example of usage of this function:::
     0.0
 
 
-.. topic:: Example:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_calibration_plot_calibration.py`
-    for an example of Brier score loss usage to perform probability
-    calibration of classifiers.
+  * 请参阅分类器的概率校准 :ref:`sphx_glr_auto_examples_calibration_plot_calibration.py` ，通过 Brier 分数损失使用示例 来执行分类器的概率校准。
 
-.. topic:: References:
+.. topic:: 参考文献:
 
-  * G. Brier, `Verification of forecasts expressed in terms of probability
-    <http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf>`_,
-    Monthly weather review 78.1 (1950)
+  * G. Brier, `以概率表示的预测验证 <http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf>`_ , 月度天气评估78.1（1950）
 
 .. _multilabel_ranking_metrics:
 
-Multilabel ranking metrics
+多标签排名指标
 ==========================
 
 .. currentmodule:: sklearn.metrics
 
-In multilabel learning, each sample can have any number of ground truth labels
-associated with it. The goal is to give high scores and better rank to
-the ground truth labels.
+在多分类学习中，每个样本可以具有与其相关联的任何数量的真实标签。目标是给予高分，更好地评价真实标签。
 
 .. _coverage_error:
 
-Coverage error
+覆盖误差
 --------------
 
-The :func:`coverage_error` function computes the average number of labels that
-have to be included in the final prediction such that all true labels
-are predicted. This is useful if you want to know how many top-scored-labels
-you have to predict in average without missing any true one. The best value
-of this metrics is thus the average number of true labels.
+:func:`coverage_error` 函数计算必须包含在最终预测中的标签的平均数，以便预测所有真正的标签。 
+如果您想知道有多少 top 评分标签，您必须通过平均来预测，而不会丢失任何真正的标签，这很有用。 
+因此，此指标的最佳价值是真正标签的平均数量。
 
 .. note::
 
-    Our implementation's score is 1 greater than the one given in Tsoumakas
-    et al., 2010. This extends it to handle the degenerate case in which an
-    instance has 0 true labels.
+    我们的实现的分数比 Tsoumakas 等人在2010年的分数大1。
+    这扩展了它来处理一个具有0个真实标签实例的退化情况。
 
-Formally, given a binary indicator matrix of the ground truth labels
-:math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` and the
-score associated with each label
-:math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}`,
-the coverage is defined as
+正式地，给定真实标签 :math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` 的二进制指示矩阵和与每个标签 :math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}` 相关联的分数，覆盖范围被定义为
 
 .. math::
   coverage(y, \hat{f}) = \frac{1}{n_{\text{samples}}}
     \sum_{i=0}^{n_{\text{samples}} - 1} \max_{j:y_{ij} = 1} \text{rank}_{ij}
 
-with :math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|`.
-Given the rank definition, ties in ``y_scores`` are broken by giving the
-maximal rank that would have been assigned to all tied values.
+与 :math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|` 。给定等级定义，通过给出将被分配给所有绑定值的最大等级， ``y_scores`` 中的关系会被破坏。
 
-Here is a small example of usage of this function::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import coverage_error
@@ -1248,39 +1222,27 @@ Here is a small example of usage of this function::
 
 .. _label_ranking_average_precision:
 
-Label ranking average precision
+标签排名平均精度
 -------------------------------
 
-The :func:`label_ranking_average_precision_score` function
-implements label ranking average precision (LRAP). This metric is linked to
-the :func:`average_precision_score` function, but is based on the notion of
-label ranking instead of precision and recall.
+:func:`label_ranking_average_precision_score` 函数实现标签排名平均精度（LRAP）。 
+该度量值与 :func:`average_precision_score` 函数相关联，但是基于标签排名的概念，而不是精确度和召回。
 
-Label ranking average precision (LRAP) is the average over each ground truth
-label assigned to each sample, of the ratio of true vs. total labels with lower
-score. This metric will yield better scores if you are able to give better rank
-to the labels associated with each sample. The obtained score is always strictly
-greater than 0, and the best value is 1. If there is exactly one relevant
-label per sample, label ranking average precision is equivalent to the `mean
-reciprocal rank <https://en.wikipedia.org/wiki/Mean_reciprocal_rank>`_.
+标签排名平均精度（LRAP）是分配给每个样本的每个真实标签的平均值，真实对总标签与较低分数的比率。 
+如果能够为每个样本相关标签提供更好的排名，这个指标就会产生更好的分数。 
+获得的得分总是严格大于0，最佳值为1。如果每个样本只有一个相关标签，则标签排名平均精度等于 `平均倒数等级 <https://en.wikipedia.org/wiki/Mean_reciprocal_rank>`_ 。
 
-Formally, given a binary indicator matrix of the ground truth labels
-:math:`y \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}` and the
-score associated with each label
-:math:`\hat{f} \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}`,
-the average precision is defined as
+正式地，给定真实标签 :math:`y \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}` 的二进制指示矩阵和与每个标签 :math:`\hat{f} \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}` 相关联的得分，平均精度被定义为
 
 .. math::
   LRAP(y, \hat{f}) = \frac{1}{n_{\text{samples}}}
     \sum_{i=0}^{n_{\text{samples}} - 1} \frac{1}{|y_i|}
     \sum_{j:y_{ij} = 1} \frac{|\mathcal{L}_{ij}|}{\text{rank}_{ij}}
 
+与 :math:`\mathcal{L}_{ij} = \left\{k: y_{ik} = 1, \hat{f}_{ik} \geq \hat{f}_{ij} \right\}`，
+:math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|` 和 :math:`|\cdot|` 是集合的 l0 范数或基数。
 
-with :math:`\mathcal{L}_{ij} = \left\{k: y_{ik} = 1, \hat{f}_{ik} \geq \hat{f}_{ij} \right\}`,
-:math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|`
-and :math:`|\cdot|` is the l0 norm or the cardinality of the set.
-
-Here is a small example of usage of this function::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import label_ranking_average_precision_score
@@ -1291,29 +1253,21 @@ Here is a small example of usage of this function::
 
 .. _label_ranking_loss:
 
-Ranking loss
+排序损失
 ------------
 
-The :func:`label_ranking_loss` function computes the ranking loss which
-averages over the samples the number of label pairs that are incorrectly
-ordered, i.e. true labels have a lower score than false labels, weighted by
-the inverse number of false and true labels. The lowest achievable
-ranking loss is zero.
+:func:`label_ranking_loss` 函数计算在样本上平均排序错误的标签对数量的排序损失，即真实标签的分数低于假标签，由虚假和真实标签的倒数加权。最低可实现的排名损失为零。
 
-Formally, given a binary indicator matrix of the ground truth labels
-:math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` and the
-score associated with each label
-:math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}`,
-the ranking loss is defined as
+正式地，给定真相标签 :math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` 的二进制指示矩阵和与每个标签 :math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}` 相关联的得分，排序损失被定义为
 
 .. math::
   \text{ranking\_loss}(y, \hat{f}) =  \frac{1}{n_{\text{samples}}}
     \sum_{i=0}^{n_{\text{samples}} - 1} \frac{1}{|y_i|(n_\text{labels} - |y_i|)}
     \left|\left\{(k, l): \hat{f}_{ik} < \hat{f}_{il}, y_{ik} = 1, y_{il} = 0 \right\}\right|
 
-where :math:`|\cdot|` is the :math:`\ell_0` norm or the cardinality of the set.
+其中 :math:`|\cdot|` 是 :math:`\ell_0` 范数或集合的基数。
 
-Here is a small example of usage of this function::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import label_ranking_loss
@@ -1327,10 +1281,9 @@ Here is a small example of usage of this function::
     0.0
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
-  * Tsoumakas, G., Katakis, I., & Vlahavas, I. (2010). Mining multi-label data. In
-    Data mining and knowledge discovery handbook (pp. 667-685). Springer US.
+  * Tsoumakas, G., Katakis, I., & Vlahavas, I. (2010). 挖掘多标签数据。在数据挖掘和知识发现手册（第667-685页）。美国 Springer.
 
 .. _regression_metrics:
 
