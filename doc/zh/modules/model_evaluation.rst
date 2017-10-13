@@ -1335,7 +1335,7 @@ Here is a small example of usage of this function::
 .. _regression_metrics:
 
 Regression metrics（回归指标）
-===================
+==============================
 
 .. currentmodule:: sklearn.metrics
 
@@ -1573,7 +1573,7 @@ R² score, 可决系数
 
 
 Dummy estimators（虚拟估计）
-=================
+============================
 
 .. currentmodule:: sklearn.dummy
 
