@@ -1,7 +1,7 @@
 .. _ensemble:
 
 ================
-Ensemble methods
+集成方法
 ================
 
 .. currentmodule:: sklearn.ensemble
@@ -10,65 +10,40 @@ Ensemble methods
 
 集成方法通常分为两种:
 
-- In **averaging methods**, the driving principle is to build several
-  estimators independently and then to average their predictions. On average,
-  the combined estimator is usually better than any of the single base
-  estimator because its variance is reduced.
+- 在 **平均方法** 中，驱动原则是构建几个独立的估计器，然后平均化它们的预测结果。一般来说组合之后的估计器是会要比单个估计器要好的，因为它的方差减小了。
 
-  **Examples:** :ref:`Bagging methods <bagging>`, :ref:`Forests of randomized trees <forest>`, ...
+  **示例:** :ref:`Bagging 方法 <bagging>`, :ref:`随机森林 <forest>`, ...
 
-- By contrast, in **boosting methods**, base estimators are built sequentially
-  and one tries to reduce the bias of the combined estimator. The motivation is
-  to combine several weak models to produce a powerful ensemble.
+- 相比之下，在 **boosting 方法** 中，基估计器是依次构建的并且每一个都尝试去减少组合估计器的偏差。主要目的是为了把多个弱模型相结合变得更加强大。
 
-  **Examples:** :ref:`AdaBoost <adaboost>`, :ref:`Gradient Tree Boosting <gradient_boosting>`, ...
+  **示例:** :ref:`AdaBoost <adaboost>`, :ref:`梯度提升树 <gradient_boosting>`, ...
 
 
 .. _bagging:
 
-Bagging meta-estimator
+Bagging元估计
 ======================
 
-In ensemble algorithms, bagging methods form a class of algorithms which build
-several instances of a black-box estimator on random subsets of the original
-training set and then aggregate their individual predictions to form a final
-prediction. These methods are used as a way to reduce the variance of a base
-estimator (e.g., a decision tree), by introducing randomization into its
-construction procedure and then making an ensemble out of it. In many cases,
-bagging methods constitute a very simple way to improve with respect to a
-single model, without making it necessary to adapt the underlying base
-algorithm. As they provide a way to reduce overfitting, bagging methods work
-best with strong and complex models (e.g., fully developed decision trees), in
-contrast with boosting methods which usually work best with weak models (e.g.,
-shallow decision trees).
+在集成算法中，bagging方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
+该方法通过在构建模型的过程中引入随机性，以此来减少基本估计器的方差(例如一棵决策树)。
+在多数情况下，bagging方法提供了一种非常简单的方式来对单一模型进行改进，同时无需适应底层算法。
+因为bagging方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树），相比之下boosting方法在弱模型上表现更好（例如，浅层决策树）。
 
-Bagging methods come in many flavours but mostly differ from each other by the
-way they draw random subsets of the training set:
 
-  * When random subsets of the dataset are drawn as random subsets of the
-    samples, then this algorithm is known as Pasting [B1999]_.
+bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
-  * When samples are drawn with replacement, then the method is known as
-    Bagging [B1996]_.
+  * 如果抽取的数据集是样本的的子集，我们叫做粘贴(Pasting) [B1999]_ 。
 
-  * When random subsets of the dataset are drawn as random subsets of
-    the features, then the method is known as Random Subspaces [H1998]_.
+  * 如果样本抽取是放回的，我们称为Bagging [B1996]_ 。
 
-  * Finally, when base estimators are built on subsets of both samples and
-    features, then the method is known as Random Patches [LG2012]_.
+  * 如果抽取的数据集的随机子集是特征的随机子集，我们叫做随机子空间(Random Subspaces) [H1998]_ 。
 
-In scikit-learn, bagging methods are offered as a unified
-:class:`BaggingClassifier` meta-estimator  (resp. :class:`BaggingRegressor`),
-taking as input a user-specified base estimator along with parameters
-specifying the strategy to draw random subsets. In particular, ``max_samples``
-and ``max_features`` control the size of the subsets (in terms of samples and
-features), while ``bootstrap`` and ``bootstrap_features`` control whether
-samples and features are drawn with or without replacement. When using a subset
-of the available samples the generalization accuracy can be estimated with the
-out-of-bag samples by setting ``oob_score=True``. As an example, the
-snippet below illustrates how to instantiate a bagging ensemble of
-:class:`KNeighborsClassifier` base estimators, each built on random subsets of
-50% of the samples and 50% of the features.
+  * 最后，如果估计器构建在样本和特征的子集之上时，我们叫做随机补丁(Random Patches) [LG2012]_ 。
+
+
+在sklearn中，bagging方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor`），输入的参数和策略由用户指定。
+ ``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
+当使用样本子集时，通过设置oob_score=True，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何实构造一个 :class:`KNeighborsClassifier` 估计器的bagging集成，每一个基估计器都建立在50%的样本随机子集和特征随机子集上。
 
     >>> from sklearn.ensemble import BaggingClassifier
     >>> from sklearn.neighbors import KNeighborsClassifier
@@ -100,7 +75,7 @@ Forests of randomized trees
 ===========================
 
 :mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees 方法。
-这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques）[B1998]_ 。
+这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques） [B1998]_ 。
 这意味着通过在分类器构造过程中引入随机性来创建一组不同的分类器。集成分类器的预测是单个分类器预测结果的平均值。 
 
 
@@ -224,10 +199,10 @@ Forests of randomized trees
 -----------------------------
 
 特征对目标变量预测的重要性可以通过（树中的决策节点的）特征使用的顺序（即深度）来进行评估。
-决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该**特征相对重要性**。 
+决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该 **特征相对重要性** 。 
 
 
-通过**平均**多个随机树中的**预期贡献率*（expected activity rates），可以减少这种估计的**方差**，并将其用于特征选择。 
+通过 **平均** 多个随机树中的 **预期贡献率**（expected activity rates），可以减少这种估计的 **方差** ，并将其用于特征选择。 
 
 
 下面的例子展示了在面部识别中用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
@@ -259,8 +234,6 @@ Forests of randomized trees
 
 由于相邻数据点更可能位于树的同一叶子中，此时该变换表现为隐式非参数密度估计。 
 
-As neighboring data points are more likely to lie within the same leaf of a tree,
-the transformation performs an implicit, non-parametric density estimation.
 
 .. topic:: Examples:
 
