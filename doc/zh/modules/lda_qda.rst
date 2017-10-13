@@ -7,8 +7,8 @@
 .. 当前模块：sklearn
 
 线性判别分析
-(:类:`discriminant_analysis.LinearDiscriminantAnalysis`) 和二次判别分析
-(:类:`discriminant_analysis.QuadraticDiscriminantAnalysis`) 是两个经典的分类器。
+(:class:`discriminant_analysis.LinearDiscriminantAnalysis`) 和二次判别分析
+(:class:`discriminant_analysis.QuadraticDiscriminantAnalysis`) 是两个经典的分类器。
 正如他们名字所描述的那样，他们分别适合用于线性和二次方程的决策。
 
 这些分类器十分具有魅力，因为他们拥有十分便于计算的封闭式解决方案，即其天生的多分类特性，已经被证明在实际中运行效果十分好，并且不需要再次调参。
@@ -22,7 +22,7 @@
 以下这些图像展示了线性判别分析以及二次判别分析的决策边界。其中，最底行阐述了线性判别分析只能学习线性边界，
 而二次判别分析则可以学习二次函数的边界，因此它会相对而言更加灵活。
 
-.. 主题:: 示例:
+.. topic:: Examples:
 
     :ref:`sphx_glr_auto_examples_classification_plot_lda_qda.py`: 在综合的数据基础上对比LDA和QDA
 
@@ -38,7 +38,7 @@
 :func:`discriminant_analysis.LinearDiscriminantAnalysis.fit` or
 :func:`discriminant_analysis.LinearDiscriminantAnalysis.predict` 产生影响.
 
-.. 主题:: 示例:
+.. topic:: Examples:
 
     :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_lda.py`: 在Iris数据集对比了LDA和PCA之间的降维差异
 
@@ -47,17 +47,16 @@ LDA和QDA分类器的数学公式
 
 LDA和QDA都是源于简单的概率模型，这些模型对于每一个类别:math:`k`的类别相关分布:math:`P(X|y=k)`都可以通过贝叶斯定理所获得。
 
-.. 数学公式::
+.. math::
     P(y=k | X) = \frac{P(X | y=k) P(y=k)}{P(X)} = \frac{P(X | y=k) P(y = k)}{ \sum_{l} P(X | y=l) \cdot P(y=l)}
 
-and we select the class :math:`k` which maximizes this conditional probability.
-并且我们选择能够最大化条件概率的类别：k，
+并且我们选择能够最大化条件概率的类别：k.
 
 更详细地，对于线性以及二次判别分析，数学公式:`P(X|y)`被塑造成一个多变量的高斯分布
 
 密度:
 
-.. 公式:: p(X | y=k) = \frac{1}{(2\pi)^n |\Sigma_k|^{1/2}}\exp\left(-\frac{1}{2} (X-\mu_k)^t \Sigma_k^{-1} (X-\mu_k)\right)
+.. math:: p(X | y=k) = \frac{1}{(2\pi)^n |\Sigma_k|^{1/2}}\exp\left(-\frac{1}{2} (X-\mu_k)^t \Sigma_k^{-1} (X-\mu_k)\right)
 
 
 为了使用该模型作为分类器使用，我们需要通过训练集数据预测更重要的类别：`P(y=k)`（通过每个类：`k`的实例的概率预测）
@@ -66,12 +65,12 @@ and we select the class :math:`k` which maximizes this conditional probability.
 关于LDA的案例，高斯被看作是共享相同协方差矩阵：`\Sigma_k = \Sigma` for all :math:`k`。这会导致线性决策显示介于比较对数概率之比：`\log[P(y=k | X) / P(y=l | X)]`之间。
 
 
-.. 公式::
+.. math::
    \log\left(\frac{P(y=k|X)}{P(y=l | X)}\right) = 0 \Leftrightarrow (\mu_k-\mu_l)\Sigma^{-1} X = \frac{1}{2} (\mu_k^t \Sigma^{-1} \mu_k - \mu_l^t \Sigma^{-1} \mu_l)
 
 对于QDA而言，没有关于高斯协方差矩阵:`\Sigma_k`的假设，可以通过查看[#1]_ 获取更多信息.
 
-.. 注意:: **与高斯朴素贝叶斯的关系**
+.. note:: **与高斯朴素贝叶斯的关系**
 
       如果在QDA模型中假设协方差矩阵是对角的，那么在每个类别中的输入数据则被假定是相关依赖的。
       而且结果分类器会和高斯朴素贝叶斯分类器:`naive_bayes.GaussianNB`相同。
@@ -82,7 +81,8 @@ LDA的降维数学公式
 为了理解LDA在降维上的应用，它对于进行LDA分类的几何重构是十分有用的。我们用`K`表示目标类别的总数。
 由于在LDA中我们假设所有类别都有相同预测的协方差:`\Sigma`,我们可重新调节数据从而让让协方差相同。
 
-.. 公式:: X^* = D^{-1/2}U^t X\text{ with }\Sigma = UDU^t
+.. math:: X^* = D^{-1/2}U^t X\text{ with }\Sigma = UDU^t
+
 
 在缩放后可以分类数据点和找到离数据点最近的欧式距离相同的预测类别均值。但是它可以在投影到K-1个由所有\mu^*_k`个类生成的仿射子空间
 数学表达式:`H_K`之后被完成。这也表明，LDA分类器中存在一个利用线性投影到`K-1`个维度空间的降维工具。
@@ -122,12 +122,12 @@ LDA的降维数学公式
 它既可以被用于分类以及转换（transform），此外它还同时支持收缩。然而，该解决方案需要计算协方差矩阵，因此它可能
 不适用于具有大量特征的情况。
 
-.. 主题:: 示例:
+.. topic:: Examples:
 
     :ref:`sphx_glr_auto_examples_classification_plot_lda.py`: Comparison of LDA classifiers
     with and without shrinkage.
 
-.. 主题:: 引用:
+.. topic:: References:
 
    .. [#1] "The Elements of Statistical Learning", Hastie T., Tibshirani R.,
       Friedman J., Section 4.3, p.106-119, 2008.
