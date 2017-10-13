@@ -42,8 +42,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
 
 
-在sklearn中，bagging方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor`），输入的参数和策略由用户指定。
- ``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
+在sklearn中，bagging方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor` ），输入的参数和策略由用户指定。``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
 当使用样本子集时，通过设置 ``oob_score=True`` ，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何实构造一个 :class:`KNeighborsClassifier` 估计器的bagging集成，每一个基估计器都建立在50%的样本随机子集和特征随机子集上。
 
     >>> from sklearn.ensemble import BaggingClassifier
