@@ -6,7 +6,9 @@
 
 .. currentmodule:: sklearn.ensemble
 
-``注意，在本文中bagging和boosting为了更好的保留原文意图，不进行翻译``
+``注意，在本文中bagging和boosting为了更好的保留原文意图，不进行翻译
+  estimator->估计器  base estimator->基估计器
+``
 
 **集成方法** 的目标是把使用给定学习算法构建的几个基估计器的预测结果结合起来，从而获得比单个估计器更好的泛化能力/鲁棒性。
 
@@ -82,7 +84,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
 
 与其他分类器一样，森林分类器必须拟合（fitted）两个数组：
-保存训练样本的数组（可能稀疏或密集）X，大小为 ``[n_samples, n_features]``。
+保存训练样本的数组（可能稀疏或稠密）X，大小为 ``[n_samples, n_features]``。
 保存训练样本目标值（类标签）的数组Y，大小为 ``[n_samples]``::
 
     >>> from sklearn.ensemble import RandomForestClassifier
@@ -204,7 +206,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该 **特征相对重要性** 。 
 
 
-通过 **平均** 多个随机树中的 **预期贡献率**（expected activity rates），可以减少这种估计的 **方差** ，并将其用于特征选择。 
+通过 **平均** 多个随机树中的 **预期贡献率** （expected activity rates），可以减少这种估计的 **方差** ，并将其用于特征选择。 
 
 
 下面的例子展示了在面部识别中用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
