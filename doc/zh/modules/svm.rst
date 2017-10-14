@@ -531,8 +531,8 @@ RBF内核参数
 SVC
 ---
 
-给定训练向量 :math:`x_i \in \mathbb{R}^p`, i=1,..., n, 在两类中，和一个向量 :math:`y \in \{1, -1\}^n`, SVC解决
-了如下主要问题:
+在两类中，给定训练向量 :math:`x_i \in \mathbb{R}^p`, i=1,..., n, 和一个向量 :math:`y \in \{1, -1\}^n`, SVC能解决
+如下主要问题:
 
 .. math::
 
@@ -554,31 +554,24 @@ SVC
    & 0 \leq \alpha_i \leq C, i=1, ..., n
 
 其中 :math:`e` 是所有的向量， :math:`C > 0` 是上界，:math:`Q` 是一个 :math:`n` 由 :math:`n` 个半正定矩阵，
-而:math:`Q_{ij} \equiv y_i y_j K(x_i, x_j)`，其中 :math:`K(x_i, x_j) = \phi (x_i)^T \phi (x_j)`是内核。
-所以训练向量是通过函数 :math:`\phi`，间接反映到一个更高维度的（无穷的）空间。
+而 :math:`Q_{ij} \equiv y_i y_j K(x_i, x_j)` ，其中 :math:`K(x_i, x_j) = \phi (x_i)^T \phi (x_j)`是内核。所以
+训练向量是通过函数 :math:`\phi`，间接反映到一个更高维度的（无穷的）空间。
 
 
 决策函数是:
 
 .. math:: \operatorname{sgn}(\sum_{i=1}^n y_i \alpha_i K(x_i, x) + \rho)
 
-.. 注意::
+注意::
 
-    While SVM models derived from `libsvm`_ and `liblinear`_ use ``C`` as
-    regularization parameter, most other estimators use ``alpha``. The exact
-    equivalence between the amount of regularization of two models depends on
-    the exact objective function optimized by the model. For example, when the
-    estimator used is :class:`sklearn.linear_model.Ridge <ridge>` regression,
-    the relation between them is given as :math:`C = \frac{1}{alpha}`.
-    虽然这些SVM模型是从 `libsvm`_ 和 `liblinear`_ 中派生出来，使用了 ``C`` 作为调整参数，但是大多数的
-    攻击使用了 ``alpha``。两个模型的正则化量之间的精确等价，取决于模型优化的准确目标函数。举
-    个例子，当使用的估计起是 :class:`sklearn.linear_model.Ridge <ridge>` 做回归时，他们之间的相关性是 :math:`C = \frac{1}{alpha}`。 
-
-.. TODO multiclass case ?/
+虽然这些SVM模型是从 `libsvm`_ 和 `liblinear`_ 中派生出来，使用了 ``C`` 作为调整参数，但是大多数的
+攻击使用了 ``alpha``。两个模型的正则化量之间的精确等价，取决于模型优化的准确目标函数。举
+个例子，当使用的估计起是 :class:`sklearn.linear_model.Ridge <ridge>` 做回归时，他们之间的相关性是 :math:`C = \frac{1}{alpha}`。 
 
 
-这些参数能通过成员 ``dual_coef_``、 ``support_vectors_`` 、 ``intercept_`` 去访问，这些成员分别
-控制了输出 :math:`y_i \alpha_i`、支持向量和无关项 :math:`\rho` ： 
+
+这些参数能通过成员 ``dual_coef_``、 ``support_vectors_`` 、 ``intercept_`` 去访问，这些成员分别控
+制了输出 :math:`y_i \alpha_i`、支持向量和无关项 :math:`\rho` ： 
 
 .. topic:: 参考文献:
 
@@ -607,7 +600,7 @@ SVR
 ---
 
 给定训练向量 :math:`x_i \in \mathbb{R}^p`, i=1,..., n，向量 :math:`y \in \mathbb{R}^n` :math:`\varepsilon`-SVR 
-解决了以下的主要问题：
+能解决以下的主要问题：
 
 
 .. math::
