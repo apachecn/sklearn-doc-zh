@@ -3,25 +3,32 @@
 
 =================================================================
 Decomposing signals in components (matrix factorization problems)
+分解成分中的信号（矩阵分解问题）
 =================================================================
 
-.. currentmodule:: sklearn.decomposition
+.. currentmodule当前模块:: sklearn.decomposition
 
 
 .. _PCA:
 
 
 Principal component analysis (PCA)
+主成分分析（PCA）
 ==================================
 
 Exact PCA and probabilistic interpretation
+准确的PCA和概率解释
 ------------------------------------------
+
 
 PCA is used to decompose a multivariate dataset in a set of successive
 orthogonal components that explain a maximum amount of the variance. In
 scikit-learn, :class:`PCA` is implemented as a *transformer* object
 that learns :math:`n` components in its ``fit`` method, and can be used on new
 data to project it on these components.
+PCA 通过引入最大数量的变量来对一组连续正交分量中的多变量数据集进行降维。
+在 scikit-learn 中，:class:`PCA` 被实现为一个变换对象， 通过 ``fit`` 方法可以降维成 `n` 个成分，
+并且可以将新的数据投射(project, 亦可理解为 分解)到这些成分中。
 
 The optional parameter ``whiten=True`` makes it possible to
 project the data onto the singular space while scaling each component
@@ -29,9 +36,14 @@ to unit variance. This is often useful if the models down-stream make
 strong assumptions on the isotropy of the signal: this is for example
 the case for Support Vector Machines with the RBF kernel and the K-Means
 clustering algorithm.
+可选参数 ``whiten=True`` 使得可以将数据投影到单个空间上，同时将每个成分缩放到单位方差。
+如果下游模型对信号的各向同性作出强烈的假设，这通常是有用的。
+例如，使用RBF内核的 SVM(Support Vector Machines) 算法和 K-Means 聚类算法。
+
 
 Below is an example of the iris dataset, which is comprised of 4
 features, projected on the 2 dimensions that explain most variance:
+以下是iris数据集的一个示例， 该数据集包含4个特征， 通过PCA降维后投影到二维空间上：
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_pca_vs_lda_001.png
     :target: ../auto_examples/decomposition/plot_pca_vs_lda.html
@@ -43,6 +55,8 @@ The :class:`PCA` object also provides a
 probabilistic interpretation of the PCA that can give a likelihood of
 data based on the amount of variance it explains. As such it implements a
 `score` method that can be used in cross-validation:
+:class:`PCA` 对象还提供了 PCA 的概率解释， 其可以基于降维后的变量数量来给出数据的可能性。
+可以通过在 cross-validation 中使用 `score` 方法来实现。
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_pca_vs_fa_model_selection_001.png
     :target: ../auto_examples/decomposition/plot_pca_vs_fa_model_selection.html
@@ -50,7 +64,7 @@ data based on the amount of variance it explains. As such it implements a
     :scale: 75%
 
 
-.. topic:: Examples:
+.. topic:: Examples例子:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_lda.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_fa_model_selection.py`
@@ -58,7 +72,7 @@ data based on the amount of variance it explains. As such it implements a
 
 .. _IncrementalPCA:
 
-Incremental PCA
+增量PCA (Incremental PCA)
 ---------------
 
 The :class:`PCA` object is very useful, but has certain limitations for
@@ -69,6 +83,8 @@ processing and allows for partial computations which almost
 exactly match the results of :class:`PCA` while processing the data in a
 minibatch fashion. :class:`IncrementalPCA` makes it possible to implement
 out-of-core Principal Component Analysis either by:
+
+:class:`PCA` 对象非常有用
 
  * Using its ``partial_fit`` method on chunks of data fetched sequentially
    from the local hard drive or a network database.

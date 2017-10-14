@@ -2,6 +2,7 @@
 
 ===================================================
 Covariance estimation
+协方差估计
 ===================================================
 
 .. currentmodule:: sklearn.covariance
@@ -38,7 +39,7 @@ The empirical covariance matrix of a sample can be computed using the
 whether the data are centered or not, the result will be different, so
 one may want to use the ``assume_centered`` parameter accurately. More precisely
 if one uses ``assume_centered=False``, then the test set is supposed to have the
-same mean vector as the training set. If not so, both should be centered by the 
+same mean vector as the training set. If not so, both should be centered by the
 user, and ``assume_centered=True`` should be used.
 
 .. topic:: Examples:
@@ -334,4 +335,3 @@ ____
 
     * - |robust_vs_emp|
       - |mahalanobis|
-
