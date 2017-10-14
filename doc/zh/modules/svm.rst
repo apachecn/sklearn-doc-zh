@@ -516,16 +516,12 @@ RBF内核参数
 
 .. _svm_mathematical_formulation:
 
-Mathematical formulation
+数学公式
 ========================
 
-A support vector machine constructs a hyper-plane or set of hyper-planes
-in a high or infinite dimensional space, which can be used for
-classification, regression or other tasks. Intuitively, a good
-separation is achieved by the hyper-plane that has the largest distance
-to the nearest training data points of any class (so-called functional
-margin), since in general the larger the margin the lower the
-generalization error of the classifier.
+支持向量机在高维度或无穷维度空间中，构建一个超平面或者一系列的超平面，可以用于分类、回归或者别的任务。
+直观地看，借助超平面去实现一个好的分割， 能在任意类别中使最为接近的训练数据点具有最大的间隔距离（即所
+谓的函数余量），这样做是因为通常更大的余量能有更低的分类器泛化误差。
 
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_separating_hyperplane_001.png
@@ -535,9 +531,8 @@ generalization error of the classifier.
 SVC
 ---
 
-Given training vectors :math:`x_i \in \mathbb{R}^p`, i=1,..., n, in two classes, and a
-vector :math:`y \in \{1, -1\}^n`, SVC solves the following primal problem:
-
+给定训练向量 :math:`x_i \in \mathbb{R}^p`, i=1,..., n, 在两类中，和一个向量 :math:`y \in \{1, -1\}^n`, SVC解决
+了如下主要问题:
 
 .. math::
 
@@ -548,7 +543,7 @@ vector :math:`y \in \{1, -1\}^n`, SVC solves the following primal problem:
     \textrm {subject to } & y_i (w^T \phi (x_i) + b) \geq 1 - \zeta_i,\\
     & \zeta_i \geq 0, i=1, ..., n
 
-Its dual is
+它的对偶是
 
 .. math::
 
@@ -558,18 +553,16 @@ Its dual is
    \textrm {subject to } & y^T \alpha = 0\\
    & 0 \leq \alpha_i \leq C, i=1, ..., n
 
-where :math:`e` is the vector of all ones, :math:`C > 0` is the upper bound,
-:math:`Q` is an :math:`n` by :math:`n` positive semidefinite matrix,
-:math:`Q_{ij} \equiv y_i y_j K(x_i, x_j)`, where :math:`K(x_i, x_j) = \phi (x_i)^T \phi (x_j)`
-is the kernel. Here training vectors are implicitly mapped into a higher
-(maybe infinite) dimensional space by the function :math:`\phi`.
+其中 :math:`e` 是所有的向量， :math:`C > 0` 是上界，:math:`Q` 是一个 :math:`n` 由 :math:`n` 个半正定矩阵，
+而:math:`Q_{ij} \equiv y_i y_j K(x_i, x_j)`，其中 :math:`K(x_i, x_j) = \phi (x_i)^T \phi (x_j)`是内核。
+所以训练向量是通过函数 :math:`\phi`，间接反映到一个更高维度的（无穷的）空间。
 
 
-The decision function is:
+决策函数是:
 
 .. math:: \operatorname{sgn}(\sum_{i=1}^n y_i \alpha_i K(x_i, x) + \rho)
 
-.. note::
+.. 注意::
 
     While SVM models derived from `libsvm`_ and `liblinear`_ use ``C`` as
     regularization parameter, most other estimators use ``alpha``. The exact
@@ -577,15 +570,17 @@ The decision function is:
     the exact objective function optimized by the model. For example, when the
     estimator used is :class:`sklearn.linear_model.Ridge <ridge>` regression,
     the relation between them is given as :math:`C = \frac{1}{alpha}`.
+    虽然这些SVM模型是从 `libsvm`_ 和 `liblinear`_ 中派生出来，使用了 ``C`` 作为调整参数，但是大多数的
+    攻击使用了 ``alpha``。两个模型的正则化量之间的精确等价，取决于模型优化的准确目标函数。举
+    个例子，当使用的估计起是 :class:`sklearn.linear_model.Ridge <ridge>` 做回归时，他们之间的相关性是 :math:`C = \frac{1}{alpha}`。 
 
 .. TODO multiclass case ?/
 
-This parameters can be accessed through the members ``dual_coef_``
-which holds the product :math:`y_i \alpha_i`, ``support_vectors_`` which
-holds the support vectors, and ``intercept_`` which holds the independent
-term :math:`\rho` :
 
-.. topic:: References:
+这些参数能通过成员 ``dual_coef_``、 ``support_vectors_`` 、 ``intercept_`` 去访问，这些成员分别
+控制了输出 :math:`y_i \alpha_i`、支持向量和无关项 :math:`\rho` ： 
+
+.. topic:: 参考文献:
 
  * `"Automatic Capacity Tuning of Very Large VC-dimension Classifiers"
    <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.17.7215>`_,
@@ -602,20 +597,17 @@ term :math:`\rho` :
 NuSVC
 -----
 
-We introduce a new parameter :math:`\nu` which controls the number of
-support vectors and training errors. The parameter :math:`\nu \in (0,
-1]` is an upper bound on the fraction of training errors and a lower
-bound of the fraction of support vectors.
+我们引入一个新的参数 :math:`\nu` 来控制支持向量的数量和训练误差。参数 :math:`\nu \in (0,
+1]` 是训练误差分数的上限和支持向量分数的下限。
 
-It can be shown that the :math:`\nu`-SVC formulation is a reparametrization
-of the :math:`C`-SVC and therefore mathematically equivalent.
+可以看出， :math:`\nu`-SVC 公式是 :math:`C`-SVC 的再参数化，所以数学上是等效的。
 
 
 SVR
 ---
 
-Given training vectors :math:`x_i \in \mathbb{R}^p`, i=1,..., n, and a
-vector :math:`y \in \mathbb{R}^n` :math:`\varepsilon`-SVR solves the following primal problem:
+给定训练向量 :math:`x_i \in \mathbb{R}^p`, i=1,..., n，向量 :math:`y \in \mathbb{R}^n` :math:`\varepsilon`-SVR 
+解决了以下的主要问题：
 
 
 .. math::
@@ -628,7 +620,7 @@ vector :math:`y \in \mathbb{R}^n` :math:`\varepsilon`-SVR solves the following p
                           & w^T \phi (x_i) + b - y_i \leq \varepsilon + \zeta_i^*,\\
                           & \zeta_i, \zeta_i^* \geq 0, i=1, ..., n
 
-Its dual is
+它的对偶是
 
 .. math::
 
@@ -638,22 +630,21 @@ Its dual is
    \textrm {subject to } & e^T (\alpha - \alpha^*) = 0\\
    & 0 \leq \alpha_i, \alpha_i^* \leq C, i=1, ..., n
 
-where :math:`e` is the vector of all ones, :math:`C > 0` is the upper bound,
-:math:`Q` is an :math:`n` by :math:`n` positive semidefinite matrix,
-:math:`Q_{ij} \equiv K(x_i, x_j) = \phi (x_i)^T \phi (x_j)`
-is the kernel. Here training vectors are implicitly mapped into a higher
-(maybe infinite) dimensional space by the function :math:`\phi`.
 
-The decision function is:
+其中 :math:`e` 是所有的向量， :math:`C > 0` 是上界，:math:`Q` 是一个 :math:`n` 由 :math:`n` 个半正定矩阵，
+而:math:`Q_{ij} \equiv K(x_i, x_j) = \phi (x_i)^T \phi (x_j)` 是内核。
+所以训练向量是通过函数 :math:`\phi`，间接反映到一个更高维度的（无穷的）空间。
+
+
+决策函数是:
 
 .. math:: \sum_{i=1}^n (\alpha_i - \alpha_i^*) K(x_i, x) + \rho
 
-These parameters can be accessed through the members ``dual_coef_``
-which holds the difference :math:`\alpha_i - \alpha_i^*`, ``support_vectors_`` which
-holds the support vectors, and ``intercept_`` which holds the independent
-term :math:`\rho`
+这些参数能通过成员 ``dual_coef_``、 ``support_vectors_`` 、 ``intercept_`` 去访问，这些
+成员分别控制了不同的 :math:`\alpha_i - \alpha_i^*`、支持向量和无关项 :math:`\rho`：
 
-.. topic:: References:
+
+.. topic:: 参考文献:
 
  * `"A Tutorial on Support Vector Regression"
    <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.114.4288>`_,
@@ -663,19 +654,18 @@ term :math:`\rho`
 
 .. _svm_implementation_details:
 
-Implementation details
+实现细节
 ======================
 
-Internally, we use `libsvm`_ and `liblinear`_ to handle all
-computations. These libraries are wrapped using C and Cython.
+在底层里，我们使用 `libsvm`_ 和 `liblinear`_ 去处理所有的计算。这些库都使用了 C 和 Cython 去包装。
+
 
 .. _`libsvm`: http://www.csie.ntu.edu.tw/~cjlin/libsvm/
 .. _`liblinear`: http://www.csie.ntu.edu.tw/~cjlin/liblinear/
 
-.. topic:: References:
+.. topic:: 参考文献:
 
-  For a description of the implementation and details of the algorithms
-  used, please refer to
+  有关实现的描述和使用算法的细节，请参考
 
     - `LIBSVM: A Library for Support Vector Machines
       <http://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.pdf>`_.
