@@ -685,7 +685,7 @@ L1正则                             	"liblinear" or "saga"
 
 .. topic:: 与liblinear的区别:
 
-   当 ``fit_intercept=False`` 、回归得到的 ``coef_`` 、带预测的数据为零时， :class:`LogisticRegression` 用 ``solver=liblinear``
+   当 ``fit_intercept=False`` 、回归得到的 ``coef_`` 以及待预测的数据为零时， :class:`LogisticRegression` 用 ``solver=liblinear``
    及 :class:`LinearSVC` 与直接使用外部liblinear库预测得分会有差异。这是因为，
    对于 ``decision_function`` 为零的样本， :class:`LogisticRegression` 和 :class:`LinearSVC`
    将预测为负类，而liblinear预测为正类。
@@ -695,7 +695,7 @@ L1正则                             	"liblinear" or "saga"
 
    带L1罚项的逻辑斯蒂回归将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
 
- :class:`LogisticRegressionCV` 对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最好的参数C。
+ :class:`LogisticRegressionCV` 对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最优的参数C。
 "newton-cg", "sag", "saga" and "lbfgs"在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳C值。
 
 .. topic:: 参考文献：
@@ -741,7 +741,7 @@ learning）的一种简单算法。默认地，
 被动攻击算法（Passive Aggressive Algorithms）
 =============================
 
-被动攻击算法是大规模学习的一类算法。和感知机类似的，它也不需要设置学习率。不过比感知机多出一个正则化参数 ``C`` 。
+被动攻击算法是大规模学习的一类算法。和感知机类似，它也不需要设置学习率，不过比感知机多出一个正则化参数 ``C`` 。
 
 对于分类问题， :class:`PassiveAggressiveClassifier` 可设定
 ``loss='hinge'`` (PA-I)或 ``loss='squared_hinge'`` (PA-II)。对于回归问题，
@@ -760,7 +760,7 @@ learning）的一种简单算法。默认地，
 稳健回归（Robustness regression）： 处理离群点（outliers）和模型错误
 =====================================================
 
-稳健回归（robust regression）专用于回归模型包含损坏数据（corrupt data）的情况，如离群点或模型中的错误。
+稳健回归（robust regression）特别适用于回归模型包含损坏数据（corrupt data）的情况，如离群点或模型中的错误。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_theilsen_001.png
    :target: ../auto_examples/linear_model/plot_theilsen.html
@@ -804,7 +804,7 @@ learning）的一种简单算法。默认地，
 
 稳健拟合（robust fitting）的一个重要概念是崩溃点（breakdown point），即拟合模型（仍准确预测）所能承受的离群值最大比例。
 
-注意，一般而言在高维数据条件下（ `n_features` 大）很难完成稳健拟合，很可能完全不起作用。
+注意，在高维数据条件下（ `n_features` 大），一般而言很难完成稳健拟合，很可能完全不起作用。
 
 
 .. topic:: **折中： 预测器的选择**
@@ -815,10 +815,10 @@ learning）的一种简单算法。默认地，
   :ref:`HuberRegressor <huber_regression>`
 
   * :ref:`HuberRegressor <huber_regression>` 一般快于
-    :ref:`RANSAC <ransac_regression>` 和 :ref:`Theil Sen <theil_sen_regression>`
+    :ref:`RANSAC <ransac_regression>` 和 :ref:`Theil Sen <theil_sen_regression>` ，
     除非样本数很大，即 ``n_samples`` >> ``n_features`` 。
     这是因为 :ref:`RANSAC <ransac_regression>` 和 :ref:`Theil Sen <theil_sen_regression>`
-    都是基于数据的较小子集进行拟合。然而使用默认参数时， :ref:`Theil Sen <theil_sen_regression>`
+    都是基于数据的较小子集进行拟合。但使用默认参数时， :ref:`Theil Sen <theil_sen_regression>`
     和 :ref:`RANSAC <ransac_regression>` 可能不如
     :ref:`HuberRegressor <huber_regression>` 鲁棒。
 
