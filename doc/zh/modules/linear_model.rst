@@ -630,9 +630,9 @@ ARD is also known in the literature as *Sparse Bayesian Learning* and
 ===================
 
 逻辑斯蒂回归，虽然名字里有“回归”二字，但实际上是解决分类问题的一类线性模型。在某些文献中，逻辑斯蒂回归又被称作
-logit regression（logit回归），maximum-entropy classification (MaxEnt，最大熵分类)，或log-linear classifier（线性对数分类器）。该模型利用函数`logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_将单次试验（single trial）的输出转化并描述为概率。
+“logit regression”（logit回归），“maximum-entropy classification”(MaxEnt，最大熵分类)，或“log-linear classifier”（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_将单次试验（single trial）的输出转化并描述为概率。
 
-scikit-learn中逻辑斯蒂回归在:class:`LogisticRegression`类中实现了二元（binary）、一对多（one-vs-rest）及多元逻辑斯蒂回归，并带有可选的L1和L2正则化。
+scikit-learn中逻辑斯蒂回归在 :class:`LogisticRegression`类中实现了二元（binary）、一对余（one-vs-rest）及多元逻辑斯蒂回归，并带有可选的L1和L2正则化。
 
 若视为一优化问题，带L2罚项的二分类逻辑斯蒂回归要最小化以下代价函数（cost function）：
 
@@ -642,34 +642,34 @@ scikit-learn中逻辑斯蒂回归在:class:`LogisticRegression`类中实现了�
 
 .. math:: \underset{w, c}{min\,} \|w\|_1 + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-在:class:`LogisticRegression`类中实现了这些求解器：“liblinear”、“newton-cg”、“lbfgs”、“sag”和“saga”。
+在 :class:`LogisticRegression`类中实现了这些求解器：“liblinear”、“newton-cg”、“lbfgs”、“sag”和“saga”。
 
 “liblinear”应用了坐标下降算法（Coordinate Descent, CD），并基于scikit-learn内附的高性能C++库 `LIBLINEAR library
 <http://www.csie.ntu.edu.tw/~cjlin/liblinear/>`_, 实现。不过CD算法训练的模型不是真正意义上的多分类模型，而是基于“一对余”（one-vs-rest）思想分解了这个优化问题，为每个类别都训练了一个二元分类器。因为实现在底层
-使用该求解器的:class:`LogisticRegression`实例对象表面上看是一个多元分类器。:func:`sklearn.svm.l1_min_c`可以计算使用L1罚项时C的下界，以避免模型为空（即全部特征分量的权重为零）。
+使用该求解器的 :class:`LogisticRegression`实例对象表面上看是一个多元分类器。 :func:`sklearn.svm.l1_min_c`可以计算使用L1罚项时C的下界，以避免模型为空（即全部特征分量的权重为零）。
 
 “lbfgs”、“sag”和“newton-cg”求解器只支持L2罚项，对某些高维数据收敛更快。这些求解器的参数
-`multi_class`设为“multinomial”即可训练一个真正的多元逻辑斯蒂回归[5]_，其预测的概率比默认的“一对余”（one-vs-rest）设定更为准确。
+`multi_class`设为“multinomial”即可训练一个真正的多元逻辑斯蒂回归 [5]_，其预测的概率比默认的“一对余”（one-vs-rest）设定更为准确。
 
-“sag”求解器基于平均随机梯度下降算法（Stochastic Average Gradient descent）[6]_。在大数据集上的表现更快，大数据集指样本量大且特征数多。
+“sag”求解器基于平均随机梯度下降算法（Stochastic Average Gradient descent） [6]_。在大数据集上的表现更快，大数据集指样本量大且特征数多。
 
-“saga”求解器[7]_是“sag”的一类变体，它支持非平滑（non-smooth）的L1正则选项`penalty="l1"`。因此对于稀疏多元逻辑斯蒂回归，往往选用该求解器。
+“saga”求解器 [7]_是“sag”的一类变体，它支持非平滑（non-smooth）的L1正则选项 `penalty="l1"` 。因此对于稀疏多元逻辑斯蒂回归，往往选用该求解器。
 
 一言以蔽之，选用求解器可遵循如下规则:
 
 =================================  =====================================
 Case                               Solver
 =================================  =====================================
-L1正则                         "liblinear" or "saga"
-多元损失（multinomial loss）    "lbfgs", "sag", "saga" or "newton-cg"
-大数据集 (`n_samples`)         "sag" or "saga"
+L1正则                             	"liblinear" or "saga"
+多元损失（multinomial loss）        	"lbfgs", "sag", "saga" or "newton-cg"
+大数据集（`n_samples`）            	"sag" or "saga"
 =================================  =====================================
 
 “saga”一般都是最佳的选择，但出于一些历史遗留原因默认的是“liblinear”。
 
 对于大数据集，还可以用:class:`SGDClassifier`，并使用对数损失（'log' loss）
 
-.. topic:: Examples:
+.. topic:: 示例：
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_logistic_l1_l2_sparsity.py`
 
@@ -683,24 +683,22 @@ L1正则                         "liblinear" or "saga"
 
 .. _liblinear_differences:
 
-.. topic:: Differences from liblinear:
+.. topic:: 与liblinear的区别:
 
-   There might be a difference in the scores obtained between
-   ,
-   当``fit_intercept=False`` 、回归得到的 ``coef_``、带预测的数据为零时，:class:`LogisticRegression`用 ``solver=liblinear``
-   及:class:`LinearSVC`与直接使用外部liblinear库预测得分会有差异。这是因为，
-   对于``decision_function``为零的样本，:class:`LogisticRegression`和 :class:`LinearSVC`
+   当``fit_intercept=False`` 、回归得到的 ``coef_``、带预测的数据为零时， :class:`LogisticRegression` 用 ``solver=liblinear``
+   及 :class:`LinearSVC` 与直接使用外部liblinear库预测得分会有差异。这是因为，
+   对于 ``decision_function`` 为零的样本， :class:`LogisticRegression` 和 :class:`LinearSVC` 
    将预测为负类，而liblinear预测为正类。
-   注意，设定了``fit_intercept=False``，又有很多样本使得``decision_function``为零的模型，很可能会欠拟合，其表现往往比较差。建议您设置``fit_intercept=True``并增大intercept_scaling.
+   注意，设定了 ``fit_intercept=False`` ，又有很多样本使得 ``decision_function`` 为零的模型，很可能会欠拟合，其表现往往比较差。建议您设置 ``fit_intercept=True`` 并增大intercept_scaling.
 
-.. note:: **Feature selection with sparse logistic regression**
+.. note:: **利用稀疏逻辑回归（sparse logisitic regression）进行特征选择**
 
-   带L1罚项的逻辑斯蒂回归将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见:ref:`l1_feature_selection`。
+   带L1罚项的逻辑斯蒂回归将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection`。
 
-:class:`LogisticRegressionCV`对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最好的参数C。
-"newton-cg", "sag", "saga" and "lbfgs"在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若`multi_class`设为"ovr"，会为每类求一个最佳的C值；若`multi_class`设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳C值。
+ :class:`LogisticRegressionCV` 对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最好的参数C。
+"newton-cg", "sag", "saga" and "lbfgs"在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳C值。
 
-.. topic:: References:
+.. topic:: 参考文献：
 
     .. [5] Christopher M. Bishop: Pattern Recognition and Machine Learning, Chapter 4.3.4
 
@@ -708,23 +706,23 @@ L1正则                         "liblinear" or "saga"
 
     .. [7] Aaron Defazio, Francis Bach, Simon Lacoste-Julien: `SAGA: A Fast Incremental Gradient Method With Support for Non-Strongly Convex Composite Objectives. <https://arxiv.org/abs/1407.0202>`_
 
-Stochastic Gradient Descent - SGD
+随机梯度下降（Stochastic Gradient Descent, SGD）
 =================================
 
 随机梯度下降是拟合线性模型的一个简单而高效的方法。在样本量（和特征数）很大时尤为有用。
-方法``partial_fit``可用于在线学习（online learning）或基于外存的训练（out-of-core learning）
+方法 ``partial_fit`` 可用于在线学习（online learning）或基于外存的学习（out-of-core learning）
 
-:class:`SGDClassifier`和:class:`SGDRegressor`分别用于拟合分类问题和回归问题的线性模型，可使用不同的（凸）损失函数，支持不同的罚项。
-例如，设定``loss="log"``，则:class:`SGDClassifier`
-拟合一个逻辑斯蒂回归模型，而``loss="hinge"``拟合线性支持向量机(SVM).
+ :class:`SGDClassifier` 和 :class:`SGDRegressor` 分别用于拟合分类问题和回归问题的线性模型，可使用不同的（凸）损失函数，支持不同的罚项。
+例如，设定 ``loss="log"`` ，则 :class:`SGDClassifier` 
+拟合一个逻辑斯蒂回归模型，而 ``loss="hinge"`` 拟合线性支持向量机(SVM).
 
-.. topic:: References
+.. topic:: 参考文献
 
  * :ref:`sgd`
 
 .. _perceptron:
 
-Perceptron
+感知机（Perceptron）
 ==========
 
 :class:`Perceptron`是适用于大规模学习（large scale
