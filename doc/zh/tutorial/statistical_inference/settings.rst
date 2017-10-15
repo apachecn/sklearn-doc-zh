@@ -3,7 +3,7 @@
 Statistical learning: the setting and the estimator object in scikit-learn
 ==========================================================================
 
-Datasets
+数据集
 =========
 
 Scikit-learn deals with learning information from one or more
