@@ -623,77 +623,53 @@ ARD is also known in the literature as *Sparse Bayesian Learning* and
 
 
 
+
 .. _Logistic_regression:
 
-Logistic regression
+逻辑斯蒂回归（Logistic Regression）
 ===================
 
-Logistic regression, despite its name, is a linear model for classification
-rather than regression. Logistic regression is also known in the literature as
-logit regression, maximum-entropy classification (MaxEnt)
-or the log-linear classifier. In this model, the probabilities describing the possible outcomes of a single trial are modeled using a `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_.
+逻辑斯蒂回归，虽然名字里有“回归”二字，但实际上是解决分类问题的一类线性模型。在某些文献中，逻辑斯蒂回归又被称作
+“logit regression”（logit回归），“maximum-entropy classification”(MaxEnt，最大熵分类)，或“log-linear classifier”（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
 
-The implementation of logistic regression in scikit-learn can be accessed from
-class :class:`LogisticRegression`. This implementation can fit binary, One-vs-
-Rest, or multinomial logistic regression with optional L2 or L1
-regularization.
+scikit-learn中逻辑斯蒂回归在 :class:`LogisticRegression` 类中实现了二元（binary）、一对余（one-vs-rest）及多元逻辑斯蒂回归，并带有可选的L1和L2正则化。
 
-As an optimization problem, binary class L2 penalized logistic regression
-minimizes the following cost function:
+若视为一优化问题，带L2罚项的二分类逻辑斯蒂回归要最小化以下代价函数（cost function）：
 
 .. math:: \underset{w, c}{min\,} \frac{1}{2}w^T w + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-Similarly, L1 regularized logistic regression solves the following
-optimization problem
+类似地，带L1正则的逻辑斯蒂回归需要求解下式：
 
 .. math:: \underset{w, c}{min\,} \|w\|_1 + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-The solvers implemented in the class :class:`LogisticRegression`
-are "liblinear", "newton-cg", "lbfgs", "sag" and "saga":
+在 :class:`LogisticRegression` 类中实现了这些求解器：“liblinear”、“newton-cg”、“lbfgs”、“sag”和“saga”。
 
-The solver "liblinear" uses a coordinate descent (CD) algorithm, and relies
-on the excellent C++ `LIBLINEAR library
-<http://www.csie.ntu.edu.tw/~cjlin/liblinear/>`_, which is shipped with
-scikit-learn. However, the CD algorithm implemented in liblinear cannot learn
-a true multinomial (multiclass) model; instead, the optimization problem is
-decomposed in a "one-vs-rest" fashion so separate binary classifiers are
-trained for all classes. This happens under the hood, so
-:class:`LogisticRegression` instances using this solver behave as multiclass
-classifiers. For L1 penalization :func:`sklearn.svm.l1_min_c` allows to
-calculate the lower bound for C in order to get a non "null" (all feature
-weights to zero) model.
+“liblinear”应用了坐标下降算法（Coordinate Descent, CD），并基于scikit-learn内附的高性能C++库 `LIBLINEAR library
+<http://www.csie.ntu.edu.tw/~cjlin/liblinear/>`_ 实现。不过CD算法训练的模型不是真正意义上的多分类模型，而是基于“一对余”（one-vs-rest）思想分解了这个优化问题，为每个类别都训练了一个二元分类器。因为实现在底层
+使用该求解器的 :class:`LogisticRegression` 实例对象表面上看是一个多元分类器。 :func:`sklearn.svm.l1_min_c` 可以计算使用L1罚项时C的下界，以避免模型为空（即全部特征分量的权重为零）。
 
-The "lbfgs", "sag" and "newton-cg" solvers only support L2 penalization and
-are found to converge faster for some high dimensional data. Setting
-`multi_class` to "multinomial" with these solvers learns a true multinomial
-logistic regression model [5]_, which means that its probability estimates
-should be better calibrated than the default "one-vs-rest" setting.
+“lbfgs”、“sag”和“newton-cg”求解器只支持L2罚项，对某些高维数据收敛更快。这些求解器的参数
+`multi_class`设为“multinomial”即可训练一个真正的多元逻辑斯蒂回归 [5]_，其预测的概率比默认的“一对余”（one-vs-rest）设定更为准确。
 
-The "sag" solver uses a Stochastic Average Gradient descent [6]_. It is faster
-than other solvers for large datasets, when both the number of samples and the
-number of features are large.
+“sag”求解器基于平均随机梯度下降算法（Stochastic Average Gradient descent） [6]_。在大数据集上的表现更快，大数据集指样本量大且特征数多。
 
-The "saga" solver [7]_ is a variant of "sag" that also supports the
-non-smooth `penalty="l1"` option. This is therefore the solver of choice
-for sparse multinomial logistic regression.
+“saga”求解器 [7]_ 是“sag”的一类变体，它支持非平滑（non-smooth）的L1正则选项 ``penalty="l1"`` 。因此对于稀疏多元逻辑斯蒂回归，往往选用该求解器。
 
-In a nutshell, one may choose the solver with the following rules:
+一言以蔽之，选用求解器可遵循如下规则:
 
 =================================  =====================================
 Case                               Solver
 =================================  =====================================
-L1 penalty                         "liblinear" or "saga"
-Multinomial loss                   "lbfgs", "sag", "saga" or "newton-cg"
-Very Large dataset (`n_samples`)   "sag" or "saga"
+L1正则                             	"liblinear" or "saga"
+多元损失（multinomial loss）        	"lbfgs", "sag", "saga" or "newton-cg"
+大数据集（`n_samples`）            	"sag" or "saga"
 =================================  =====================================
 
-The "saga" solver is often the best choice. The "liblinear" solver is
-used by default for historical reasons.
+“saga”一般都是最佳的选择，但出于一些历史遗留原因默认的是“liblinear”。
 
-For large dataset, you may also consider using :class:`SGDClassifier`
-with 'log' loss.
+对于大数据集，还可以用 :class:`SGDClassifier` ，并使用对数损失（'log' loss）
 
-.. topic:: Examples:
+.. topic:: 示例：
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_logistic_l1_l2_sparsity.py`
 
@@ -707,35 +683,22 @@ with 'log' loss.
 
 .. _liblinear_differences:
 
-.. topic:: Differences from liblinear:
+.. topic:: 与liblinear的区别:
 
-   There might be a difference in the scores obtained between
-   :class:`LogisticRegression` with ``solver=liblinear``
-   or :class:`LinearSVC` and the external liblinear library directly,
-   when ``fit_intercept=False`` and the fit ``coef_`` (or) the data to
-   be predicted are zeroes. This is because for the sample(s) with
-   ``decision_function`` zero, :class:`LogisticRegression` and :class:`LinearSVC`
-   predict the negative class, while liblinear predicts the positive class.
-   Note that a model with ``fit_intercept=False`` and having many samples with
-   ``decision_function`` zero, is likely to be a underfit, bad model and you are
-   advised to set ``fit_intercept=True`` and increase the intercept_scaling.
+   当 ``fit_intercept=False`` 、回归得到的 ``coef_`` 以及待预测的数据为零时， :class:`LogisticRegression` 用 ``solver=liblinear``
+   及 :class:`LinearSVC` 与直接使用外部liblinear库预测得分会有差异。这是因为，
+   对于 ``decision_function`` 为零的样本， :class:`LogisticRegression` 和 :class:`LinearSVC`
+   将预测为负类，而liblinear预测为正类。
+   注意，设定了 ``fit_intercept=False`` ，又有很多样本使得 ``decision_function`` 为零的模型，很可能会欠拟合，其表现往往比较差。建议您设置 ``fit_intercept=True`` 并增大 ``intercept_scaling``。
 
-.. note:: **Feature selection with sparse logistic regression**
+.. note:: **利用稀疏逻辑回归（sparse logisitic regression）进行特征选择**
 
-   A logistic regression with L1 penalty yields sparse models, and can
-   thus be used to perform feature selection, as detailed in
-   :ref:`l1_feature_selection`.
+   带L1罚项的逻辑斯蒂回归将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
 
-:class:`LogisticRegressionCV` implements Logistic Regression with
-builtin cross-validation to find out the optimal C parameter.
-"newton-cg", "sag", "saga" and "lbfgs" solvers are found to be faster
-for high-dimensional dense data, due to warm-starting. For the
-multiclass case, if `multi_class` option is set to "ovr", an optimal C
-is obtained for each class and if the `multi_class` option is set to
-"multinomial", an optimal C is obtained by minimizing the cross-entropy
-loss.
+ :class:`LogisticRegressionCV` 对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最优的参数C。
+"newton-cg", "sag", "saga" and "lbfgs"在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳C值。
 
-.. topic:: References:
+.. topic:: 参考文献：
 
     .. [5] Christopher M. Bishop: Pattern Recognition and Machine Learning, Chapter 4.3.4
 
@@ -743,60 +706,50 @@ loss.
 
     .. [7] Aaron Defazio, Francis Bach, Simon Lacoste-Julien: `SAGA: A Fast Incremental Gradient Method With Support for Non-Strongly Convex Composite Objectives. <https://arxiv.org/abs/1407.0202>`_
 
-Stochastic Gradient Descent - SGD
+随机梯度下降（Stochastic Gradient Descent, SGD）
 =================================
 
-Stochastic gradient descent is a simple yet very efficient approach
-to fit linear models. It is particularly useful when the number of samples
-(and the number of features) is very large.
-The ``partial_fit`` method allows only/out-of-core learning.
+随机梯度下降是拟合线性模型的一个简单而高效的方法。在样本量（和特征数）很大时尤为有用。
+方法 ``partial_fit`` 可用于在线学习（online learning）或基于外存的学习（out-of-core learning）
 
-The classes :class:`SGDClassifier` and :class:`SGDRegressor` provide
-functionality to fit linear models for classification and regression
-using different (convex) loss functions and different penalties.
-E.g., with ``loss="log"``, :class:`SGDClassifier`
-fits a logistic regression model,
-while with ``loss="hinge"`` it fits a linear support vector machine (SVM).
+:class:`SGDClassifier` 和 :class:`SGDRegressor` 分别用于拟合分类问题和回归问题的线性模型，可使用不同的（凸）损失函数，支持不同的罚项。
+例如，设定 ``loss="log"`` ，则 :class:`SGDClassifier` 
+拟合一个逻辑斯蒂回归模型，而 ``loss="hinge"`` 拟合线性支持向量机(SVM).
 
-.. topic:: References
+.. topic:: 参考文献
 
  * :ref:`sgd`
 
 .. _perceptron:
 
-Perceptron
+感知机（Perceptron）
 ==========
 
-The :class:`Perceptron` is another simple algorithm suitable for large scale
-learning. By default:
+:class:`Perceptron` 是适用于大规模学习（large scale
+learning）的一种简单算法。默认地，
 
-    - It does not require a learning rate.
+    - 不需要设置学习率（learning rate）。
 
-    - It is not regularized (penalized).
+    - 不需要正则化处理。
 
-    - It updates its model only on mistakes.
+    - 仅使用错误样本更新模型。
 
-The last characteristic implies that the Perceptron is slightly faster to
-train than SGD with the hinge loss and that the resulting models are
-sparser.
+最后一点表明使用合页损失（hinge loss）的感知机比SGD略快，所得模型更稀疏。
 
 .. _passive_aggressive:
 
-Passive Aggressive Algorithms
+被动攻击算法（Passive Aggressive Algorithms）
 =============================
 
-The passive-aggressive algorithms are a family of algorithms for large-scale
-learning. They are similar to the Perceptron in that they do not require a
-learning rate. However, contrary to the Perceptron, they include a
-regularization parameter ``C``.
+被动攻击算法是大规模学习的一类算法。和感知机类似，它也不需要设置学习率，不过比感知机多出一个正则化参数 ``C`` 。
 
-For classification, :class:`PassiveAggressiveClassifier` can be used with
-``loss='hinge'`` (PA-I) or ``loss='squared_hinge'`` (PA-II).  For regression,
-:class:`PassiveAggressiveRegressor` can be used with
-``loss='epsilon_insensitive'`` (PA-I) or
+对于分类问题， :class:`PassiveAggressiveClassifier` 可设定
+``loss='hinge'`` (PA-I)或 ``loss='squared_hinge'`` (PA-II)。对于回归问题，
+:class:`PassiveAggressiveRegressor` 可设置
+``loss='epsilon_insensitive'`` (PA-I)或
 ``loss='squared_epsilon_insensitive'`` (PA-II).
 
-.. topic:: References:
+.. topic:: 参考文献：
 
 
  * `"Online Passive-Aggressive Algorithms"
@@ -804,22 +757,20 @@ For classification, :class:`PassiveAggressiveClassifier` can be used with
    K. Crammer, O. Dekel, J. Keshat, S. Shalev-Shwartz, Y. Singer - JMLR 7 (2006)
 
 
-Robustness regression: outliers and modeling errors
+稳健回归（Robustness regression）： 处理离群点（outliers）和模型错误
 =====================================================
 
-Robust regression is interested in fitting a regression model in the
-presence of corrupt data: either outliers, or error in the model.
+稳健回归（robust regression）特别适用于回归模型包含损坏数据（corrupt data）的情况，如离群点或模型中的错误。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_theilsen_001.png
    :target: ../auto_examples/linear_model/plot_theilsen.html
    :scale: 50%
    :align: center
 
-Different scenario and useful concepts
+各种使用场景与相关概念
 ----------------------------------------
 
-There are different things to keep in mind when dealing with data
-corrupted by outliers:
+处理包含离群点的数据时牢记以下几点:
 
 .. |y_outliers| image:: ../auto_examples/linear_model/images/sphx_glr_plot_robust_fit_003.png
    :target: ../auto_examples/linear_model/plot_robust_fit.html
@@ -833,120 +784,91 @@ corrupted by outliers:
    :target: ../auto_examples/linear_model/plot_robust_fit.html
    :scale: 60%
 
-* **Outliers in X or in y**?
+* **离群值在X上还是在y方向上**?
 
   ==================================== ====================================
-  Outliers in the y direction          Outliers in the X direction
+  离群值在y方向上                  	离群值在X方向上
   ==================================== ====================================
   |y_outliers|                         |X_outliers|
   ==================================== ====================================
 
-* **Fraction of outliers versus amplitude of error**
+* **离群点的比例 vs. 错误的量级（amplitude）**
 
-  The number of outlying points matters, but also how much they are
-  outliers.
+  离群点的数量很重要，离群程度也同样重要。
 
   ==================================== ====================================
-  Small outliers                       Large outliers
+  离群值小                            离群值大
   ==================================== ====================================
   |y_outliers|                         |large_y_outliers|
   ==================================== ====================================
 
-An important notion of robust fitting is that of breakdown point: the
-fraction of data that can be outlying for the fit to start missing the
-inlying data.
+稳健拟合（robust fitting）的一个重要概念是崩溃点（breakdown point），即拟合模型（仍准确预测）所能承受的离群值最大比例。
 
-Note that in general, robust fitting in high-dimensional setting (large
-`n_features`) is very hard. The robust models here will probably not work
-in these settings.
+注意，在高维数据条件下（ `n_features` 大），一般而言很难完成稳健拟合，很可能完全不起作用。
 
 
-.. topic:: **Trade-offs: which estimator?**
+.. topic:: **折中： 预测器的选择**
 
-  Scikit-learn provides 3 robust regression estimators:
-  :ref:`RANSAC <ransac_regression>`,
-  :ref:`Theil Sen <theil_sen_regression>` and
+  Scikit-learn提供了三种稳健回归的预测器（estimator）:
+  :ref:`RANSAC <ransac_regression>` ,
+  :ref:`Theil Sen <theil_sen_regression>` 和
   :ref:`HuberRegressor <huber_regression>`
 
-  * :ref:`HuberRegressor <huber_regression>` should be faster than
-    :ref:`RANSAC <ransac_regression>` and :ref:`Theil Sen <theil_sen_regression>`
-    unless the number of samples are very large, i.e ``n_samples`` >> ``n_features``.
-    This is because :ref:`RANSAC <ransac_regression>` and :ref:`Theil Sen <theil_sen_regression>`
-    fit on smaller subsets of the data. However, both :ref:`Theil Sen <theil_sen_regression>`
-    and :ref:`RANSAC <ransac_regression>` are unlikely to be as robust as
-    :ref:`HuberRegressor <huber_regression>` for the default parameters.
+  * :ref:`HuberRegressor <huber_regression>` 一般快于
+    :ref:`RANSAC <ransac_regression>` 和 :ref:`Theil Sen <theil_sen_regression>` ，
+    除非样本数很大，即 ``n_samples`` >> ``n_features`` 。
+    这是因为 :ref:`RANSAC <ransac_regression>` 和 :ref:`Theil Sen <theil_sen_regression>`
+    都是基于数据的较小子集进行拟合。但使用默认参数时， :ref:`Theil Sen <theil_sen_regression>`
+    和 :ref:`RANSAC <ransac_regression>` 可能不如
+    :ref:`HuberRegressor <huber_regression>` 鲁棒。
 
-  * :ref:`RANSAC <ransac_regression>` is faster than :ref:`Theil Sen <theil_sen_regression>`
-    and scales much better with the number of samples
+  * :ref:`RANSAC <ransac_regression>` 比 :ref:`Theil Sen <theil_sen_regression>` 更快，在样本数量上的伸缩性（适应性）更好。
 
-  * :ref:`RANSAC <ransac_regression>` will deal better with large
-    outliers in the y direction (most common situation)
+  * :ref:`RANSAC <ransac_regression>` 能更好地处理y方向的大值离群点（通常情况下）。
 
-  * :ref:`Theil Sen <theil_sen_regression>` will cope better with
-    medium-size outliers in the X direction, but this property will
-    disappear in large dimensional settings.
+  * :ref:`Theil Sen <theil_sen_regression>` 能更好地处理x方向中等大小的离群点，但在高维情况下无法保证这一特点。
 
- When in doubt, use :ref:`RANSAC <ransac_regression>`
+ 实在决定不了的话，请使用 :ref:`RANSAC <ransac_regression>`
 
 .. _ransac_regression:
 
-RANSAC: RANdom SAmple Consensus
+RANSAC： 随机抽样一致性算法（RANdom SAmple Consensus）
 --------------------------------
 
-RANSAC (RANdom SAmple Consensus) fits a model from random subsets of
-inliers from the complete data set.
+随机抽样一致性算法（RANdom SAmple Consensus, RANSAC）利用全体数据中局内点（inliers）的一个随机子集拟合模型。
 
-RANSAC is a non-deterministic algorithm producing only a reasonable result with
-a certain probability, which is dependent on the number of iterations (see
-`max_trials` parameter). It is typically used for linear and non-linear
-regression problems and is especially popular in the fields of photogrammetric
-computer vision.
+RANSAC是一种非确定性算法，以一定概率输出一个可能的合理结果，依赖于迭代次数（参数 `max_trials` ）。这种算法主要解决线性或非线性回归问题，在计算机视觉摄影测量领域尤为流行。
 
-The algorithm splits the complete input sample data into a set of inliers,
-which may be subject to noise, and outliers, which are e.g. caused by erroneous
-measurements or invalid hypotheses about the data. The resulting model is then
-estimated only from the determined inliers.
+算法从全体样本输入中分出一个局内点集合，全体样本可能由于测量错误或对数据的假设错误而含有噪点、离群点。最终的模型仅从这个局内点集合中得出。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ransac_001.png
    :target: ../auto_examples/linear_model/plot_ransac.html
    :align: center
    :scale: 50%
 
-Details of the algorithm
+算法细节
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Each iteration performs the following steps:
+每轮迭代执行以下步骤:
 
-1. Select ``min_samples`` random samples from the original data and check
-   whether the set of data is valid (see ``is_data_valid``).
-2. Fit a model to the random subset (``base_estimator.fit``) and check
-   whether the estimated model is valid (see ``is_model_valid``).
-3. Classify all data as inliers or outliers by calculating the residuals
-   to the estimated model (``base_estimator.predict(X) - y``) - all data
-   samples with absolute residuals smaller than the ``residual_threshold``
-   are considered as inliers.
-4. Save fitted model as best model if number of inlier samples is
-   maximal. In case the current estimated model has the same number of
-   inliers, it is only considered as the best model if it has better score.
+1. 从原始数据中抽样 ``min_samples`` 数量的随机样本，检查数据是否合法（见 ``is_data_valid`` ）.
+2. 用一个随机子集拟合模型（ ``base_estimator.fit`` ）。检查模型是否合法（见 ``is_model_valid`` ）。
+3. 计算预测模型的残差（residual），将全体数据分成局内点和离群点（ ``base_estimator.predict(X) - y`` ）
+ - 绝对残差小于 ``residual_threshold`` 的全体数据认为是局内点。
+4. 若局内点样本数最大，保存当前模型为最佳模型。以免当前模型离群点数量恰好相等（而出现未定义情况），规定仅当数值大于当前最值时认为是最佳模型。
 
-These steps are performed either a maximum number of times (``max_trials``) or
-until one of the special stop criteria are met (see ``stop_n_inliers`` and
-``stop_score``). The final model is estimated using all inlier samples (consensus
-set) of the previously determined best model.
+上述步骤或者迭代到最大次数（ ``max_trials`` ），或者某些终止条件满足时停下（见 ``stop_n_inliers`` 和 ``stop_score`` )。最终模型由之前确定的最佳模型的局内点样本（一致性集合，consensus
+set）预测。
 
-The ``is_data_valid`` and ``is_model_valid`` functions allow to identify and reject
-degenerate combinations of random sub-samples. If the estimated model is not
-needed for identifying degenerate cases, ``is_data_valid`` should be used as it
-is called prior to fitting the model and thus leading to better computational
-performance.
+函数 ``is_data_valid`` 和 ``is_model_valid`` 可以识别出随机样本子集中的退化组合（degenerate combinations）并予以丢弃（reject）。即便不需要考虑退化情况，也会使用 ``is_data_valid`` ，因为在拟合模型之前调用它能得到更高的计算性能。
 
 
-.. topic:: Examples:
+.. topic:: 示例：
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_ransac.py`
   * :ref:`sphx_glr_auto_examples_linear_model_plot_robust_fit.py`
 
-.. topic:: References:
+.. topic:: 参考文献：
 
  * https://en.wikipedia.org/wiki/RANSAC
  * `"Random Sample Consensus: A Paradigm for Model Fitting with Applications to
