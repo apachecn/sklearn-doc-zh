@@ -20,18 +20,16 @@ Scikit-learn从可以从一个或者多个数据集中学习信息，这些数�
 
     这个数据集包含150个样本，每个样本包含4个特征：花萼长度，花萼宽度，花瓣长度，花瓣宽度，详细数据可以通过``iris.DESCR``查看。
 
-When the data is not initially in the ``(n_samples, n_features)`` shape, it
-needs to be preprocessed in order to be used by scikit-learn.
+如果原始数据并不是``(n_samples, n_features)``的类型，在使用之前必须进行预处理。
 
-.. topic:: An example of reshaping data would be the digits dataset
+.. topic:: 数据预处理样例:digits数据集(手写数字数据集)
 
     .. image:: /auto_examples/datasets/images/sphx_glr_plot_digits_last_image_001.png
         :target: ../../auto_examples/datasets/plot_digits_last_image.html
         :align: right
         :scale: 60
 
-    The digits dataset is made of 1797 8x8 images of hand-written
-    digits ::
+    digits数据集包含1797个手写数字的图像，每个图像为8*8像素 ::
 
         >>> digits = datasets.load_digits()
         >>> digits.images.shape
