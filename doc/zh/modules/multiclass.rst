@@ -34,19 +34,17 @@ regression is also supported.
 
  每个输出变量的标签集合可以是各不相同的。比如说，一个水果样本可以将梨作为一个输出变量，这个输出变
  量在一个比如梨、苹果等的有限集合中取可能的值；输出蓝色或者黄色的第二个输出变量在一个有限的颜色集
- 合绿色、红色、蓝色等取可能的值。...
+ 合绿色、红色、蓝色等取可能的值...
 
- 这意味着任何处理 multi-output multiclass or multi-task classification的分类器，在特殊的
- 情况下支持multi-label classification任务。Multi-task classification 与具有不同模型公式
+ 这意味着任何处理 multi-output multiclass or multi-task classification 的分类器，在特殊的
+ 情况下支持 multi-label classification 任务。Multi-task classification 与具有不同模型公式
  的 multi-output classification 相似。详细情况请查阅相关的分类器的文档。
 
-所有的scikit-learn分类器都能处理multiclass classification任务，
-但是 :mod:`sklearn.multiclass`
-提供的 meta-estimators允许改变处理超多两类的方式，因为这会对分类器的性能产生影响
+所有的 scikit-learn 分类器都能处理 multiclass classification 任务，
+但是 :mod:`sklearn.multiclass` 提供的 meta-estimators 允许改变处理超多两类的方式，因为这会对分类器的性能产生影响
 （无论是在泛化误差或者所需要的计算资源方面）
 
-下面是按照scikit-learn策略分组的分类器的总结，如果你使用其中的一个，则不需要此类中的
-meta-estimators，除非你想要定值多分类方式。
+下面是按照 scikit-learn 策略分组的分类器的总结，如果你使用其中的一个，则不需要此类中的 meta-estimators，除非你想要定值多分类方式。
 
 - **Inherently multiclass:**
 
@@ -120,11 +118,8 @@ meta-estimators，除非你想要定值多分类方式。
 Multilabel classification format
 ================================
 
-在multilabel learning 中，二分类任务的合集表示为二进制数组：每一个样本是形状为
-（n_samples, n_classes）的二维数组中的一行二进制值，比如非0元素，1表示为对应标签的
-子集。 一个数组
-``np.array([[1, 0, 0], [0, 1, 1], [0, 0, 0]])`` r表示第一个样本属于第0个标签，
-第二个样本属于第一个和第二个标签，第三个样本不属于任何标签。
+在 multilabel learning 中，二分类任务的合集表示为二进制数组：每一个样本是 shape 为 (n_samples, n_classes) 的二维数组中的一行二进制值，比如非0元素，1表示为对应标签的
+子集。 一个数组 ``np.array([[1, 0, 0], [0, 1, 1], [0, 0, 0]])`` 表示第一个样本属于第 0 个标签，第二个样本属于第一个和第二个标签，第三个样本不属于任何标签。
 
 Producing multilabel data as a list of sets of labels may be more intuitive.
 The :class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>`
@@ -145,16 +140,12 @@ labels and the indicator format.
 One-Vs-The-Rest
 ===============
 
-这个方法也被称为 **one-vs-all**, 在
-:class:`OneVsRestClassifier`模块中执行。 这个方法在于每一个类都将拟合出一个分类器。对于
-每一个分类器，该类将会和其他所有的类区别。除了她的计算效率之外 (只需要 `n_classes`
-个分类器), 这种方法的优点是它具有可解释性。通过检查相关的分类器它可以获得知识。这是最常用
-的方法，也是一个公平的默认选择。
+这个方法也被称为 **one-vs-all**, 在 :class:`OneVsRestClassifier` 模块中执行。 这个方法在于每一个类都将拟合出一个分类器。对于每一个分类器，该类将会和其他所有的类区别。除了她的计算效率之外 (只需要 `n_classes` 个分类器), 这种方法的优点是它具有可解释性。通过检查相关的分类器它可以获得知识。这是最常用的方法，也是一个公平的默认选择。
 
 Multiclass learning
 -------------------
 
-下面是一个使用OvR的一个例子：
+下面是一个使用 OvR 的一个例子：
 
   >>> from sklearn import datasets
   >>> from sklearn.multiclass import OneVsRestClassifier
@@ -174,7 +165,7 @@ Multilabel learning
 -------------------
 
 :class:`OneVsRestClassifier`  也支持 multilabel classification.
-要使用该功能，给分类器提供一个指示矩阵，比如[i,j]表示样本i的标签为j。
+要使用该功能，给分类器提供一个指示矩阵，比如 [i,j] 表示样本 i 的标签为 j。
 
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_multilabel_001.png
@@ -183,7 +174,7 @@ Multilabel learning
     :scale: 75%
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_plot_multilabel.py`
 
@@ -192,16 +183,15 @@ Multilabel learning
 One-Vs-One
 ==========
 
-:class:`OneVsOneClassifier`将会为每一对类别构造出一个分类器，在预测阶段，收到最多投票的类别
-将会被选择出来。在两个类具有同样的票数的时候， it
+:class:`OneVsOneClassifier` 将会为每一对类别构造出一个分类器，在预测阶段，收到最多投票的类别将会被选择出来。在两个类具有同样的票数的时候， it
 selects the class with the highest aggregate classification confidence by
 summing over the pair-wise classification confidence levels computed by the
 underlying binary classifiers.
 
 因为这需要训练出 ``n_classes * (n_classes - 1) / 2`` 个分类器,
-由于复杂度为O(n_classes^2)，这个方法通常比one-vs-the-rest慢。然而，这个方法也有优点，
-比如说是在没有很好的缩放 ``n_samples`` 数据的核方法中。每个单独的学习问题只涉及一小部分数据，
+由于复杂度为 O(n_classes^2)，这个方法通常比 one-vs-the-rest 慢。然而，这个方法也有优点，比如说是在没有很好的缩放 ``n_samples`` 数据的核方法中。每个单独的学习问题只涉及一小部分数据，
 而 one-vs-the-rest 将会使用 ``n_classes`` 个完整的数据。
+
 Multiclass learning
 -------------------
 
@@ -222,7 +212,7 @@ Below is an example of multiclass learning using OvO::
          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     * "Pattern Recognition and Machine Learning. Springer",
       Christopher M. Bishop, page 183, (First Edition)
@@ -232,25 +222,18 @@ Below is an example of multiclass learning using OvO::
 Error-Correcting Output-Codes
 =============================
 
-基于Output-code的方法不同于 one-vs-the-rest 和 one-vs-one。使用这些方法，每一个类将会被
-映射到欧几里得空间，每一个维度上的值为0或者为1。另一种解释它的方法是，每一个类被表示为二进制
-码（一个0、1数组）。保存位置/每一个类的编码的矩阵被称为code book。编码的大小是前面提到的欧几里
-得空间的纬度。直观上，每一个类应该使用一个唯一的编码，好的code book 应该能够优化分类的精度。
-在实现上，我们使用随机产生的code book，正如在 [3]_ 提倡的方式，然而，更加详尽的方法会在未来加入
-进来。
+基于Output-code的方法不同于 one-vs-the-rest 和 one-vs-one。使用这些方法，每一个类将会被映射到欧几里得空间，每一个维度上的值为0或者为1。另一种解释它的方法是，每一个类被表示为二进制
+码（一个 0 和 1 数组）。保存 location （位置）/ 每一个类的编码的矩阵被称为 code book。编码的大小是前面提到的欧几里得空间的纬度。直观上，每一个类应该使用一个唯一的编码，好的 code book 应该能够优化分类的精度。
+在实现上，我们使用随机产生的 code book，正如在 [3]_ 提倡的方式，然而，更加详尽的方法会在未来加入进来。
 
-在训练时，codebook每一位的二分类器将会被训练。在预测时，分类器将映射到类空间中选中的点的附近。
+在训练时，code book 每一位的二分类器将会被训练。在预测时，分类器将映射到类空间中选中的点的附近。
  
 在 :class:`OutputCodeClassifier`, ``code_size`` 属性允许用户设置将会用到的分类器的数量。
 它是类别总数的百分比。
 
-在0或1之中的一个数字会比one-vs-the-rest使用更少的分类器。理论上
-``log2(n_classes) / n_classes`` 足以明确表示每个类。然而，在实际上，折也许会导致不太好的精确
-度，因为 ``log2(n_classes)`` 小于 n_classes.
+在 0 或 1 之中的一个数字会比 one-vs-the-rest 使用更少的分类器。理论上 ``log2(n_classes) / n_classes`` 足以明确表示每个类。然而，在实际上，这也许会导致不太好的精确度，因为 ``log2(n_classes)`` 小于 n_classes.
 
-比1大的数字比one-vs-the-rest需要更多的分类器数数量。在这种情况下，一些分类器理论上会纠正其他
-分类器的错误，因此命名为 “error-correcting”。然而在实际上这通常不会发生，因为许多分类器的错误
-通常意义上来说是相关的。error-correcting output codes 和bagging 有一个相似的作用效果。
+比 1 大的数字比 one-vs-the-rest 需要更多的分类器数数量。在这种情况下，一些分类器理论上会纠正其他分类器的错误，因此命名为 "error-correcting" 。然而在实际上这通常不会发生，因为许多分类器的错误通常意义上来说是相关的。error-correcting output codes 和 bagging 有一个相似的作用效果。
 
 
 Multiclass learning
@@ -274,7 +257,7 @@ Below is an example of multiclass learning using Output-Codes::
          2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 1, 2, 2, 2,
          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     * "Solving multiclass learning problems via error-correcting output codes",
       Dietterich T., Bakiri G.,
@@ -293,13 +276,9 @@ Below is an example of multiclass learning using Output-Codes::
 Multioutput regression
 ======================
 
-Multioutput regression 支持 :class:`MultiOutputRegressor`可以被添加到任何回归器中.  
-This strategy consists of fitting one
-因为每一个目标可以被一个回归器精确的表示，通过检查其他回归器，它可以获取关于目标的知识。
-因为 :class:`MultiOutputRegressor` 对于每一个目标可以训练出一个回归器，所以它可能忽略属性
-之间的关系。
+Multioutput regression 支持 :class:`MultiOutputRegressor` 可以被添加到任何回归器中。这个策略包括对每个目标拟合一个回归。因为每一个目标可以被一个回归器精确的表示，通过检查其他回归器，它可以获取关于目标的知识。因为 :class:`MultiOutputRegressor` 对于每一个目标可以训练出一个回归器，所以它可能忽略属性之间的关系。
 
-Below is an example of multioutput regression:
+以下是 multioutput regression（多输出回归）的示例:
 
   >>> from sklearn.datasets import make_regression
   >>> from sklearn.multioutput import MultiOutputRegressor
@@ -320,10 +299,7 @@ Below is an example of multioutput regression:
 Multioutput classification
 ==========================
 
-Multioutput classification 支持能够被添加到任何分类器中的
-:class:`MultiOutputClassifier`. 这种方法训练每一个目标一个分类器。这允许多目标变量分类器。
-这种类的目的是扩展能够评估一系列目标函数的评估器(f1,f2,f3…,fn) ，这些函数在一个单独的预测
-矩阵上训练来预测一系列(y1,y2,y3…,yn)。
+Multioutput classification 支持能够被添加到任何分类器中的 :class:`MultiOutputClassifier`. 这种方法训练每一个目标一个分类器。这允许多目标变量分类器。这种类的目的是扩展能够评估一系列目标函数的评估器 (f1,f2,f3…,fn) ，这些函数在一个单独的预测矩阵上训练来预测一系列 (y1,y2,y3…,yn)。
 
 Below is an example of multioutput classification:
     
@@ -356,19 +332,15 @@ Below is an example of multioutput classification:
 Classifier Chain
 ================
 
-Classifier chains (查看 :class:`ClassifierChain`) 是一种集合多个二分类器为一个单独的
-multi-label模型，能够发掘目标之间的相关性信息。
+Classifier chains (查看 :class:`ClassifierChain`) 是一种集合多个二分类器为一个单独的 multi-label 模型，能够发掘目标之间的相关性信息。
 
-有N个类别的multi-label 分类问题，将N个二分类器分配0到N-1之间的一个整数。这些整数定义了模型
-在链中的顺序。 每一个分类器在可用的训练数据加上具有较低数字的模型的类的真正标签上训练。
+有 N 个类别的 multi-label 分类问题，将 N 个二分类器分配 0 到 N-1 之间的一个整数。这些整数定义了模型在 chain 中的顺序。 每一个分类器在可用的训练数据加上具有较低数字的模型的类的真正标签上训练。
 
 当预测时，真正的标签将不可利用。每一个模型的预测将会传递个链上的下一个模型来作为特征使用。
 
-很明显链的顺序是十分重要的。链上的第一个模型没有关于其他标签的有效的利用信息，而链上的最后一个
-模型将会具有所有其他的标签信息。在一般情况下，不知道链上模型最优的顺序，因此通常会使用许多随机
-的顺序，将他们的预测求平均。
+很明显链的顺序是十分重要的。链上的第一个模型没有关于其他标签的有效的利用信息，而链上的最后一个模型将会具有所有其他的标签信息。在一般情况下，不知道链上模型最优的顺序，因此通常会使用许多随机的顺序，将他们的预测求平均。
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     Jesse Read, Bernhard Pfahringer, Geoff Holmes, Eibe Frank,
         "Classifier Chains for Multi-label Classification", 2009.
