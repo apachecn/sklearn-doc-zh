@@ -1,25 +1,25 @@
 .. _introduction:
 
-使用scikit-learn介绍机器学习
+使用 scikit-learn 介绍机器学习
 =====================================================
 
 .. topic:: 内容提要
 
-    在本节中，我们介绍一些我们在使用scikit-learn过程中的`机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_词汇，并且给出一些例子阐释它们。  词汇，并给出了一个简单的学习示例。
+    在本节中，我们介绍一些我们在使用 scikit-learn 过程中的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。  词汇，并给出了一个简单的学习示例。
 
 
 机器学习：问题设置
 -------------------------------------
 
-一般来说，一个学习问题通常考查一个数据`样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
-如果每个样本是`多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性特征 。
+一般来说，一个学习问题通常考查一个数据 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
+如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性特征 。
 
 我们可以在几个大类上分解学习问题:
 
- * `监督学习 <https://en.wikipedia.org/wiki/Supervised_learning>`_,
+ * `监督学习 <https://en.wikipedia.org/wiki/Supervised_learning>`_ ,
    其中数据带有我们想要预测的附加属性（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
 
-    * `分类 <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_:
+    * `分类 <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_ :
       样本属于两个或更多个类，我们想从已经标记的数据中学习如何预测未标记数据的类别。
       分类问题的一个例子是手写数字识别示例，其目的是将每个输入向量分配给有限数目的离散类别之一。
       我们通常把分类视作监督学习的一个离散形式，从有限的类别中，给每个样本贴上正确的标签。
@@ -29,13 +29,13 @@
       回归问题的一个示例是预测鲑鱼的长度是其年龄和体重的函数。
 
  * `无监督学习 <https://en.wikipedia.org/wiki/Unsupervised_learning>`_,
-   其中训练数据由没有任何相应目标值的一组输入向量x组成。这种问题的目标可能是在数据中发现类似示例的组，称为 `聚类 <https://en.wikipedia.org/wiki/Cluster_analysis>`_,
-   或者确定输入空间内的数据分布，称为 `密度估计 <https://en.wikipedia.org/wiki/Density_estimation>`_，或从高维数据投影数据空间缩小到二维或三维以进行 *可视化* （:ref:`点击此处 <unsupervised-learning>` 转到 scikit-learn 无监督学习页面）。
+   其中训练数据由没有任何相应目标值的一组输入向量x组成。这种问题的目标可能是在数据中发现类似示例的组，称为 `聚类 <https://en.wikipedia.org/wiki/Cluster_analysis>`_ ,
+   或者确定输入空间内的数据分布，称为 `密度估计 <https://en.wikipedia.org/wiki/Density_estimation>`_ ，或从高维数据投影数据空间缩小到二维或三维以进行 *可视化* （:ref:`点击此处 <unsupervised-learning>` 转到 scikit-learn 无监督学习页面）。
 
 .. topic:: 训练集和测试集
 
     机器学习是从数据的属性中学习，并将它们应用到新数据的过程。
-    这就是为什么机器学习中评估算法的普遍实践是把数据分割成**训练集**（我们从中学习数据的属性）和**测试集**（我们测试这些性质）。
+    这就是为什么机器学习中评估算法的普遍实践是把数据分割成 **训练集** （我们从中学习数据的属性）和 **测试集** （我们测试这些性质）。
 
 .. _loading_example_dataset:
 
@@ -141,7 +141,7 @@
 模型持久化
 -----------------
 
-可以通过使用Python的内置持久性模块（即 `pickle <https://docs.python.org/2/library/pickle.html>`_ ）将模型保存在文件系统::
+可以通过使用 Python 的内置持久性模块（即 `pickle <https://docs.python.org/2/library/pickle.html>`_ ）将模型保存在文件系统::
 
   >>> from sklearn import svm
   >>> from sklearn import datasets
@@ -171,11 +171,11 @@
 
   >>> clf = joblib.load('filename.pkl') # doctest:+SKIP
 
-.. 注意::
+.. warning::
 
     ``joblib.dump`` 并且 ``joblib.load`` 函数也接受 file-like（类似文件） 对象而不是文件名。有关 Joblib 的数据持久性的更多信息，请 `点击此处 <https://pythonhosted.org/joblib/persistence.html>`_。
 
-请注意，pickle 有一些安全性和可维护性问题。有关使用 scikit-learn 的模型持久性的更多详细信息，请参阅 :ref:`模型持久性` 部分。
+请注意，pickle 有一些安全性和可维护性问题。有关使用 scikit-learn 的模型持久性的更多详细信息，请参阅 :ref:`model_persistence` 部分。
 
 
 规定
@@ -280,7 +280,7 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
     >>> classif.fit(X, y).predict(X)
     array([0, 0, 1, 1, 2])
 
-在上述情况下，分类器被使用一个含有多个标签的一维数组训练，因此``predict（）``方法提供相应的多类别预测。分类器也可以通过二进制表示的的标签的二维数组来训练::
+在上述情况下，分类器被使用一个含有多个标签的一维数组训练，因此 ``predict（）``方法提供相应的多类别预测。分类器也可以通过二进制表示的的标签的二维数组来训练::
 
     >>> y = LabelBinarizer().fit_transform(y)
     >>> classif.fit(X, y).predict(X)
@@ -290,7 +290,7 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
            [0, 0, 0],
            [0, 0, 0]])
 
-这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>`使目标向量y被转化成二维数组的标签表示。在这种情况下，``predict()`` 返回一个表示相应多重标签预测的 2d 矩阵。
+这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>` 使目标向量 y 被转化成二维数组的标签表示。在这种情况下， ``predict()`` 返回一个表示相应多重标签预测的 2d 矩阵。
 
 请注意，第四个和第五个实例返回全零向量，表明它们不能匹配用来训练中的目标标签中的任意一个。使用多分类输出，类似地可以为一个实例分配多个标签::
 
@@ -305,4 +305,4 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
          [0, 0, 1, 0, 1]])
 
 在这种情况下，用来训练分类器的多个向量被赋予多个标记,:class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>` 被用来二进制化多个标签的二维数组，使之用来训练。
-``predict（）``函数返回带有多个标记的二维数组作为每个实例的结果。
+``predict()`` 函数返回带有多个标记的二维数组作为每个实例的结果。
