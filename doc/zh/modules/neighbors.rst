@@ -190,34 +190,24 @@ Nearest Neighbor Algorithms
 Brute Force
 -----------
 
-Fast computation of nearest neighbors is an active area of research in
-machine learning.  The most naive neighbor search implementation involves
-the brute-force computation of distances between all pairs of points in the
-dataset: for :math:`N` samples in :math:`D` dimensions, this approach scales
-as :math:`O[D N^2]`.  Efficient brute-force neighbors searches can be very
-competitive for small data samples.
-However, as the number of samples :math:`N` grows, the brute-force
-approach quickly becomes infeasible.  In the classes within
-:mod:`sklearn.neighbors`, brute-force neighbors searches are specified
-using the keyword ``algorithm = 'brute'``, and are computed using the
-routines available in :mod:`sklearn.metrics.pairwise`.
+最近邻的快速计算是机器学习中一个活跃的研究领域。最简单的近邻搜索涉及数据集中所有成对点之间距离的暴力计算：
+对于 :math:`D` 维度中的 :math:`N` 个样本来说, 这个方法的范围是 :math:`O[D N^2]`。
+对于小数据样本，有效的暴力近邻搜索是非常有竞争力的。
+然而，随着样本数 :math:`N` 的增长，暴力方法迅速变得不可行。在 :mod:`sklearn.neighbors` 类中，
+暴力近邻搜索通过关键字 ``algorithm = 'brute'`` 来指定，并通过 :mod:`sklearn.metrics.pairwise` 中的例程来进行计算。
 
 .. _kd_tree:
 
 K-D Tree
 --------
 
-To address the computational inefficiencies of the brute-force approach, a
-variety of tree-based data structures have been invented.  In general, these
-structures attempt to reduce the required number of distance calculations
-by efficiently encoding aggregate distance information for the sample.
-The basic idea is that if point :math:`A` is very distant from point
-:math:`B`, and point :math:`B` is very close to point :math:`C`,
-then we know that points :math:`A` and :math:`C`
-are very distant, *without having to explicitly calculate their distance*.
-In this way, the computational cost of a nearest neighbors search can be
-reduced to :math:`O[D N \log(N)]` or better.  This is a significant
-improvement over brute-force for large :math:`N`.
+为了解决暴力搜索方法的效率底下，已经发明了大量的基于树的数据结构。总的来说，
+这些结构通过有效地对样本中聚合距离信息的编码，来试图减少距离所需的距离计算的数量。
+基本思想是，若 :math:`A` 点距离 :math:`B` 点非常远，:math:`B` 点距离 :math:`C` 点非常近，
+可知 :math:`A` 点与 :math:`C` 点很遥远，*不需要明确计算它们的距离*。
+通过这样的方式，近邻搜索的计算成本可以降低为 :math:`O[D N \log(N)]` 或更好。
+这是对于暴力搜索在大样本数 large :math:`N` 中表现的显著改善。
+
 
 An early approach to taking advantage of this aggregate information was
 the *KD tree* data structure (short for *K-dimensional tree*), which
