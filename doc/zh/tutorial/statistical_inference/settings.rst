@@ -6,14 +6,9 @@ Statistical learning: the setting and the estimator object in scikit-learn
 数据集
 =========
 
-Scikit-learn从可以从一个或者多个数据集众学习信息，这些数据集合必须是2维阵列。第一个维度是 **样本** ，第二个维度是 **特征** 
-Scikit-learn deals with learning information from one or more
-datasets that are represented as 2D arrays. They can be understood as a
-list of multi-dimensional observations. We say that the first axis of
-these arrays is the **samples** axis, while the second is the
-**features** axis.
+Scikit-learn从可以从一个或者多个数据集中学习信息，这些数据集合必须是2维阵列，也可以认为是一个列表。列表的第一个维度代表 **样本** ，第二个维度代表 **特征** （每一行代表一个样本，每一列代表一种特征）。
 
-.. topic:: A simple example shipped with the scikit: iris dataset
+.. topic:: 样例: iris 数据集（鸢尾花卉数据集）
 
     ::
 
@@ -23,9 +18,7 @@ these arrays is the **samples** axis, while the second is the
         >>> data.shape
         (150, 4)
 
-    It is made of 150 observations of irises, each described by 4
-    features: their sepal and petal length and width, as detailed in
-    ``iris.DESCR``.
+    这个数据集包含150个样本，每个样本包含4个特征：花萼长度，花萼宽度，花瓣长度，花瓣宽度，详细数据可以通过``iris.DESCR``查看。
 
 When the data is not initially in the ``(n_samples, n_features)`` shape, it
 needs to be preprocessed in order to be used by scikit-learn.
