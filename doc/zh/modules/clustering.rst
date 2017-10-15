@@ -201,17 +201,12 @@ Mini-batches（小批量）是输入数据的子集，在每次 training iterati
 
 .. _affinity_propagation:
 
-Affinity Propagation
+Affinity Propagation（AP聚类算法）
 ====================
 
-:class:`AffinityPropagation` creates clusters by sending messages between
-pairs of samples until convergence. A dataset is then described using a small
-number of exemplars, which are identified as those most representative of other
-samples. The messages sent between pairs represent the suitability for one
-sample to be the exemplar of the other, which is updated in response to the
-values from other pairs. This updating happens iteratively until convergence,
-at which point the final exemplars are chosen, and hence the final clustering
-is given.
+:class:`AffinityPropagation` AP聚类是通过在样本对之间发送消息直到收敛来创建聚类。然后使用少量示例样本作为聚类中心来描述数据集，
+聚类中心是数据集中最能代表一类数据的样本。在样本对之间发送的消息表示一个样本作为另一个样本的示例样本的
+适合程度，适合程度值在根据通信的反馈不断更新。更新迭代直到收敛，完成聚类中心的选取，因此也给出了最终聚类。
 
 .. figure:: ../auto_examples/cluster/images/sphx_glr_plot_affinity_propagation_001.png
    :target: ../auto_examples/cluster/plot_affinity_propagation.html
@@ -219,22 +214,15 @@ is given.
    :scale: 50
 
 
-Affinity Propagation can be interesting as it chooses the number of
-clusters based on the data provided. For this purpose, the two important
-parameters are the *preference*, which controls how many exemplars are
-used, and the *damping factor* which damps the responsibility and 
-availability messages to avoid numerical oscillations when updating these
-messages.
+Affinity Propagation 算法比较有趣的是可以根据提供的数据决定聚类的数目。 因此有两个比较重要的参数
+ *preference*, 决定使用多少个示例样本  *damping factor*（阻尼因子） 减少吸引信息和归属信息以防止
+ 更新减少吸引度和归属度信息时数据振荡。
 
-The main drawback of Affinity Propagation is its complexity. The
-algorithm has a time complexity of the order :math:`O(N^2 T)`, where :math:`N`
-is the number of samples and :math:`T` is the number of iterations until
-convergence. Further, the memory complexity is of the order
-:math:`O(N^2)` if a dense similarity matrix is used, but reducible if a
-sparse similarity matrix is used. This makes Affinity Propagation most
-appropriate for small to medium sized datasets.
+AP聚类算法主要的缺点是算法的复杂度. AP聚类算法的时间复杂度是 :math:`O(N^2 T)`, 其中 :math:`N`
+是样本的个数 ， :math:`T` 是收敛之前迭代的次数. 如果使用密集的相似性矩阵空间复杂度是
+:math:`O(N^2)` 如果使用稀疏的相似性矩阵空间复杂度可以降低。 这使得AP聚类最适合中小型数据集。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_affinity_propagation.py`: Affinity
    Propagation on a synthetic 2D datasets with 3 classes.
@@ -243,83 +231,69 @@ appropriate for small to medium sized datasets.
    Financial time series to find groups of companies
 
 
-**Algorithm description:**
-The messages sent between points belong to one of two categories. The first is
-the responsibility :math:`r(i, k)`,
-which is the accumulated evidence that sample :math:`k`
-should be the exemplar for sample :math:`i`.
-The second is the availability :math:`a(i, k)`
-which is the accumulated evidence that sample :math:`i`
-should choose sample :math:`k` to be its exemplar,
-and considers the values for all other samples that :math:`k` should
-be an exemplar. In this way, exemplars are chosen by samples if they are (1)
-similar enough to many samples and (2) chosen by many samples to be
-representative of themselves.
+**算法描述:**
+样本之间传递的信息有两种。 第一种是 responsibility（吸引信息） :math:`r(i, k)`,
+样本:math:`k`适合作为样本 :math:`i`的聚类中心的程度。
 
-More formally, the responsibility of a sample :math:`k`
-to be the exemplar of sample :math:`i` is given by:
+第二种是 availability（归属信息） :math:`a(i, k)`样本:math:`i`
+选择样本:math:`k` 作为聚类中心的适合程度,并且考虑其他所有样本选取:math:`k` 做为聚类中心的合适程度。
+通过这个方法，选取示例样本作为聚类中心如果（1）该样本与其许多样本相似，并且（2）被许多样本选取
+为它们自己的示例样本。
+
+样本 :math:`k`对样本 :math:`i` 吸引度计算公式:
 
 .. math::
 
     r(i, k) \leftarrow s(i, k) - max [ a(i, k') + s(i, k') \forall k' \neq k ]
 
-Where :math:`s(i, k)` is the similarity between samples :math:`i` and :math:`k`.
-The availability of sample :math:`k`
-to be the exemplar of sample :math:`i` is given by:
+其中 :math:`s(i, k)` 是样本 :math:`i` 和样本 :math:`k`之间的相似度。
+样本 :math:`k` 作为样本 :math:`i` 的示例样本的合适程度:
 
 .. math::
 
     a(i, k) \leftarrow min [0, r(k, k) + \sum_{i'~s.t.~i' \notin \{i, k\}}{r(i', k)}]
 
-To begin with, all values for :math:`r` and :math:`a` are set to zero,
-and the calculation of each iterates until convergence.
-As discussed above, in order to avoid numerical oscillations when updating the 
-messages, the damping factor :math:`\lambda` is introduced to iteration process:
+算法开始时 :math:`r` and :math:`a` 都被置0,然后开始迭代计算直到收敛。
+为了防止更新数据时出现数据振荡，在迭代过程中引入阻尼因子 :math:`\lambda` :
 
 .. math:: r_{t+1}(i, k) = \lambda\cdot r_{t}(i, k) + (1-\lambda)\cdot r_{t+1}(i, k)
 .. math:: a_{t+1}(i, k) = \lambda\cdot a_{t}(i, k) + (1-\lambda)\cdot a_{t+1}(i, k)
 
-where :math:`t` indicates the iteration times.
+其中 :math:`t` 迭代的次数。
 
 .. _mean_shift:
 
-Mean Shift
+Mean Shift（均值漂移算法）
 ==========
-:class:`MeanShift` clustering aims to discover *blobs* in a smooth density of
-samples. It is a centroid based algorithm, which works by updating candidates
-for centroids to be the mean of the points within a given region. These
-candidates are then filtered in a post-processing stage to eliminate
+:class:`MeanShift` 算法旨在于发现一个样本密度平滑的 *blobs* 。
+ It is a centroid based algorithm, which works by updating candidates
+for centroids to be the mean of the points within a given region.
+均值漂移算法是基于质心的算法，通过更新质心的候选位置为所选定区域的偏移均值。
+ These candidates are then filtered in a post-processing stage to eliminate
 near-duplicates to form the final set of centroids.
+然后，这些候选者在后处理阶段被过滤以消除近似重复，从而形成最终质心集合。
 
-Given a candidate centroid :math:`x_i` for iteration :math:`t`, the candidate
-is updated according to the following equation:
+给定第 :math:`t` 次迭代中的候选质心 :math:`x_i` , 候选质心的位置将被安装如下公式更新:
 
 .. math::
 
     x_i^{t+1} = x_i^t + m(x_i^t)
 
-Where :math:`N(x_i)` is the neighborhood of samples within a given distance
-around :math:`x_i` and :math:`m` is the *mean shift* vector that is computed for each
-centroid that points towards a region of the maximum increase in the density of points.
-This is computed using the following equation, effectively updating a centroid
-to be the mean of the samples within its neighborhood:
+其中 :math:`N(x_i)` 是围绕 :math:`x_i` 周围一个给定距离范围内的样本空间 
+and :math:`m` 是  *mean shift* vector（均值偏移向量） 是所有质心中指向
+点密度增加最多的区域的偏移向量。使用以下等式计算，有效地将质心更新为其邻域内样本的平均值：
 
 .. math::
 
     m(x_i) = \frac{\sum_{x_j \in N(x_i)}K(x_j - x_i)x_j}{\sum_{x_j \in N(x_i)}K(x_j - x_i)}
 
-The algorithm automatically sets the number of clusters, instead of relying on a
-parameter ``bandwidth``, which dictates the size of the region to search through.
-This parameter can be set manually, but can be estimated using the provided
-``estimate_bandwidth`` function, which is called if the bandwidth is not set.
+算法自动设定聚类的数目，取代依赖参数 ``bandwidth``（带宽）,带宽是决定搜索区域的size的参数。
+这个参数可以手动设置，但是如果没有设置，可以使用提供的评估函数``estimate_bandwidth``进行评估。
 
-The algorithm is not highly scalable, as it requires multiple nearest neighbor
-searches during the execution of the algorithm. The algorithm is guaranteed to
-converge, however the algorithm will stop iterating when the change in centroids
-is small.
+该算法不是高度可扩展的，因为在执行算法期间需要执行多个最近邻搜索。 该算法保证收敛，但是当
+质心的变化较小时，算法将停止迭代。
 
-Labelling a new sample is performed by finding the nearest centroid for a
-given sample.
+通过找到给定样本的最近质心来给新样本打上标签。
 
 
 .. figure:: ../auto_examples/cluster/images/sphx_glr_plot_mean_shift_001.png
@@ -328,12 +302,12 @@ given sample.
    :scale: 50
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_mean_shift.py`: Mean Shift clustering
    on a synthetic 2D datasets with 3 classes.
 
-.. topic:: References:
+.. topic:: 参考:
 
  * `"Mean shift: A robust approach toward feature space analysis."
    <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.76.8968&rep=rep1&type=pdf>`_
@@ -345,21 +319,13 @@ given sample.
 Spectral clustering
 ===================
 
-:class:`SpectralClustering` does a low-dimension embedding of the
-affinity matrix between samples, followed by a KMeans in the low
-dimensional space. It is especially efficient if the affinity matrix is
-sparse and the `pyamg <http://pyamg.org/>`_ module is installed.
-SpectralClustering requires the number of clusters to be specified. It
-works well for a small number of clusters but is not advised when using
-many clusters.
+:class:`SpectralClustering` 是在样本之间进行亲和力矩阵的低维度嵌入，其实是低维空间中的 KMeans。
+如果亲和度矩阵稀疏，则这是非常有效的并且`pyamg <http://pyamg.org/>`_ module 以及安装好。
+SpectralClustering 需要指定聚类数。这个算法适用于聚类数少时，在聚类数多是不建议使用。
 
-For two clusters, it solves a convex relaxation of the `normalised
-cuts <http://people.eecs.berkeley.edu/~malik/papers/SM-ncut.pdf>`_ problem on
-the similarity graph: cutting the graph in two so that the weight of the
-edges cut is small compared to the weights of the edges inside each
-cluster. This criteria is especially interesting when working on images:
-graph vertices are pixels, and edges of the similarity graph are a
-function of the gradient of the image.
+对于两个聚类，它解决了相似图上的`normalised cuts <http://people.eecs.berkeley.edu/~malik/papers/SM-ncut.pdf>`_ problem：
+将图形切割成两个，使得切割的边缘的重量比每个簇内的边缘的权重小。在图像处理时，这个标准是特别有趣的：
+图像的顶点是像素，相似图的边缘是图像的渐变函数。
 
 
 .. |noisy_img| image:: ../auto_examples/cluster/images/sphx_glr_plot_segmentation_toy_001.png
@@ -372,20 +338,17 @@ function of the gradient of the image.
 
 .. centered:: |noisy_img| |segmented_img|
 
-.. warning:: Transforming distance to well-behaved similarities
-
-    Note that if the values of your similarity matrix are not well
-    distributed, e.g. with negative values or with a distance matrix
-    rather than a similarity, the spectral problem will be singular and
-    the problem not solvable. In which case it is advised to apply a
-    transformation to the entries of the matrix. For instance, in the
-    case of a signed distance matrix, is common to apply a heat kernel::
+.. 提示:: Transforming distance to well-behaved similarities
+ 
+    请注意，如果你的相似矩阵的值分布不均匀，例如：存在负值或者距离矩阵并不表示相似性
+    spectral problem 将会变得奇异，并且不能解决。
+    在这种情况下，建议对矩阵的 entries 进行转换。比如在符号距离有符号的情况下通常使用 heat kernel::
 
         similarity = np.exp(-beta * distance / distance.std())
 
-    See the examples for such an application.
+    请看这样一个应用程序的例子。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_segmentation_toy.py`: Segmenting objects
    from a noisy background using spectral clustering.
@@ -401,17 +364,14 @@ function of the gradient of the image.
     :target: ../auto_examples/cluster/plot_face_segmentation.html
     :scale: 65
 
-Different label assignment strategies
+不同的标记分配策略
 ---------------------------------------
 
-Different label assignment strategies can be used, corresponding to the
-``assign_labels`` parameter of :class:`SpectralClustering`.
-The ``"kmeans"`` strategy can match finer details of the data, but it can be
-more unstable. In particular, unless you control the ``random_state``, it
-may not be reproducible from run-to-run, as it depends on a random
-initialization. On the other hand, the ``"discretize"`` strategy is 100%
-reproducible, but it tends to create parcels of fairly even and
-geometrical shape.
+可以使用不同的分配策略, 对应于 ``assign_labels`` 参数 :class:`SpectralClustering`。
+``"kmeans"`` 可以匹配更精细的数据细节，但是可能更加不稳定。 特别是，除非你设置
+``random_state`` 否则可能无法复现运行的结果 ，因为它取决于随机初始化。另一方，
+使用 ``"discretize"`` 策略是 100% 可以复现的，但是它往往会产生相当均匀的几何形状的边缘。
+
 
 =====================================  =====================================
  ``assign_labels="kmeans"``              ``assign_labels="discretize"``
@@ -420,7 +380,7 @@ geometrical shape.
 =====================================  =====================================
 
 
-.. topic:: References:
+.. topic:: 参考:
 
  * `"A Tutorial on Spectral Clustering"
    <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323>`_
@@ -441,47 +401,36 @@ geometrical shape.
 
 .. _hierarchical_clustering:
 
-Hierarchical clustering
+Hierarchical clustering（层次聚类）
 =======================
 
-Hierarchical clustering is a general family of clustering algorithms that
-build nested clusters by merging or splitting them successively. This
-hierarchy of clusters is represented as a tree (or dendrogram). The root of the
-tree is the unique cluster that gathers all the samples, the leaves being the
-clusters with only one sample. See the `Wikipedia page
-<https://en.wikipedia.org/wiki/Hierarchical_clustering>`_ for more details.
+Hierarchical clustering 是一个常用的聚类算法，它通过不断的合并或者分割来构建聚类。
+聚类的层次被表示成树（or dendrogram，或者树形图）。树根是拥有所有样本的唯一聚类，叶子是仅有一个样本的聚类。
+请参照 `Wikipedia page <https://en.wikipedia.org/wiki/Hierarchical_clustering>`_ 查看更多细节。
 
-The :class:`AgglomerativeClustering` object performs a hierarchical clustering
-using a bottom up approach: each observation starts in its own cluster, and
-clusters are successively merged together. The linkage criteria determines the
-metric used for the merge strategy:
+The :class:`AgglomerativeClustering` 使用自下而上的方法进行层次聚类：开始是每一个对象是一个聚类，
+并且聚类别相继合并在一起。 linkage criteria 确定用于合并的策略的度量：
 
-- **Ward** minimizes the sum of squared differences within all clusters. It is a
-  variance-minimizing approach and in this sense is similar to the k-means
-  objective function but tackled with an agglomerative hierarchical
-  approach.
-- **Maximum** or **complete linkage** minimizes the maximum distance between
-  observations of pairs of clusters.
-- **Average linkage** minimizes the average of the distances between all
-  observations of pairs of clusters.
+- **Ward** 最小化所有聚类内的平方差总和。这是一种 variance-minimizing （方差最小化）的优化方向，
+  这是与k-means 的目标函数相似的优化方法，但是用 agglomerative hierarchical（聚类分层）的方法处理。
 
-:class:`AgglomerativeClustering` can also scale to large number of samples
-when it is used jointly with a connectivity matrix, but is computationally
-expensive when no connectivity constraints are added between samples: it
-considers at each step all the possible merges.
+- **Maximum** or **complete linkage** 最小化聚类对两个样本之间的最大距离。
+
+- **Average linkage** 最小化聚类两个聚类中样本距离的平均值。
+
+:class:`AgglomerativeClustering` 在于连接矩阵联合使用时，也可以扩大到大量的样本，但是
+在样本之间没有添加连接约束时，计算代价很大：每一个步骤都要考虑所有可能的合并。
 
 .. topic:: :class:`FeatureAgglomeration`
 
-   The :class:`FeatureAgglomeration` uses agglomerative clustering to
-   group together features that look very similar, thus decreasing the
-   number of features. It is a dimensionality reduction tool, see
-   :ref:`data_reduction`.
+   The :class:`FeatureAgglomeration` 使用 agglomerative clustering 将看上去相似的
+   特征组合在一起，从而减少特征的数量。这是一个降维工具, 请参照 :ref:`data_reduction`。
 
 Different linkage type: Ward, complete and average linkage
 -----------------------------------------------------------
 
-:class:`AgglomerativeClustering` supports Ward, average, and complete
-linkage strategies.
+:class:`AgglomerativeClustering` 支持 Ward, average, and complete
+linkage 策略.
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_digits_linkage_001.png
     :target: ../auto_examples/cluster/plot_digits_linkage.html
@@ -496,29 +445,23 @@ linkage strategies.
     :scale: 43
 
 
-Agglomerative cluster has a "rich get richer" behavior that leads to
-uneven cluster sizes. In this regard, complete linkage is the worst
-strategy, and Ward gives the most regular sizes. However, the affinity
-(or distance used in clustering) cannot be varied with Ward, thus for non
-Euclidean metrics, average linkage is a good alternative.
+Agglomerative cluster 存在 "rich get richer" 现象导致聚类大小不均匀。这方面 complete linkage
+是最坏的策略，Ward 给出了最规则的大小。然而，在 Ward 中 affinity (or distance used in clustering) 
+不能被改变，对于 non Euclidean metrics 来说 average linkage 是一个好的选择。
 
-.. topic:: Examples:
+.. topic示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_digits_linkage.py`: exploration of the
    different linkage strategies in a real dataset.
 
 
-Adding connectivity constraints
+添加连接约束
 -------------------------------
 
-An interesting aspect of :class:`AgglomerativeClustering` is that
-connectivity constraints can be added to this algorithm (only adjacent
-clusters can be merged together), through a connectivity matrix that defines
-for each sample the neighboring samples following a given structure of the
-data. For instance, in the swiss-roll example below, the connectivity
-constraints forbid the merging of points that are not adjacent on the swiss
-roll, and thus avoid forming clusters that extend across overlapping folds of
-the roll.
+:class:`AgglomerativeClustering` 中一个有趣的特点是可以使用 connectivity matrix（连接矩阵）
+将连接约束添加到算法中（只有相邻的聚类可以合并到一起），连接矩阵为每一个样本给定了相邻的样本。
+例如，在 swiss-roll 的例子中，连接约束禁止在不相邻的 swiss roll 上合并，从而防止形成在 roll 上
+重复折叠的聚类。
 
 .. |unstructured| image:: ../auto_examples/cluster/images/sphx_glr_plot_ward_structured_vs_unstructured_001.png
         :target: ../auto_examples/cluster/plot_ward_structured_vs_unstructured.html
@@ -530,24 +473,17 @@ the roll.
 
 .. centered:: |unstructured| |structured|
 
-These constraint are useful to impose a certain local structure, but they
-also make the algorithm faster, especially when the number of the samples
-is high.
+这些约束对于强加一定的局部结构是很有用的，但是这也使得算法更快，特别是当样本数量巨大时。
 
-The connectivity constraints are imposed via an connectivity matrix: a
-scipy sparse matrix that has elements only at the intersection of a row
-and a column with indices of the dataset that should be connected. This
-matrix can be constructed from a-priori information: for instance, you
-may wish to cluster web pages by only merging pages with a link pointing
-from one to another. It can also be learned from the data, for instance
-using :func:`sklearn.neighbors.kneighbors_graph` to restrict
-merging to nearest neighbors as in :ref:`this example
-<sphx_glr_auto_examples_cluster_plot_agglomerative_clustering.py>`, or
-using :func:`sklearn.feature_extraction.image.grid_to_graph` to
-enable only merging of neighboring pixels on an image, as in the
-:ref:`raccoon face <sphx_glr_auto_examples_cluster_plot_face_ward_segmentation.py>` example.
+连通性的限制是通过连接矩阵来实现的：一个 scipy sparse matrix（稀疏矩阵），仅在一行和
+一列的交集处具有应该连接在一起的数据集的索引。这个矩阵可以通过 a-priori information （先验信息）
+构建：例如，你可能通过仅仅将从一个连接指向另一个的链接合并页面来聚类页面。也可以从数据中学习到,
+ 例如使用 :func:`sklearn.neighbors.kneighbors_graph` 限制与最临近的合并 :ref:`this example
+<sphx_glr_auto_examples_cluster_plot_agglomerative_clustering.py>`, 或者使用
+ :func:`sklearn.feature_extraction.image.grid_to_graph` 仅合并图像上相邻的像素点，
+ 例如:ref:`raccoon face <sphx_glr_auto_examples_cluster_plot_face_ward_segmentation.py>`。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_face_ward_segmentation.py`: Ward clustering
    to split the image of a raccoon face in regions.
@@ -564,13 +500,10 @@ enable only merging of neighboring pixels on an image, as in the
 
 .. warning:: **Connectivity constraints with average and complete linkage**
 
-    Connectivity constraints and complete or average linkage can enhance
-    the 'rich getting richer' aspect of agglomerative clustering,
-    particularly so if they are built with
-    :func:`sklearn.neighbors.kneighbors_graph`. In the limit of a small
-    number of clusters, they tend to give a few macroscopically occupied
-    clusters and almost empty ones. (see the discussion in
-    :ref:`sphx_glr_auto_examples_cluster_plot_agglomerative_clustering.py`).
+    Connectivity constraints and complete or average linkage 可以增强 agglomerative clustering 中的
+    'rich getting richer' 现象。特别是，如果建立的是 :func:`sklearn.neighbors.kneighbors_graph`。
+    在少量聚类的限制中, 更倾向于给出一些 macroscopically occupied clusters 并且几乎是空的 (讨论内容请查看
+    :ref:`sphx_glr_auto_examples_cluster_plot_agglomerative_clustering.py`)。
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_agglomerative_clustering_001.png
     :target: ../auto_examples/cluster/plot_agglomerative_clustering.html
@@ -592,21 +525,15 @@ enable only merging of neighboring pixels on an image, as in the
 Varying the metric
 -------------------
 
-Average and complete linkage can be used with a variety of distances (or
-affinities), in particular Euclidean distance (*l2*), Manhattan distance
-(or Cityblock, or *l1*), cosine distance, or any precomputed affinity
-matrix.
+Average and complete linkage 可以使用各种距离 (or affinities), 特别是 Euclidean distance (*l2*), 
+Manhattan distance（曼哈顿距离）(or Cityblock（城市区块距离）, or *l1*), cosine distance(余弦距离),
+ 或者任何预先计算的 affinity matrix（亲和度矩阵）.
 
-* *l1* distance is often good for sparse features, or sparse noise: ie
-  many of the features are zero, as in text mining using occurrences of
-  rare words.
+* *l1* distance 有利于稀疏特征或者稀疏噪声: 例如很多特征都是0，就想在文本挖掘中使用 rare words 一样。
 
-* *cosine* distance is interesting because it is invariant to global
-  scalings of the signal.
+* *cosine* distance 非常有趣因为它对全局放缩是一样的。 
 
-The guidelines for choosing a metric is to use one that maximizes the
-distance between samples in different classes, and minimizes that within
-each class.
+选择度量标准的方针是使得不同类样本之间距离最大化，并且最小化同类样本之间的距离。
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_agglomerative_clustering_metrics_005.png
     :target: ../auto_examples/cluster/plot_agglomerative_clustering_metrics.html
@@ -620,7 +547,7 @@ each class.
     :target: ../auto_examples/cluster/plot_agglomerative_clustering_metrics.html
     :scale: 32
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_agglomerative_clustering_metrics.py`
 
@@ -630,39 +557,26 @@ each class.
 DBSCAN
 ======
 
-The :class:`DBSCAN` algorithm views clusters as areas of high density
-separated by areas of low density. Due to this rather generic view, clusters
-found by DBSCAN can be any shape, as opposed to k-means which assumes that
-clusters are convex shaped. The central component to the DBSCAN is the concept
-of *core samples*, which are samples that are in areas of high density. A
-cluster is therefore a set of core samples, each close to each other
-(measured by some distance measure)
-and a set of non-core samples that are close to a core sample (but are not
-themselves core samples). There are two parameters to the algorithm,
-``min_samples`` and ``eps``,
-which define formally what we mean when we say *dense*.
-Higher ``min_samples`` or lower ``eps``
-indicate higher density necessary to form a cluster.
+The :class:`DBSCAN` 算法将聚类视为被低密度区域分隔的高密度区域。由于这个相当普遍的观点，
+DBSCAN发现的聚类可以是任何形状的，与假设聚类是convex shaped 的K-means相反。 
+DBSCAN 的核心概念是 *core samples*, 是指位于高密度区域的样本。
+因此一个聚类是一组核心样本，每个核心样本彼此靠近（通过一定距离度量测量）
+和一组接近核心样本的非核心样本（但本身不是核心样本）。算法中的两个参数,``min_samples`` 
+和 ``eps``,正式的定义了我们所说的 *dense*（稠密）。较高的 ``min_samples`` 或者
+ 较低的 ``eps``表示形成聚类所需的较高密度。
 
-More formally, we define a core sample as being a sample in the dataset such
-that there exist ``min_samples`` other samples within a distance of
-``eps``, which are defined as *neighbors* of the core sample. This tells
-us that the core sample is in a dense area of the vector space. A cluster
-is a set of core samples that can be built by recursively taking a core
-sample, finding all of its neighbors that are core samples, finding all of
-*their* neighbors that are core samples, and so on. A cluster also has a
-set of non-core samples, which are samples that are neighbors of a core sample
-in the cluster but are not themselves core samples. Intuitively, these samples
-are on the fringes of a cluster.
+更正式的,我们定义核心样本是指数据集中的一个样本，存在``min_samples``个其他样本在``eps``
+距离范围内，这些样本被定为为核心样本的邻居*neighbors* 。这告诉我们核心样本在向量空间稠密的区域。
+一个聚类是一个核心样本的集合，可以通过递归来构建，选取一个核心样本，查找它所有的neighbors（邻居样本）
+中的核心样本，然后查找 *their* （新获取的核心样本）的neighbors（邻居样本）中的核心样本，递归这个过程。
+聚类中还具有一组非核心样本，它们是集群中核心样本的邻居的样本，但本身并不是核心样本。
+显然，这些样本位于聚类的边缘。
 
-Any core sample is part of a cluster, by definition. Any sample that is not a 
-core sample, and is at least ``eps`` in distance from any core sample, is 
-considered an outlier by the algorithm.
+根据定义，任何核心样本都是聚类的一部分，任何不是核心样本并且和任意一个核心样本距离都大于
+``eps``的样本将被视为异常值。
 
-In the figure below, the color indicates cluster membership, with large circles
-indicating core samples found by the algorithm. Smaller circles are non-core
-samples that are still part of a cluster. Moreover, the outliers are indicated
-by black points below.
+在下图中，颜色表示聚类成员属性，大圆圈表示算法发现的核心样本。 较小的圈子是仍然是群集的
+一部分的非核心样本。 此外，异常值由下面的黑点表示。
 
 .. |dbscan_results| image:: ../auto_examples/cluster/images/sphx_glr_plot_dbscan_001.png
         :target: ../auto_examples/cluster/plot_dbscan.html
@@ -670,49 +584,38 @@ by black points below.
 
 .. centered:: |dbscan_results|
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_cluster_plot_dbscan.py`
 
-.. topic:: Implementation
+.. topic:: Implementation （实现）
 
-    The DBSCAN algorithm is deterministic, always generating the same clusters 
-    when given the same data in the same order.  However, the results can differ when
-    data is provided in a different order. First, even though the core samples 
-    will always be assigned to the same clusters, the labels of those clusters
-    will depend on the order in which those samples are encountered in the data.
-    Second and more importantly, the clusters to which non-core samples are assigned
-    can differ depending on the data order.  This would happen when a non-core sample
-    has a distance lower than ``eps`` to two core samples in different clusters. By the
-    triangular inequality, those two core samples must be more distant than
-    ``eps`` from each other, or they would be in the same cluster. The non-core
-    sample is assigned to whichever cluster is generated first in a pass
-    through the data, and so the results will depend on the data ordering.
+    DBSCAN算法是具有确定性的，当以相同的顺序给出相同的数据时总是形成相同的聚类。
+    然而，当以不同的顺序提供数据时聚类的结果可能不相同。首先，即使核心样本总是被
+    分配给相同的聚类，这些集群的标签将取决于数据中遇到这些样本的顺序。第二个更重
+    要的是，非核心样本的聚类可能因数据顺序而有所不同。
+    当一个非核心样本距离两个核心样本的距离都小于``eps``时，就会发生这种情况。 
+    通过三角不等式可知，这两个核心样本距离一定大于``eps``或者处于同一个聚类中。
+    非核心样本将被非配到首先查找到改样本的类别，因此结果将取决于数据的顺序。
 
-    The current implementation uses ball trees and kd-trees
-    to determine the neighborhood of points,
-    which avoids calculating the full distance matrix
-    (as was done in scikit-learn versions before 0.14).
-    The possibility to use custom metrics is retained;
-    for details, see :class:`NearestNeighbors`.
+    当前版本使用ball trees 和 kd-trees 来确定领域，这样避免了计算全部的距离矩阵
+    （0.14之前的scikit-learn版本计算全部的距离矩阵）。保留使用 custom metrics 
+    （自定义指标）的可能性。细节请参照 :class:`NearestNeighbors`。
 
-.. topic:: Memory consumption for large sample sizes
+.. topic:: Memory consumption for large sample sizes（大量样本的内存消耗）
 
-    This implementation is by default not memory efficient because it constructs
-    a full pairwise similarity matrix in the case where kd-trees or ball-trees cannot
-    be used (e.g. with sparse matrices). This matrix will consume n^2 floats.
-    A couple of mechanisms for getting around this are:
+    默认的实现方式并没有充分利用内存，因为在不使用kd-trees 或者 ball-trees 的情况下构建一个
+    完整的相似度矩阵（e.g. 使用稀疏矩阵）。这个矩阵将消耗 n^2 个浮点数。
+    解决这个问题的几种机制:
 
-    - A sparse radius neighborhood graph (where missing
-      entries are presumed to be out of eps) can be precomputed in a memory-efficient
-      way and dbscan can be run over this with ``metric='precomputed'``.
+    - A sparse radius neighborhood graph （稀疏半径邻域图）(其中缺少条目被假定为距离超出eps)
+      可以以高效的方式预先编译，并且可以使用``metric='precomputed'``来运行dbscan。
 
-    - The dataset can be compressed, either by removing exact duplicates if
-      these occur in your data, or by using BIRCH. Then you only have a
-      relatively small number of representatives for a large number of points.
-      You can then provide a ``sample_weight`` when fitting DBSCAN.
+    - 数据可以压缩，当数据中存在准确的重复时，可以删除这些重复的数据，或者使用BIRCH。
+      任何。然后仅需要使用相对少量的样本来表示大量的点。当训练DBSCAN时，可以提供一个
+      ``sample_weight`` 参数。
 
-.. topic:: References:
+.. topic:: 引用:
 
  * "A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases
    with Noise"
@@ -725,81 +628,71 @@ by black points below.
 Birch
 =====
 
-The :class:`Birch` builds a tree called the Characteristic Feature Tree (CFT)
-for the given data. The data is essentially lossy compressed to a set of
-Characteristic Feature nodes (CF Nodes). The CF Nodes have a number of
-subclusters called Characteristic Feature subclusters (CF Subclusters)
-and these CF Subclusters located in the non-terminal CF Nodes
-can have CF Nodes as children.
+The :class:`Birch` 为提供的数据构建一颗 Characteristic Feature Tree (CFT，聚类特征树)。
+数据实质上是被有损压缩成一组Characteristic Feature nodes (CF Nodes，聚类特征节点)。
+CF Nodes 中有一部分子聚类被称为Characteristic Feature subclusters (CF Subclusters)，
+并且这些位于非终端位置的CF Subclusters可以拥有CF Nodes作为孩子节点。
 
-The CF Subclusters hold the necessary information for clustering which prevents
-the need to hold the entire input data in memory. This information includes:
 
-- Number of samples in a subcluster.
-- Linear Sum - A n-dimensional vector holding the sum of all samples
-- Squared Sum - Sum of the squared L2 norm of all samples.
-- Centroids - To avoid recalculation linear sum / n_samples.
-- Squared norm of the centroids.
+CF Subclusters 保存用于聚类的必要信息，防止将整个输入数据保存在内存中。
+这些信息包括：
 
-The Birch algorithm has two parameters, the threshold and the branching factor.
-The branching factor limits the number of subclusters in a node and the
-threshold limits the distance between the entering sample and the existing
-subclusters.
+- Number of samples in a subcluster（子聚类中样本数）.
+- Linear Sum - A n-dimensional vector holding the sum of all samples（保存所有样本和的n维向量）
+- Squared Sum - Sum of the squared L2 norm of all samples（所有样本的L2 norm的平方和）.
+- Centroids - To avoid recalculation linear sum / n_samples（为了防止重复计算 linear sum / n_samples）.
+- Squared norm of the centroids（质心的 Squared norm ）.
 
-This algorithm can be viewed as an instance or data reduction method,
-since it reduces the input data to a set of subclusters which are obtained directly
-from the leaves of the CFT. This reduced data can be further processed by feeding
-it into a global clusterer. This global clusterer can be set by ``n_clusters``.
-If ``n_clusters`` is set to None, the subclusters from the leaves are directly
-read off, otherwise a global clustering step labels these subclusters into global
-clusters (labels) and the samples are mapped to the global label of the nearest subcluster.
+Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分支因子。Branching factor （分支因子）
+限制了一个节点中的子集群的数量 ，threshold （簇半径阈值）限制了新加入的样本和存在与现有子集群中样本的最大距离。
 
-**Algorithm description:**
+该算法可以视为将一个实例或者数据简化的方法，因为它将输入的数据简化到可以直接从CFT的叶子结点中获取的一组子聚类。
+这种简化的数据可以通过将其馈送到global clusterer（全局聚类）来进一步处理。Global clusterer（全局聚类）可以
+通过 ``n_clusters``来设置。
 
-- A new sample is inserted into the root of the CF Tree which is a CF Node.
-  It is then merged with the subcluster of the root, that has the smallest
-  radius after merging, constrained by the threshold and branching factor conditions.
-  If the subcluster has any child node, then this is done repeatedly till it reaches
-  a leaf. After finding the nearest subcluster in the leaf, the properties of this
-  subcluster and the parent subclusters are recursively updated.
+如果 ``n_clusters`` 被设置为 None，将直接读取叶子结点中的子聚类，否则，global clustering（全局聚类）
+将逐步标记他的 subclusters 到 global clusters (labels) 中，样本将被映射到 距离最近的子聚类的global label中。 
 
-- If the radius of the subcluster obtained by merging the new sample and the
-  nearest subcluster is greater than the square of the threshold and if the
-  number of subclusters is greater than the branching factor, then a space is temporarily
-  allocated to this new sample. The two farthest subclusters are taken and
-  the subclusters are divided into two groups on the basis of the distance
-  between these subclusters.
 
+**算法描述:**
+
+- 一个新的样本作为一个CF Node 被插入到 CF Tree 的根节点。然后将其合并到根节点的子聚类中去，使得合并后子聚类
+  拥有最小的半径，子聚类的选取受 threshold 和 branching factor 的约束。如果子聚类也拥有孩子节点，则重复执
+  行这个步骤直到到达叶子结点。在叶子结点中找到最近的子聚类以后，递归的更新这个子聚类及其父聚类的属性。
+
+- 如果合并了新样本和最近的子聚类获得的子聚类半径大约square of the threshold（阈值的平方），
+  并且子聚类的数量大于branching factor（分支因子），则将为这个样本分配一个临时空间。
+  最远的两个子聚类被选取，剩下的子聚类按照之间的距离分为两组作为被选取的两个子聚类的孩子节点。
+  
 - If this split node has a parent subcluster and there is room
   for a new subcluster, then the parent is split into two. If there is no room,
   then this node is again split into two and the process is continued
   recursively, till it reaches the root.
+  如果拆分的节点有一个 parent subcluster ，并且有一个容纳一个新的子聚类的空间，那么父聚类拆分成两个。
+  如果没有空间容纳一个新的聚类，那么这个节点将被再次拆分，依次向上检查父节点是否需要分裂，
+  如果需要按叶子节点方式相同分裂。
 
 **Birch or MiniBatchKMeans?**
 
- - Birch does not scale very well to high dimensional data. As a rule of thumb if
-   ``n_features`` is greater than twenty, it is generally better to use MiniBatchKMeans.
- - If the number of instances of data needs to be reduced, or if one wants a
-   large number of subclusters either as a preprocessing step or otherwise,
-   Birch is more useful than MiniBatchKMeans.
+ - Birch 在高维数据上表现不好。一条经验法则，如果 ``n_features`` 大于20，通常使用MiniBatchKMeans更好。
+
+ - 如果需要减少数据实例的数量，或者如果需要大量的子聚类作为预处理步骤或者其他，Birch 比 MiniBatchKMeans更有用。
 
 
 **How to use partial_fit?**
 
-To avoid the computation of global clustering, for every call of ``partial_fit``
-the user is advised
+为了避免对 global clustering 的计算，每次调用建议使用  ``partial_fit`` 。
 
- 1. To set ``n_clusters=None`` initially
- 2. Train all data by multiple calls to partial_fit.
- 3. Set ``n_clusters`` to a required value using
-    ``brc.set_params(n_clusters=n_clusters)``.
- 4. Call ``partial_fit`` finally with no arguments, i.e ``brc.partial_fit()``
-    which performs the global clustering.
+
+ 1. 初始化 ``n_clusters=None`` 。
+ 2. 通过多次调用 partial_fit 训练所以的数据。
+ 3. 设置 ``n_clusters`` 为所需值，通过使用 ``brc.set_params(n_clusters=n_clusters)``。
+ 4. 最后不需要参数调用 ``partial_fit`` , 例如 ``brc.partial_fit()``执行全局聚类。
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_birch_vs_minibatchkmeans_001.png
     :target: ../auto_examples/cluster/plot_birch_vs_minibatchkmeans.html
 
-.. topic:: References:
+.. topic:: 参考:
 
  * Tian Zhang, Raghu Ramakrishnan, Maron Livny
    BIRCH: An efficient data clustering method for large databases.
