@@ -4,7 +4,7 @@
 .. _manifold:
 
 =================
-Manifold learning
+流形学习
 =================
 
 .. rst-class:: quote
@@ -16,7 +16,7 @@ Manifold learning
                  | Old Mother Nature's recipes
                  | That bring the bare necessities of life
                  |
-                 |             -- Baloo's song [The Jungle Book]
+                 |             -- Baloo的歌 [奇幻森林]
 
 
 
@@ -25,25 +25,15 @@ Manifold learning
    :align: center
    :scale: 60
 
-Manifold learning is an approach to non-linear dimensionality reduction.
-Algorithms for this task are based on the idea that the dimensionality of
-many data sets is only artificially high.
+流形学习是一种减少非线性维度的方法。
+这个任务的算法基于许多数据集的维度只是人为导致的高。
 
-
-Introduction
+介绍
 ============
 
-High-dimensional datasets can be very difficult to visualize.  While data
-in two or three dimensions can be plotted to show the inherent
-structure of the data, equivalent high-dimensional plots are much less
-intuitive.  To aid visualization of the structure of a dataset, the
-dimension must be reduced in some way.
+高维数据集可能非常难以可视化。 虽然可以绘制两维或三维数据来显示数据的固有结构，但等效的高维图不太直观。 为了帮助可视化数据集的结构，必须以某种方式减小维度。
 
-The simplest way to accomplish this dimensionality reduction is by taking
-a random projection of the data.  Though this allows some degree of
-visualization of the data structure, the randomness of the choice leaves much
-to be desired.  In a random projection, it is likely that the more
-interesting structure within the data will be lost.
+通过对数据的随机投影来实现降维的最简单方法。 虽然这允许数据结构的一定程度的可视化，但是选择的随机性远远不够。 在随机投影中，数据中更有趣的结构很可能会丢失。
 
 
 .. |digits_img| image:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_001.png
@@ -56,15 +46,7 @@ interesting structure within the data will be lost.
 
 .. centered:: |digits_img| |projected_img|
 
-
-To address this concern, a number of supervised and unsupervised linear
-dimensionality reduction frameworks have been designed, such as Principal
-Component Analysis (PCA), Independent Component Analysis, Linear
-Discriminant Analysis, and others.  These algorithms define specific
-rubrics to choose an "interesting" linear projection of the data.
-These methods can be powerful, but often miss important non-linear
-structure in the data.
-
+为了解决这一问题，设计了一些监督和无监督的线性维数降低框架，如主成分分析（PCA），独立成分分析，线性判别分析等。 这些算法定义了特定的标题来选择数据的“有趣”线性投影。 这些是强大的，但是经常会错过重要的非线性结构的数据。
 
 .. |PCA_img| image:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_003.png
     :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -76,74 +58,51 @@ structure in the data.
 
 .. centered:: |PCA_img| |LDA_img|
 
-Manifold Learning can be thought of as an attempt to generalize linear
-frameworks like PCA to be sensitive to non-linear structure in data. Though
-supervised variants exist, the typical manifold learning problem is
-unsupervised: it learns the high-dimensional structure of the data
-from the data itself, without the use of predetermined classifications.
+流形可以被认为是将线性框架（如PCA）推广为对数据中的非线性结构敏感的尝试。 虽然存在监督变量，但是典型的流形学习问题是无监督的：它从数据本身学习数据的高维结构，而不使用预定的分类。
 
 
-.. topic:: Examples:
+.. topic:: 例子:
 
-    * See :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` for an example of
-      dimensionality reduction on handwritten digits.
+    * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` ,手写数字降维的例子。
 
-    * See :ref:`sphx_glr_auto_examples_manifold_plot_compare_methods.py` for an example of
-      dimensionality reduction on a toy "S-curve" dataset.
+    * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_compare_methods.py` ,玩具“S曲线”数据集的维度降低的一个例子。
 
-The manifold learning implementations available in scikit-learn are
-summarized below
+以下概述了scikit学习中可用的流形学习实现
 
 .. _isomap:
 
 Isomap
 ======
-
-One of the earliest approaches to manifold learning is the Isomap
-algorithm, short for Isometric Mapping.  Isomap can be viewed as an
-extension of Multi-dimensional Scaling (MDS) or Kernel PCA.
-Isomap seeks a lower-dimensional embedding which maintains geodesic
-distances between all points.  Isomap can be performed with the object
-:class:`Isomap`.
+流形学习的最早方法之一是Isomap算法，等距映射(Isometric Mapping)的缩写。 Isomap可以被视为多维缩放（Multi-dimensional Scaling：MDS）或Kernel PCA的扩展。 Isomap寻求一个维度较低的嵌入，它保持所有点之间的测量距离。 Isomap可以与 :class:`Isomap` 对象执行。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_005.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
    :align: center
    :scale: 50
 
-Complexity
+复杂度
 ----------
-The Isomap algorithm comprises three stages:
+Isomap算法包括三个阶段:
 
-1. **Nearest neighbor search.**  Isomap uses
-   :class:`sklearn.neighbors.BallTree` for efficient neighbor search.
-   The cost is approximately :math:`O[D \log(k) N \log(N)]`, for :math:`k`
-   nearest neighbors of :math:`N` points in :math:`D` dimensions.
+1. **搜索最近的邻居.**  Isomap使用
+   :class:`sklearn.neighbors.BallTree` 进行有效的邻居搜索。
+   对于 :math:`D` 维中 :math:`N` 个点的 :math:`k` 个最近邻，成本约为 :math:`O[D \log(k) N \log(N)]`
 
-2. **Shortest-path graph search.**  The most efficient known algorithms
-   for this are *Dijkstra's Algorithm*, which is approximately
-   :math:`O[N^2(k + \log(N))]`, or the *Floyd-Warshall algorithm*, which
-   is :math:`O[N^3]`.  The algorithm can be selected by the user with
-   the ``path_method`` keyword of ``Isomap``.  If unspecified, the code
-   attempts to choose the best algorithm for the input data.
+2. **最短路径图搜索.**  最有效的已知算法是Dijkstra算法，它的复杂度大约是
+   :math:`O[N^2(k + \log(N))]`，或Floyd-Warshall算法，它的复杂度是 :math:`O[N^3]`.  该算法可以由用户使用isomap的path_method关键字来选择。 如果未指定，则代码尝试为输入数据选择最佳算法。
 
-3. **Partial eigenvalue decomposition.**  The embedding is encoded in the
-   eigenvectors corresponding to the :math:`d` largest eigenvalues of the
-   :math:`N \times N` isomap kernel.  For a dense solver, the cost is
-   approximately :math:`O[d N^2]`.  This cost can often be improved using
-   the ``ARPACK`` solver.  The eigensolver can be specified by the user
-   with the ``path_method`` keyword of ``Isomap``.  If unspecified, the
-   code attempts to choose the best algorithm for the input data.
-
-The overall complexity of Isomap is
+3. **部分特征值分解.**  嵌入在与 :math:`N \times N` isomap内核的 :math:`d` 
+   个最大特征值相对应的特征向量中进行编码。 对于密集求解器，成本约为 :math:`O[d N^2]` 。 通常可以使用ARPACK求解器来提高这个成本。 用户可以使用isomap的path_method关键字来指定特征。 如果未指定，则代码尝试为输入数据选择最佳算法。
+   
+Isomap的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[N^2(k + \log(N))] + O[d N^2]`.
 
-* :math:`N` : number of training data points
-* :math:`D` : input dimension
-* :math:`k` : number of nearest neighbors
-* :math:`d` : output dimension
+* :math:`N` : 训练的数据节点数
+* :math:`D` : 输入维度
+* :math:`k` : 最近的邻居数
+* :math:`d` : 输出维度
 
-.. topic:: References:
+.. topic:: 参考文献:
 
    * `"A global geometric framework for nonlinear dimensionality reduction"
      <http://science.sciencemag.org/content/290/5500/2319.full>`_
@@ -151,46 +110,41 @@ The overall complexity of Isomap is
 
 .. _locally_linear_embedding:
 
-Locally Linear Embedding
+局部线性嵌入
 ========================
 
-Locally linear embedding (LLE) seeks a lower-dimensional projection of the data
-which preserves distances within local neighborhoods.  It can be thought
-of as a series of local Principal Component Analyses which are globally
-compared to find the best non-linear embedding.
+局部线性嵌入（LLE）寻求保留局部邻域内距离的数据的低维投影。 它可以被认为是一系列局部主成分分析，与整体相比，找到最好的非线性嵌入。
 
-Locally linear embedding can be performed with function
-:func:`locally_linear_embedding` or its object-oriented counterpart
-:class:`LocallyLinearEmbedding`.
+局部线性嵌入可以使用
+:func:`locally_linear_embedding` 函数或其面向对象的副本方法
+:class:`LocallyLinearEmbedding` 执行。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_006.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
    :align: center
    :scale: 50
 
-Complexity
+复杂度
 ----------
 
-The standard LLE algorithm comprises three stages:
+标准的LLE算法包括三个阶段:
 
-1. **Nearest Neighbors Search**.  See discussion under Isomap above.
+1. **搜索最近的邻居**.  参见上述Isomap讨论。
 
-2. **Weight Matrix Construction**. :math:`O[D N k^3]`.
-   The construction of the LLE weight matrix involves the solution of a
-   :math:`k \times k` linear equation for each of the :math:`N` local
-   neighborhoods
+2. **权重矩阵构造**. :math:`O[D N k^3]`.
+   LLE权重矩阵的构造涉及每 :math:`N` 个局部邻域的 :math:`k \times k` 线性方程的解
 
-3. **Partial Eigenvalue Decomposition**. See discussion under Isomap above.
+3. **部分特征值分解**. 参见上述Isomap讨论。
 
-The overall complexity of standard LLE is
+标准LLE的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[d N^2]`.
 
-* :math:`N` : number of training data points
-* :math:`D` : input dimension
-* :math:`k` : number of nearest neighbors
-* :math:`d` : output dimension
+* :math:`N` : 训练的数据节点数
+* :math:`D` : 输入维度
+* :math:`k` : 最近的邻居数
+* :math:`d` : 输出维度
 
-.. topic:: References:
+.. topic:: 参考文献:
 
    * `"Nonlinear dimensionality reduction by locally linear embedding"
      <http://www.sciencemag.org/content/290/5500/2323.full>`_
