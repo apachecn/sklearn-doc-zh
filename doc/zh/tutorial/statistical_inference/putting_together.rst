@@ -25,9 +25,6 @@ can predict variables. We can also create combined estimators:
 .. literalinclude:: ../../auto_examples/plot_digits_pipe.py
     :lines: 23-63
 
-
-
-
 Face recognition with eigenfaces
 =================================
 
