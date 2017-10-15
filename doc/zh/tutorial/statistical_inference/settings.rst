@@ -10,7 +10,7 @@ Scikit-learn从可以从一个或者多个数据集众学习信息，这些数�
 Scikit-learn deals with learning information from one or more
 datasets that are represented as 2D arrays. They can be understood as a
 list of multi-dimensional observations. We say that the first axis of
-these arrays is the **samples样本** axis, while the second is the
+these arrays is the **samples** axis, while the second is the
 **features** axis.
 
 .. topic:: A simple example shipped with the scikit: iris dataset
