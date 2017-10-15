@@ -1,18 +1,18 @@
 .. _introduction:
 
-使用 scikit-learn 的机器学习介绍
+使用scikit-learn介绍机器学习
 =====================================================
 
-.. topic:: 章节内容
+.. topic:: 内容提要
 
-    在本节中，我们介绍了在 scikit-learn 中使用的 `机器学习 <https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并给出了一个简单的学习示例。
+    在本节中，我们介绍一些我们在使用scikit-learn过程中的`机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_词汇，并且给出一些例子阐释它们。  词汇，并给出了一个简单的学习示例。
 
 
 机器学习：问题设置
 -------------------------------------
 
-一般来说，学习问题考虑了一组n 个数据 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
-如果每个样本多于单个数字，并且例如多维条目（也称为 `多变量 <https://en.wikipedia.org/wiki/Multivariate_random_variable>`_ 数据），则称其具有多个属性或 **特征**.
+一般来说，一个学习问题通常考查一个数据`样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
+如果每个样本是`多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性特征 。
 
 我们可以在几个大类上分解学习问题:
 
@@ -22,8 +22,7 @@
     * `分类 <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_:
       样本属于两个或更多个类，我们想从已经标记的数据中学习如何预测未标记数据的类别。
       分类问题的一个例子是手写数字识别示例，其目的是将每个输入向量分配给有限数目的离散类别之一。
-      考虑分类的另一种方法是作为监督学习的离散形式（而不是连续的），其中有一个 categories(类型)数量有限，
-      并且是针对于所提供的 n 个样本中的每一个样本，一个是尝试用正确的 category（范畴）或 class （类别）来 label （标记）它们。
+      我们通常把分类视作监督学习的一个离散形式，从有限的类别中，给每个样本贴上正确的标签。
 
     * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_: 
       如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归*.
@@ -35,9 +34,8 @@
 
 .. topic:: 训练集和测试集
 
-    机器学习是关于学习数据集的某些属性并将其应用于新数据。
-    这就是为什么在机器的普遍做法学习评价的算法是手头上的数据分成两组，
-    一个是我们所说的 **训练集** 上，我们了解到，我们称之为数据属性和一个 **测试集** 上，我们测试这些属性。
+    机器学习是从数据的属性中学习，并将它们应用到新数据的过程。
+    这就是为什么机器学习中评估算法的普遍实践是把数据分割成**训练集**（我们从中学习数据的属性）和**测试集**（我们测试这些性质）。
 
 .. _loading_example_dataset:
 
@@ -58,7 +56,7 @@
 数据集是一个类似字典的对象，它保存有关数据的所有数据和一些元数据。 该数据存储在 ``.data`` 成员中，它是 ``n_samples, n_features`` 数组。 
 在监督问题的情况下，一个或多个响应变量存储在 ``.target`` 成员中。 有关不同数据集的更多详细信息，请参见 :ref:`专用数据集部分 <datasets>`.
 
-例如，在数字数据集的情况下，``digits.data`` 可以访问可用于对数字样本进行分类的功能::
+例如，在数字数据集的情况下，``digits.data`` 使我们能够得到一些用于分类的样本特征::
 
   >>> print(digits.data)  # doctest: +NORMALIZE_WHITESPACE
   [[  0.   0.   5. ...,   0.   0.   0.]
@@ -69,7 +67,7 @@
    [  0.   0.   2. ...,  12.   0.   0.]
    [  0.   0.  10. ...,  12.   1.   0.]]
 
-并且 ``digits.target`` 给出数字数据集的基本真值，即我们正在尝试学习的每个数字图像对应的数字::
+并且 ``digits.target`` 表示了数据集内每个数字的真实类别，也就是我们期望从每个手写数字图像中学得的相应的数字标记::
 
   >>> digits.target
   array([0, 1, 2, ..., 8, 9, 8])
@@ -89,7 +87,7 @@
              [  0.,   2.,  14.,   5.,  10.,  12.,   0.,   0.],
              [  0.,   0.,   6.,  13.,  10.,   0.,   0.,   0.]])
     
-    该  :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始问题开始，可以在 scikit-learn 中形成消费数据。
+    该  :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始数据开始调整，形成可以在 scikit-learn 中形成消费数据。
     
 .. topic:: 从外部数据集加载
 
@@ -99,9 +97,9 @@
 ------------------------
 
 在数字数据集的情况下，任务是给出图像来预测其表示的数字。 
-我们给出了10个可能类（数字0到9）中的每一个的样本，我们在这些类上给出了一个 `估计量 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够*预测*看不见的样本所属的类。
+我们给出了10个可能类（数字0到9）中的每一个的样本，我们在这些类上给出了一个 `估计器 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够*预测*看不见的样本所属的类。
 
-在 scikit-learn 中，分类的估计是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 的方法。
+在 scikit-learn 中，分类的估计器是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 的方法。
 
 估计器的一个例子是实现 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 的类 ``sklearn.svm.SVC``. 估计器的构造函数以模型的参数为参数，但目前我们将把估计器视为黑盒子::
 
@@ -110,10 +108,10 @@
 
 .. topic:: 选择模型的参数
 
-  在这个例子中，我们设置 ``gamma`` 手动的值。通过使用 :ref:`网格搜索  <grid_search>` 和 :ref:`交叉验证 <cross_validation>` 等工具，可以自动找到参数的良好值。
+  在这个例子中，我们手动设置 ``gamma`` 值。通过使用 :ref:`网格搜索  <grid_search>` 和 :ref:`交叉验证 <cross_validation>` 等工具，可以自动找到参数的良好值。
 
-们称之为我们的估计器实例 ``clf``，因为它是一个分类器。它现在必须适应模型，也就是说，它必须从模型中*学习*。
-这是通过将我们的训练集传递给该 ``fit`` 方法来完成的。作为一个训练集，让我们使用除最后一个数据集的所有图像。
+我们称之为我们的估计器实例 ``clf``，因为它是一个分类器。它现在必须适应模型，也就是说，它必须从模型中*学习*。
+这是通过将我们的训练集传递给该 ``fit`` 方法来完成的。作为一个训练集，让我们使用除最后一个实例的数据集的所有图像。
 我们用 ``[:-1]`` Python 语法选择这个训练集，它产生一个包含除最后一个条目之外的所有数组的新数组 ``digits.data``::
 
   >>> clf.fit(digits.data[:-1], digits.target[:-1])  # doctest: +NORMALIZE_WHITESPACE
@@ -122,7 +120,7 @@
     max_iter=-1, probability=False, random_state=None, shrinking=True,
     tol=0.001, verbose=False)
 
-现在你可以预测新的值，特别是我们可以向还没有用来训练分类器询问 ``digits`` 数据集中最后一个图像的数字是什么::
+现在你可以预测新的值，特别是我们可以向分类器询问 ``digits`` 数据集中最后一个图像（没有用来训练的一条实例)的数字是什么::
 
   >>> clf.predict(digits.data[-1:])
   array([8])
@@ -134,16 +132,16 @@
     :align: center
     :scale: 50
 
-正如你所看到的，这是一项具有挑战性的任务：图像分辨率差。你同意分类器吗？
+正如你所看到的，这是一项具有挑战性的任务：图像分辨率差。你是否认同这个分类？
 
 这个分类问题的一个完整例子可以作为一个例子来运行和学习： 识别手写数字。
 :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`.
 
 
-模型持久性
+模型持久化
 -----------------
 
-可以通过使用Python的内置持久性模型（即 `pickle <https://docs.python.org/2/library/pickle.html>`_ ）将模型保存在scikit中::
+可以通过使用Python的内置持久性模块（即 `pickle <https://docs.python.org/2/library/pickle.html>`_ ）将模型保存在文件系统::
 
   >>> from sklearn import svm
   >>> from sklearn import datasets
@@ -164,7 +162,7 @@
   >>> y[0]
   0
 
-在scikit的具体情况下，使用 joblib 替换 pickle（``joblib.dump`` & ``joblib.load``）可能会更有趣，这对大数据更有效，但只能 pickle 到磁盘而不是字符串::
+在scikit的具体情况下，使用 joblib 替换 pickle（``joblib.dump`` & ``joblib.load``）可能会更有趣，这对大数据更有效，但只能 序列化到磁盘而不是字符串::
 
   >>> from sklearn.externals import joblib
   >>> joblib.dump(clf, 'filename.pkl') # doctest: +SKIP
@@ -175,7 +173,7 @@
 
 .. 注意::
 
-    ``joblib.dump`` 并且 ``joblib.load`` 函数也接受 file-like 对象而不是文件名。有关 Joblib 的数据持久性的更多信息，请 `点击此处 <https://pythonhosted.org/joblib/persistence.html>`_。
+    ``joblib.dump`` 并且 ``joblib.load`` 函数也接受 file-like（类似文件） 对象而不是文件名。有关 Joblib 的数据持久性的更多信息，请 `点击此处 <https://pythonhosted.org/joblib/persistence.html>`_。
 
 请注意，pickle 有一些安全性和可维护性问题。有关使用 scikit-learn 的模型持久性的更多详细信息，请参阅 :ref:`模型持久性` 部分。
 
@@ -205,8 +203,8 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
   >>> X_new.dtype
   dtype('float64')
 
-在这个例子中，``X`` 是 ``float32``，被转换 ``float64`` 的 ``fit_transform(X)``。
-回归目标被归结为 ``float64``，维护分类目标::
+在这个例子中，``X`` 是 ``float32``，通过``fit_transform(X)``被转换 ``float64``。
+回归目标被转换为 ``float64``，分类目标维持不变::
 
     >>> from sklearn import datasets
     >>> from sklearn.svm import SVC
@@ -231,13 +229,13 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
     ['setosa', 'setosa', 'setosa']
 
 这里，第一个 ``predict()`` 返回一个整数数组，因为在 ``fit`` 中使用了 ``iris.target`` （一个整数数组）。 
-第二个 ``predict()`` 返回一个字符串数组，因为 ``iris.target_names`` 是用于拟合的。
+第二个 ``predict()`` 返回一个字符串数组，因为 ``iris.target_names`` 是字符串数组的。
 
-修改和更新参数
+再次训练和更新参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-估计器的超参数可以在通过 :func:`sklearn.pipeline.Pipeline.set_params` 方法构建之后进行更新。 
-调用 ``fit()`` 多次将覆盖以前的 ``fit()`` 中学到的内容::
+估计器的超参数可以在通过 :func:`sklearn.pipeline.Pipeline.set_params` 方法构建之后才可以进行更新。 
+调用 ``fit()`` 多次将覆盖以前的 ``fit()`` 中学到的参数::
 
   >>> import numpy as np
   >>> from sklearn.svm import SVC
@@ -264,12 +262,12 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
   >>> clf.predict(X_test)
   array([0, 0, 0, 1, 0])
 
-在这里，默认内核 ``rbf`` 首先被改变到 ``linear`` 估计器被构造之后 ``SVC()``，并且改回到 ``rbf`` 重新设计估计器并进行第二预测。
+在这里，估计器被构造之后 ``SVC()``，默认内核 ``rbf`` 首先被改变到 ``linear`` ，然后改回到 ``rbf`` 重新训练估计器并进行第二预测。
 
 多分类与多标签拟合
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-当使用 :class:`多类分类器 <sklearn.multiclass>` 时，执行的学习和预测任务取决于适合的目标数据的格式::
+当使用 :class:`多类分类器 <sklearn.multiclass>` 时，执行的学习和预测任务取决于参与训练的目标数据的格式::
 
     >>> from sklearn.svm import SVC
     >>> from sklearn.multiclass import OneVsRestClassifier
@@ -282,7 +280,7 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
     >>> classif.fit(X, y).predict(X)
     array([0, 0, 1, 1, 2])
 
-在上述情况下，分类器适合于多分类标签的 1d 矩阵，``predict()`` 因此该方法提供了相应的多类预测。还可以使用二维标签二维矩阵::
+在上述情况下，分类器被使用一个含有多个标签的一维数组训练，因此``predict（）``方法提供相应的多类别预测。分类器也可以通过二进制表示的的标签的二维数组来训练::
 
     >>> y = LabelBinarizer().fit_transform(y)
     >>> classif.fit(X, y).predict(X)
@@ -292,9 +290,9 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
            [0, 0, 0],
            [0, 0, 0]])
 
-这里，分类器是 ``fit()`` 上的 2D 二进制标记表示 y，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>`。在这种情况下，``predict()`` 返回一个表示相应多重标签预测的 2d 矩阵。
+这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>`使目标向量y被转化成二维数组的标签表示。在这种情况下，``predict()`` 返回一个表示相应多重标签预测的 2d 矩阵。
 
-请注意，第四个和第五个实例返回所有零，表示它们没有匹配三个标签 ``fit``。使用多分类输出，类似地可以为一个实例分配多个标签::
+请注意，第四个和第五个实例返回全零向量，表明它们不能匹配用来训练中的目标标签中的任意一个。使用多分类输出，类似地可以为一个实例分配多个标签::
 
   >> from sklearn.preprocessing import MultiLabelBinarizer
   >> y = [[0, 1], [0, 2], [1, 3], [0, 2, 3], [2, 4]]
@@ -306,6 +304,5 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
          [1, 0, 1, 1, 0],
          [0, 0, 1, 0, 1]])
 
-在这种情况下，分类器适合每个分配多个标签的实例。
-所述 :class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>` 用于多分类的 2D 矩阵以二进制化 ``fit`` 时。
-因此，``predict()`` 返回具有每个实例的多个预测标签的 2d 矩阵。
+在这种情况下，用来训练分类器的多个向量被赋予多个标记,:class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>` 被用来二进制化多个标签的二维数组，使之用来训练。
+``predict（）``函数返回带有多个标记的二维数组作为每个实例的结果。
