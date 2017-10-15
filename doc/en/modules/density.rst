@@ -30,7 +30,7 @@
 
 核密度估计
 =========================
-:class:`sklearn.neighbors.KernelDensity`估计实现了scikit-learn中的核密度估计，它使用Ball Tree或KD Tree来进行高效查询（有关这些讨论请参见:ref:`neighbors`）。尽管为了简单起见上述示例采用的是一维数据集，但实际上核密度估计能够用在任意维度上, 不过在实际应用中,维数灾难会导致其在高维上的性能降低。
+:class:`sklearn.neighbors.KernelDensity` 估计实现了scikit-learn中的核密度估计，它使用Ball Tree或KD Tree来进行高效查询（有关这些讨论请参见 :ref:`neighbors`）。尽管为了简单起见上述示例采用的是一维数据集，但实际上核密度估计能够用在任意维度上, 不过在实际应用中,维数灾难会导致其在高维上的性能降低。
 
 如下图所示, 从双峰分布中绘制了100个点，并展示了选用三个不同内核的核密度估计:
 
