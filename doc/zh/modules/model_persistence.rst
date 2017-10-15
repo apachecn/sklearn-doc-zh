@@ -1,20 +1,18 @@
 .. _model_persistence:
 
 =================
-Model persistence
+模型持久化
 =================
 
-After training a scikit-learn model, it is desirable to have a way to persist
-the model for future use without having to retrain. The following section gives
-you an example of how to persist a model with pickle. We'll also review a few
-security and maintainability issues when working with pickle serialization.
+在训练完 scikit-learn 模型之后, 最好有一种方法来将模型持久化以备将来使用，而无需重新训练.
+以下部分为您提供了有关如何使用 pickle 来持久化模型的示例.
+在使用 pickle 序列化时，我们还将回顾一些安全性和可维护性方面的问题.
 
 
-Persistence example
+持久化示例
 -------------------
 
-It is possible to save a model in the scikit by using Python's built-in
-persistence model, namely `pickle <https://docs.python.org/2/library/pickle.html>`_::
+可以通过使用 Python 的内置持久化模型将训练好的模型保存在 scikit 中, 它名为 `pickle <https://docs.python.org/2/library/pickle.html>`_::
 
   >>> from sklearn import svm
   >>> from sklearn import datasets
@@ -35,56 +33,42 @@ persistence model, namely `pickle <https://docs.python.org/2/library/pickle.html
   >>> y[0]
   0
 
-In the specific case of the scikit, it may be more interesting to use
-joblib's replacement of pickle (``joblib.dump`` & ``joblib.load``),
-which is more efficient on objects that carry large numpy arrays internally as
-is often the case for fitted scikit-learn estimators, but can only pickle to the
-disk and not to a string::
+在这个 scikit 的特殊示例中，使用 joblib 来替换 pickle (``joblib.dump``＆``joblib.load``) 可能会更有意思, 这对于内部带有大量数组的对象来说更为高效, 通常情况下适合 scikit-learn estimators（预估器）, but can only pickle to the disk and not to a string::
 
   >>> from sklearn.externals import joblib
   >>> joblib.dump(clf, 'filename.pkl') # doctest: +SKIP
 
-Later you can load back the pickled model (possibly in another Python process)
-with::
+之后你可以使用以下方式加载 pickled model（可能在另一个 Python 进程中）::
 
   >>> clf = joblib.load('filename.pkl') # doctest:+SKIP
 
 .. note::
 
-   ``joblib.dump`` and ``joblib.load`` functions also accept file-like object
-   instead of filenames. More information on data persistence with Joblib is
-   available `here <https://pythonhosted.org/joblib/persistence.html>`_.
+   ``joblib.dump`` 和 ``joblib.load`` 函数也接收类似 file 的对象而不是文件名.
+   有关使用 Joblib 来持久化数据的更多信息可以参阅 `这里 <https://pythonhosted.org/joblib/persistence.html>`_.
 
 .. _persistence_limitations:
 
-Security & maintainability limitations
+安全性和可维护性的局限性
 --------------------------------------
 
-pickle (and joblib by extension), has some issues regarding maintainability
-and security. Because of this,
+pickle (和通过扩展的 joblib), 在安全性和可维护性方面存在一些问题.
+由于以下原因,
 
-* Never unpickle untrusted data as it could lead to malicious code being 
-  executed upon loading.
-* While models saved using one version of scikit-learn might load in 
-  other versions, this is entirely unsupported and inadvisable. It should 
-  also be kept in mind that operations performed on such data could give
-  different and unexpected results.
+* 不要打开不受信任的数据, 因为它可能导致恶意代码在加载时执行.
+* 虽然使用一个版本的 scikit-learn 保存的模型可能会在其他版本中加载，但这完全不受支持并且也不合适.
+  还应该记住, 对这些数据执行的操作可能会产生不同和意想不到的结果.
 
-In order to rebuild a similar model with future versions of scikit-learn,
-additional metadata should be saved along the pickled model:
+为了用将来版本的 scikit-learn 来重构类似的模型, 额外的元数据应该随着 pickled model 一起被保存：
 
-* The training data, e.g. a reference to a immutable snapshot
-* The python source code used to generate the model
-* The versions of scikit-learn and its dependencies
-* The cross validation score obtained on the training data
+* 训练数据, 例如. 引用不可变的快照
+* 用于生成模型更多 python 源代码
+* scikit-learn 以及它的 dependencies 的版本
+* 在训练数据的基础上获得的交叉验证得分
 
-This should make it possible to check that the cross-validation score is in the
-same range as before.
+这样可以检查交叉验证得分是否与以前的范围相同.
 
-Since a model internal representation may be different on two different
-architectures, dumping a model on one architecture and loading it on
-another architecture is not supported.
+由于模型内部表示可能在两种不同架构上不一样, 因此不支持在一个架构上转储模型并将其加载到另一个体系架构上.
 
-If you want to know more about these issues and explore other possible
-serialization methods, please refer to this
-`talk by Alex Gaynor <http://pyvideo.org/video/2566/pickles-are-for-delis-not-software>`_.
+如果您想要了解关于这些 issues 以及浏览其它可能的序列化方法的更多详情，请参阅这个
+`Alex Gaynor 的演讲 <http://pyvideo.org/video/2566/pickles-are-for-delis-not-software>`_.

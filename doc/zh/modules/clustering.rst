@@ -1,32 +1,21 @@
 .. _clustering:
 
 ==========
-Clustering
+Clustering（聚类）
 ==========
 
-`Clustering <https://en.wikipedia.org/wiki/Cluster_analysis>`__ of
-unlabeled data can be performed with the module :mod:`sklearn.cluster`.
+未标记的数据的 `Clustering（聚类） <https://en.wikipedia.org/wiki/Cluster_analysis>`__ 可以使用模块 :mod:`sklearn.cluster` 来实现。
 
-Each clustering algorithm comes in two variants: a class, that implements
-the ``fit`` method to learn the clusters on train data, and a function,
-that, given train data, returns an array of integer labels corresponding
-to the different clusters. For the class, the labels over the training
-data can be found in the ``labels_`` attribute.
+每个 clustering algorithm （聚类算法）有两个变体: 一个是 class, 它实现了 ``fit`` 方法来学习 train data（训练数据）的 clusters（聚类），还有一个 function（函数），是给定 train data（训练数据），返回与不同 clusters（聚类）对应的整数标签 array（数组）。对于 class（类），training data（训练数据）上的标签可以在 ``labels_`` 属性中找到。
 
 .. currentmodule:: sklearn.cluster
 
-.. topic:: Input data
+.. topic:: 输入数据
 
-    One important thing to note is that the algorithms implemented in
-    this module can take different kinds of matrix as input. All the
-    methods accept standard data matrices of shape ``[n_samples, n_features]``.
-    These can be obtained from the classes in the :mod:`sklearn.feature_extraction`
-    module. For :class:`AffinityPropagation`, :class:`SpectralClustering`
-    and :class:`DBSCAN` one can also input similarity matrices of shape
-    ``[n_samples, n_samples]``. These can be obtained from the functions
-    in the :mod:`sklearn.metrics.pairwise` module.
+    需要注意的一点是，该模块中实现的算法可以采用不同种类的 matrix （矩阵）作为输入。所有这些都接受 shape ``[n_samples, n_features]`` 的标准数据矩阵。
+    这些可以从以下的 :mod:`sklearn.feature_extraction` 模块的 classes （类）中获得。对于 :class:`AffinityPropagation`, :class:`SpectralClustering` 和 :class:`DBSCAN` 也可以输入 shape ``[n_samples, n_samples]`` 的相似矩阵。这些可以从 :mod:`sklearn.metrics.pairwise` 模块中的函数获得。
 
-Overview of clustering methods
+Clustering （聚类）方法概述
 ===============================
 
 .. figure:: ../auto_examples/cluster/images/sphx_glr_plot_cluster_comparison_001.png
@@ -34,191 +23,137 @@ Overview of clustering methods
    :align: center
    :scale: 50
 
-   A comparison of the clustering algorithms in scikit-learn
+   在 scikit-learn 中的 clustering algorithms （聚类算法）的比较
 
 
 .. list-table::
    :header-rows: 1
    :widths: 14 15 19 25 20
 
-   * - Method name
-     - Parameters
-     - Scalability
-     - Usecase
-     - Geometry (metric used)
+   * - Method name（方法名称）
+     - Parameters（参数）
+     - Scalability（可扩展性）
+     - Usecase（使用场景）
+     - Geometry (metric used)（几何图形（公制使用））
 
-   * - :ref:`K-Means <k_means>`
-     - number of clusters
-     - Very large ``n_samples``, medium ``n_clusters`` with
-       :ref:`MiniBatch code <mini_batch_kmeans>`
-     - General-purpose, even cluster size, flat geometry, not too many clusters
-     - Distances between points
+   * - :ref:`K-Means（K-均值） <k_means>`
+     - number of clusters（聚类形成的簇的个数）
+     - 非常大的 ``n_samples``, 中等的 ``n_clusters`` 使用
+       :ref:`MiniBatch code（MiniBatch 代码） <mini_batch_kmeans>`
+     - 通用, 均匀的 cluster size（簇大小）, flat geometry（平面几何）, 不是太多的 clusters（簇）
+     - Distances between points（点之间的距离）
 
    * - :ref:`Affinity propagation <affinity_propagation>`
-     - damping, sample preference
-     - Not scalable with n_samples
-     - Many clusters, uneven cluster size, non-flat geometry
-     - Graph distance (e.g. nearest-neighbor graph)
+     - damping（阻尼）, sample preference（样本偏好）
+     - Not scalable with n_samples（n_samples 不可扩展）
+     - Many clusters, uneven cluster size, non-flat geometry（许多簇，不均匀的簇大小，非平面几何）
+     - Graph distance (e.g. nearest-neighbor graph)（图形距离（例如，最近邻图））
 
    * - :ref:`Mean-shift <mean_shift>`
-     - bandwidth
-     - Not scalable with ``n_samples``
-     - Many clusters, uneven cluster size, non-flat geometry
-     - Distances between points
+     - bandwidth（带宽）
+     - Not scalable with ``n_samples`` （不可扩展的 ``n_samples``）
+     - Many clusters, uneven cluster size, non-flat geometry（许多簇，不均匀的簇大小，非平面几何）
+     - Distances between points（点之间的距离）
 
    * - :ref:`Spectral clustering <spectral_clustering>`
-     - number of clusters
-     - Medium ``n_samples``, small ``n_clusters``
-     - Few clusters, even cluster size, non-flat geometry
-     - Graph distance (e.g. nearest-neighbor graph)
+     - number of clusters（簇的个数）
+     - 中等的 ``n_samples``, 小的 ``n_clusters``
+     - Few clusters, even cluster size, non-flat geometry（几个簇，均匀的簇大小，非平面几何）
+     - Graph distance (e.g. nearest-neighbor graph)（图形距离（例如最近邻图））
 
    * - :ref:`Ward hierarchical clustering <hierarchical_clustering>`
-     - number of clusters
-     - Large ``n_samples`` and ``n_clusters``
-     - Many clusters, possibly connectivity constraints
-     - Distances between points
+     - number of clusters（簇的个数）
+     - 大的 ``n_samples`` 和 ``n_clusters``
+     - Many clusters, possibly connectivity constraints（很多的簇，可能连接限制）
+     - Distances between points（点之间的距离）
 
    * - :ref:`Agglomerative clustering <hierarchical_clustering>`
-     - number of clusters, linkage type, distance
-     - Large ``n_samples`` and ``n_clusters``
-     - Many clusters, possibly connectivity constraints, non Euclidean
-       distances
-     - Any pairwise distance
+     - number of clusters（簇的个数）, linkage type（链接类型）, distance（距离）
+     - 大的 ``n_samples`` 和 ``n_clusters``
+     - Many clusters, possibly connectivity constraints, non Euclidean distances（很多簇，可能连接限制，非欧几里得距离）
+     - Any pairwise distance（任意成对距离）
 
    * - :ref:`DBSCAN <dbscan>`
-     - neighborhood size
-     - Very large ``n_samples``, medium ``n_clusters``
-     - Non-flat geometry, uneven cluster sizes
-     - Distances between nearest points
+     - neighborhood size（neighborhood 的大小）
+     - 非常大的 ``n_samples``, 中等的 ``n_clusters``
+     - Non-flat geometry, uneven cluster sizes（非平面几何，不均匀的簇大小）
+     - Distances between nearest points（最近点之间的距离）
 
-   * - :ref:`Gaussian mixtures <mixture>`
-     - many
-     - Not scalable
-     - Flat geometry, good for density estimation
-     - Mahalanobis distances to  centers
+   * - :ref:`Gaussian mixtures（高斯混合） <mixture>`
+     - many（很多）
+     - Not scalable（不可扩展）
+     - Flat geometry, good for density estimation（平面几何，适用于密度估计）
+     - Mahalanobis distances to  centers（Mahalanobis 与中心的距离）
 
    * - :ref:`Birch`
-     - branching factor, threshold, optional global clusterer.
-     - Large ``n_clusters`` and ``n_samples``
-     - Large dataset, outlier removal, data reduction.
-     - Euclidean distance between points
+     - branching factor（分支因子）, threshold（阈值）, optional global clusterer（可选全局簇）.
+     - 大的 ``n_clusters`` 和 ``n_samples``
+     - Large dataset, outlier removal, data reduction.（大数据集，异常值去除，数据简化）
+     - Euclidean distance between points（点之间的欧式距离）
 
-Non-flat geometry clustering is useful when the clusters have a specific
-shape, i.e. a non-flat manifold, and the standard euclidean distance is
-not the right metric. This case arises in the two top rows of the figure
-above.
+当 clusters （簇）具有 specific shape （特殊的形状），即 non-flat manifold（非平面 manifold），并且标准欧几里得距离不是正确的 metric （度量标准）时，Non-flat geometry clustering （非平面几何聚类）是非常有用的。这种情况出现在上图的两个顶行中。
 
-Gaussian mixture models, useful for clustering, are described in
-:ref:`another chapter of the documentation <mixture>` dedicated to
-mixture models. KMeans can be seen as a special case of Gaussian mixture
-model with equal covariance per component.
+用于 clustering （聚类）的 Gaussian mixture models （高斯混合模型），专用于 mixture models （混合模型）描述在 :ref:`文档的另一章节 <mixture>` 。可以将 KMeans 视为具有 equal covariance per component （每个分量相等协方差）的 Gaussian mixture model （高斯混合模型）的特殊情况。
 
 .. _k_means:
 
-K-means
+K-means（K-均值）
 =======
 
-The :class:`KMeans` algorithm clusters data by trying to separate samples
-in n groups of equal variance, minimizing a criterion known as the
-`inertia <inertia>`_ or within-cluster sum-of-squares.
-This algorithm requires the number of clusters to be specified.
-It scales well to large number of samples and has been used
-across a large range of application areas in many different fields.
+:class:`KMeans` 算法通过试图分离 n groups of equal variance（n 个相等方差组）的样本来聚集数据，minimizing （最小化）称为 `inertia <inertia>`_ 或者 within-cluster sum-of-squares （簇内和平方）的 criterion （标准）。
+该算法需要指定 number of clusters （簇的数量）。它可以很好地 scales （扩展）到 large number of samples（大量样本），并已经被广泛应用于许多不同领域的应用领域。
 
-The k-means algorithm divides a set of :math:`N` samples :math:`X`
-into :math:`K` disjoint clusters :math:`C`,
-each described by the mean :math:`\mu_j` of the samples in the cluster.
-The means are commonly called the cluster "centroids";
-note that they are not, in general, points from :math:`X`,
-although they live in the same space.
-The K-means algorithm aims to choose centroids
-that minimise the *inertia*, or within-cluster sum of squared criterion:
+k-means 算法将一组 :math:`N` 样本 :math:`X` 划分成 :math:`K` 不相交的 clusters （簇） :math:`C`, 每个都用 cluster （该簇）中的样本的均值 :math:`\mu_j` 描述。
+这个 means （均值）通常被称为 cluster（簇）的 "centroids（质心）"; 注意，它们一般不是从 :math:`X` 中挑选出的点，虽然它们是处在同一个 space（空间）。
+K-means（K-均值）算法旨在选择最小化 *inertia（惯性）* 或  within-cluster sum of squared（簇内和的平方和）的标准的 centroids（质心）:
 
 .. math:: \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_j - \mu_i||^2)
 
-Inertia, or the within-cluster sum of squares criterion,
-can be recognized as a measure of how internally coherent clusters are.
-It suffers from various drawbacks:
+Inertia（惯性）, 或 the within-cluster sum of squares（簇内和平方差） criterion（标准）,可以被认为是 internally coherent clusters （内部想干聚类）的 measure （度量）。
+它有各种缺点: 
 
-- Inertia makes the assumption that clusters are convex and isotropic,
-  which is not always the case. It responds poorly to elongated clusters,
-  or manifolds with irregular shapes.
+- Inertia（惯性）假设 clusters （簇）是 convex（凸）的和 isotropic （各项同性），这并不是总是这样。它对 elongated clusters （细长的簇）或具有不规则形状的 manifolds 反应不佳。
 
-- Inertia is not a normalized metric: we just know that lower values are
-  better and zero is optimal. But in very high-dimensional spaces, Euclidean
-  distances tend to become inflated
-  (this is an instance of the so-called "curse of dimensionality").
-  Running a dimensionality reduction algorithm such as `PCA <PCA>`_
-  prior to k-means clustering can alleviate this problem
-  and speed up the computations.
+- Inertia（惯性）不是一个 normalized metric（归一化度量）: 我们只知道 lower values （较低的值）是更好的，并且 零 是最优的。但是在 very high-dimensional spaces （非常高维的空间）中，欧几里得距离往往会变得 inflated （膨胀）（这就是所谓的 "curse of dimensionality （维度诅咒/维度惩罚）"）。在 k-means 聚类之前运行诸如 `PCA <PCA>`_ 之类的 dimensionality reduction algorithm （降维算法）可以减轻这个问题并加快计算速度。 
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_kmeans_assumptions_001.png
    :target: ../auto_examples/cluster/plot_kmeans_assumptions.html
    :align: center
    :scale: 50
 
-K-means is often referred to as Lloyd's algorithm. In basic terms, the
-algorithm has three steps. The first step chooses the initial centroids, with
-the most basic method being to choose :math:`k` samples from the dataset
-:math:`X`. After initialization, K-means consists of looping between the
-two other steps. The first step assigns each sample to its nearest centroid.
-The second step creates new centroids by taking the mean value of all of the
-samples assigned to each previous centroid. The difference between the old
-and the new centroids are computed and the algorithm repeats these last two
-steps until this value is less than a threshold. In other words, it repeats
-until the centroids do not move significantly.
+K-means 通常被称为 Lloyd's algorithm（劳埃德算法）。在基本术语中，算法有三个步骤。、
+第一步是选择 initial centroids （初始质心），最基本的方法是从 :math:`X` 数据集中选择 :math:`k` 个样本。初始化完成后，K-means 由两个其他步骤之间的循环组成。
+第一步将每个样本分配到其 nearest centroid （最近的质心）。第二步通过取分配给每个先前质心的所有样本的平均值来创建新的质心。计算旧的和新的质心之间的差异，并且算法重复这些最后的两个步骤，直到该值小于阈值。换句话说，算法重复这个步骤，直到质心不再显著移动。
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_kmeans_digits_001.png
    :target: ../auto_examples/cluster/plot_kmeans_digits.html
    :align: right
    :scale: 35
 
-K-means is equivalent to the expectation-maximization algorithm
-with a small, all-equal, diagonal covariance matrix.
+K-means 相当于具有 small, all-equal, diagonal covariance matrix （小的全对称协方差矩阵）的 expectation-maximization algorithm （期望最大化算法）。
 
-The algorithm can also be understood through the concept of `Voronoi diagrams
-<https://en.wikipedia.org/wiki/Voronoi_diagram>`_. First the Voronoi diagram of
-the points is calculated using the current centroids. Each segment in the
-Voronoi diagram becomes a separate cluster. Secondly, the centroids are updated
-to the mean of each segment. The algorithm then repeats this until a stopping
-criterion is fulfilled. Usually, the algorithm stops when the relative decrease
-in the objective function between iterations is less than the given tolerance
-value. This is not the case in this implementation: iteration stops when
-centroids move less than the tolerance.
+该算法也可以通过 `Voronoi diagrams（Voronoi图）<https://en.wikipedia.org/wiki/Voronoi_diagram>`_ 的概念来理解。首先使用 current centroids （当前质心）计算点的 Voronoi 图。
+Voronoi 图中的每个 segment （段）都成为一个 separate cluster （单独的簇）。其次，centroids（质心）被更新为每个 segment （段）的 mean（平均值）。然后，该算法重复此操作，直到满足停止条件。
+通常情况下，当 iterations （迭代）之间的 objective function （目标函数）的相对减小小于给定的 tolerance value （公差值）时，算法停止。在此实现中不是这样: 当质心移动小于 tolerance （公差）时，迭代停止。
 
-Given enough time, K-means will always converge, however this may be to a local
-minimum. This is highly dependent on the initialization of the centroids.
-As a result, the computation is often done several times, with different
-initializations of the centroids. One method to help address this issue is the
-k-means++ initialization scheme, which has been implemented in scikit-learn
-(use the ``init='k-means++'`` parameter). This initializes the centroids to be
-(generally) distant from each other, leading to provably better results than
-random initialization, as shown in the reference.
+给定足够的时间，K-means 将总是收敛的，但这可能是 local minimum （局部最小）的。这很大程度上取决于 initialization of the centroids （质心的初始化）。
+因此，通常会进行几次 different initializations of the centroids （初始化不同质心）的计算。帮助解决这个问题的一种方法是 k-means++ 初始化方案，它已经在 scikit-learn 中实现（使用 ``init='k-means++'`` 参数）。
+这将初始化 centroids （质心）（通常）彼此远离，导致比随机初始化更好的结果，如参考文献所示。
 
-A parameter can be given to allow K-means to be run in parallel, called
-``n_jobs``. Giving this parameter a positive value uses that many processors
-(default: 1). A value of -1 uses all available processors, with -2 using one
-less, and so on. Parallelization generally speeds up computation at the cost of
-memory (in this case, multiple copies of centroids need to be stored, one for
-each job).
+可以给出一个参数，以允许 K-means 并行运行，称为 ``n_jobs``。给这个参数一个正值使用许多处理器（默认值: 1）。值 -1 使用所有可用的处理器，-2 使用一个，等等。Parallelization （并行化）通常以 cost of memory（内存的代价）加速计算（在这种情况下，需要存储多个质心副本，每个作业使用一个）。
 
 .. warning::
 
-    The parallel version of K-Means is broken on OS X when `numpy` uses the
-    `Accelerate` Framework. This is expected behavior: `Accelerate` can be called
-    after a fork but you need to execv the subprocess with the Python binary
-    (which multiprocessing does not do under posix).
+    当 `numpy` 使用 `Accelerate` 框架时，K-Means 的并行版本在 OS X 上损坏。这是 expected behavior （预期的行为）: `Accelerate` 可以在 fork 之后调用，但是您需要使用 Python binary（二进制）（该多进程在 posix 下不执行）来执行子进程。
 
-K-means can be used for vector quantization. This is achieved using the
-transform method of a trained model of :class:`KMeans`.
+K-means 可用于 vector quantization （矢量量化）。这是使用以下类型的 trained model （训练模型）的变换方法实现的 :class:`KMeans` 。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
- * :ref:`sphx_glr_auto_examples_cluster_plot_kmeans_assumptions.py`: Demonstrating when
-   k-means performs intuitively and when it does not
- * :ref:`sphx_glr_auto_examples_cluster_plot_kmeans_digits.py`: Clustering handwritten digits
+ * :ref:`sphx_glr_auto_examples_cluster_plot_kmeans_assumptions.py`: 演示 k-means 是否 performs intuitively （直观执行），何时不执行
+ * :ref:`sphx_glr_auto_examples_cluster_plot_kmeans_digits.py`: 聚类手写数字
 
-.. topic:: References:
+.. topic:: 参考:
 
  * `"k-means++: The advantages of careful seeding"
    <http://ilpubs.stanford.edu:8090/778/1/2006-13.pdf>`_
@@ -228,31 +163,19 @@ transform method of a trained model of :class:`KMeans`.
 
 .. _mini_batch_kmeans:
 
-Mini Batch K-Means
+Mini Batch K-Means（小批量 K-Means）
 ------------------
 
-The :class:`MiniBatchKMeans` is a variant of the :class:`KMeans` algorithm
-which uses mini-batches to reduce the computation time, while still attempting
-to optimise the same objective function. Mini-batches are subsets of the input
-data, randomly sampled in each training iteration. These mini-batches
-drastically reduce the amount of computation required to converge to a local
-solution. In contrast to other algorithms that reduce the convergence time of
-k-means, mini-batch k-means produces results that are generally only slightly
-worse than the standard algorithm.
+:class:`MiniBatchKMeans` 是 :class:`KMeans` 算法的一个变体，它使用 mini-batches （小批量）来减少计算时间，同时仍然尝试优化相同的 objective function （目标函数）。
+Mini-batches（小批量）是输入数据的子集，在每次 training iteration （训练迭代）中 randomly sampled （随机抽样）。这些小批量大大减少了融合到本地解决方案所需的计算量。
+与其他降低 k-means 收敛时间的算法相反，mini-batch k-means 产生的结果通常只比标准算法略差。
 
-The algorithm iterates between two major steps, similar to vanilla k-means.
-In the first step, :math:`b` samples are drawn randomly from the dataset, to form
-a mini-batch. These are then assigned to the nearest centroid. In the second
-step, the centroids are updated. In contrast to k-means, this is done on a
-per-sample basis. For each sample in the mini-batch, the assigned centroid
-is updated by taking the streaming average of the sample and all previous
-samples assigned to that centroid. This has the effect of decreasing the
-rate of change for a centroid over time. These steps are performed until
-convergence or a predetermined number of iterations is reached.
+该算法在两个主要步骤之间进行迭代，类似于 vanilla k-means 。
+在第一步， :math:`b` 样本是从数据集中随机抽取的，形成一个 mini-batch （小批量）。然后将它们分配到最近的 centroid（质心）。
+在第二步，centroids （质心）被更新。与 k-means 相反，这是在每个样本的基础上完成的。对于 mini-batch （小批量）中的每个样本，通过取样本的 streaming average （流平均值）和分配给该质心的所有先前样本来更新分配的质心。
+这具有随时间降低 centroid （质心）的 rate （变化率）的效果。执行这些步骤直到达到收敛或达到预定次数的迭代。
 
-:class:`MiniBatchKMeans` converges faster than :class:`KMeans`, but the quality
-of the results is reduced. In practice this difference in quality can be quite
-small, as shown in the example and cited reference.
+:class:`MiniBatchKMeans` 收敛速度比 :class:`KMeans` ，但是结果的质量会降低。在实践中，质量差异可能相当小，如示例和引用的参考。
 
 .. figure:: ../auto_examples/cluster/images/sphx_glr_plot_mini_batch_kmeans_001.png
    :target: ../auto_examples/cluster/plot_mini_batch_kmeans.html
@@ -260,18 +183,16 @@ small, as shown in the example and cited reference.
    :scale: 100
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
- * :ref:`sphx_glr_auto_examples_cluster_plot_mini_batch_kmeans.py`: Comparison of KMeans and
-   MiniBatchKMeans
+ * :ref:`sphx_glr_auto_examples_cluster_plot_mini_batch_kmeans.py`: KMeans 与 MiniBatchKMeans 的比较
 
- * :ref:`sphx_glr_auto_examples_text_document_clustering.py`: Document clustering using sparse
-   MiniBatchKMeans
+ * :ref:`sphx_glr_auto_examples_text_document_clustering.py`: 使用 sparse MiniBatchKMeans （稀疏 MiniBatchKMeans）的文档聚类
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_dict_face_patches.py`
 
 
-.. topic:: References:
+.. topic:: 参考:
 
  * `"Web Scale K-Means clustering"
    <http://www.eecs.tufts.edu/~dsculley/papers/fastkmeans.pdf>`_
@@ -891,30 +812,20 @@ the user is advised
 
 .. _clustering_evaluation:
 
-Clustering performance evaluation
+Clustering performance evaluation（聚类性能评估）
 =================================
 
-Evaluating the performance of a clustering algorithm is not as trivial as
-counting the number of errors or the precision and recall of a supervised
-classification algorithm. In particular any evaluation metric should not
-take the absolute values of the cluster labels into account but rather
-if this clustering define separations of the data similar to some ground
-truth set of classes or satisfying some assumption such that members
-belong to the same class are more similar that members of different
-classes according to some similarity metric.
+评估聚类算法的性能不像 counting the number of errors （计数错误数量）或监督分类算法的精度和调用那样微不足道。
+特别地，任何 evaluation metric （评估度量）不应该考虑到 cluster labels （簇标签）的绝对值，而是如果这个聚类定义类似于 some ground truth set of classes or satisfying some assumption （某些基本真值集合的数据的分离或者满足一些假设），使得属于同一个类的成员更类似于根据某些 similarity metric （相似性度量）的不同类的成员。
 
 .. currentmodule:: sklearn.metrics
 
 .. _adjusted_rand_score:
 
-Adjusted Rand index
+Adjusted Rand index（调整后的 Rand index）
 -------------------
 
-Given the knowledge of the ground truth class assignments ``labels_true``
-and our clustering algorithm assignments of the same samples
-``labels_pred``, the **adjusted Rand index** is a function that measures
-the **similarity** of the two assignments, ignoring permutations and **with
-chance normalization**::
+考虑到 the ground truth class 赋值 ``labels_true`` 和相同样本 ``labels_pred`` 的聚类算法分配的知识，**adjusted Rand index** 是一个函数，用于测量两个 assignments （作业）的 **similarity（相似度）** ，忽略 permutations （置换）和 **with chance normalization（使用机会规范化）**::
 
   >>> from sklearn import metrics
   >>> labels_true = [0, 0, 0, 1, 1, 1]
@@ -923,27 +834,24 @@ chance normalization**::
   >>> metrics.adjusted_rand_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.24...
 
-One can permute 0 and 1 in the predicted labels, rename 2 to 3, and get
-the same score::
+可以在预测的标签中 permute （排列） 0 和 1，重命名为 2 到 3， 得到相同的分数::
 
   >>> labels_pred = [1, 1, 0, 0, 3, 3]
   >>> metrics.adjusted_rand_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.24...
 
-Furthermore, :func:`adjusted_rand_score` is **symmetric**: swapping the argument
-does not change the score. It can thus be used as a **consensus
-measure**::
+另外，:func:`adjusted_rand_score` 是 **symmetric（对称的）**: 交换参数不会改变 score （得分）。它可以作为 **consensus measure（共识度量）**::
 
   >>> metrics.adjusted_rand_score(labels_pred, labels_true)  # doctest: +ELLIPSIS
   0.24...
 
-Perfect labeling is scored 1.0::
+完美的标签得分为 1.0::
 
   >>> labels_pred = labels_true[:]
   >>> metrics.adjusted_rand_score(labels_true, labels_pred)
   1.0
 
-Bad (e.g. independent labelings) have negative or close to 0.0 scores::
+坏 (e.g. independent labelings（独立标签）) 有负数 or 接近于 0.0 分::
 
   >>> labels_true = [0, 1, 2, 0, 3, 4, 5, 1]
   >>> labels_pred = [1, 1, 0, 0, 2, 2, 2, 2]
@@ -951,71 +859,52 @@ Bad (e.g. independent labelings) have negative or close to 0.0 scores::
   -0.12...
 
 
-Advantages
+Advantages（优点）
 ~~~~~~~~~~
 
-- **Random (uniform) label assignments have a ARI score close to 0.0**
-  for any value of ``n_clusters`` and ``n_samples`` (which is not the
-  case for raw Rand index or the V-measure for instance).
+- **Random (uniform) label assignments have a ARI score close to 0.0（随机（统一）标签分配的 ARI 评分接近于 0.0）**
+  对于 ``n_clusters`` 和 ``n_samples`` 的任何值（这不是原始的 Rand index 或者 V-measure 的情况）。
 
-- **Bounded range [-1, 1]**: negative values are bad (independent
-  labelings), similar clusterings have a positive ARI, 1.0 is the perfect
-  match score.
+- **Bounded range（有界范围） [-1, 1]**: negative values （负值）是坏的 (独立性标签), 类似的聚类有一个 positive ARI （正的 ARI）， 1.0 是完美的匹配得分。
 
-- **No assumption is made on the cluster structure**: can be used
-  to compare clustering algorithms such as k-means which assumes isotropic
-  blob shapes with results of spectral clustering algorithms which can
-  find cluster with "folded" shapes.
+- **No assumption is made on the cluster structure（对簇的结构没有作出任何假设）**: 可以用于比较聚类算法，例如 k-means，其假定 isotropic blob shapes 与可以找到具有 "folded" shapes 的聚类的 spectral clustering algorithms（频谱聚类算法）的结果。
 
 
-Drawbacks
+Drawbacks（缺点）
 ~~~~~~~~~
 
-- Contrary to inertia, **ARI requires knowledge of the ground truth
-  classes** while is almost never available in practice or requires manual
-  assignment by human annotators (as in the supervised learning setting).
+- 与 inertia 相反，**ARI requires knowledge of the ground truth classes（ARI需要了解 ground truth classes）** ，而在实践中几乎不可用，或者需要人工标注者手动分配（如在监督学习环境中）。
 
-  However ARI can also be useful in a purely unsupervised setting as a
-  building block for a Consensus Index that can be used for clustering
-  model selection (TODO).
+  然而，ARI 还可以在 purely unsupervised setting （纯粹无监督的设置中）作为可用于 聚类模型选择（TODO）的共识索引的构建块。
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
- * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: Analysis of
-   the impact of the dataset size on the value of clustering measures
-   for random assignments.
+ * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: 分析数据集大小对随机分配聚类度量值的影响。
 
 
-Mathematical formulation
+Mathematical formulation（数学表达）
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If C is a ground truth class assignment and K the clustering, let us
-define :math:`a` and :math:`b` as:
+如果 C 是一个 ground truth class assignment （标定过的真实数据类分配）和 K 个簇，就让我们定义 :math:`a` 和 :math:`b` 如:
 
-- :math:`a`, the number of pairs of elements that are in the same set
-  in C and in the same set in K
+- :math:`a`, 在 C 中的相同集合的与 K 中的相同集合中的元素的对数
 
-- :math:`b`, the number of pairs of elements that are in different sets
-  in C and in different sets in K
+- :math:`b`, 在 C 中的不同集合与 K 中的不同集合中的元素的对数
 
-The raw (unadjusted) Rand index is then given by:
+原始的（unadjusted（未调整的）） Rand index 则由下式给出: 
 
 .. math:: \text{RI} = \frac{a + b}{C_2^{n_{samples}}}
 
-Where :math:`C_2^{n_{samples}}` is the total number of possible pairs
-in the dataset (without ordering).
+其中 :math:`C_2^{n_{samples}}` 是数据集中可能的 pairs （对）的总数（不排序）。
 
-However the RI score does not guarantee that random label assignments
-will get a value close to zero (esp. if the number of clusters is in
-the same order of magnitude as the number of samples).
+然而，RI 评分不能保证 random label assignments （随机标签分配）将获得接近零的值（特别是如果聚类的数量与采样数量相同的数量级）。
 
-To counter this effect we can discount the expected RI :math:`E[\text{RI}]` of
-random labelings by defining the adjusted Rand index as follows:
+为了抵消这种影响，我们可以通过定义 adjusted Rand index （调整后的 Rand index）来 discount 随机标签的预期 RI :math:`E[\text{RI}]` ,如下所示:
 
 .. math:: \text{ARI} = \frac{\text{RI} - E[\text{RI}]}{\max(\text{RI}) - E[\text{RI}]}
 
-.. topic:: References
+.. topic:: 参考
 
  * `Comparing Partitions
    <http://link.springer.com/article/10.1007%2FBF01908075>`_
@@ -1026,16 +915,11 @@ random labelings by defining the adjusted Rand index as follows:
 
 .. _mutual_info_score:
 
-Mutual Information based scores
+Mutual Information based scores （基于 Mutual Information 的分数）
 -------------------------------
 
-Given the knowledge of the ground truth class assignments ``labels_true`` and
-our clustering algorithm assignments of the same samples ``labels_pred``, the
-**Mutual Information** is a function that measures the **agreement** of the two
-assignments, ignoring permutations.  Two different normalized versions of this
-measure are available, **Normalized Mutual Information(NMI)** and **Adjusted
-Mutual Information(AMI)**. NMI is often used in the literature while AMI was
-proposed more recently and is **normalized against chance**::
+考虑到 ground truth class assignments （标定过的真实数据类分配） ``labels_true`` 的知识和相同样本 ``labels_pred`` 的聚类算法分配， **Mutual Information** 是测量两者 **agreement** 分配的函数，忽略 permutations（排列）。
+这种测量方案的两个不同的标准化版本可用，**Normalized Mutual Information(NMI)** 和 **Adjusted Mutual Information(AMI)**。NMI 经常在文献中使用，而 AMI 最近被提出，并且 **normalized against chance**::
 
   >>> from sklearn import metrics
   >>> labels_true = [0, 0, 0, 1, 1, 1]
@@ -1044,21 +928,18 @@ proposed more recently and is **normalized against chance**::
   >>> metrics.adjusted_mutual_info_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.22504...
 
-One can permute 0 and 1 in the predicted labels, rename 2 to 3 and get
-the same score::
+可以在 predicted labels （预测的标签）中 permute （排列） 0 和 1, 重命名为 2 到 3 并得到相同的得分::
 
   >>> labels_pred = [1, 1, 0, 0, 3, 3]
   >>> metrics.adjusted_mutual_info_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.22504...
 
-All, :func:`mutual_info_score`, :func:`adjusted_mutual_info_score` and
-:func:`normalized_mutual_info_score` are symmetric: swapping the argument does
-not change the score. Thus they can be used as a **consensus measure**::
+全部的，:func:`mutual_info_score`, :func:`adjusted_mutual_info_score` 和 :func:`normalized_mutual_info_score` 是 symmetric（对称的）: 交换参数不会更改分数。因此，它们可以用作 **consensus measure**::
 
   >>> metrics.adjusted_mutual_info_score(labels_pred, labels_true)  # doctest: +ELLIPSIS
   0.22504...
 
-Perfect labeling is scored 1.0::
+完美标签得分是 1.0::
 
   >>> labels_pred = labels_true[:]
   >>> metrics.adjusted_mutual_info_score(labels_true, labels_pred)
@@ -1067,12 +948,12 @@ Perfect labeling is scored 1.0::
   >>> metrics.normalized_mutual_info_score(labels_true, labels_pred)
   1.0
 
-This is not true for ``mutual_info_score``, which is therefore harder to judge::
+这对于 ``mutual_info_score`` 是不正确的，因此更难判断::
 
   >>> metrics.mutual_info_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.69...
 
-Bad (e.g. independent labelings) have non-positive scores::
+坏的 (例如 independent labelings（独立标签）) 具有非正分数::
 
   >>> labels_true = [0, 1, 2, 0, 3, 4, 5, 1]
   >>> labels_pred = [1, 1, 0, 0, 2, 2, 2, 2]
@@ -1080,86 +961,63 @@ Bad (e.g. independent labelings) have non-positive scores::
   -0.10526...
 
 
-Advantages
+Advantages（优点）
 ~~~~~~~~~~
 
-- **Random (uniform) label assignments have a AMI score close to 0.0**
-  for any value of ``n_clusters`` and ``n_samples`` (which is not the
-  case for raw Mutual Information or the V-measure for instance).
+- **Random (uniform) label assignments have a AMI score close to 0.0（随机（统一）标签分配的AMI评分接近0.0）**
+  对于 ``n_clusters`` 和 ``n_samples`` 的任何值（这不是原始 Mutual Information 或者 V-measure 的情况）。
 
-- **Bounded range [0, 1]**:  Values close to zero indicate two label
-  assignments that are largely independent, while values close to one
-  indicate significant agreement. Further, values of exactly 0 indicate
-  **purely** independent label assignments and a AMI of exactly 1 indicates
-  that the two label assignments are equal (with or without permutation).
+- **Bounded range（有界范围） [0, 1]**:  接近 0 的值表示两个主要独立的标签分配，而接近 1 的值表示重要的一致性。此外，正好 0 的值表示 **purely（纯粹）** 独立标签分配，正好为 1 的 AMI 表示两个标签分配相等（有或者没有 permutation）。
 
-- **No assumption is made on the cluster structure**: can be used
-  to compare clustering algorithms such as k-means which assumes isotropic
-  blob shapes with results of spectral clustering algorithms which can
-  find cluster with "folded" shapes.
+- **No assumption is made on the cluster structure（对簇的结构没有作出任何假设）**: 可以用于比较聚类算法，例如 k-means，其假定 isotropic blob shapes 与可以找到具有 "folded" shapes 的聚类的 spectral clustering algorithms （频谱聚类算法）的结果。
 
 
-Drawbacks
+Drawbacks（缺点）
 ~~~~~~~~~
 
-- Contrary to inertia, **MI-based measures require the knowledge
-  of the ground truth classes** while almost never available in practice or
-  requires manual assignment by human annotators (as in the supervised learning
-  setting).
+- 与 inertia 相反，**MI-based measures require the knowledge of the ground truth classes（MI-based measures 需要了解 ground truth classes）** ，而在实践中几乎不可用，或者需要人工标注者手动分配（如在监督学习环境中）。
 
-  However MI-based measures can also be useful in purely unsupervised setting as a
-  building block for a Consensus Index that can be used for clustering
-  model selection.
+  然而，基于 MI-based measures （基于 MI 的测量方式）也可用于纯无人监控的设置，作为可用于聚类模型选择的 Consensus Index （共识索引）的构建块。
 
-- NMI and MI are not adjusted against chance.
+- NMI 和 MI 没有调整机会。
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
- * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: Analysis of
-   the impact of the dataset size on the value of clustering measures
-   for random assignments. This example also includes the Adjusted Rand
-   Index.
+ * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: 分析数据集大小对随机分配聚类度量值的影响。 此示例还包括 Adjusted Rand Index。
 
 
-Mathematical formulation
+Mathematical formulation（数学表达）
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Assume two label assignments (of the same N objects), :math:`U` and :math:`V`.
-Their entropy is the amount of uncertainty for a partition set, defined by:
+假设两个标签分配（相同的 N 个对象），:math:`U` 和 :math:`V`。
+它们的 entropy （熵）是一个 partition set （分区集合）的不确定性量，定义如下:
 
 .. math:: H(U) = - \sum_{i=1}^{|U|}P(i)\log(P(i))
 
-where :math:`P(i) = |U_i| / N` is the probability that an object picked at
-random from :math:`U` falls into class :math:`U_i`. Likewise for :math:`V`:
+其中 :math:`P(i) = |U_i| / N` 是从 :math:`U` 中随机选取的对象到类 :math:`U_i` 的概率。同样对于 :math:`V`:
 
 .. math:: H(V) = - \sum_{j=1}^{|V|}P'(j)\log(P'(j))
 
-With :math:`P'(j) = |V_j| / N`. The mutual information (MI) between :math:`U`
-and :math:`V` is calculated by:
+使用 :math:`P'(j) = |V_j| / N`. :math:`U` 和 :math:`V` 之间的 mutual information (MI) 由下式计算: 
 
 .. math:: \text{MI}(U, V) = \sum_{i=1}^{|U|}\sum_{j=1}^{|V|}P(i, j)\log\left(\frac{P(i,j)}{P(i)P'(j)}\right)
  
-where :math:`P(i, j) = |U_i \cap V_j| / N` is the probability that an object
-picked at random falls into both classes :math:`U_i` and :math:`V_j`.
+其中 :math:`P(i, j) = |U_i \cap V_j| / N` 是随机选择的对象落入两个类的概率 :math:`U_i` 和 :math:`V_j` 。
 
-It also can be expressed in set cardinality formulation:
+也可以用设定的基数表达式表示: 
 
 .. math:: \text{MI}(U, V) = \sum_{i=1}^{|U|} \sum_{j=1}^{|V|} \frac{|U_i \cap V_j|}{N}\log\left(\frac{N|U_i \cap V_j|}{|U_i||V_j|}\right)
 
-The normalized mutual information is defined as
+normalized (归一化) mutual information 被定义为
 
 .. math:: \text{NMI}(U, V) = \frac{\text{MI}(U, V)}{\sqrt{H(U)H(V)}}
 
-This value of the mutual information and also the normalized variant is not
-adjusted for chance and will tend to increase as the number of different labels
-(clusters) increases, regardless of the actual amount of "mutual information"
-between the label assignments.
+mutual information 的价值以及 normalized variant （标准化变量）的值不会因 chance （机会）而被调整，随着不同标签（clusters（簇））的数量的增加，不管标签分配之间的 "mutual information" 的实际数量如何，都会趋向于增加。
 
-The expected value for the mutual information can be calculated using the
-following equation, from Vinh, Epps, and Bailey, (2009). In this equation,
-:math:`a_i = |U_i|` (the number of elements in :math:`U_i`) and
-:math:`b_j = |V_j|` (the number of elements in :math:`V_j`).
+mutual information 的期望值可以用 Vinh, Epps 和 Bailey,(2009) 的以下公式来计算。在这个方程式中,
+:math:`a_i = |U_i|` (:math:`U_i` 中元素的数量) 和
+:math:`b_j = |V_j|` (:math:`V_j` 中元素的数量).
 
 
 .. math:: E[\text{MI}(U,V)]=\sum_{i=1}^|U| \sum_{j=1}^|V| \sum_{n_{ij}=(a_i+b_j-N)^+
@@ -1167,12 +1025,11 @@ following equation, from Vinh, Epps, and Bailey, (2009). In this equation,
    \frac{a_i!b_j!(N-a_i)!(N-b_j)!}{N!n_{ij}!(a_i-n_{ij})!(b_j-n_{ij})!
    (N-a_i-b_j+n_{ij})!}
 
-Using the expected value, the adjusted mutual information can then be
-calculated using a similar form to that of the adjusted Rand index:
+使用 expected value (期望值), 然后可以使用与 adjusted Rand index 相似的形式来计算调整后的 mutual information:
 
 .. math:: \text{AMI} = \frac{\text{MI} - E[\text{MI}]}{\max(H(U), H(V)) - E[\text{MI}]}
 
-.. topic:: References
+.. topic:: 参考
 
  * Strehl, Alexander, and Joydeep Ghosh (2002). "Cluster ensembles – a
    knowledge reuse framework for combining multiple partitions". Journal of
@@ -1198,24 +1055,18 @@ calculated using a similar form to that of the adjusted Rand index:
 
 .. _homogeneity_completeness:
 
-Homogeneity, completeness and V-measure
+Homogeneity, completeness and V-measure（同质性，完整性和 V-measure）
 ---------------------------------------
 
-Given the knowledge of the ground truth class assignments of the samples,
-it is possible to define some intuitive metric using conditional entropy
-analysis.
+鉴于样本的 ground truth class assignments （标定过的真实数据类分配）的知识，可以使用 conditional entropy （条件熵）分析来定义一些 intuitive metric（直观的度量）。
 
-In particular Rosenberg and Hirschberg (2007) define the following two
-desirable objectives for any cluster assignment:
+特别是 Rosenberg 和 Hirschberg (2007) 为任何 cluster （簇）分配定义了以下两个理想的目标:
 
-- **homogeneity**: each cluster contains only members of a single class.
+- **homogeneity(同质性)**: 每个簇只包含一个类的成员
 
-- **completeness**: all members of a given class are assigned to the same
-  cluster.
+- **completeness(完整性)**: 给定类的所有成员都分配给同一个簇。
 
-We can turn those concept as scores :func:`homogeneity_score` and
-:func:`completeness_score`. Both are bounded below by 0.0 and above by
-1.0 (higher is better)::
+我们可以把这些概念作为分数 :func:`homogeneity_score` 和 :func:`completeness_score` 。两者均在 0.0 以下 和 1.0 以上（越高越好）::
 
   >>> from sklearn import metrics
   >>> labels_true = [0, 0, 0, 1, 1, 1]
@@ -1227,24 +1078,20 @@ We can turn those concept as scores :func:`homogeneity_score` and
   >>> metrics.completeness_score(labels_true, labels_pred) # doctest: +ELLIPSIS
   0.42...
 
-Their harmonic mean called **V-measure** is computed by
-:func:`v_measure_score`::
+称为 **V-measure** 的 harmonic mean 由以下函数计算 :func:`v_measure_score`::
 
   >>> metrics.v_measure_score(labels_true, labels_pred)    # doctest: +ELLIPSIS
   0.51...
 
-The V-measure is actually equivalent to the mutual information (NMI)
-discussed above normalized by the sum of the label entropies [B2011]_.
+V-measure 实际上等于上面讨论的 mutual information (NMI) 由 label entropies [B2011]_ （标准熵 [B2011]_） 的总和 normalized （归一化）。
 
-Homogeneity, completeness and V-measure can be computed at once using
-:func:`homogeneity_completeness_v_measure` as follows::
+Homogeneity（同质性）, completeness（完整性） and V-measure 可以立即计算 :func:`homogeneity_completeness_v_measure` 如下:: 
 
   >>> metrics.homogeneity_completeness_v_measure(labels_true, labels_pred)
   ...                                                      # doctest: +ELLIPSIS
   (0.66..., 0.42..., 0.51...)
 
-The following clustering assignment is slightly better, since it is
-homogeneous but not complete::
+以下聚类分配稍微好一些，因为它是同构但不完整的::
 
   >>> labels_pred = [0, 0, 0, 1, 2, 2]
   >>> metrics.homogeneity_completeness_v_measure(labels_true, labels_pred)
@@ -1253,95 +1100,70 @@ homogeneous but not complete::
 
 .. note::
 
-  :func:`v_measure_score` is **symmetric**: it can be used to evaluate
-  the **agreement** of two independent assignments on the same dataset.
+  :func:`v_measure_score` 是 **symmetric（对称的）**: 它可以用于评估同一数据集上两个 independent assignments （独立赋值）的 **agreement（协议）**。
 
-  This is not the case for :func:`completeness_score` and
-  :func:`homogeneity_score`: both are bound by the relationship::
+  这不是这样的 :func:`completeness_score` 和 :func:`homogeneity_score`: 两者的关系是被这样约束着::
 
     homogeneity_score(a, b) == completeness_score(b, a)
 
 
-Advantages
+Advantages（优点）
 ~~~~~~~~~~
 
-- **Bounded scores**: 0.0 is as bad as it can be, 1.0 is a perfect score.
+- **Bounded scores（有界分数）**: 0.0 是最坏的, 1.0 是一个完美的分数.
 
-- Intuitive interpretation: clustering with bad V-measure can be
-  **qualitatively analyzed in terms of homogeneity and completeness**
-  to better feel what 'kind' of mistakes is done by the assignment.
+- Intuitive interpretation（直觉解释）: 具有不良 V-measure 的聚类可以在 **qualitatively analyzed in terms of homogeneity and completeness（在同质性和完整性方面进行定性分析）** 以更好地感知到作业完成的错误类型。
 
-- **No assumption is made on the cluster structure**: can be used
-  to compare clustering algorithms such as k-means which assumes isotropic
-  blob shapes with results of spectral clustering algorithms which can
-  find cluster with "folded" shapes.
+- **No assumption is made on the cluster structure（对簇的结构没有作出任何假设）**: 可以用于比较聚类算法，例如 k-means ，其假定 isotropic blob shapes 与可以找到具有 "folded" shapes 的聚类的 spectral clustering algorithms （频谱聚类算法）的结果。
 
 
-Drawbacks
+Drawbacks（缺点）
 ~~~~~~~~~
 
-- The previously introduced metrics are **not normalized with regards to
-  random labeling**: this means that depending on the number of samples,
-  clusters and ground truth classes, a completely random labeling will
-  not always yield the same values for homogeneity, completeness and
-  hence v-measure. In particular **random labeling won't yield zero
-  scores especially when the number of clusters is large**.
+- 以前引入的 metrics （度量标准）**not normalized with regards to random labeling（并不是随机标记的标准化的）**: 这意味着，根据 number of samples （样本数量），clusters （簇）和 ground truth classes （标定过的真实数据类），完全随机的标签并不总是产生 homogeneity （同质性），completeness（完整性）和 hence v-measure 的相同值。特别是 **random labeling won't yield zero scores especially when the number of clusters is large（随机标记不会产生零分，特别是当集群数量大时）**。
 
-  This problem can safely be ignored when the number of samples is more
-  than a thousand and the number of clusters is less than 10. **For
-  smaller sample sizes or larger number of clusters it is safer to use
-  an adjusted index such as the Adjusted Rand Index (ARI)**.
+  当样本数量超过一千，簇的数量小于 10 时，可以安全地忽略此问题。**For smaller sample sizes or larger number of clusters it is safer to use an adjusted index such as the Adjusted Rand Index (ARI)（对于较小的样本数量或者较大数量的簇，使用 adjusted index 例如 Adjusted Rand Index (ARI)）**。
 
 .. figure:: ../auto_examples/cluster/images/sphx_glr_plot_adjusted_for_chance_measures_001.png
    :target: ../auto_examples/cluster/plot_adjusted_for_chance_measures.html
    :align: center
    :scale: 100
 
-- These metrics **require the knowledge of the ground truth classes** while
-  almost never available in practice or requires manual assignment by
-  human annotators (as in the supervised learning setting).
+- 这些 metrics （指标） **require the knowledge of the ground truth classes（需要标定过的真实数据类的知识）**，而在实践中几乎不可用，或需要人工标注来人工分配（如在受监督的学习环境中）。
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
- * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: Analysis of
-   the impact of the dataset size on the value of clustering measures
-   for random assignments.
+ * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: 分析数据集大小对随机分配聚类度量值的影响。
 
 
-Mathematical formulation
+Mathematical formulation（数学表达）
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Homogeneity and completeness scores are formally given by:
+Homogeneity（同质性） and completeness（完整性） 的得分由下面公式给出:
 
 .. math:: h = 1 - \frac{H(C|K)}{H(C)}
 
 .. math:: c = 1 - \frac{H(K|C)}{H(K)}
 
-where :math:`H(C|K)` is the **conditional entropy of the classes given
-the cluster assignments** and is given by:
+其中 :math:`H(C|K)` 是 **给定簇分配的类的 conditional entropy （条件熵）** ，由下式给出:
 
 .. math:: H(C|K) = - \sum_{c=1}^{|C|} \sum_{k=1}^{|K|} \frac{n_{c,k}}{n}
           \cdot \log\left(\frac{n_{c,k}}{n_k}\right)
 
-and :math:`H(C)` is the **entropy of the classes** and is given by:
+并且 :math:`H(C)` 是 **entropy of the classes（类的熵）**，并且由下式给出:
 
 .. math:: H(C) = - \sum_{c=1}^{|C|} \frac{n_c}{n} \cdot \log\left(\frac{n_c}{n}\right)
 
-with :math:`n` the total number of samples, :math:`n_c` and :math:`n_k`
-the number of samples respectively belonging to class :math:`c` and
-cluster :math:`k`, and finally :math:`n_{c,k}` the number of samples
-from class :math:`c` assigned to cluster :math:`k`.
+:math:`n` 个样本总数， :math:`n_c` 和 :math:`n_k` 分别属于 :math:`c` 类和簇 :math:`k` 的样本数，最后 :math:`n_{c,k}` 分配给簇 :math:`k` 的类 :math:`c` 的样本数。
 
-The **conditional entropy of clusters given class** :math:`H(K|C)` and the
-**entropy of clusters** :math:`H(K)` are defined in a symmetric manner.
+**conditional entropy of clusters given class（给定类的条件熵）** :math:`H(K|C)` 和 **entropy of clusters（类的熵）** :math:`H(K)` 以 symmetric manner （对称方式）定义。
 
-Rosenberg and Hirschberg further define **V-measure** as the **harmonic
-mean of homogeneity and completeness**:
+Rosenberg 和 Hirschberg 进一步定义 **V-measure** 作为 **harmonic mean of homogeneity and completeness（同质性和完整性的 harmonic mean）**:
 
 .. math:: v = 2 \cdot \frac{h \cdot c}{h + c}
 
-.. topic:: References
+.. topic:: 参考
 
  * `V-Measure: A conditional entropy-based external cluster evaluation
    measure <http://aclweb.org/anthology/D/D07/D07-1043.pdf>`_
@@ -1353,26 +1175,16 @@ mean of homogeneity and completeness**:
 
 .. _fowlkes_mallows_scores:
 
-Fowlkes-Mallows scores
+Fowlkes-Mallows scores（Fowlkes-Mallows 得分）
 ----------------------
 
-The Fowlkes-Mallows index (:func:`sklearn.metrics.fowlkes_mallows_score`) can be
-used when the ground truth class assignments of the samples is known. The
-Fowlkes-Mallows score FMI is defined as the geometric mean of the
-pairwise precision and recall:
+当样本的已标定的真实数据的类别分配已知时，可以使用 Fowlkes-Mallows index （Fowlkes-Mallows 指数）(:func:`sklearn.metrics.fowlkes_mallows_score`) 。Fowlkes-Mallows 得分 FMI 被定义为 geometric mean of the pairwise precision （成对精度）和 recall （召回）的几何平均值:
 
 .. math:: \text{FMI} = \frac{\text{TP}}{\sqrt{(\text{TP} + \text{FP}) (\text{TP} + \text{FN})}}
 
-Where ``TP`` is the number of **True Positive** (i.e. the number of pair
-of points that belong to the same clusters in both the true labels and the
-predicted labels), ``FP`` is the number of **False Positive** (i.e. the number
-of pair of points that belong to the same clusters in the true labels and not
-in the predicted labels) and ``FN`` is the number of **False Negative** (i.e the
-number of pair of points that belongs in the same clusters in the predicted
-labels and not in the true labels).
+其中的 ``TP`` 是 **True Positive（正确的正）** 的数量（即，真实标签和预测标签中属于相同簇的点对数），``FP`` 是 **False Positive（错误的正）** （即，在真实标签中属于同一簇的点对数，而不在预测标签中），``FN`` 是 **False Negative（错误的负）** 的数量（即，预测标签中属于同一簇的点对数，而不在真实标签中）。
 
-The score ranges from 0 to 1. A high value indicates a good similarity
-between two clusters.
+score （分数）范围为 0 到 1。较高的值表示两个簇之间的良好相似性。
 
   >>> from sklearn import metrics
   >>> labels_true = [0, 0, 0, 1, 1, 1]
@@ -1381,55 +1193,42 @@ between two clusters.
   >>> metrics.fowlkes_mallows_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.47140...
 
-One can permute 0 and 1 in the predicted labels, rename 2 to 3 and get
-the same score::
+可以在 predicted labels （预测的标签）中 permute （排列） 0 和 1 ，重命名为 2 到 3 并得到相同的得分::
 
   >>> labels_pred = [1, 1, 0, 0, 3, 3]
 
   >>> metrics.fowlkes_mallows_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.47140...
 
-Perfect labeling is scored 1.0::
+完美的标签得分是 1.0::
 
   >>> labels_pred = labels_true[:]
   >>> metrics.fowlkes_mallows_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   1.0
 
-Bad (e.g. independent labelings) have zero scores::
+坏的（例如 independent labelings （独立标签））的标签得分为 0:: 
 
   >>> labels_true = [0, 1, 2, 0, 3, 4, 5, 1]
   >>> labels_pred = [1, 1, 0, 0, 2, 2, 2, 2]
   >>> metrics.fowlkes_mallows_score(labels_true, labels_pred)  # doctest: +ELLIPSIS
   0.0
 
-Advantages
+Advantages（优点）
 ~~~~~~~~~~
 
-- **Random (uniform) label assignments have a FMI score close to 0.0**
-  for any value of ``n_clusters`` and ``n_samples`` (which is not the
-  case for raw Mutual Information or the V-measure for instance).
+- **Random (uniform) label assignments have a FMI score close to 0.0（随机（统一）标签分配 FMI 得分接近于 0.0）** 对于 ``n_clusters`` 和 ``n_samples`` 的任何值（对于原始 Mutual Information 或例如 V-measure 而言）。
 
-- **Bounded range [0, 1]**:  Values close to zero indicate two label
-  assignments that are largely independent, while values close to one
-  indicate significant agreement. Further, values of exactly 0 indicate
-  **purely** independent label assignments and a AMI of exactly 1 indicates
-  that the two label assignments are equal (with or without permutation).
+- **Bounded range（有界范围） [0, 1]**:  接近于 0 的值表示两个标签分配在很大程度上是独立的，而接近于 1 的值表示 significant agreement 。此外，正好为 0 的值表示 **purely** 独立标签分配，正好为 1 的 AMI 表示两个标签分配相等（有或者没有 permutation （排列））。
 
-- **No assumption is made on the cluster structure**: can be used
-  to compare clustering algorithms such as k-means which assumes isotropic
-  blob shapes with results of spectral clustering algorithms which can
-  find cluster with "folded" shapes.
+- **No assumption is made on the cluster structure（对簇的结构没有作出任何假设）**: 可以用于比较诸如 k-means 的聚类算法，其将假设 isotropic blob shapes 与能够找到具有 "folded" shapes 的簇的 spectral clustering algorithms （频谱聚类算法）的结果相结合。
 
 
-Drawbacks
+Drawbacks（缺点）
 ~~~~~~~~~
 
-- Contrary to inertia, **FMI-based measures require the knowledge
-  of the ground truth classes** while almost never available in practice or
-  requires manual assignment by human annotators (as in the supervised learning
-  setting).
+- 与 inertia（惯性）相反，**FMI-based measures require the knowledge of the ground truth classes（基于 FMI 的测量方案需要了解已标注的真是数据的类）** ，而在实践中几乎不用，或需要人工标注者的人工分配（如在监督学习的学习环境中）。
 
-.. topic:: References
+.. topic:: 参考
 
   * E. B. Fowkles and C. L. Mallows, 1983. "A method for comparing two
     hierarchical clusterings". Journal of the American Statistical Association.
@@ -1443,26 +1242,17 @@ Drawbacks
 Silhouette Coefficient
 ----------------------
 
-If the ground truth labels are not known, evaluation must be performed using
-the model itself. The Silhouette Coefficient
-(:func:`sklearn.metrics.silhouette_score`)
-is an example of such an evaluation, where a
-higher Silhouette Coefficient score relates to a model with better defined
-clusters. The Silhouette Coefficient is defined for each sample and is composed
-of two scores:
+如果标注过的真实数据的标签不知道，则必须使用模型本身进行 evaluation （评估）。Silhouette Coefficient (:func:`sklearn.metrics.silhouette_score`) 是一个这样的评估的例子，其中较高的 Silhouette Coefficient 得分与具有更好定义的聚类的模型相关。Silhouette Coefficient 是为每个样本定义的，由两个得分组成:
 
-- **a**: The mean distance between a sample and all other points in the same
-  class.
+- **a**: 样本与同一类别中所有其他点之间的平均距离。
 
-- **b**: The mean distance between a sample and all other points in the *next
-  nearest cluster*.
+- **b**: 样本与 *next nearest cluster（下一个最近的簇）* 中的所有其他点之间的平均距离。
 
-The Silhouette Coefficient *s* for a single sample is then given as:
+然后将单个样本的 Silhouette Coefficient *s* 给出为:
 
 .. math:: s = \frac{b - a}{max(a, b)}
 
-The Silhouette Coefficient for a set of samples is given as the mean of the
-Silhouette Coefficient for each sample.
+给定一组样本的 Silhouette Coefficient 作为每个样本的 Silhouette Coefficient 的平均值。
 
 
   >>> from sklearn import metrics
@@ -1472,8 +1262,7 @@ Silhouette Coefficient for each sample.
   >>> X = dataset.data
   >>> y = dataset.target
 
-In normal usage, the Silhouette Coefficient is applied to the results of a
-cluster analysis.
+在正常使用情况下，将 Silhouette Coefficient 应用于聚类分析的结果。
 
   >>> import numpy as np
   >>> from sklearn.cluster import KMeans
@@ -1483,7 +1272,7 @@ cluster analysis.
   ...                                                      # doctest: +ELLIPSIS
   0.55...
 
-.. topic:: References
+.. topic:: 参考
 
  * Peter J. Rousseeuw (1987). "Silhouettes: a Graphical Aid to the
    Interpretation and Validation of Cluster Analysis". Computational
@@ -1491,56 +1280,42 @@ cluster analysis.
    `doi:10.1016/0377-0427(87)90125-7 <http://dx.doi.org/10.1016/0377-0427(87)90125-7>`_.
 
 
-Advantages
+Advantages（优点）
 ~~~~~~~~~~
 
-- The score is bounded between -1 for incorrect clustering and +1 for highly
-  dense clustering. Scores around zero indicate overlapping clusters.
+- 对于不正确的 clustering （聚类），分数为 -1 ， highly dense clustering （高密度聚类）为 +1 。零点附近的分数表示 overlapping clusters （重叠的聚类）。
 
-- The score is higher when clusters are dense and well separated, which relates
-  to a standard concept of a cluster.
+- 当 clusters （簇）密集且分离较好时，分数更高，这与 cluster （簇）的标准概念有关。
 
 
-Drawbacks
+Drawbacks（缺点）
 ~~~~~~~~~
 
-- The Silhouette Coefficient is generally higher for convex clusters than other
-  concepts of clusters, such as density based clusters like those obtained
-  through DBSCAN.
+- convex clusters（凸集）的 Silhouette Coefficient 通常比其他 cluster （簇）的概念更高，例如通过 DBSCAN 获得的基于密度的 cluster（簇）。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
- * :ref:`sphx_glr_auto_examples_cluster_plot_kmeans_silhouette_analysis.py` : In this example
-   the silhouette analysis is used to choose an optimal value for n_clusters.
+ * :ref:`sphx_glr_auto_examples_cluster_plot_kmeans_silhouette_analysis.py` : 在这个例子中，silhouette 分析用于为 n_clusters 选择最佳值.
 
 .. _calinski_harabaz_index:
 
-Calinski-Harabaz Index
+Calinski-Harabaz Index（Calinski-Harabaz 指数）
 ----------------------
 
-If the ground truth labels are not known, the Calinski-Harabaz index
-(:func:`sklearn.metrics.calinski_harabaz_score`) can be used to evaluate the
-model, where a higher Calinski-Harabaz score relates to a model with better
-defined clusters.
+如果不知道真实数据的类别标签，则可以使用 Calinski-Harabaz index (:func:`sklearn.metrics.calinski_harabaz_score`) 来评估模型，其中较高的 Calinski-Harabaz 的得分与具有更好定义的聚类的模型相关。
 
-For :math:`k` clusters, the Calinski-Harabaz score :math:`s` is given as the
-ratio of the between-clusters dispersion mean and the within-cluster
-dispersion:
+对于 :math:`k` 簇，Calinski-Harabaz 得分 :math:`s` 是作为 between-clusters dispersion mean （簇间色散平均值）与 within-cluster dispersion（群内色散之间）的比值给出的:
 
 .. math::
   s(k) = \frac{\mathrm{Tr}(B_k)}{\mathrm{Tr}(W_k)} \times \frac{N - k}{k - 1}
 
-where :math:`B_K` is the between group dispersion matrix and :math:`W_K`
-is the within-cluster dispersion matrix defined by:
+其中 :math:`B_K` 是 between group dispersion matrix （组间色散矩阵）， :math:`W_K` 是由以下定义的 within-cluster dispersion matrix （群内色散矩阵）: 
 
 .. math:: W_k = \sum_{q=1}^k \sum_{x \in C_q} (x - c_q) (x - c_q)^T
 
 .. math:: B_k = \sum_q n_q (c_q - c) (c_q - c)^T
 
-with :math:`N` be the number of points in our data, :math:`C_q` be the set of
-points in cluster :math:`q`, :math:`c_q` be the center of cluster
-:math:`q`, :math:`c` be the center of :math:`E`, :math:`n_q` be the number of
-points in cluster :math:`q`.
+:math:`N` 为数据中的点数，:math:`C_q` 为 cluster （簇） :math:`q` 中的点集， :math:`c_q` 为 cluster（簇） :math:`q` 的中心， :math:`c` 为 :math:`E` 的中心， :math:`n_q` 为 cluster（簇） :math:`q` 中的点数。 
 
 
   >>> from sklearn import metrics
@@ -1550,8 +1325,7 @@ points in cluster :math:`q`.
   >>> X = dataset.data
   >>> y = dataset.target
 
-In normal usage, the Calinski-Harabaz index is applied to the results of a
-cluster analysis.
+在正常使用情况下，将 Calinski-Harabaz index （Calinski-Harabaz 指数）应用于 cluster analysis （聚类分析）的结果。
 
   >>> import numpy as np
   >>> from sklearn.cluster import KMeans
@@ -1561,23 +1335,20 @@ cluster analysis.
   560.39...
 
 
-Advantages
+Advantages（优点）
 ~~~~~~~~~~
 
-- The score is higher when clusters are dense and well separated, which relates
-  to a standard concept of a cluster.
+- 当 cluster （簇）密集且分离较好时，分数更高，这与 cluster（簇）的标准概念有关。
 
-- The score is fast to compute
+- 得分计算很快
 
 
-Drawbacks
+Drawbacks（缺点）
 ~~~~~~~~~
 
-- The Calinski-Harabaz index is generally higher for convex clusters than other
-  concepts of clusters, such as density based clusters like those obtained
-  through DBSCAN.
+- 凸集的 Calinski-Harabaz index（Calinski-Harabaz 指数）通常高于 cluster （簇） 的其他概念，例如通过 DBSCAN 获得的基于密度的 cluster（簇）。
 
-.. topic:: References
+.. topic:: 参考
 
  *  Caliński, T., & Harabasz, J. (1974). "A dendrite method for cluster
     analysis". Communications in Statistics-theory and Methods 3: 1-27.

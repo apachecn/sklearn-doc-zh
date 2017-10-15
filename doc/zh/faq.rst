@@ -1,206 +1,166 @@
 .. _faq:
 
 ===========================
-Frequently Asked Questions
+常见问题
 ===========================
 
-Here we try to give some answers to questions that regularly pop up on the mailing list.
+在这里，我们试着给出一些经常出现在邮件列表上的问题的答案。
 
-What is the project name (a lot of people get it wrong)?
+项目名称是什么 (很多人弄错)?
 --------------------------------------------------------
-scikit-learn, but not scikit or SciKit nor sci-kit learn.
-Also not scikits.learn or scikits-learn, which were previously used.
+scikit-learn, 但既不是scikit或是SciKit也不是sci-kit learn。
+也不是我们过去用过的scikits.learn和scikits-learn。
 
-How do you pronounce the project name?
+你怎么念这个项目的名称呢?
 ------------------------------------------
-sy-kit learn. sci stands for science!
+sy-kit learn。sci代表着科学!
 
-Why scikit?
+为什么是scikit?
 ------------
-There are multiple scikits, which are scientific toolboxes built around SciPy.
-You can find a list at `<https://scikits.appspot.com/scikits>`_.
-Apart from scikit-learn, another popular one is `scikit-image <http://scikit-image.org/>`_.
+拥有很多围绕Scipy构建的科学工具箱。
+你可以在这里看见列表 `<https://scikits.appspot.com/scikits>`_
+除了scikit-learn,另一个受欢迎的是 `scikit-image <http://scikit-image.org/>`_ 。
 
-How can I contribute to scikit-learn?
+我怎么样才能为scikit-learn做出贡献?
 -----------------------------------------
-See :ref:`contributing`. Before wanting to add a new algorithm, which is
-usually a major and lengthy undertaking, it is recommended to start with
-:ref:`known issues <new_contributors>`. Please do not contact the contributors
-of scikit-learn directly regarding contributing to scikit-learn.
+在添加一个通常是重要冗长的新算法前, 推荐你观看
+:ref:`known issues <new_contributors>` 。
+关于scikit-learn贡献，请不要直接和scikit-learn的贡献者联系。
 
-What's the best way to get help on scikit-learn usage?
+如何得到scikit-learn最好的用法帮助?
 --------------------------------------------------------------
-**For general machine learning questions**, please use
-`Cross Validated <http://stats.stackexchange.com>`_ with the ``[machine-learning]`` tag.
+**对于一般的机器学习问题**, 请使用
+`交叉验证 <http://stats.stackexchange.com>`_ 和 ``[machine-learning]`` 。
 
-**For scikit-learn usage questions**, please use `Stack Overflow <http://stackoverflow.com/questions/tagged/scikit-learn>`_
-with the ``[scikit-learn]`` and ``[python]`` tags. You can alternatively use the `mailing list
-<https://mail.python.org/mailman/listinfo/scikit-learn>`_.
+**对于scikit-learn使用的问题**, 请点击 `Stack Overflow <http://stackoverflow.com/questions/tagged/scikit-learn>`_
+with the ``[scikit-learn]`` 和 ``[python]`` 。 你也可以使用 `联系列表 <https://mail.python.org/mailman/listinfo/scikit-learn>`_.
 
-Please make sure to include a minimal reproduction code snippet (ideally shorter
-than 10 lines) that highlights your problem on a toy dataset (for instance from
-``sklearn.datasets`` or randomly generated with functions of ``numpy.random`` with
-a fixed random seed). Please remove any line of code that is not necessary to
-reproduce your problem.
+请确保包含一个最小的复制代码片段(最好少于10行)，突出显示玩具数据集上的问题 (例如从 ``sklearn.datasets`` 或者是用固定随机数种子利用 ``numpy.random`` 函数生成). 请删除任何不需要重现您的问题的代码行
 
-The problem should be reproducible by simply copy-pasting your code snippet in a Python
-shell with scikit-learn installed. Do not forget to include the import statements.
+该问题应该可以在安装了scikit-learn的python命令行中简单地复制粘贴您的代码重现. 并且不要忘了import语句.
 
-More guidance to write good reproduction code snippets can be found at:
+编写能够重现的代码的更多指南可以在以下网址找到:
 
 http://stackoverflow.com/help/mcve
 
-If your problem raises an exception that you do not understand (even after googling it),
-please make sure to include the full traceback that you obtain when running the
-reproduction script.
+即使在谷歌搜索之后,你的代码依旧引起了你不明白的异常，
+请确保在运行复制脚本时包含完整的回溯。
 
-For bug reports or feature requests, please make use of the
-`issue tracker on Github <https://github.com/scikit-learn/scikit-learn/issues>`_.
+有关错误报告或者功能请求，请使用
+`issue tracker on Github <https://github.com/scikit-learn/scikit-learn/issues>`_ 。
 
-There is also a `scikit-learn Gitter channel
-<https://gitter.im/scikit-learn/scikit-learn>`_ where some users and developers
-might be found. 
+你还可以在 `scikit-learn Gitter channel <https://gitter.im/scikit-learn/scikit-learn>`_ 找到一些用户与开发人员。
 
-**Please do not email any authors directly to ask for assistance, report bugs,
-or for any other issue related to scikit-learn.**
+**请不要直接给任何作者发邮件请求帮助，报告bug或其他与scikit-learn相关的问题。**
 
-How can I create a bunch object?
+我怎么才可以创建一个bunch对象?
 ------------------------------------------------
 
-Don't make a bunch object! They are not part of the scikit-learn API. Bunch
-objects are just a way to package some numpy arrays. As a scikit-learn user you
-only ever need numpy arrays to feed your model with data.
+不要创建bunch对象! 它们不是scikit-learn API的一部分. Bunch
+对象只是打包一些numpy数组的一种方式. 作为一个scikit-learn用户你仅需要
+numpy数组来给你的模型提供数据。
 
-For instance to train a classifier, all you need is a 2D array ``X`` for the
-input variables and a 1D array ``y`` for the target variables. The array ``X``
-holds the features as columns and samples as rows . The array ``y`` contains
-integer values to encode the class membership of each sample in ``X``.
+例如，训练一个分类器, 你需要的是用于输入变量的一个2D数组 ``X``  
+和目标变量的1D数组 ``y`` 。 ``X`` 数组将特征作为列，样本保存为行。 ``y`` 数组包含用于对每个样本的类成员资格编码的整型数值 ``X``.
 
-How can I load my own datasets into a format usable by scikit-learn?
+如何将我自己的数据集加载到scikit-learn可用的格式?
 --------------------------------------------------------------------
 
-Generally, scikit-learn works on any numeric data stored as numpy arrays
-or scipy sparse matrices. Other types that are convertible to numeric 
-arrays such as pandas DataFrame are also acceptable.
+一般来说,scikit-learn可以在诸如numpy数组或者scipy稀疏矩阵这样的数字数据上运行。其他格式的如
+pandas Dataframe的数组也是可以的。
 
-For more information on loading your data files into these usable data 
-structures, please refer to :ref:`loading external datasets <external_datasets>`.
+有关将数据文件加载到可用数据结构中的更多信息，参阅 :ref:`加载外部数据集 <external_datasets>` 。
 
-What are the inclusion criteria for new algorithms ?
+新算法的纳入标准是什么 ?
 ----------------------------------------------------
 
-We only consider well-established algorithms for inclusion. A rule of thumb is
-at least 3 years since publication, 200+ citations and wide use and
-usefulness. A technique that provides a clear-cut improvement (e.g. an
-enhanced data structure or a more efficient approximation technique) on
-a widely-used method will also be considered for inclusion.
+我们仅考虑添加已经完善的算法。录入的一个标准是，自发布时间已过3年，被引用超过200次，广泛使用。
+对广泛使用的方法提供了明确改进的技术（如增强型数据结构或更有效的近似技术）也将被考虑纳入。
 
-From the algorithms or techniques that meet the above criteria, only those
-which fit well within the current API of scikit-learn, that is a ``fit``,
-``predict/transform`` interface and ordinarily having input/output that is a
-numpy array or sparse matrix, are accepted.
+在满足上述标准的算法或技术中,只有这些能够适合现在scikit-learn API的, 这是一个 ``适合`` 定义, 
+``预测/转换`` 接口通常具有一个numpy阵列或稀疏矩阵的输入/输出。
 
-The contributor should support the importance of the proposed addition with
-research papers and/or implementations in other similar packages, demonstrate
-its usefulness via common use-cases/applications and corroborate performance
-improvements, if any, with benchmarks and/or plots. It is expected that the 
-proposed algorithm should outperform the methods that are already implemented
-in scikit-learn at least in some areas.
+贡献者应该支持通过研究论文和/或其他类似软件包中的实现来提出增加的重要性，通过常见的用例/应用程序
+证明其有用性，并通过基准和/或图证实性能改进（如果有的话）。预计所提出的算法应该在某些领域
+优于已经在scikit-learn中的方法.
 
-Also note that your implementation need not be in scikit-learn to be used
-together with scikit-learn tools. You can implement your favorite algorithm in
-a scikit-learn compatible way, upload it to github and let us know. We will
-list it under :ref:`related_projects`.
+还要注意，您的实现不需要在scikit-learn中以和scikit-learn工具一起使用。您可以以scikit-learn兼容的
+方式实现您最喜欢的算法，将其上传到github并让我们知道。我们将在 :ref:`related_projects` 列出。
 
 .. _selectiveness:
 
-Why are you so selective on what algorithms you include in scikit-learn?
+为什么你对scikit-learn中的算法如此讲究?
 ------------------------------------------------------------------------
-Code is maintenance cost, and we need to balance the amount of
-code we have with the size of the team (and add to this the fact that
-complexity scales non linearly with the number of features).
-The package relies on core developers using their free time to
-fix bugs, maintain code and review contributions.
-Any algorithm that is added needs future attention by the developers,
-at which point the original author might long have lost interest.
-Also see `this thread on the mailing list
-<https://sourceforge.net/p/scikit-learn/mailman/scikit-learn-general/thread/CAAkaFLWcBG+gtsFQzpTLfZoCsHMDv9UG5WaqT0LwUApte0TVzg@mail.gmail.com/#msg33104380>`_.
+代码是维护成本, 我们需要平衡我们与团队规模的代码量
+(再加上这个事实：复杂性与功能的数量成线性关系).
+该软件包依赖于核心开发人员利用他们的空闲时间修复错误，维护代码和审查贡献。
+添加的任何算法都需要开发人员的关注，此时原作者可能已经长久失去兴趣。
+也可以在 `该链接 <https://sourceforge.net/p/scikit-learn/mailman/scikit-learn-general/thread/CAAkaFLWcBG+gtsFQzpTLfZoCsHMDv9UG5WaqT0LwUApte0TVzg@mail.gmail.com/#msg33104380>`_ 查看。
 
-Why did you remove HMMs from scikit-learn?
+为什么从scikit-learn中删除HMMS?
 --------------------------------------------
-See :ref:`adding_graphical_models`.
+:ref:`adding_graphical_models`。
 
 .. _adding_graphical_models:
 
-Will you add graphical models or sequence prediction to scikit-learn?
+你会在scikit-learn中添加图形模型或序列预测吗?
 ---------------------------------------------------------------------
 
-Not in the foreseeable future.
-scikit-learn tries to provide a unified API for the basic tasks in machine
-learning, with pipelines and meta-algorithms like grid search to tie
-everything together. The required concepts, APIs, algorithms and
-expertise required for structured learning are different from what
-scikit-learn has to offer. If we started doing arbitrary structured
-learning, we'd need to redesign the whole package and the project
-would likely collapse under its own weight.
+不可预见的未来。
+scikit-learn尝试为机器学习中的基本任务提供统一的API，
+使用管道和元算法（如网格搜索）将所有内容都集中在一起。
+结构化学习所需的概念，API，算法和专业知识与scikit学习所提供的不同。
+果我们开始进行任意的结构化学习，那么我们需要重新设计整个软件包，
+这个项目可能在自身的负担下崩溃。
 
-There are two project with API similar to scikit-learn that
-do structured prediction:
+这里有两个类似于scikit-learn的做结构化预测的API:
 
-* `pystruct <http://pystruct.github.io/>`_ handles general structured
-  learning (focuses on SSVMs on arbitrary graph structures with
-  approximate inference; defines the notion of sample as an instance of
-  the graph structure)
+* `pystruct <http://pystruct.github.io/>`_ 处理一般结构化学习
+(关注具有近似推理的任意图形结构上的SSVMs;将样本的概念定义为图形结构的一个实例)
 
-* `seqlearn <http://larsmans.github.io/seqlearn/>`_ handles sequences only
-  (focuses on exact inference; has HMMs, but mostly for the sake of
-  completeness; treats a feature vector as a sample and uses an offset encoding
-  for the dependencies between feature vectors)
+* `seqlearn <http://larsmans.github.io/seqlearn/>`_ 仅处理序列（专注于精确推断;
+主要是为了完整性附带了HMMs;将特征向量作为样本，并对特征向量之间的依赖使用偏移编码）
 
-Will you add GPU support?
+你会添加GPU支持吗?
 -------------------------
 
-No, or at least not in the near future. The main reason is that GPU support
-will introduce many software dependencies and introduce platform specific
-issues. scikit-learn is designed to be easy to install on a wide variety of
-platforms. Outside of neural networks, GPUs don't play a large role in machine
-learning today, and much larger gains in speed can often be achieved by a
-careful choice of algorithms.
+不，或者至少在最近不会。
+主要原因是GPU支持将引入许多软件依赖关系并引入平台特定的问题。
+scikit-learn旨在轻松安装在各种平台上。
+除了神经网络，GPU在当今的机器学习中不起重要作用，
+通常我们可以通过仔细选择算法来获得更大的速度增益。
 
-Do you support PyPy?
+你支持PyPy吗?
 --------------------
 
-In case you didn't know, `PyPy <http://pypy.org/>`_ is the new, fast,
-just-in-time compiling Python implementation. We don't support it.
-When the `NumPy support <http://buildbot.pypy.org/numpy-status/latest.html>`_
-in PyPy is complete or near-complete, and SciPy is ported over as well,
-we can start thinking of a port.
-We use too much of NumPy to work with a partial implementation.
+防止您不知道 `PyPy <http://pypy.org/>`_ 它是个新的，快速，及时的编译Python实现，但是我们不支持。
+当PyPy中的 `NumPy support <http://buildbot.pypy.org/numpy-status/latest.html>`_
+完成或接近完成，并且SciPy也被移植时，我们可以开始考虑移植。
+我们使用了太多的NumPy而不能完成部分实现。
 
-How do I deal with string data (or trees, graphs...)?
+如何处理字符串数据（或树，图...）？
 -----------------------------------------------------
 
-scikit-learn estimators assume you'll feed them real-valued feature vectors.
-This assumption is hard-coded in pretty much all of the library.
-However, you can feed non-numerical inputs to estimators in several ways.
+scikit-learn估计器假设您将为他们提供实值特征向量。
+这个假设在几乎所有的库都是硬编码的。
+但是，您可以通过多种方式将非数字输入馈送到估计器。
 
-If you have text documents, you can use a term frequency features; see
-:ref:`text_feature_extraction` for the built-in *text vectorizers*.
-For more general feature extraction from any kind of data, see
-:ref:`dict_feature_extraction` and :ref:`feature_hashing`.
+如果您有文本文档，可以使用术语频率特征; 参阅内置 *文本向量化器* 的
+:ref:`text_feature_extraction`。
+对于从任何类型的数据更一般的特征提取，见
+:ref:`dict_feature_extraction` 和 :ref:`feature_hashing`。
 
-Another common case is when you have non-numerical data and a custom distance
-(or similarity) metric on these data. Examples include strings with edit
-distance (aka. Levenshtein distance; e.g., DNA or RNA sequences). These can be
-encoded as numbers, but doing so is painful and error-prone. Working with
-distance metrics on arbitrary data can be done in two ways.
+另一个常见的情况是当您对这些数据有非数字数据和自定义距离（或相似度）指标时。
+示例包括具有编辑距离的字符串（也称为Levenshtein距离;例如DNA或RNA序列）。
+这些可以编码为数字，但这样做是令人不快和容易出错的。
+使用任意数据的距离度量可以通过以下两种方式完成。
 
-Firstly, many estimators take precomputed distance/similarity matrices, so if
-the dataset is not too large, you can compute distances for all pairs of inputs.
-If the dataset is large, you can use feature vectors with only one "feature",
-which is an index into a separate data structure, and supply a custom metric
-function that looks up the actual data in this data structure. E.g., to use
-DBSCAN with Levenshtein distances::
+首先，许多估计器采用预计算的距离/相似矩阵，
+因此如果数据集不太大，可以计算所有输入对的距离。
+如果数据集很大，您可以使用仅具有一个“特征”的特征向量，
+该特征是单独数据结构的索引，
+并提供在该数据结构中查找实际数据的自定义度量函数。
+例如，使用DBSCAN与Levenshtein距离::
 
     >>> from leven import levenshtein       # doctest: +SKIP
     >>> import numpy as np
@@ -218,48 +178,39 @@ DBSCAN with Levenshtein distances::
     >>> dbscan(X, metric=lev_metric, eps=5, min_samples=2)  # doctest: +SKIP
     ([0, 1], array([ 0,  0, -1]))
 
-(This uses the third-party edit distance package ``leven``.)
+(这里使用了第三方编辑距离包 ``leven``)
 
-Similar tricks can be used, with some care, for tree kernels, graph kernels,
-etc.
+类似的技巧也可以用在树形内核、图形内核等上
 
-Why do I sometime get a crash/freeze with n_jobs > 1 under OSX or Linux?
+为什么我有时会在OSX或Linux下遇到n_jobs> 1崩溃/冻结?
 ------------------------------------------------------------------------
 
-Several scikit-learn tools such as ``GridSearchCV`` and ``cross_val_score``
-rely internally on Python's `multiprocessing` module to parallelize execution
-onto several Python processes by passing ``n_jobs > 1`` as argument.
+一些例如 ``GridSearchCV`` 和 ``cross_val_score`` 的scikit-learn工具，
+它们可以依靠Python的内置 `多重处理` 模块，通过“n_jobs > 1”作为参数，将执行并行化到多个Python进程。
 
-The problem is that Python ``multiprocessing`` does a ``fork`` system call
-without following it with an ``exec`` system call for performance reasons. Many
-libraries like (some versions of) Accelerate / vecLib under OSX, (some versions
-of) MKL, the OpenMP runtime of GCC, nvidia's Cuda (and probably many others),
-manage their own internal thread pool. Upon a call to `fork`, the thread pool
-state in the child process is corrupted: the thread pool believes it has many
-threads while only the main thread state has been forked. It is possible to
-change the libraries to make them detect when a fork happens and reinitialize
-the thread pool in that case: we did that for OpenBLAS (merged upstream in
-master since 0.2.10) and we contributed a `patch
-<https://gcc.gnu.org/bugzilla/show_bug.cgi?id=60035>`_ to GCC's OpenMP runtime
-(not yet reviewed).
+问题是Python由于性能原因 ``多重处理`` 会执行 ``fork`` 系统调用
+而不是 ``exec`` 系统调用。
+许多库如OSX下的（某些版本的）Accelerate / vecLib, (默写版本的)MKL,GCC的OpenMP运行时,
+nvidia的Cuda(可能还有很多),
+都是自行管理自己的内部线程池。在调用 `fork` 时，子进程中的线程池状态已损坏：
+线程池认为它有许多线程，而只有主线程状态已被fork。
+有可能更改库，使它们在发生fork时检测，并在该情况下重新初始化线程池：
+我们对OpenBLAS执行了此操作（从0.2.10开始在master中合并），
+并且我们向GCC的OpenMP运行时提供了一个 `补丁 <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=60035>`_ 
+(尚未审查)。
 
-But in the end the real culprit is Python's ``multiprocessing`` that does
-``fork`` without ``exec`` to reduce the overhead of starting and using new
-Python processes for parallel computing. Unfortunately this is a violation of
-the POSIX standard and therefore some software editors like Apple refuse to
-consider the lack of fork-safety in Accelerate / vecLib as a bug.
+但最终，真正的罪魁祸首是Python的 ``多重处理`` ，执行 ``fork`` 而不是 ``exec`` 来减少开始和使用新的并行计算的Python进程的开销。
+不幸的是，这违反了POSIX标准。
+因此在Accelerate / vecLib中缺乏fork安全被一些软件编辑器（如苹果）拒绝认为是一个bug。
 
-In Python 3.4+ it is now possible to configure ``multiprocessing`` to
-use the 'forkserver' or 'spawn' start methods (instead of the default
-'fork') to manage the process pools. To work around this issue when
-using scikit-learn, you can set the JOBLIB_START_METHOD environment
-variable to 'forkserver'. However the user should be aware that using
-the 'forkserver' method prevents joblib.Parallel to call function
-interactively defined in a shell session.
+在Python 3.4或以上版本中，现在可以配置 ``多重处理`` 决定使用
+ 'forkserver' 或者 'spawn' 启动方法(而不是默认的 
+'fork' )来管理进程池。要使用scikit-learn来解决此问题，
+你可以将JOBLIB_START_METHOD的环境变量设为 'forkserver' 。
+但是用户应该意识到使用 'forkserver' 方法会阻止joblib.Parallel调用在shell会话中交互定义的函数。
 
-If you have custom code that uses ``multiprocessing`` directly instead of using
-it via joblib you can enable the 'forkserver' mode globally for your
-program: Insert the following instructions in your main script::
+如果你有直接使用 ``多重处理`` 的自定义代码而非通过joblib使用，你可以为你的程序全局启用 'forkserver' 模式：
+在主脚本中插入以下说明::
 
     import multiprocessing
 
@@ -270,56 +221,45 @@ program: Insert the following instructions in your main script::
 
         # call scikit-learn utils with n_jobs > 1 here
 
-You can find more default on the new start methods in the `multiprocessing
-documentation <https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods>`_.
+你可以在 `多重处理文档 <https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods>`_ 上找到更多新启动方法的默认值。
 
-Why is there no support for deep or reinforcement learning / Will there be support for deep or reinforcement learning in scikit-learn?
+为什么不支持深度学习或强化学习/scikit-learn中将会支持深度学习或强化学习吗?
 --------------------------------------------------------------------------------------------------------------------------------------
 
-Deep learning and reinforcement learning both require a rich vocabulary to
-define an architecture, with deep learning additionally requiring
-GPUs for efficient computing. However, neither of these fit within
-the design constraints of scikit-learn; as a result, deep learning
-and reinforcement learning are currently out of scope for what
-scikit-learn seeks to achieve.
+深度学习和强化学习需要丰富的词汇来定义一个架构，
+深度学习还需要GPU来进行有效的计算。
+然而，这些都不符合scikit-learn的设计限制。
+因此，深度学习和强化学习目前已经超出了scikit-learn寻求实现的范围。
 
-You can find more information about addition of gpu support at
-`Will you add GPU support?`_.
+你可以找到更多关于gpu支持的信息 `Will you add GPU support?`_.
 
-Why is my pull request not getting any attention?
+为什么我的拉请求没有得到注意?
 -------------------------------------------------
 
-The scikit-learn review process takes a significant amount of time, and
-contributors should not be discouraged by a lack of activity or review on
-their pull request. We care a lot about getting things right
-the first time, as maintenance and later change comes at a high cost.
-We rarely release any "experimental" code, so all of our contributions
-will be subject to high use immediately and should be of the highest
-quality possible initially.
+scikit-learn审查过程需要大量的时间，因此
+贡献者不应该因为拉请求缺乏活动或没有被审查而沮丧。
+我们非常关心第一次正确的使用，因为维护和以后的更改带来了高成本。
+我们不会发布"实验性"代码, 
+所以我们所有的贡献将会立即得到大量使用，并且在最初的时候就应该是最高的质量。
 
-Beyond that, scikit-learn is limited in its reviewing bandwidth; many of the
-reviewers and core developers are working on scikit-learn on their own time.
-If a review of your pull request comes slowly, it is likely because the
-reviewers are busy. We ask for your understanding and request that you
-not close your pull request or discontinue your work solely because of
-this reason.
+除此之外，scikit-learn在审查带宽方面是有限的; 
+许多审稿人和核心开发人员都是利用自己的时间在scikit-learn工作。
+如果您的拉动请求的检查缓慢，可能是因为审阅者很忙。
+我们要求您的理解，并要求您不要因为这个原因而关闭您的拉取请求或停止您的工作。
 
-How do I set a ``random_state`` for an entire execution?
+如何为整个执行设置一个统一的 ``random_state`` ?
 ---------------------------------------------------------
 
-For testing and replicability, it is often important to have the entire execution
-controlled by a single seed for the pseudo-random number generator used in
-algorithms that have a randomized component. Scikit-learn does not use its own
-global random state; whenever a RandomState instance or an integer random seed
-is not provided as an argument, it relies on the numpy global random state,
-which can be set using :func:`numpy.random.seed`.
-For example, to set an execution's numpy global random state to 42, one could
-execute the following in his or her script::
+对于测试和复制，通常重要的是让整个执行由具有随机组件
+的算法中使用的伪随机数生成器的单个种子进行控制。
+Scikit-learn不使用自己的全局随机状态;
+每当RandomState实例或整数随机种子不作为参数提供时，
+它依赖于可以这样使用的 :func:`numpy.random.seed` numpy全局随机数种子。
+例如，要将执行的numpy全局随机状态设置为42，可以在他或她的脚本中执行以下操作::
 
     import numpy as np
     np.random.seed(42)
 
-However, a global random state is prone to modification by other code during
-execution. Thus, the only way to ensure replicability is to pass ``RandomState``
-instances everywhere and ensure that both estimators and cross-validation
-splitters have their ``random_state`` parameter set.
+然而，全局随机状态在执行期间容易被其他代码修改。
+因此，确保可复制性的唯一方法是在每个地方传递 ``RandomState`` 实例，
+并确保估算器和交叉验证分隔符都具有其 ``random_state`` 参数集。

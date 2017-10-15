@@ -1,50 +1,46 @@
-Iris Plants Database
+鸢尾花数据集
 ====================
 
-Notes
+注释
 -----
-Data Set Characteristics:
-    :Number of Instances: 150 (50 in each of three classes)
-    :Number of Attributes: 4 numeric, predictive attributes and the class
-    :Attribute Information:
-        - sepal length in cm
-        - sepal width in cm
-        - petal length in cm
-        - petal width in cm
-        - class:
-                - Iris-Setosa
-                - Iris-Versicolour
-                - Iris-Virginica
-    :Summary Statistics:
+数据集特征:
+    :实例数量: 150 (三个类各有50个)
+    :属性数量: 4 (数值型，数值型，帮助预测的属性和类)
+    :属性信息:
+         - sepal length 萼片长度（厘米）
+         - sepal width 萼片宽度（厘米）
+         - petal length 花瓣长度（厘米）
+         - petal width 花瓣宽度（厘米）
+        - 类别:
+                - Iris-Setosa 山鸢尾 
+                - Iris-Versicolour 变色鸢尾
+                - Iris-Virginica 维吉尼亚鸢尾
+    :统计摘要:
 
     ============== ==== ==== ======= ===== ====================
-                    Min  Max   Mean    SD   Class Correlation
+                   最小  最大  平均值   标准差       类相关性
     ============== ==== ==== ======= ===== ====================
-    sepal length:   4.3  7.9   5.84   0.83    0.7826
-    sepal width:    2.0  4.4   3.05   0.43   -0.4194
-    petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
-    petal width:    0.1  2.5   1.20  0.76     0.9565  (high!)
+    萼片长度:        4.3  7.9   5.84   0.83    0.7826
+    萼片宽度:        2.0  4.4   3.05   0.43   -0.4194
+    花瓣长度:        1.0  6.9   3.76   1.76    0.9490  (高!)
+    花瓣宽度:        0.1  2.5   1.20  0.76     0.9565  (高!)
     ============== ==== ==== ======= ===== ====================
 
-    :Missing Attribute Values: None
-    :Class Distribution: 33.3% for each of 3 classes.
-    :Creator: R.A. Fisher
-    :Donor: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)
-    :Date: July, 1988
+    :缺失属性值: 无
+    :类别分布: 3个类别各占33.3%
+    :创建者: R.A. Fisher
+    :捐助者: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)
+    :日期: 1988年7月
 
-This is a copy of UCI ML iris datasets.
+这是UCI ML（欧文加利福尼亚大学 机器学习库）鸢尾花数据集的副本。
 http://archive.ics.uci.edu/ml/datasets/Iris
 
-The famous Iris database, first used by Sir R.A Fisher
+著名的鸢尾花数据库，首先由R. Fisher先生使用。
 
-This is perhaps the best known database to be found in the
-pattern recognition literature.  Fisher's paper is a classic in the field and
-is referenced frequently to this day.  (See Duda & Hart, for example.)  The
-data set contains 3 classes of 50 instances each, where each class refers to a
-type of iris plant.  One class is linearly separable from the other 2; the
-latter are NOT linearly separable from each other.
+这可能是在模式识别文献中最有名的数据库。Fisher的论文是这个领域的经典之作，到今天也经常被引用。（例如：Duda＆Hart）
+数据集包含3个类，每类有50个实例，每个类指向一种类型的鸢尾花。一类与另外两类线性分离，而后者不能彼此线性分离。
 
-References
+参考资料
 ----------
    - Fisher,R.A. "The use of multiple measurements in taxonomic problems"
      Annual Eugenics, 7, Part II, 179-188 (1936); also in "Contributions to
