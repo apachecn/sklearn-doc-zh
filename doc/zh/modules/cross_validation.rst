@@ -71,6 +71,7 @@ k-折交叉验证将训练集划分为 k 个较小的集合（其它的方法将
 计算交叉验证的指标
 =================================
 
+最简单的方式
 The simplest way to use cross-validation is to call the
 :func:`cross_val_score` helper function on the estimator and the dataset.
 
