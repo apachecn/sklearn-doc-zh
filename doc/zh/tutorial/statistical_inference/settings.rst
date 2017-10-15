@@ -6,6 +6,7 @@ Statistical learning: the setting and the estimator object in scikit-learn
 数据集
 =========
 
+Scikit-learn从可以从一个或者多个数据集众学习信息，这些数据集合必须是2维阵列。第一个维度是**样本**，第二个维度是**特征**
 Scikit-learn deals with learning information from one or more
 datasets that are represented as 2D arrays. They can be understood as a
 list of multi-dimensional observations. We say that the first axis of
