@@ -5,8 +5,7 @@
 ==================
 .. sectionauthor:: Jake Vanderplas <vanderplas@astro.washington.edu>
 
-密度估计在无监督学习，特征工程和数据建模之间划分了界线。  一些最流行和有用的密度估计技术
-是混合模型，如高斯混合(:class:`sklearn.mixture.GaussianMixture`), 和基于邻近的方法(:class:`sklearn.neighbors.KernelDensity`)，如核密度估计。:ref:`clustering <clustering>`一节中更充分地讨论了高斯混合，因为此技术也用作为一种无监督聚类方案。
+密度估计在无监督学习，特征工程和数据建模之间划分了界线。  一些最流行和有用的密度估计技术是混合模型，如高斯混合(:class:`sklearn.mixture.GaussianMixture`), 和基于邻近的方法(:class:`sklearn.neighbors.KernelDensity`)，如核密度估计。:ref:`clustering <clustering>`一节中更充分地讨论了高斯混合，因为此技术也用作为一种无监督聚类方案。
 
 密度估计是一个非常简单的概念，大多数人已经熟悉了其中一种常用的密度估计技术：直方图。
 
