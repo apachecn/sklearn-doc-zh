@@ -38,8 +38,7 @@ Scikit-learn从可以从一个或者多个数据集中学习信息，这些数�
         >>> plt.imshow(digits.images[-1], cmap=plt.cm.gray_r) #doctest: +SKIP
         <matplotlib.image.AxesImage object at ...>
 
-    To use this dataset with the scikit, we transform each 8x8 image into a
-    feature vector of length 64 ::
+    为了在scikit中使用这一数据集，需要将8×8的图像转换成长度为64的一维列表 ::
 
         >>> data = digits.images.reshape((digits.images.shape[0], -1))
 
