@@ -255,22 +255,16 @@ Multi-task Lasso(多任务 Lasso)
 
 .. _elastic_net:
 
-Elastic Net
+弹性网络
 ===========
-:class:`ElasticNet` is a linear regression model trained with L1 and L2 prior
-as regularizer. This combination allows for learning a sparse model where
-few of the weights are non-zero like :class:`Lasso`, while still maintaining
-the regularization properties of :class:`Ridge`. We control the convex
-combination of L1 and L2 using the ``l1_ratio`` parameter.
+:class:`弹性网络` 是用L1,L2范数作为先验正则项训练的线性回归模型。 这种组合允许学习到一个稀疏模型，这个模型的一些参数是非0的，就像 :class:`Lasso`一样, 但是它仍然保持
+一些像 :class:`Ridge`的正则性质。我们可利用 ``l1_ratio`` 参数控制L1和L2的凸组合。
 
-Elastic-net is useful when there are multiple features which are
-correlated with one another. Lasso is likely to pick one of these
-at random, while elastic-net is likely to pick both.
+弹性网络在很多特征互相联系的情况下是非常有用的。Lasso很可能只随机考虑这些特征中的一个，但是弹性网络很可能把这些特征全考虑了。
 
-A practical advantage of trading-off between Lasso and Ridge is it allows
-Elastic-Net to inherit some of Ridge's stability under rotation.
+一个在实际中经常采用的权衡Lasso 和Ridge的好处，就是它允许弹性网络继承Ridge的旋转稳定性。
 
-The objective function to minimize is in this case
+在这里，目标函数就是最小化
 
 .. math::
 
@@ -283,8 +277,8 @@ The objective function to minimize is in this case
    :align: center
    :scale: 50%
 
-The class :class:`ElasticNetCV` can be used to set the parameters
-``alpha`` (:math:`\alpha`) and ``l1_ratio`` (:math:`\rho`) by cross-validation.
+这个类 :class:`ElasticNetCV` 可以通过交叉验证来设置参数
+``alpha`` (:math:`\alpha`) 和 ``l1_ratio`` (:math:`\rho`) 。
 
 .. topic:: Examples:
 
@@ -295,82 +289,64 @@ The class :class:`ElasticNetCV` can be used to set the parameters
 
 .. _multi_task_elastic_net:
 
-Multi-task Elastic Net
+多任务弹性网络
 ======================
 
-The :class:`MultiTaskElasticNet` is an elastic-net model that estimates sparse
-coefficients for multiple regression problems jointly: ``Y`` is a 2D array,
-of shape ``(n_samples, n_tasks)``. The constraint is that the selected
-features are the same for all the regression problems, also called tasks.
+ :class:`MultiTaskElasticNet` 是一个对多回归问题估算稀疏参数的弹性网络: ``Y`` 是2D的数列，形状是
+ ``(参数个数, 参数任务个数)``。 这个模型有个限制，即对所有的回归问题（任务）选择的特征是一样的。
 
-Mathematically, it consists of a linear model trained with a mixed
-:math:`\ell_1` :math:`\ell_2` prior and :math:`\ell_2` prior as regularizer.
-The objective function to minimize is:
+从数学上来说， 它包含一个用
+:math:`\ell_1` :math:`\ell_2` 先验 and :math:`\ell_2` 先验为正则项训练的线性模型
+目标函数就是最小化:
 
 .. math::
 
     \underset{W}{min\,} { \frac{1}{2n_{samples}} ||X W - Y||_{Fro}^2 + \alpha \rho ||W||_{2 1} +
     \frac{\alpha(1-\rho)}{2} ||W||_{Fro}^2}
 
-The implementation in the class :class:`MultiTaskElasticNet` uses coordinate descent as
-the algorithm to fit the coefficients.
+在 :class:`MultiTaskElasticNet`类中的实现采用了坐标下降法求解参数。
 
-The class :class:`MultiTaskElasticNetCV` can be used to set the parameters
-``alpha`` (:math:`\alpha`) and ``l1_ratio`` (:math:`\rho`) by cross-validation.
+在 :class:`MultiTaskElasticNetCV` 中可以通过交叉验证来设置参数
+``alpha`` (:math:`\alpha`) 和 ``l1_ratio`` (:math:`\rho`) 。
 
 
 .. _least_angle_regression:
 
-Least Angle Regression
+最小角回归
 ======================
 
-Least-angle regression (LARS) is a regression algorithm for
-high-dimensional data, developed by Bradley Efron, Trevor Hastie, Iain
-Johnstone and Robert Tibshirani. LARS is similar to forward stepwise
-regression. At each step, it finds the predictor most correlated with the
-response. When there are multiple predictors having equal correlation, instead
-of continuing along the same predictor, it proceeds in a direction equiangular
-between the predictors.
+最小角回归 (LARS) is 是对高维数据的回归算法， 由Bradley Efron, Trevor Hastie, Iain
+Johnstone 和 Robert Tibshirani开发完成。 LARS和 逐步回归很像。 在每一步，它寻找与响应最有关联的
+预测。当有很多预测由相同的关联时，它没有继续利用相同的预测，而是在这些预测中找出应该等角的方向。
 
-The advantages of LARS are:
+LARS的优点:
 
-  - It is numerically efficient in contexts where p >> n (i.e., when the
-    number of dimensions is significantly greater than the number of
-    points)
+  - 当p >> n，该算法数值运算上非常有效。(例子：当维度的数目远超
+    点的个数)
 
-  - It is computationally just as fast as forward selection and has
-    the same order of complexity as an ordinary least squares.
+  - 它在计算上和前向选择一样快，和普通最小二乘法有相同的运算复杂度。
 
-  - It produces a full piecewise linear solution path, which is
-    useful in cross-validation or similar attempts to tune the model.
+  - 它产生了一个完整的分段线性的解决路径，这在交叉验证或者其他相似的微调模型的方法上非常有用。
 
-  - If two variables are almost equally correlated with the response,
-    then their coefficients should increase at approximately the same
-    rate. The algorithm thus behaves as intuition would expect, and
-    also is more stable.
+  - 如果两个变量对响应几乎有相等的联系，则它们的系数应该有大约相同的增长率。因而这个算法和我们直觉
+    上想得一样，而且也更稳定。
 
-  - It is easily modified to produce solutions for other estimators,
-    like the Lasso.
+  - 它也很容易改变为为其他估算器提供解，比如Lasso。
 
-The disadvantages of the LARS method include:
+LARS的缺点:
 
-  - Because LARS is based upon an iterative refitting of the
-    residuals, it would appear to be especially sensitive to the
-    effects of noise. This problem is discussed in detail by Weisberg
-    in the discussion section of the Efron et al. (2004) Annals of
-    Statistics article.
+  - 因为LARS是建立在循环拟合剩余变量上的，它会对噪声的影响非常敏感。
+    这个问题，在2004年统计年鉴的文章由Weisberg详细讨论。
 
-The LARS model can be used using estimator :class:`Lars`, or its
-low-level implementation :func:`lars_path`.
+LARS模型可以在:class:`Lars`，或者它的低配实现:func:`lars_path`中被使用。
 
 
 LARS Lasso
 ==========
 
-:class:`LassoLars` is a lasso model implemented using the LARS
-algorithm, and unlike the implementation based on coordinate_descent,
-this yields the exact solution, which is piecewise linear as a
-function of the norm of its coefficients.
+:class:`LassoLars` 是一个使用LARS算法的lasso模型
+不同于基于坐标下降法的实现，它得到的是精确解，也就是一个
+关于自身参数标准化后的一个分段线性解。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_lars_001.png
    :target: ../auto_examples/linear_model/plot_lasso_lars.html
@@ -388,29 +364,23 @@ function of the norm of its coefficients.
    >>> reg.coef_    # doctest: +ELLIPSIS
    array([ 0.717157...,  0.        ])
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_lars.py`
 
-The Lars algorithm provides the full path of the coefficients along
-the regularization parameter almost for free, thus a common operation
-consist of retrieving the path with function :func:`lars_path`
+Lars算法提供了一个完整的关于参数的路径，并且几乎无代价的给出了正则化系数，
+所以一个常规的操作包括利用函数:func:`lars_path`取回路径。
 
-Mathematical formulation
+数学表达式
 ------------------------
 
-The algorithm is similar to forward stepwise regression, but instead
-of including variables at each step, the estimated parameters are
-increased in a direction equiangular to each one's correlations with
-the residual.
+该算法和逐步回归非常相似，但是它没有在每一步包含变量，它估计的参数是根据与
+其他剩余变量的联系增加的。
 
-Instead of giving a vector result, the LARS solution consists of a
-curve denoting the solution for each value of the L1 norm of the
-parameter vector. The full coefficients path is stored in the array
-``coef_path_``, which has size (n_features, max_features+1). The first
-column is always zero.
+算法没有给出一个向量的结果，LARS的解决方案包括对每一个变量进行总体变量的L1正则化后的显示的一条曲线。
+完全的参数路径存在``coef_path_``向量下。它的尺寸是 (特征个数, 最大特征数+1)。 第一列通常是全0列。
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * Original Algorithm is detailed in the paper `Least Angle Regression
    <http://www-stat.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf>`_
@@ -419,38 +389,33 @@ column is always zero.
 
 .. _omp:
 
-Orthogonal Matching Pursuit (OMP)
+正交匹配追踪法 (OMP)
 =================================
-:class:`OrthogonalMatchingPursuit` and :func:`orthogonal_mp` implements the OMP
-algorithm for approximating the fit of a linear model with constraints imposed
-on the number of non-zero coefficients (ie. the L :sub:`0` pseudo-norm).
+:class:`OrthogonalMatchingPursuit(正交匹配追踪法)` 和 :func:`orthogonal_mp(正交匹配追踪)` 
+使用了OMP算法近似拟合了一个带限制的线性模型，该限制限制了模型的非0系数(例：L0范数)。
 
-Being a forward feature selection method like :ref:`least_angle_regression`,
-orthogonal matching pursuit can approximate the optimum solution vector with a
-fixed number of non-zero elements:
+就像最小角回归一样，作为一个前向特征选择方法，正交匹配追踪法可以近似一个固定非0元素的最优
+向量解:
 
 .. math:: \text{arg\,min\,} ||y - X\gamma||_2^2 \text{ subject to } \
     ||\gamma||_0 \leq n_{nonzero\_coefs}
 
-Alternatively, orthogonal matching pursuit can target a specific error instead
-of a specific number of non-zero coefficients. This can be expressed as:
+正交匹配追踪法也可以不用特定的非0参数元素个数做限制，它可以用别的特定函数定义其损失函数。
+这个可以表示为:
 
 .. math:: \text{arg\,min\,} ||\gamma||_0 \text{ subject to } ||y-X\gamma||_2^2 \
     \leq \text{tol}
 
 
-OMP is based on a greedy algorithm that includes at each step the atom most
-highly correlated with the current residual. It is similar to the simpler
-matching pursuit (MP) method, but better in that at each iteration, the
-residual is recomputed using an orthogonal projection on the space of the
-previously chosen dictionary elements.
+OMP是基于每一步的贪心算法，在每一步元素都是与当前剩余量联系最为紧密的。它跟较为简单的匹配追踪
+（MP）很像，但是比MP更好，好在每一步循环，剩余量是利用正交投影到之前选择的字典元素重新计算的。
 
 
-.. topic:: Examples:
+.. topic:: 例子:
 
  * :ref:`sphx_glr_auto_examples_linear_model_plot_omp.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * http://www.cs.technion.ac.il/~ronrubin/Publications/KSVD-OMP-v2.pdf
 
@@ -461,75 +426,64 @@ previously chosen dictionary elements.
 
 .. _bayesian_regression:
 
-Bayesian Regression
+贝叶斯回归
 ===================
 
-Bayesian regression techniques can be used to include regularization
-parameters in the estimation procedure: the regularization parameter is
-not set in a hard sense but tuned to the data at hand.
+贝叶斯回归可以用于在预估阶段的参数正则化: 正则化参数的选择不是通过人为的选择，而是通过手边的数据调整而成。
 
-This can be done by introducing `uninformative priors
+上述过程可以通过引入 `无信息先验
 <https://en.wikipedia.org/wiki/Non-informative_prior#Uninformative_priors>`__
-over the hyper parameters of the model.
-The :math:`\ell_{2}` regularization used in `Ridge Regression`_ is equivalent
-to finding a maximum a posteriori estimation under a Gaussian prior over the
-parameters :math:`w` with precision :math:`\lambda^{-1}`.  Instead of setting
-`\lambda` manually, it is possible to treat it as a random variable to be
-estimated from the data.
+于模型中的超参数来完成。
+在`岭回归`_中使用的 :math:`\ell_{2}` 正则项相当于在:math:`w` 为高斯先验条件下，且此先验的精确度为 :math:`\lambda^{-1}`
+求最大后验估计。在这里，我们没有手工调参数lambda，而是让他作为一个变量，通过数据中估计得到。
 
-To obtain a fully probabilistic model, the output :math:`y` is assumed
-to be Gaussian distributed around :math:`X w`:
+
+为了得到一个全概率模型，输出 :math:`y` 也被认为是关于 :math:`X w`:的高斯分布。
 
 .. math::  p(y|X,w,\alpha) = \mathcal{N}(y|X w,\alpha)
 
-Alpha is again treated as a random variable that is to be estimated from the
-data.
+Alpha 在这里也是作为一个变量，通过数据中估计得到.
 
-The advantages of Bayesian Regression are:
+贝叶斯回归有如下几个优点:
 
-    - It adapts to the data at hand.
+    - 它能根据手边数据进行改变。
 
-    - It can be used to include regularization parameters in the
-      estimation procedure.
+    - 它能在估计过程中引入正则项
 
-The disadvantages of Bayesian regression include:
+贝叶斯回归有如下缺点:
 
-    - Inference of the model can be time consuming.
+    - 它包含的推断过程是非常耗时的。
 
 
-.. topic:: References
+.. topic:: 参考文献
 
- * A good introduction to Bayesian methods is given in C. Bishop: Pattern
+ * 一个对于贝叶斯方法的很好的介绍 C. Bishop: Pattern
    Recognition and Machine learning
 
- * Original Algorithm is detailed in the  book `Bayesian learning for neural
+ *详细介绍原创算法的一本书 `Bayesian learning for neural
    networks` by Radford M. Neal
 
 .. _bayesian_ridge_regression:
 
-Bayesian Ridge Regression
+贝叶斯岭回归
 -------------------------
 
-:class:`BayesianRidge` estimates a probabilistic model of the
-regression problem as described above.
-The prior for the parameter :math:`w` is given by a spherical Gaussian:
+:class:`贝叶斯岭回归` 利用概率模型估算了上述的回归问题
+先验参数 :math:`w` 通过球面高斯公式给出
 
 .. math:: p(w|\lambda) =
     \mathcal{N}(w|0,\lambda^{-1}\bold{I_{p}})
 
-The priors over :math:`\alpha` and :math:`\lambda` are chosen to be `gamma
-distributions <https://en.wikipedia.org/wiki/Gamma_distribution>`__, the
-conjugate prior for the precision of the Gaussian.
+先验参数 :math:`\alpha` 和 :math:`\lambda`一般是服从 `gamma
+分布 <https://en.wikipedia.org/wiki/Gamma_distribution>`__, 这个分布与高斯成共轭先验关系。
 
-The resulting model is called *Bayesian Ridge Regression*, and is similar to the
-classical :class:`Ridge`.  The parameters :math:`w`, :math:`\alpha` and
-:math:`\lambda` are estimated jointly during the fit of the model.  The
-remaining hyperparameters are the parameters of the gamma priors over
-:math:`\alpha` and :math:`\lambda`.  These are usually chosen to be
-*non-informative*.  The parameters are estimated by maximizing the *marginal
-log likelihood*.
+得到的模型一般称为 *贝叶斯岭回归*， 并且这个与传统的 :class:`Ridge`非常相似。
+  参数 :math:`w`, :math:`\alpha` 和
+:math:`\lambda`是在调模型的时候一起估算出的。 剩下的超参数就是gamma分布的先验了。
+:math:`\alpha` and :math:`\lambda`。  它们一般被选择为
+*没有信息量*。模型参数的估计一般利用 *最大似然对数估计法*。
 
-By default :math:`\alpha_1 = \alpha_2 =  \lambda_1 = \lambda_2 = 10^{-6}`.
+默认 :math:`\alpha_1 = \alpha_2 =  \lambda_1 = \lambda_2 = 10^{-6}`.
 
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_bayesian_ridge_001.png
@@ -538,7 +492,7 @@ By default :math:`\alpha_1 = \alpha_2 =  \lambda_1 = \lambda_2 = 10^{-6}`.
    :scale: 50%
 
 
-Bayesian Ridge Regression is used for regression::
+贝叶斯岭回归用来解决回归问题::
 
     >>> from sklearn import linear_model
     >>> X = [[0., 0.], [1., 1.], [2., 2.], [3., 3.]]
@@ -549,69 +503,65 @@ Bayesian Ridge Regression is used for regression::
            fit_intercept=True, lambda_1=1e-06, lambda_2=1e-06, n_iter=300,
            normalize=False, tol=0.001, verbose=False)
 
-After being fitted, the model can then be used to predict new values::
+等到模型训练完成，可以用来预测新值::
 
     >>> reg.predict ([[1, 0.]])
     array([ 0.50000013])
 
 
-The weights :math:`w` of the model can be access::
+权值 :math:`w` 可以被这样访问::
 
     >>> reg.coef_
     array([ 0.49999993,  0.49999993])
 
-Due to the Bayesian framework, the weights found are slightly different to the
-ones found by :ref:`ordinary_least_squares`. However, Bayesian Ridge Regression
-is more robust to ill-posed problem.
+由于贝叶斯框架的缘故，权值与 :ref:`ordinary_least_squares`产生的不太一样。
+但是，贝叶斯岭回归对病态问题（ill-posed）鲁棒性要更好。
 
-.. topic:: Examples:
+.. topic:: 例子s:
 
  * :ref:`sphx_glr_auto_examples_linear_model_plot_bayesian_ridge.py`
 
-.. topic:: References
+.. topic:: 参考文献
 
-  * More details can be found in the article `Bayesian Interpolation
+  * 更多细节可以参考 `Bayesian Interpolation
     <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.27.9072&rep=rep1&type=pdf>`_
     by MacKay, David J. C.
 
 
 
-Automatic Relevance Determination - ARD
+主动相关决策理论 - ARD
 ---------------------------------------
 
-:class:`ARDRegression` is very similar to `Bayesian Ridge Regression`_,
-but can lead to sparser weights :math:`w` [1]_ [2]_.
-:class:`ARDRegression` poses a different prior over :math:`w`, by dropping the
-assumption of the Gaussian being spherical.
+:class:`主动相关决策理论`和 `贝叶斯岭回归`_ 非常像，
+但是会导致一个更加稀疏的权重 :math:`w` [1]_ [2]_。
+:class:`主动相关决策理论` 提出了一个关于:math:`w`的完全不同的先验假设。具体来说，就是放弃了分布为
+球状高斯模型的假设。
+它采用的，是关于 :math:`w` 轴平行的椭圆高斯分布。
 
-Instead, the distribution over :math:`w` is assumed to be an axis-parallel,
-elliptical Gaussian distribution.
-
-This means each weight :math:`w_{i}` is drawn from a Gaussian distribution,
-centered on zero and with a precision :math:`\lambda_{i}`:
+这就是说，每个权值 :math:`w_{i}` 是由0均值，精确度为 :math:`\lambda_{i}` 的分布中采样得到。
 
 .. math:: p(w|\lambda) = \mathcal{N}(w|0,A^{-1})
 
-with :math:`diag \; (A) = \lambda = \{\lambda_{1},...,\lambda_{p}\}`.
+并且 :math:`diag \; (A) = \lambda = \{\lambda_{1},...,\lambda_{p}\}`.
 
-In contrast to `Bayesian Ridge Regression`_, each coordinate of :math:`w_{i}`
-has its own standard deviation :math:`\lambda_i`. The prior over all
-:math:`\lambda_i` is chosen to be the same gamma distribution given by
-hyperparameters :math:`\lambda_1` and :math:`\lambda_2`.
+与 `贝叶斯岭回归`_不同， 每个 :math:`w_{i}`的坐标有它自己的
+关于方差的系数 :math:`\lambda_i`。这所有的关于方差的系数
+:math:`\lambda_i`  是通过超参数为:math:`\lambda_1` 和 :math:`\lambda_2` 
+的gamma分布选择的。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ard_001.png
    :target: ../auto_examples/linear_model/plot_ard.html
    :align: center
    :scale: 50%
 
-ARD is also known in the literature as *Sparse Bayesian Learning* and
-*Relevance Vector Machine* [3]_ [4]_.
+ARD 也被称为 *稀疏贝叶斯学习* 或
+*相关向量机* [3]_ [4]_.
 
 .. topic:: Examples:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_ard.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     .. [1] Christopher M. Bishop: Pattern Recognition and Machine Learning, Chapter 7.2.1
 
