@@ -28,14 +28,7 @@ Python, Cython 还是 C/C++?
 
 通常来说，scikit-learn 项目强调源码的 **可读性**，以保证项目的使用者们能轻松地深入源码，理解算法是如何在他们的数据上运作的，同时也让项目的可维护性（对于开发者）更佳。
 
-When implementing a new algorithm is thus recommended to **start
-implementing it in Python using Numpy and Scipy** by taking care of avoiding
-looping code using the vectorized idioms of those libraries. In practice
-this means trying to **replace any nested for loops by calls to equivalent
-Numpy array methods**. The goal is to avoid the CPU wasting time in the
-Python interpreter rather than crunching numbers to fit your statistical
-model. It's generally a good idea to consider NumPy and SciPy performance tips:
-http://scipy.github.io/old-wiki/pages/PerformanceTips
+在实现一个新算法时，我们建议：**试着以 Python 借助 Numpy 和 Scipy 实现它**，注意避免循环代码，而改用这些库向量化风格的代码。在实践中这就意味着试着 **把任何嵌套的 for 循环替换为等价的 Numpy 数组方法的调用**。我们的目标是避免 Python 解释器中的 CPU 时间浪费，而不仅仅是处理一堆数字，让他们拟合你的统计模型（译者注：不知道这样翻译对不对，因为我感觉 avoid CPU wasting time 和 crunch numbers to fit your statistical model 并不是两个对立的目的，就翻译成递进的关系）。 通常来说参考 NumPy 和 SciPy 的性能技巧是个不错的主意: http://scipy.github.io/old-wiki/pages/PerformanceTips
 
 但有时一个算法并不能有效地以简单的向量化的 Numpy 代码形式表达。在这种情况下，推荐的方法是这样的：
 
@@ -279,11 +272,7 @@ TODO: 网页报表（译者没搞懂在这里是什么意思），类型声明�
 使用 gprof
 -------------
 
-In order to profile compiled Python extensions one could use ``gprof``
-after having recompiled the project with ``gcc -pg`` and using the
-``python-dbg`` variant of the interpreter on debian / ubuntu: however
-this approach requires to also have ``numpy`` and ``scipy`` recompiled
-with ``-pg`` which is rather complicated to get working.
+在用 ``gcc -pg`` 和在 debian / ubuntu 上通过 ``python-dbg`` 生成的解释器变种重新编译了项目后，你可以用 ``gporf`` 来分析编译过的 Python 扩展：但是这种方法还要求有用 ``-pg`` 重新编译过的 ``numpy`` 和 ``scipy``，而这从某种程度上来说很复杂。
 
 幸运的是，现在已经有两款可替代的分析器，无需重新编译一切就能进行代码分析。
 
