@@ -31,10 +31,10 @@ can predict variables. We can also create combined estimators:
 Face recognition with eigenfaces
 =================================
 
-本证脸技术做人脸识别
+本征脸技术做人脸识别
 =================================
 
-该实例用到的数据集是来自LFW_(Labeled Faces in the Wild)通过预处理后数据。
+该实例用到的数据集来自LFW_(Labeled Faces in the Wild)。数据已经进行了初步预处理。
   http://vis-www.cs.umass.edu/lfw/lfw-funneled.tgz (233MB)
 
 The dataset used in this example is a preprocessed excerpt of the
@@ -67,7 +67,7 @@ The dataset used in this example is a preprocessed excerpt of the
 
      - **Eigenfaces**
 
-数据集中前5名最有代表的人的预期结果：
+数据集中前5名最有代表性样本的预期结果：
 
 Expected results for the top 5 most represented people in the dataset::
 

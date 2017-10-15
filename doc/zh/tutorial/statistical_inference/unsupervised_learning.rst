@@ -323,7 +323,7 @@ direction: one of the three univariate features can almost be exactly
 computed using the other two. PCA finds the directions in which the data is
 not *flat*
 
-当用主成分分析(PCA)来转换数据时，可以通过在主要子空间上投影来降低数据的维数。
+当用主成分分析(PCA)来转换数据时，可以通过在子空间上投影来降低数据的维数。
 When used to *transform* data, PCA can reduce the dimensionality of the
 data by projecting on a principal subspace.
 
@@ -359,7 +359,7 @@ Independent Component Analysis: ICA
 独立成分分析: ICA
 -------------------------------------
 
-:ref:`ICA`可以提取数据信息中的独立成分，这些成分载荷的分布包含了主居中最多的
+:ref:`ICA`可以提取数据信息中的独立成分，这些成分载荷的分布包含了最多的
 的独立信息。该方法能够恢复非高斯独立信号。
 
 :ref:`ICA` selects components so that the distribution of their loadings carries

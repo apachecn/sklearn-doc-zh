@@ -37,7 +37,7 @@ Q&A communities with Machine Learning practitioners
 
   
   :Stack Exchange:
-    Stack Exchange系列网站托管机器学习问题的多个分支。
+    Stack Exchange系列网站包含机器学习问题的多个分支。
 
   :Stack Exchange:
 
