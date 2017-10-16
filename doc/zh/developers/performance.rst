@@ -9,11 +9,8 @@
 .. note::
   
   尽管分析代码进而 **检查代码的性能** 往往是有价值的，但在你投入代价高昂的对算法实现的优化工作之前，我们仍然强力推荐你先 **查阅相关文献**，以保证对于当前的任务来说，已经实现的算法是当前为止最先进的。
-
-  Times and times, hours of efforts invested in optimizing complicated
-  implementation details have been rendered irrelevant by the subsequent
-  discovery of simple **algorithmic tricks**, or by using another algorithm
-  altogether that is better suited to the problem.
+  
+  有多少次，不论后来发现了怎样简单的算法技巧，或者对于问题有怎样更合适的替代算法可以全部使用（译者注：这里全部的意思应该是使用整个算法而非拆出其中一小部分使用），无数的努力都被投入在复杂的算法实现细节的优化中。
 
   
 
@@ -43,7 +40,7 @@ Python, Cython 还是 C/C++?
      
   4. **将函数的 Python版本放入测试中** ，来检验编译扩展产生的结果是否与高度标准的，易调试的 Python 版本一致。
      
-  5. 一旦确定代码是已经优化过的 （通过代码分析无法找到一般的性能瓶颈），就应该确定能否用 ``joblib.Parallel`` 类实现具有 **粗粒度并行性** 的            **多进程处理**。
+  5. 一旦确定代码是已经优化过的（通过代码分析无法找到一般的性能瓶颈），就应该确定能否用 ``joblib.Parallel`` 类实现具有 **粗粒度并行性** 的            **多进程处理**。
 
 在使用 Cython 时，用以下指令之一
 
@@ -52,9 +49,7 @@ Python, Cython 还是 C/C++?
 
 来生成 C 文件。你需要自行在各个子模块的 ``setup.py`` 中添加 .c/.cpp 扩展名和构建参数。
 
-C/C++ generated files are embedded in distributed stable packages. The goal is
-to make it possible to install scikit-learn stable version
-on any machine with Python, Numpy, Scipy and C/C++ compiler.
+在我们发布的稳定版本中（译者注：不确定这里是发布的版本还是分布式版本）都嵌入有 C/C++ 生成文件。这样做的目标是使 scikit-learn 的稳定版本在任何带有 Python, Numpy, Scipy 和 C/C++ 编译器的机器上都可以进行安装。
 
 .. _profiling-python-code:
 
