@@ -1,6 +1,6 @@
 
 ==========================================================================
-Statistical learning: the setting and the estimator object in scikit-learn
+机器学习：scikit-learn中的设置以及拟合模型
 ==========================================================================
 
 数据集
@@ -43,7 +43,7 @@ Scikit-learn从可以从一个或者多个数据集中学习信息，这些数�
         >>> data = digits.images.reshape((digits.images.shape[0], -1))
 
 
-Estimators objects
+拟合模型（Estimators objects）
 ===================
 
 .. Some code to make the doctests run
@@ -57,26 +57,18 @@ Estimators objects
    ...          pass
    >>> estimator = Estimator()
 
-**Fitting data**: the main API implemented by scikit-learn is that of the
-`estimator`. An estimator is any object that learns from data;
-it may be a classification, regression or clustering algorithm or
-a *transformer* that extracts/filters useful features from raw data.
+**拟合数据**: scikit-learn实现最重要的一个API是`estimator`。拟合模型（estimators object）可以基于数据进行学习，拟合模型可以是一个分类器，回归或者是一个聚类算法，或者只是一个*映射*关系。
 
-All estimator objects expose a ``fit`` method that takes a dataset
-(usually a 2-d array):
+所有的拟合模型对象拥有一个名为``fit``的方法，参数是一个数据集（通常是一个2维列表）:
 
     >>> estimator.fit(data)
 
-**Estimator parameters**: All the parameters of an estimator can be set
-when it is instantiated or by modifying the corresponding attribute::
+**拟合模型对象构造参数**: 在创建一个拟合模型时，可以设置相关参数，在创建之后也可以修改对应的参数::
 
     >>> estimator = Estimator(param1=1, param2=2)
     >>> estimator.param1
     1
 
-**Estimated parameters**: When data is fitted with an estimator,
-parameters are estimated from the data at hand. All the estimated
-parameters are attributes of the estimator object ending by an
-underscore::
+**拟合参数**: 当拟合模型完成对数据的拟合之后，可以从拟合模型中获取拟合的参数结果，所有拟合完成的参数均以下划线(_)作为结尾::
 
     >>> estimator.estimated_param_ #doctest: +SKIP
