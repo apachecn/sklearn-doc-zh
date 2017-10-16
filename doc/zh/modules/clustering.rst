@@ -338,7 +338,7 @@ SpectralClustering 需要指定聚类数。这个算法适用于聚类数少时�
 
 .. centered:: |noisy_img| |segmented_img|
 
-.. 提示:: Transforming distance to well-behaved similarities
+.. warning:: Transforming distance to well-behaved similarities
  
     请注意，如果你的相似矩阵的值分布不均匀，例如：存在负值或者距离矩阵并不表示相似性
     spectral problem 将会变得奇异，并且不能解决。
@@ -449,7 +449,7 @@ Agglomerative cluster 存在 "rich get richer" 现象导致聚类大小不均匀
 是最坏的策略，Ward 给出了最规则的大小。然而，在 Ward 中 affinity (or distance used in clustering) 
 不能被改变，对于 non Euclidean metrics 来说 average linkage 是一个好的选择。
 
-.. topic示例:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_cluster_plot_digits_linkage.py`: exploration of the
    different linkage strategies in a real dataset.
