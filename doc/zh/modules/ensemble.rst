@@ -24,7 +24,7 @@
 
 .. _bagging:
 
-Bagging元估计(Bagging meta-estimator)
+Bagging meta-estimator(Bagging元估计)
 ======================
 
 在集成算法中，bagging方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
@@ -33,7 +33,7 @@ Bagging元估计(Bagging meta-estimator)
 因为bagging方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下boosting方法在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
 
 
-bagging方法有很多种，区别大多数在于抽取训练子集的方法：
+bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
   * 如果抽取的数据集是样本的的子集，我们叫做粘贴(Pasting) [B1999]_ 。
 
@@ -693,7 +693,7 @@ GBRT可以认为是下面形式的加法模型:
    accounting for the initial model; partial dependence plots
    do not include the ``init`` model.
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_partial_dependence.py`
 
@@ -712,44 +712,37 @@ GBRT可以认为是下面形式的加法模型:
 
  .. _voting_classifier:
 
-Voting Classifier
-========================
+Voting Classifier (投票分类器)
+=============================
 
-The idea behind the :class:`VotingClassifier` is to combine
-conceptually different machine learning classifiers and use a majority vote
-or the average predicted probabilities (soft vote) to predict the class labels.
-Such a classifier can be useful for a set of equally well performing model
-in order to balance out their individual weaknesses.
+:class:`VotingClassifier` （投票分类器）的原理是结合了多个不同的机器学习分类器，并且采用 majority vote （多数表决）的方式或者 soft vote （平均预测概率）的方式来预测类标签。这样的分类器（指 Voting Classifier）可以用于一组 equally well performing model （同样出色的模型），以平衡它们各自的弱点。
 
 
-Majority Class Labels (Majority/Hard Voting)
+Majority Class Labels （多数类标签） (也叫 Majority/Hard Voting)
 --------------------------------------------
 
-In majority voting, the predicted class label for a particular sample is
-the class label that represents the majority (mode) of the class labels
-predicted by each individual classifier.
+majority vote(采用多数投票)的时候，特定样本的预测类标签是每个分类器预测的类标签中占据多数的那个类标签。
 
-E.g., if the prediction for a given sample is
+举个例子, 如果给定一个样本进行预测
 
-- classifier 1 -> class 1
-- classifier 2 -> class 1
-- classifier 3 -> class 2
+- 分类器 1 预测得到的结果是 类别 1
+- 分类器 2 预测得到的结果是 类别 1
+- 分类器 3 预测得到的结果是 类别 2
 
-the VotingClassifier (with ``voting='hard'``) would classify the sample
-as "class 1" based on the majority class label.
+类别 1 占据多数，所以 VotingClassifier (投票分类器)使用 ``voting='hard'`` ，即 majority vote (多数表决)的方式，会得到该样本的预测结果是类别 1。
 
-In the cases of a tie, the `VotingClassifier` will select the class based
-on the ascending sort order. E.g., in the following scenario
+如果得到的票数最多的类标签不止一个，VotingClassifier(投票分类器)会按照类标签升序排序的结果，选择靠前的类标签。
+举个例子，在下边的场景中:
 
-- classifier 1 -> class 2
-- classifier 2 -> class 1
+- 分类器1 预测得到的结果是 类别2
+- 分类器2 预测得到的结果是 类别1
 
-the class label 1 will be assigned to the sample.
+这种情况下，该样本的预测结果会是类别1。
 
-Usage
+Usage (用法)
 .....
 
-The following example shows how to fit the majority rule classifier::
+下边这个示例程序说明了如何去 fit (拟合)、去构建一个采用 majority vote (多数表决)方法的分类器::
 
    >>> from sklearn import datasets
    >>> from sklearn.model_selection import cross_val_score
@@ -776,40 +769,31 @@ The following example shows how to fit the majority rule classifier::
    Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
 
-Weighted Average Probabilities (Soft Voting)
+Weighted Average Probabilities（加权平均概率） (也叫 Soft Voting)
 --------------------------------------------
 
-In contrast to majority voting (hard voting), soft voting
-returns the class label as argmax of the sum of predicted probabilities.
+与多数表决 (majority voting / hard voting) 的方法相反，采用加权平均概率的方法得到的是预测概率值总和最大的那一个类标签。
 
-Specific weights can be assigned to each classifier via the ``weights``
-parameter. When weights are provided, the predicted class probabilities
-for each classifier are collected, multiplied by the classifier weight,
-and averaged. The final class label is then derived from the class label
-with the highest average probability.
+可以通过参数 ``weights`` 来给每个分类器分配一个特定的权重。
+当提供参数 ``weights`` 时，每个分类器的预测类概率需要乘以分类器权重并平均化。
+最后得到的类标签采用拥有最高平均概率的类标签。
 
-To illustrate this with a simple example, let's assume we have 3
-classifiers and a 3-class classification problems where we assign
-equal weights to all classifiers: w1=1, w2=1, w3=1.
+用一个简单的例子来说明上述这个方法。假设现在有一个分类问题，可供选择的类标签有 3 个，我们有 3 个分类器，在这里我们给这三个分类器分配相同的权重：w1=1, w2=1, w3=1.
 
-The weighted average probabilities for a sample would then be
-calculated as follows:
+如下所示，针对一个特定的样本输入，来计算加权平均概率：
 
 ================  ==========    ==========      ==========
-classifier        class 1       class 2         class 3
+  分类器            类别 1         类别 2          类别 3
 ================  ==========    ==========      ==========
-classifier 1	  w1 * 0.2      w1 * 0.5        w1 * 0.3
-classifier 2	  w2 * 0.6      w2 * 0.3        w2 * 0.1
-classifier 3      w3 * 0.3      w3 * 0.4        w3 * 0.3
-weighted average  0.37	        0.4             0.23
+  分类器 1          w1 * 0.2      w1 * 0.5        w1 * 0.3
+  分类器 2          w2 * 0.6      w2 * 0.3        w2 * 0.1
+  分类器 3          w3 * 0.3      w3 * 0.4        w3 * 0.3
+ 加权平均的结果       0.37	   0.4             0.23
 ================  ==========    ==========      ==========
 
-Here, the predicted class label is 2, since it has the
-highest average probability.
+这里可以看出，预测的类标签是类别 2，因为它有 highest average probability (最大的平均概率)。
 
-The following example illustrates how the decision regions may change
-when a soft `VotingClassifier` is used based on an linear Support
-Vector Machine, a Decision Tree, and a K-nearest neighbor classifier::
+下边的示例程序说明了当加权平均概率(也叫 soft voting )是基于 linear SupportVector Machine (线性支持向量机)、Decision Tree(决策树)、K-nearest neighbor(K近邻)这三种分类器的时候，decision regions (决策域) 可能会变化:
 
    >>> from sklearn import datasets
    >>> from sklearn.tree import DecisionTreeClassifier
@@ -839,11 +823,10 @@ Vector Machine, a Decision Tree, and a K-nearest neighbor classifier::
     :align: center
     :scale: 75%
 
-Using the `VotingClassifier` with `GridSearch`
+Using the `VotingClassifier` with `GridSearch` (网格搜索下的投票分类器)
 ----------------------------------------------
 
-The `VotingClassifier` can also be used together with `GridSearch` in order
-to tune the hyperparameters of the individual estimators::
+为了调整每个 estimators 的 hyperparameters ，`VotingClassifier` 可以和 `GridSearch` 一起使用::
 
    >>> from sklearn.model_selection import GridSearchCV
    >>> clf1 = LogisticRegression(random_state=1)
@@ -856,15 +839,13 @@ to tune the hyperparameters of the individual estimators::
    >>> grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
    >>> grid = grid.fit(iris.data, iris.target)
 
-Usage
+Usage (用法)
 .....
 
-In order to predict the class labels based on the predicted
-class-probabilities (scikit-learn estimators in the VotingClassifier
-must support ``predict_proba`` method)::
+根据预测的类概率来预测类标签(在 VotingClassifier 中的 scikit-learn estimators 必须支持 ``predict_proba`` 函数方法)::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft')
 
-Optionally, weights can be provided for the individual classifiers::
+可选地，也可以为单个分类器提供权重::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft', weights=[2,5,1])

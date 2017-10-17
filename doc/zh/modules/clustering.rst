@@ -231,29 +231,27 @@ AP聚类算法主要的缺点是算法的复杂度. AP聚类算法的时间复�
    Financial time series to find groups of companies
 
 
-**算法描述:**
-样本之间传递的信息有两种。 第一种是 responsibility（吸引信息） :math:`r(i, k)`,
-样本:math:`k`适合作为样本 :math:`i`的聚类中心的程度。
+**Algorithm description(算法描述):**
+样本之间传递的信息有两种。 第一种是 responsibility(吸引信息) :math:`r(i, k)`, 样本 :math:`k` 适合作为样本 :math:`i` 的聚类中心的程度。
 
-第二种是 availability（归属信息） :math:`a(i, k)`样本:math:`i`
-选择样本:math:`k` 作为聚类中心的适合程度,并且考虑其他所有样本选取:math:`k` 做为聚类中心的合适程度。
-通过这个方法，选取示例样本作为聚类中心如果（1）该样本与其许多样本相似，并且（2）被许多样本选取
+第二种是 availability(归属信息) :math:`a(i, k)` 样本 :math:`i` 选择样本 :math:`k` 作为聚类中心的适合程度,并且考虑其他所有样本选取 :math:`k` 做为聚类中心的合适程度。
+通过这个方法，选取示例样本作为聚类中心如果 (1) 该样本与其许多样本相似，并且 (2) 被许多样本选取
 为它们自己的示例样本。
 
-样本 :math:`k`对样本 :math:`i` 吸引度计算公式:
+样本 :math:`k` 对样本 :math:`i` 吸引度计算公式:
 
 .. math::
 
     r(i, k) \leftarrow s(i, k) - max [ a(i, k') + s(i, k') \forall k' \neq k ]
 
-其中 :math:`s(i, k)` 是样本 :math:`i` 和样本 :math:`k`之间的相似度。
+其中 :math:`s(i, k)` 是样本 :math:`i` 和样本 :math:`k` 之间的相似度。
 样本 :math:`k` 作为样本 :math:`i` 的示例样本的合适程度:
 
 .. math::
 
     a(i, k) \leftarrow min [0, r(k, k) + \sum_{i'~s.t.~i' \notin \{i, k\}}{r(i', k)}]
 
-算法开始时 :math:`r` and :math:`a` 都被置0,然后开始迭代计算直到收敛。
+算法开始时 :math:`r` 和 :math:`a` 都被置 0,然后开始迭代计算直到收敛。
 为了防止更新数据时出现数据振荡，在迭代过程中引入阻尼因子 :math:`\lambda` :
 
 .. math:: r_{t+1}(i, k) = \lambda\cdot r_{t}(i, k) + (1-\lambda)\cdot r_{t+1}(i, k)
@@ -281,7 +279,7 @@ near-duplicates to form the final set of centroids.
 
 其中 :math:`N(x_i)` 是围绕 :math:`x_i` 周围一个给定距离范围内的样本空间 
 and :math:`m` 是  *mean shift* vector（均值偏移向量） 是所有质心中指向
-点密度增加最多的区域的偏移向量。使用以下等式计算，有效地将质心更新为其邻域内样本的平均值：
+点密度增加最多的区域的偏移向量。使用以下等式计算，有效地将质心更新为其邻域内样本的平均值:
 
 .. math::
 
@@ -323,8 +321,8 @@ Spectral clustering
 如果亲和度矩阵稀疏，则这是非常有效的并且`pyamg <http://pyamg.org/>`_ module 以及安装好。
 SpectralClustering 需要指定聚类数。这个算法适用于聚类数少时，在聚类数多是不建议使用。
 
-对于两个聚类，它解决了相似图上的`normalised cuts <http://people.eecs.berkeley.edu/~malik/papers/SM-ncut.pdf>`_ problem：
-将图形切割成两个，使得切割的边缘的重量比每个簇内的边缘的权重小。在图像处理时，这个标准是特别有趣的：
+对于两个聚类，它解决了相似图上的`normalised cuts <http://people.eecs.berkeley.edu/~malik/papers/SM-ncut.pdf>`_ problem:
+将图形切割成两个，使得切割的边缘的重量比每个簇内的边缘的权重小。在图像处理时，这个标准是特别有趣的:
 图像的顶点是像素，相似图的边缘是图像的渐变函数。
 
 
@@ -340,7 +338,7 @@ SpectralClustering 需要指定聚类数。这个算法适用于聚类数少时�
 
 .. warning:: Transforming distance to well-behaved similarities
  
-    请注意，如果你的相似矩阵的值分布不均匀，例如：存在负值或者距离矩阵并不表示相似性
+    请注意，如果你的相似矩阵的值分布不均匀，例如:存在负值或者距离矩阵并不表示相似性
     spectral problem 将会变得奇异，并且不能解决。
     在这种情况下，建议对矩阵的 entries 进行转换。比如在符号距离有符号的情况下通常使用 heat kernel::
 
@@ -408,8 +406,8 @@ Hierarchical clustering 是一个常用的聚类算法，它通过不断的合�
 聚类的层次被表示成树（or dendrogram，或者树形图）。树根是拥有所有样本的唯一聚类，叶子是仅有一个样本的聚类。
 请参照 `Wikipedia page <https://en.wikipedia.org/wiki/Hierarchical_clustering>`_ 查看更多细节。
 
-The :class:`AgglomerativeClustering` 使用自下而上的方法进行层次聚类：开始是每一个对象是一个聚类，
-并且聚类别相继合并在一起。 linkage criteria 确定用于合并的策略的度量：
+The :class:`AgglomerativeClustering` 使用自下而上的方法进行层次聚类:开始是每一个对象是一个聚类，
+并且聚类别相继合并在一起。 linkage criteria 确定用于合并的策略的度量:
 
 - **Ward** 最小化所有聚类内的平方差总和。这是一种 variance-minimizing （方差最小化）的优化方向，
   这是与k-means 的目标函数相似的优化方法，但是用 agglomerative hierarchical（聚类分层）的方法处理。
@@ -419,7 +417,7 @@ The :class:`AgglomerativeClustering` 使用自下而上的方法进行层次聚�
 - **Average linkage** 最小化聚类两个聚类中样本距离的平均值。
 
 :class:`AgglomerativeClustering` 在于连接矩阵联合使用时，也可以扩大到大量的样本，但是
-在样本之间没有添加连接约束时，计算代价很大：每一个步骤都要考虑所有可能的合并。
+在样本之间没有添加连接约束时，计算代价很大:每一个步骤都要考虑所有可能的合并。
 
 .. topic:: :class:`FeatureAgglomeration`
 
@@ -475,9 +473,9 @@ Agglomerative cluster 存在 "rich get richer" 现象导致聚类大小不均匀
 
 这些约束对于强加一定的局部结构是很有用的，但是这也使得算法更快，特别是当样本数量巨大时。
 
-连通性的限制是通过连接矩阵来实现的：一个 scipy sparse matrix（稀疏矩阵），仅在一行和
+连通性的限制是通过连接矩阵来实现的:一个 scipy sparse matrix（稀疏矩阵），仅在一行和
 一列的交集处具有应该连接在一起的数据集的索引。这个矩阵可以通过 a-priori information （先验信息）
-构建：例如，你可能通过仅仅将从一个连接指向另一个的链接合并页面来聚类页面。也可以从数据中学习到,
+构建:例如，你可能通过仅仅将从一个连接指向另一个的链接合并页面来聚类页面。也可以从数据中学习到,
  例如使用 :func:`sklearn.neighbors.kneighbors_graph` 限制与最临近的合并 :ref:`this example
 <sphx_glr_auto_examples_cluster_plot_agglomerative_clustering.py>`, 或者使用
  :func:`sklearn.feature_extraction.image.grid_to_graph` 仅合并图像上相邻的像素点，
@@ -635,7 +633,7 @@ CF Nodes 中有一部分子聚类被称为Characteristic Feature subclusters (CF
 
 
 CF Subclusters 保存用于聚类的必要信息，防止将整个输入数据保存在内存中。
-这些信息包括：
+这些信息包括:
 
 - Number of samples in a subcluster（子聚类中样本数）.
 - Linear Sum - A n-dimensional vector holding the sum of all samples（保存所有样本和的n维向量）
