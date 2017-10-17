@@ -173,63 +173,37 @@ Note: the implementation of ``inverse_transform`` in :class:`PCA` with
 
 .. _kernel_PCA:
 
-Kernel PCA
-----------
+Kernel PCA（内核 PCA）
+---------------------
 
-:class:`KernelPCA` is an extension of PCA which achieves non-linear
-dimensionality reduction through the use of kernels (see :ref:`metrics`). It
-has many applications including denoising, compression and structured
-prediction (kernel dependency estimation). :class:`KernelPCA` supports both
-``transform`` and ``inverse_transform``.
+:class:`KernelPCA` 是 PCA 的扩展，通过使用内核实现非线性 dimensionality reduction（降维） (参阅 :ref:`metrics`)。它具有许多应用，包括 denoising（去噪）, compression（压缩） 和 structured prediction（结构预测） (kernel dependency estimation（内核依赖估计）)。 :class:`KernelPCA` 支持 ``transform`` 和 ``inverse_transform`` 。
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_kernel_pca_001.png
     :target: ../auto_examples/decomposition/plot_kernel_pca.html
     :align: center
     :scale: 75%
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_kernel_pca.py`
 
 
 .. _SparsePCA:
 
-Sparse principal components analysis (SparsePCA and MiniBatchSparsePCA)
------------------------------------------------------------------------
+稀疏主成分分析（Sparse principal components analysis） (SparsePCA 和 MiniBatchSparsePCA)
+---------------------------------------------------------------------------------------
 
-:class:`SparsePCA` is a variant of PCA, with the goal of extracting the
-set of sparse components that best reconstruct the data.
+:class:`SparsePCA` 是 PCA 的一个变体，目的是提取能重建数据的 sparse components （稀疏组件）集合。
 
-Mini-batch sparse PCA (:class:`MiniBatchSparsePCA`) is a variant of
-:class:`SparsePCA` that is faster but less accurate. The increased speed is
-reached by iterating over small chunks of the set of features, for a given
-number of iterations.
+Mini-batch sparse PCA（小批量稀疏 PCA） (:class:`MiniBatchSparsePCA`) 是一个 :class:`SparsePCA` 的变种，速度更快，但不太准确。通过迭代一组特征的 small chunks （小块）来达到增加的速度，对于给定的迭代次数。
 
 
-Principal component analysis (:class:`PCA`) has the disadvantage that the
-components extracted by this method have exclusively dense expressions, i.e.
-they have non-zero coefficients when expressed as linear combinations of the
-original variables. This can make interpretation difficult. In many cases,
-the real underlying components can be more naturally imagined as sparse
-vectors; for example in face recognition, components might naturally map to
-parts of faces.
+Principal component analysis（主成分分析） (:class:`PCA`) 的缺点在于，通过该方法提取的成分具有唯一的密集表达式，即当表示为原始变量的线性组合时，它们具有非零系数。这可以使解释变得困难。在许多情况下，真正的基础组件可以更自然地想象为稀疏向量; 例如在面部识别中，组件可能自然地映射到面部的部分。
 
-Sparse principal components yields a more parsimonious, interpretable
-representation, clearly emphasizing which of the original features contribute
-to the differences between samples.
+Sparse principal components（稀疏的主成分）产生更简洁，可解释的表示，明确强调哪些 original features （原始特征）有助于样本之间的差异。
 
-The following example illustrates 16 components extracted using sparse PCA from
-the Olivetti faces dataset.  It can be seen how the regularization term induces
-many zeros. Furthermore, the natural structure of the data causes the non-zero
-coefficients to be vertically adjacent. The model does not enforce this
-mathematically: each component is a vector :math:`h \in \mathbf{R}^{4096}`, and
-there is no notion of vertical adjacency except during the human-friendly
-visualization as 64x64 pixel images. The fact that the components shown below
-appear local is the effect of the inherent structure of the data, which makes
-such local patterns minimize reconstruction error. There exist sparsity-inducing
-norms that take into account adjacency and different kinds of structure; see
-[Jen09]_ for a review of such methods.
-For more details on how to use Sparse PCA, see the Examples section, below.
+以下示例说明了使用 Olivetti faces dataset 中的稀疏 PCA 提取的 16 个 components （组件）。可以看出 regularization term （正则化术语）如何引发许多零。此外，数据的 natural structure （自然结构）导致非零系数 vertically adjacent （垂直相邻）。该模型不会在数学上强制执行: 每个 component （组件）都是一个向量  :math:`h \in \mathbf{R}^{4096}`, 没有 vertical adjacency （垂直相邻性）的概念，除了人类友好的可视化视图为 64x64 像素图像。下面显示的组件出现局部的事实是数据的固有结构的影响，这使得这种局部模式使重建误差最小化。存在考虑到邻接和不同类型结构的稀疏诱导规范; 参见 [Jen09]_ 对这种方法进行审查。
+有关如何使用稀疏 PCA 的更多详细信息，请参阅下面的示例部分。
 
 
 .. |spca_img| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_005.png
@@ -238,10 +212,7 @@ For more details on how to use Sparse PCA, see the Examples section, below.
 
 .. centered:: |pca_img| |spca_img|
 
-Note that there are many different formulations for the Sparse PCA
-problem. The one implemented here is based on [Mrl09]_ . The optimization
-problem solved is a PCA problem (dictionary learning) with an
-:math:`\ell_1` penalty on the components:
+请注意，稀疏 PCA 问题有许多不同的配方。这里实行的是基于 [Mrl09]_ 。解决的优化问题是一个 PCA 问题（dictionary learning（字典学习）），具有 :math:`\ell_1` 对 components （组件）的 penalty （惩罚）:
 
 .. math::
    (U^*, V^*) = \underset{U, V}{\operatorname{arg\,min\,}} & \frac{1}{2}
@@ -250,24 +221,17 @@ problem solved is a PCA problem (dictionary learning) with an
                 0 \leq k < n_{components}
 
 
-The sparsity-inducing :math:`\ell_1` norm also prevents learning
-components from noise when few training samples are available. The degree
-of penalization (and thus sparsity) can be adjusted through the
-hyperparameter ``alpha``. Small values lead to a gently regularized
-factorization, while larger values shrink many coefficients to zero.
+sparsity-inducing（稀疏性诱导） :math:`\ell_1` 规范也可以避免学习成分的噪音降低，而 training samples （训练样本）很少。可以通过超参数 ``alpha`` 来调整惩罚程度（从而减少稀疏度）。小值导致了温和的正则化因式分解，而较大的值将许多系数缩小到零。
 
 .. note::
 
-  While in the spirit of an online algorithm, the class
-  :class:`MiniBatchSparsePCA` does not implement ``partial_fit`` because
-  the algorithm is online along the features direction, not the samples
-  direction.
+  虽然本着在线算法的精神， :class:`MiniBatchSparsePCA` 类不实现 ``partial_fit`` , 因为算法沿特征方向在线，而不是样本方向。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
    * :ref:`sphx_glr_auto_examples_decomposition_plot_faces_decomposition.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
   .. [Mrl09] `"Online Dictionary Learning for Sparse Coding"
      <http://www.di.ens.fr/sierra/pdfs/icml09.pdf>`_
@@ -279,23 +243,13 @@ factorization, while larger values shrink many coefficients to zero.
 
 .. _LSA:
 
-Truncated singular value decomposition and latent semantic analysis
-===================================================================
+Truncated singular value decomposition and latent semantic analysis（截断奇异值分解和潜在语义分析）
+===============================================================================================
 
-:class:`TruncatedSVD` implements a variant of singular value decomposition
-(SVD) that only computes the :math:`k` largest singular values,
-where :math:`k` is a user-specified parameter.
+:class:`TruncatedSVD` 实现了一个奇异值分解（SVD）的变体，它只能计算 :math:`k` 最大的奇异值，其中 :math:`k` 是用户指定的参数。
 
-When truncated SVD is applied to term-document matrices
-(as returned by ``CountVectorizer`` or ``TfidfVectorizer``),
-this transformation is known as
-`latent semantic analysis <http://nlp.stanford.edu/IR-book/pdf/18lsi.pdf>`_
-(LSA), because it transforms such matrices
-to a "semantic" space of low dimensionality.
-In particular, LSA is known to combat the effects of synonymy and polysemy
-(both of which roughly mean there are multiple meanings per word),
-which cause term-document matrices to be overly sparse
-and exhibit poor similarity under measures such as cosine similarity.
+当 truncated SVD （截断的 SVD） 被应用于术语文档矩阵（由 ``CountVectorizer`` 或 ``TfidfVectorizer`` 返回）时，这种转换被称为 `latent semantic analysis <http://nlp.stanford.edu/IR-book/pdf/18lsi.pdf>`_ (LSA), 因为它将这样的矩阵转换为低纬度的 "semantic（语义）" 空间。
+特别地， LSA 已知能够抵抗同义词和多义词的影响（两者大致意味着每个单词有多重含义），这导致术语文档矩阵过度稀疏，并且在诸如余弦相似性的度量下表现出差的相似性。
 
 .. note::
     LSA is also known as latent semantic indexing, LSI,
