@@ -178,7 +178,10 @@ L-BFGS 是近似表示函数的二阶偏导数的 Hessian 矩阵的求解器。 
 数学公式
 ========================
 
-给出一组训练示例 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n` 和 :math:`y_i \in \{0, 1\}`，一个隐藏第一层隐藏神经元 MLP 学习功能 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` 其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}`是模型参数。 :math:`W_1, W_2` 表示输入层的权重隐藏层 和 :math:`b_1, b_2` 表示添加的偏见隐藏层和输出层。 :math:`g(\cdot) : R \rightarrow R` 是激活函数，默认设置为双曲线。 它被赋予，
+给出一组训练示例 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n` 和 :math:`y_i \in \{0, 1\}`，一个隐藏第一层隐藏神经元 MLP 学习功能 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` 其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}` 是模型参数.
+:math:`W_1, W_2` 表示输入层的权重隐藏层 和 :math:`b_1, b_2` 表示添加的偏见隐藏层和输出层.
+:math:`g(\cdot) : R \rightarrow R` 是激活函数，默认设置为双曲线.
+它被赋予，
 
 .. math::
       g(z)= \frac{e^z-e^{-z}}{e^z+e^{-z}}
