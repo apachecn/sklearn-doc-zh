@@ -5,7 +5,7 @@ The Olivetti faces dataset(Olivetti 脸部数据集)
 ==========================
 
 该数据集包含 1992年4月至1994年4月在AT＆T实验室剑桥采集的一组面部图像。
-该:func:`sklearn.datasets.fetch_olivetti_faces` 函数是从AT＆T下载
+该 :func:`sklearn.datasets.fetch_olivetti_faces` 函数是从AT＆T下载
 数据存档的数据获取/缓存函数。
 
 .. _面部图像: http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
