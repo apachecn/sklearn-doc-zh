@@ -19,7 +19,7 @@ returns ready-to-use features, i.e., it is not necessary to use a feature
 extractor.
 
 Usage
------
+--------------------
 
 The :func:`sklearn.datasets.fetch_20newsgroups` function is a data
 fetching / caching functions that downloads the data archive from
