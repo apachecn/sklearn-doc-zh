@@ -2,7 +2,7 @@
 .. _cross_validation:
 
 ===================================================
-交叉验证（Cross-validation）: 评估（衡量）机器学习模型的性能
+交叉验证: 评估（衡量）机器学习模型的性能
 ===================================================
 
 .. currentmodule:: sklearn.model_selection
@@ -154,7 +154,7 @@ validation iterator instead, for instance::
 .. _multimetric_cross_validation:
 
 The cross_validate function and multiple metric evaluation
-----------------------------------------------------------
+----------------------------------------------------------------------
 
 The ``cross_validate`` function differs from ``cross_val_score`` in two ways -
 
@@ -242,7 +242,7 @@ section.
     * :ref:`sphx_glr_auto_examples_model_selection_plot_nested_cross_validation_iris.py`.
 
 交叉验证迭代器
-==========================
+=====================
 
 The following sections list utilities to generate indices
 that can be used to generate dataset splits according to different cross
@@ -251,7 +251,7 @@ validation strategies.
 .. _iid_cv:
 
 交叉验证迭代器--循环遍历数据
-==========================================
+========================================
 
 Assuming that some data is Independent and Identically Distributed (i.i.d.) is
 making the assumption that all samples stem from the same generative process
@@ -272,7 +272,7 @@ devices) it safer to use :ref:`group-wise cross-validation <group_cv>`.
 
 
 K-fold
-------
+------------------
 
 :class:`KFold` divides all the samples in :math:`k` groups of samples,
 called folds (if :math:`k = n`, this is equivalent to the *Leave One
@@ -300,8 +300,8 @@ Thus, one can create the training/test sets using numpy indexing::
   >>> X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 
 
-重复K-折交叉验证
----------------
+重复 K-折交叉验证
+-----------------------
 
 :class:`RepeatedKFold` repeats K-Fold n times. It can be used when one
 requires to run :class:`KFold` n times, producing different splits in
@@ -328,7 +328,7 @@ with different randomization in each repetition.
 
 
 留一交叉验证 (LOO)
--------------------
+--------------------------
 
 :class:`LeaveOneOut` (or LOO) is a simple cross-validation. Each learning
 set is created by taking all the samples except one, the test set being
@@ -386,7 +386,7 @@ fold cross validation should be preferred to LOO.
 
 
 Leave P Out (LPO)
------------------
+-----------------------------
 
 :class:`LeavePOut` is very similar to :class:`LeaveOneOut` as it creates all
 the possible training/test sets by removing :math:`p` samples from the complete
@@ -444,7 +444,7 @@ the proportion of samples on each side of the train / test split.
 
 
 基于类标签、具有分层的交叉验证迭代器
-=====================================================================
+===================================================
 
 Some classification problems can exhibit a large imbalance in the distribution
 of the target classes: for instance there could be several times more negative
@@ -454,7 +454,7 @@ stratified sampling as implemented in :class:`StratifiedKFold` and
 approximately preserved in each train and validation fold.
 
 Stratified k-fold
------------------
+-----------------------------
 
 :class:`StratifiedKFold` is a variation of *k-fold* which returns *stratified*
 folds: each set contains approximately the same percentage of samples of each
@@ -509,7 +509,7 @@ parameter.
 
 
 Group k-fold
-------------
+------------------------
 
 :class:`GroupKFold` is a variation of k-fold which ensures that the same group is
 not represented in both testing and training sets. For example if the data is
@@ -539,7 +539,7 @@ size due to the imbalance in the data.
 
 
 Leave One Group Out
--------------------
+-------------------------------
 
 :class:`LeaveOneGroupOut` is a cross-validation scheme which holds out
 the samples according to a third-party provided array of integer groups. This
@@ -570,7 +570,7 @@ groups could be the year of collection of the samples and thus allow
 for cross-validation against time-based splits.
 
 Leave P Groups Out
-------------------
+------------------------------
 
 :class:`LeavePGroupsOut` is similar as :class:`LeaveOneGroupOut`, but removes
 samples related to :math:`P` groups for each training/test set.
@@ -650,7 +650,7 @@ solution is provided by :class:`TimeSeriesSplit`.
 
 
 Time Series Split
------------------
+----------------------------
 
 :class:`TimeSeriesSplit` is a variation of *k-fold* which
 returns first :math:`k` folds as train set and the :math:`(k+1)` th
@@ -679,7 +679,7 @@ Example of 3-split time series cross-validation on a dataset with 6 samples::
 
 
 A note on shuffling
-===================
+==============================
 
 If the data ordering is not arbitrary (e.g. samples with the same class label
 are contiguous), shuffling it first may be essential to get a meaningful cross-

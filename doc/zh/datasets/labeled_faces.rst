@@ -1,7 +1,7 @@
 .. _labeled_faces_in_the_wild:
 
-The Labeled Faces in the Wild face recognition dataset(带标签的人脸识别数据集 )
-=============================================================================
+带标签的人脸识别数据集
+============================================
 
 这个数据集是一个在互联网上收集的名人的 JPEG 图片集，所有细节都在官方网站上提供:
 
@@ -18,8 +18,8 @@ The Labeled Faces in the Wild face recognition dataset(带标签的人脸识别�
 LFW 数据库中的人脸是从各种在线网站上被这个人脸检测器提取。
 
 
-Usage (用法)
------
+用法
+--------
 
 ``scikit-learn`` 提供两个 loader (加载器)，可以自动下载、缓存、解析元数据文件，解码 JPEG
 并且将 slices 转换成内存映射过的 NumPy 数组(numpy.memmap)。
@@ -93,7 +93,7 @@ Usage (用法)
    University of Massachusetts, Amherst, Technical Report 07-49, October, 2007.
 
 
-Examples（示例）
+示例
 --------------
 
 :ref:`sphx_glr_auto_examples_applications_plot_face_recognition.py`
