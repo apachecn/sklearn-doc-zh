@@ -203,7 +203,7 @@ Linear models: :math:`y = X\beta + \epsilon`
     ...             ).score(diabetes_X_test, diabetes_y_test) for alpha in alphas]) # doctest: +ELLIPSIS
     [0.5851110683883..., 0.5852073015444..., 0.5854677540698..., 0.5855512036503..., 0.5830717085554..., 0.57058999437...]
 
-.. 注意::
+.. note::
 
     捕获拟合参数噪声使得模型不能归纳新的数据称为 `过度拟合 <https://en.wikipedia.org/wiki/Overfitting>`_。岭回归产生的偏差被称为 `正则化 <https://en.wikipedia.org/wiki/Regularization_%28machine_learning%29>`_。
 
@@ -357,7 +357,7 @@ SVMs 可以用于回归 --:class:`SVR`(支持向量回归)--，或者分类 --:c
         max_iter=-1, probability=False, random_state=None, shrinking=True,
         tol=0.001, verbose=False)
 
-.. 警告:: **规格化数据**
+.. warning:: **规格化数据**
 
    对很多估计器来说，包括 SVMs，为每个特征值使用单位标准偏差的数据集，是获得好的预测重要前提。
 
