@@ -23,7 +23,7 @@ Kernel ridge regression (KRR) （内核岭回归）[M2012]_ 由 使用内核方�
    :target: ../auto_examples/plot_kernel_ridge_regression.html
    :align: center
 
-.. topic:: References:
+.. topic:: 参考:
 
     .. [M2012] "Machine Learning: A Probabilistic Perspective"
       Murphy, K. P. - chapter 14.4.3, pp. 492-493, The MIT Press, 2012
