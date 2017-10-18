@@ -52,7 +52,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 
 ## 贡献者
 
-贡献者可自行编辑如下内容.
+贡献者可自行编辑如下内容（排名不分先后）.
 
 ### 0.19.0
 * [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
@@ -60,6 +60,40 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@chenyyx](https://github.com/chenyyx)（Joy yx）
 * [@survivingME](https://github.com/survivingME)（Trembleguy）
 * [@mtobeiyf](https://github.com/mtobeiyf)（Fing）
+* [@Leon-Jin](https://github.com/Leon-Jin)（Leon晋）
+* [@X1aoFang](https://github.com/X1aoFang)（X1aoFang）
+* [@loverollcat](https://github.com/loverollcat)（loverollcat）
+* [@helloheshee](https://github.com/helloheshee)（helloheshee）
+* [@SkyDreamStart](https://github.com/SkyDreamStart)（SkyDreamStart）
+* [@HazekiahWon](https://github.com/HazekiahWon)（Hazekiah Wang）
+* [@201419](https://github.com/201419)（tree）
+* [@busesese](https://github.com/busesese)（wenyi）
+* [@chrzc](https://github.com/chrzc)（changzhicheng）
+* [@Zoctan](https://github.com/Zoctan)（Zoctan）
+* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
+* [@charleschou520](https://github.com/charleschou520)（charleschou520）
+* [@zhangqiking](https://github.com/zhangqiking)（BigBird）
+* [@mikechengwei](https://github.com/mikechengwei)（Mike）
+* [@wodekwan](https://github.com/wodekwan)（wodekwan）
+* [@sehriff](https://github.com/sehriff)（sehriff）
+* [@Kdotm](https://github.com/Kdotm)（kngines）
+* [@patientman](https://github.com/patientman)（YuanMingLiu）
+* [@DamonDay](https://github.com/DamonDay)（DamonDay）
+* [@cszhangbo](https://github.com/cszhangbo)（cszhangbo）
+* [@XingxGit](https://github.com/XingxGit)（XingxGit）
+* [@KrokYin](https://github.com/KrokYin)（KrokYin）
+* [@yw10](https://github.com/yw10)（Andrew Yao）
+* [@GlassyWu](https://github.com/GlassyWu)（glassy）
+* [@PrivateRookie](https://github.com/PrivateRookie)（PrivateRookie）
+* [@linweijiang](https://github.com/linweijiang)（linweijiang）
+* [@jiaqiangbandongg](https://github.com/jiaqiangbandongg)（jiaqiangbandongg）
+* [@supportingvector](https://github.com/supportingvector)（supportingvector）
+* [@stealthsMrs](https://github.com/stealthsMrs)（stealthsMrs）
+* [@lhwlhw90](https://github.com/lhwlhw90)（lhwlhw90）
+* [@sheepmen](https://github.com/sheepmen)（徐鑫）
+* [@guohao916](https://github.com/guohao916)（guohao_dm）
+
+
 
 ### 0.18
 请参阅: [http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
@@ -77,3 +111,4 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [Zeppelin 0.7.2 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030467)
 * [Elasticsearch 5.4 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=4260364)
 * [Kibana 5.2 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=8159377)
+* [Storm 1.1.0 中文文档](http://storm.apachecn.org/releases/cn/1.1.0/)
