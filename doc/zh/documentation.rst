@@ -2,7 +2,7 @@
 
   <div class="container-index">
 
-Documentation of scikit-learn |release|
+scikit-learn |release| 中文文档
 =======================================
 
 .. raw:: html
@@ -12,7 +12,7 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="tutorial/basic/tutorial.html">快速入门</a></h2>
-                    <blockquote>对机器学习问题的简要介绍, 以及如何使用 scikit-learn 来解决这些问题.介绍基本概念和规定.</blockquote>
+                    <blockquote>对机器学习问题的简要介绍, 以及如何使用 scikit-learn 来解决这些问题. 介绍基本概念和约定.</blockquote>
                 </div>
                 <div class="span4 box">
                     <h2><a href="user_guide.html">用户指南</a></h2>
@@ -36,15 +36,15 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="tutorial/index.html">教程</a></h2>
-                    <blockquote>在用于机器学习的领域中的一些 scikit-learn 应用，有用的教程会让开发有所察觉.</blockquote>
+                    <blockquote>针对在机器学习的领域中的一些 scikit-learn 应用, 这些开发的教程可以让您获得一些灵感.</blockquote>
                 </div>
                 <div class="span4 box">
                     <h2><a href="modules/classes.html">API</a></h2>
-                    <blockquote>所有函数和类的确切API, 由 docstrings 给出. API会为所有功能提供预期的类型和允许的特征, 以及可用于算法的所有参数.</blockquote>
+                    <blockquote>所有函数和类的确切 API, 由 docstrings 给出. 该 API 文档会为所有函数提供预期的类型和允许的特征, 以及可用于算法的所有参数.</blockquote>
                 </div>
 
                 <div class="span4 box">
-                    <h2><a href="presentations.html">其他资源</a></h2>
+                    <h2><a href="presentations.html">其它资源</a></h2>
                     <blockquote>传授, 幻灯片等与 scikit-learn 相关的其他信息.</blockquote>
                 </div>
             </div>
@@ -52,12 +52,12 @@ Documentation of scikit-learn |release|
             <!-- row -->
             <div class="row-fluid">
                 <div class="span4 box">
-                    <h2><a href="developers/index.html">发展</a></h2>
-                    <blockquote>关于如何贡献的信息.这还包括高级用户的有用信息, 例如如何构建自己的估计量.</blockquote>
+                    <h2><a href="developers/index.html">开发者</a></h2>
+                    <blockquote>关于如何贡献的信息. 这对高级用户也是很有帮助的, 例如如何构建自己的预估器.</blockquote>
                 </div>
 
                 <div class="span4 box">
-                    <h2><a href="tutorial/machine_learning_map/index.html">学习路线图</a></h2>
+                    <h2><a href="tutorial/machine_learning_map/index.html">流程图</a></h2>
                     <blockquote>机器学习的基本领域的图形概述, 以及在给定情况下使用哪种算法的指导.</blockquote>
                 </div>
                 <div class="span4 box">
@@ -70,6 +70,6 @@ Documentation of scikit-learn |release|
             <div class="row-fluid">
                 <div class="span4 box">
                     <h2><a href="related_projects.html">相关包</a></h2>
-                    <blockquote>Python和相关项目的其他机器学习包.还有一些略微超出范围的算法, 或者尚未完全建立的 scikit-learn 算法.</blockquote>
+                    <blockquote>Python 和相关项目的其他机器学习包. 还有一些对于 scikit-learn 来说是略微超出范围, 或尚未确定的算法.</blockquote>
                 </div>
             </div>

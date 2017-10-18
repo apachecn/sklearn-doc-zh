@@ -94,7 +94,7 @@ value.
    * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`( 使用稀疏特征的文本文档分类 )
 
 
-Ridge Complexity (岭复杂性)
+岭复杂性
 ----------------
 
 这种方法与 :ref:`ordinary_least_squares`(普通最小二乘方法)的复杂度相同.
@@ -105,7 +105,7 @@ Ridge Complexity (岭复杂性)
 .. between these
 
 
-Setting the regularization parameter: generalized Cross-Validation (设置正则化参数：广义交叉验证)
+设置正则化参数：广义交叉验证
 ------------------------------------------------------------------
 
 :class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象的工作方式与 GridSearchCV 相同，只是它默认为 Generalized Cross-Validation(通用交叉验证 GCV)，这是一种有效的留一交叉验证法::
@@ -164,7 +164,7 @@ The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下
       :ref:`l1_feature_selection`(基于L1的特征选择).
 
 
-Setting regularization parameter(设置正则化参数)
+设置正则化参数
 --------------------------------
 
  ``alpha`` 参数控制估计系数的稀疏度。
@@ -188,7 +188,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 .. centered:: |lasso_cv_1| |lasso_cv_2|
 
 
-Information-criteria based model selection(基于信息标准的模型选择)
+基于信息标准的模型选择
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 有多种选择时，估计器 :class:`LassoLarsIC` 建议使用 Akaike information criterion （Akaike 信息准则）（AIC）和 Bayes Information criterion （贝叶斯信息准则）（BIC）。 当使用 k-fold 交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
@@ -203,7 +203,7 @@ Information-criteria based model selection(基于信息标准的模型选择)
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_model_selection.py`(Lasso 型号选择：交叉验证/AIC/BIC)
 
-Comparison with the regularization parameter of SVM(与 SVM 的正则化参数进行比较)
+与 SVM 的正则化参数进行比较
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 根据估计器和模型优化的精确目标函数，在 ``alpha`` 和 SVM 的正则化参数之间是等值的,其中
@@ -211,7 +211,7 @@ Comparison with the regularization parameter of SVM(与 SVM 的正则化参数�
 
 .. _multi_task_lasso:
 
-Multi-task Lasso(多任务 Lasso)
+多任务 Lasso
 ================
 
  :class:`MultiTaskLasso` 是一个线性模型，它联合估计多个回归问题的稀疏系数： ``y`` 是 ``(n_samples, n_tasks)`` 的二维数组，
@@ -389,7 +389,7 @@ Lars算法提供了一个完整的关于参数的路径，并且几乎无代价�
 
 .. _omp:
 
-正交匹配追踪法 (OMP)
+正交匹配追踪法（OMP）
 =================================
 :class:`OrthogonalMatchingPursuit(正交匹配追踪法)` 和 :func:`orthogonal_mp(正交匹配追踪)` 
 使用了OMP算法近似拟合了一个带限制的线性模型，该限制限制了模型的非0系数(例：L0范数)。
@@ -576,7 +576,7 @@ ARD 也被称为 *稀疏贝叶斯学习* 或
 
 .. _Logistic_regression:
 
-Logistic Regression（Logistic 回归）
+逻辑回归
 ===================
 
 逻辑回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，逻辑斯蒂回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
@@ -651,7 +651,7 @@ L1正则                             	"liblinear" or "saga"
 
     .. [7] Aaron Defazio, Francis Bach, Simon Lacoste-Julien: `SAGA: A Fast Incremental Gradient Method With Support for Non-Strongly Convex Composite Objectives. <https://arxiv.org/abs/1407.0202>`_
 
-Stochastic Gradient Descent, SGD（随机梯度下降）
+随机梯度下降, SGD
 =================================
 
 随机梯度下降是拟合线性模型的一个简单而高效的方法。在样本量（和特征数）很大时尤为有用。
@@ -666,8 +666,8 @@ Stochastic Gradient Descent, SGD（随机梯度下降）
 
 .. _perceptron:
 
-Perceptron（感知机）
-==========
+Perceptron（感知器）
+====================
 
 :class:`Perceptron` 是适用于 large scale learning（大规模学习）的一种简单算法。默认地，
 
@@ -682,7 +682,7 @@ Perceptron（感知机）
 .. _passive_aggressive:
 
 Passive Aggressive Algorithms（被动攻击算法）
-=============================
+=============================================
 
 被动攻击算法是大规模学习的一类算法。和感知机类似，它也不需要设置学习率，不过比感知机多出一个正则化参数 ``C`` 。
 
@@ -701,7 +701,7 @@ Passive Aggressive Algorithms（被动攻击算法）
 
 
 稳健回归（Robustness regression）: 处理离群点（outliers）和模型错误
-=====================================================
+===================================================================
 
 稳健回归（robust regression）特别适用于回归模型包含损坏数据（corrupt data）的情况，如离群点或模型中的错误。
 
@@ -776,7 +776,7 @@ Passive Aggressive Algorithms（被动攻击算法）
 .. _ransac_regression:
 
 RANSAC： 随机抽样一致性算法（RANdom SAmple Consensus）
---------------------------------
+--------------------------------======================
 
 随机抽样一致性算法（RANdom SAmple Consensus, RANSAC）利用全体数据中局内点（inliers）的一个随机子集拟合模型。
 
