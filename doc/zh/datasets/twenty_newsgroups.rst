@@ -15,8 +15,8 @@
 用法
 -----
 
- :func:`sklearn.datasets.fetch_20newsgroups` 是一个用于从原始的20个新闻组网址( `20 newsgroups website`_)
-下载数据归档的数据获取/缓存函数，提取``~/scikit_learn_data/20news_home``文件夹中的
+ :func:`sklearn.datasets.fetch_20newsgroups`  是一个用于从原始的20个新闻组网址( `20 newsgroups website`_)
+下载数据归档的数据获取/缓存函数，提取 ``~/scikit_learn_data/20news_home`` 文件夹中的
 归档内容。并且在训练集或测试集文件夹，或者两者上调用函数 :func:`sklearn.datasets.load_files`::
 
   >>> from sklearn.datasets import fetch_20newsgroups
@@ -54,7 +54,7 @@
   >>> newsgroups_train.target[:10]
   array([12,  6,  9,  8,  6,  7,  9,  2, 13, 19])
 
-可以通过将类别列表传给 :func:`sklearn.datasets.fetch_20newsgroups`函数来实现只加载一部分的类别::
+可以通过将类别列表传给 :func:`sklearn.datasets.fetch_20newsgroups` 函数来实现只加载一部分的类别::
 
   >>> cats = ['alt.atheism', 'sci.space']
   >>> newsgroups_train = fetch_20newsgroups(subset='train', categories=cats)
@@ -67,7 +67,7 @@
   >>> newsgroups_train.target[:10]
   array([1, 1, 1, 0, 1, 0, 0, 1, 1, 1])
 
-Converting text to vectors(将文本转换成向量)
+将文本转换成向量
 --------------------------
 
 为了用文本数据训练预测或者聚类模型，首先需要做的是将文本转换成适合统计分析的数值
@@ -96,9 +96,7 @@ Converting text to vectors(将文本转换成向量)
 .. _`20 newsgroups website`: http://people.csail.mit.edu/jrennie/20Newsgroups/
 .. _`TF-IDF`: https://en.wikipedia.org/wiki/Tf-idf
 
-
-Filtering text for more realistic training
-过滤文本进行更加真实的训练
+过滤文本进行更加逼真的训练
 ------------------------------------------
 
 分类器很容易过拟合一个出现在20个新闻组数据中的特定事物，例如新闻组标头。许多分类器有
@@ -117,7 +115,7 @@ Filtering text for more realistic training
   >>> metrics.f1_score(newsgroups_test.target, pred, average='macro')
   0.88213592402729568
 
-( :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`的例子将训练和测试数据混合，
+(:ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py` 的例子将训练和测试数据混合，
 而不是按时间划分，这种情况下，多项式贝叶斯能得到更高的0.88的F分数.你是否还不信任这个分类器的内部实现？)
 
 让我们看看信息量最大一些特征是:
