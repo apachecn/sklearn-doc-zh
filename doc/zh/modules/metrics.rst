@@ -1,6 +1,6 @@
 .. _metrics:
 
-配对矩阵，类别和核函数
+成对的矩阵, 类别和核函数
 ========================================
 
 The :mod:`sklearn.metrics.pairwise` 子模块实现了用于评估成对距离或样本集合之间的联系的实用程序。
@@ -89,7 +89,7 @@ The :mod:`sklearn.metrics.pairwise` 子模块实现了用于评估成对距离�
 
 .. _sigmoid_kernel:
 
-S型核函数
+Sigmoid 核函数
 --------------
 函数 :func:`sigmoid_kernel` 计算两个向量之间的S型核函数.
 S型核函数也被称为双曲切线或者 多层感知机(因为在神经网络领域，它经常被当做激活函数). S型核函数定义为:
@@ -106,7 +106,7 @@ where:
 
 .. _rbf_kernel:
 
-RBF核函数
+RBF 核函数
 ----------
 函数 :func:`rbf_kernel` 计算计算两个向量之间的径向基函数核 (RBF) 。 其定义为:
 
@@ -135,7 +135,7 @@ RBF核函数
 
 .. _chi2_kernel:
 
- 卡方核函数
+卡方核函数
 ------------------
 在计算机视觉应用中训练非线性支持向量机时，卡方核函数是一种非常流行的选择.
  它能以 :func:`chi2_kernel` 计算然后将参数 ``kernel="precomputed"``传递到
@@ -173,7 +173,7 @@ RBF核函数
 
 卡方核函数最常用于可视化词汇的矩形图。
 
-.. topic:: References:
+.. topic:: 参考:
 
     * Zhang, J. and Marszalek, M. and Lazebnik, S. and Schmid, C.
       Local features and kernels for classification of texture and object

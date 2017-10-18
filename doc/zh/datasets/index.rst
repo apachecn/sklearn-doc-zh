@@ -1,7 +1,7 @@
 .. _datasets:
 
 =========================
-Dataset loading utilities（数据集加载工具）
+数据集加载工具
 =========================
 
 .. currentmodule:: sklearn.datasets
@@ -13,8 +13,8 @@ Dataset loading utilities（数据集加载工具）
 这个软件包还具有帮助用户获取更大的数据集的功能，这些数据集通常由机器学习社区使用，用于对来自 'real world' 的数据进行检测算法。
 
 
-General dataset API（通用数据集 API）
-===================
+通用数据集 API
+=======================
 
 对于不同类型的数据集，有三种不同类型的数据集接口。最简单的是样品图像的界面，下面在 :ref:`sample_images` 部分中进行了描述。
 
@@ -24,8 +24,8 @@ General dataset API（通用数据集 API）
 
 数据集还包含一些描述 ``DESCR`` ，一些包含 ``feature_names`` 和 ``target_names``。有关详细信息，请参阅下面的数据集说明
 
-Toy datasets（玩具数据集）
-============
+玩具数据集
+=================
 
 scikit-learn 有一些小型标准数据集，不需要从某个外部网站下载任何文件。
 
@@ -47,7 +47,7 @@ scikit-learn 有一些小型标准数据集，不需要从某个外部网站下�
 
 .. _sample_images:
 
-Sample images（样本图片）
+样本图片
 =============
 
 scikit 还嵌入了几个样本 JPEG 图片公布了通过他们的作者共同授权。这些图像对 test algorithms （测试算法）和 pipeline on 2D data （二维数据管道）是有用的。
@@ -77,17 +77,17 @@ scikit 还嵌入了几个样本 JPEG 图片公布了通过他们的作者共同�
 
 .. _sample_generators:
 
-Sample generators（样本生成器）
+样本生成器
 =================
 
 此外，scikit-learn 包括各种随机样本的生成器，可以用来建立控制的大小和复杂性人工数据集。
 
-Generators for classification and clustering（分类和聚类生成器）
+分类和聚类生成器
 --------------------------------------------
 
 这些生成器产生的特征和相应的离散矩阵目标。
 
-Single label（单标签）
+单标签
 ~~~~~~~~~~~~
 
 :func:`make_blobs` 和 :func:`make_classification` 通过分配每个类的一个或多个正态分布的点的群集创建的多类数据集。 :func:`make_blobs` 提供了更大的控制对于中心和各簇的标准偏差，并用于演示聚类。 :func:`make_classification` 专门通过引入噪声相关，多余的和均匀的特点；多高斯集群每类的特征空间上的线性变换。
@@ -101,8 +101,8 @@ Single label（单标签）
 
 :func:`make_circles` and :func:`make_moons`生成二维二分类数据集时，某些算法的挑战（如质心聚类或线性分类），包括可选的高斯噪声。它们对于可视化是有用的用球面决策边界生成二值分类高斯数据。
 
-Multilabel（多标签）
-~~~~~~~~~~
+多标签
+~~~~~~~~~~~~~~
 
 :func:`make_multilabel_classification` 生成随机样本与多个标签，反映一个 bag of words （词袋）从 mixture of topics（混合的主题画）。每个文档的主题数是从泊松分布中提取的，并且主题本身是从固定的随机分布中提取的。同样地，单词的数目是从泊松图中提取的，用多项式抽取的单词，其中每个主题定义了单词的概率分布。相对于真正的简化包括 bag-of-words mixtures （单词混合包）：
 
@@ -115,8 +115,8 @@ Multilabel（多标签）
    :scale: 50
    :align: center
 
-Biclustering（双聚类）
-~~~~~~~~~~~~
+二分聚类
+~~~~~~~~~~~~~~~
 
 .. autosummary::
 
@@ -127,7 +127,7 @@ Biclustering（双聚类）
    make_checkerboard
 
 
-Generators for regression（回归生成器）
+回归生成器
 -------------------------
 
 :func:`make_regression` 产生回归的目标作为一个可选择的稀疏线性组合的随机特性，噪声。它的信息特征可能是不相关的，或低秩（少数特征占大多数的方差）。
@@ -135,7 +135,7 @@ Generators for regression（回归生成器）
 其他回归生成器产生确定性的随机特征函数。 :func:`make_sparse_uncorrelated` 产生目标为四具有固定系数的线性组合。其他编码明确的非线性关系：:func:`make_friedman1` 通过多项式和正弦相关变换； :func:`make_friedman2` 包括特征相乘与交互；和 :func:`make_friedman3` 类似目标的反正切变换。
 
 
-Generators for manifold learning（流形学习生成器）
+流形学习生成器
 --------------------------------
 
 .. autosummary::
@@ -146,7 +146,7 @@ Generators for manifold learning（流形学习生成器）
    make_s_curve
    make_swiss_roll
 
-Generators for decomposition（生成器分解）
+生成器分解
 ----------------------------
 
 .. autosummary::
@@ -162,8 +162,8 @@ Generators for decomposition（生成器分解）
 
 .. _libsvm_loader:
 
-svmlight / libsvm格式的数据集
-====================================
+Datasets in svmlight / libsvm format
+===================================================
 
 scikit-learn 中有加载svmlight / libsvm格式的数据集的功能函数。此种格式中，每行
 采用如 ``<label> <feature-id>:<feature-value><feature-id>:<feature-value> ...`` 
@@ -198,7 +198,7 @@ scikit-learn 中有加载svmlight / libsvm格式的数据集的功能函数。�
 .. _external_datasets:
 
 从外部数据集加载
-==============================
+=============================================
 
 scikit-learn使用任何存储为numpy数组或者scipy稀疏数组的数值数据。
 其他可以转化成数值数组的类型也可以接受，如pandas中的DataFrame。

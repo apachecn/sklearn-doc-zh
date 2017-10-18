@@ -94,7 +94,7 @@ value.
    * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`( 使用稀疏特征的文本文档分类 )
 
 
-Ridge Complexity (岭复杂性)
+岭复杂性
 ----------------
 
 这种方法与 :ref:`ordinary_least_squares`(普通最小二乘方法)的复杂度相同.
@@ -105,7 +105,7 @@ Ridge Complexity (岭复杂性)
 .. between these
 
 
-Setting the regularization parameter: generalized Cross-Validation (设置正则化参数：广义交叉验证)
+设置正则化参数：广义交叉验证
 ------------------------------------------------------------------
 
 :class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象的工作方式与 GridSearchCV 相同，只是它默认为 Generalized Cross-Validation(通用交叉验证 GCV)，这是一种有效的留一交叉验证法::
@@ -158,13 +158,13 @@ The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下
   * :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`(压缩感知：L1先验(Lasso)的断层扫描重建)
 
 
-.. 注意:: **Feature selection with Lasso(使用 Lasso 进行 Feature 的选择)**
+.. note:: **Feature selection with Lasso(使用 Lasso 进行 Feature 的选择)**
 
       由于 Lasso 回归产生稀疏模型，因此可以用于执行特征选择，详见
       :ref:`l1_feature_selection`(基于L1的特征选择).
 
 
-Setting regularization parameter(设置正则化参数)
+设置正则化参数
 --------------------------------
 
  ``alpha`` 参数控制估计系数的稀疏度。
@@ -188,7 +188,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 .. centered:: |lasso_cv_1| |lasso_cv_2|
 
 
-Information-criteria based model selection(基于信息标准的模型选择)
+基于信息标准的模型选择
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 有多种选择时，估计器 :class:`LassoLarsIC` 建议使用 Akaike information criterion （Akaike 信息准则）（AIC）和 Bayes Information criterion （贝叶斯信息准则）（BIC）。 当使用 k-fold 交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
@@ -203,7 +203,7 @@ Information-criteria based model selection(基于信息标准的模型选择)
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_model_selection.py`(Lasso 型号选择：交叉验证/AIC/BIC)
 
-Comparison with the regularization parameter of SVM(与 SVM 的正则化参数进行比较)
+与 SVM 的正则化参数进行比较
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 根据估计器和模型优化的精确目标函数，在 ``alpha`` 和 SVM 的正则化参数之间是等值的,其中
@@ -211,7 +211,7 @@ Comparison with the regularization parameter of SVM(与 SVM 的正则化参数�
 
 .. _multi_task_lasso:
 
-Multi-task Lasso(多任务 Lasso)
+多任务 Lasso
 ================
 
  :class:`MultiTaskLasso` 是一个线性模型，它联合估计多个回归问题的稀疏系数： ``y`` 是 ``(n_samples, n_tasks)`` 的二维数组，
@@ -389,7 +389,7 @@ Lars算法提供了一个完整的关于参数的路径，并且几乎无代价�
 
 .. _omp:
 
-正交匹配追踪法 (OMP)
+正交匹配追踪法（OMP）
 =================================
 :class:`OrthogonalMatchingPursuit(正交匹配追踪法)` 和 :func:`orthogonal_mp(正交匹配追踪)` 
 使用了OMP算法近似拟合了一个带限制的线性模型，该限制限制了模型的非0系数(例：L0范数)。
@@ -557,7 +557,7 @@ Alpha 在这里也是作为一个变量，通过数据中估计得到.
 ARD 也被称为 *稀疏贝叶斯学习* 或
 *相关向量机* [3]_ [4]_.
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_ard.py`
 
@@ -576,7 +576,7 @@ ARD 也被称为 *稀疏贝叶斯学习* 或
 
 .. _Logistic_regression:
 
-Logistic Regression（Logistic 回归）
+逻辑回归
 ===================
 
 逻辑回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，逻辑斯蒂回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
@@ -651,7 +651,7 @@ L1正则                             	"liblinear" or "saga"
 
     .. [7] Aaron Defazio, Francis Bach, Simon Lacoste-Julien: `SAGA: A Fast Incremental Gradient Method With Support for Non-Strongly Convex Composite Objectives. <https://arxiv.org/abs/1407.0202>`_
 
-Stochastic Gradient Descent, SGD（随机梯度下降）
+随机梯度下降, SGD
 =================================
 
 随机梯度下降是拟合线性模型的一个简单而高效的方法。在样本量（和特征数）很大时尤为有用。
@@ -666,8 +666,8 @@ Stochastic Gradient Descent, SGD（随机梯度下降）
 
 .. _perceptron:
 
-Perceptron（感知机）
-==========
+Perceptron（感知器）
+====================
 
 :class:`Perceptron` 是适用于 large scale learning（大规模学习）的一种简单算法。默认地，
 
@@ -682,7 +682,7 @@ Perceptron（感知机）
 .. _passive_aggressive:
 
 Passive Aggressive Algorithms（被动攻击算法）
-=============================
+=============================================
 
 被动攻击算法是大规模学习的一类算法。和感知机类似，它也不需要设置学习率，不过比感知机多出一个正则化参数 ``C`` 。
 
@@ -701,7 +701,7 @@ Passive Aggressive Algorithms（被动攻击算法）
 
 
 稳健回归（Robustness regression）: 处理离群点（outliers）和模型错误
-=====================================================
+===================================================================
 
 稳健回归（robust regression）特别适用于回归模型包含损坏数据（corrupt data）的情况，如离群点或模型中的错误。
 
@@ -776,7 +776,7 @@ Passive Aggressive Algorithms（被动攻击算法）
 .. _ransac_regression:
 
 RANSAC： 随机抽样一致性算法（RANdom SAmple Consensus）
---------------------------------
+------------------------------------------------------
 
 随机抽样一致性算法（RANdom SAmple Consensus, RANSAC）利用全体数据中局内点（inliers）的一个随机子集拟合模型。
 
@@ -824,62 +824,44 @@ set）预测。
 
 .. _theil_sen_regression:
 
-Theil-Sen estimator: generalized-median-based estimator
---------------------------------------------------------
+Theil-Sen 预估器: 广义中值估计
+-----------------------------------------------------------------------------------------
 
-The :class:`TheilSenRegressor` estimator uses a generalization of the median in
-multiple dimensions. It is thus robust to multivariate outliers. Note however
-that the robustness of the estimator decreases quickly with the dimensionality
-of the problem. It looses its robustness properties and becomes no
-better than an ordinary least squares in high dimension.
+:class:`TheilSenRegressor` 估计器：使用中位数在多个维度推广，因此对多维离散值是有帮助，但问题是，随着维数的增加，估计器的准确性在迅速下降。准确性的丢失，导致在高维上的估计值比不上普通的最小二乘法。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_theilsen.py`
   * :ref:`sphx_glr_auto_examples_linear_model_plot_robust_fit.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
 
-Theoretical considerations
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Theoretical considerations（理论考虑）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:class:`TheilSenRegressor` is comparable to the :ref:`Ordinary Least Squares
-(OLS) <ordinary_least_squares>` in terms of asymptotic efficiency and as an
-unbiased estimator. In contrast to OLS, Theil-Sen is a non-parametric
-method which means it makes no assumption about the underlying
-distribution of the data. Since Theil-Sen is a median-based estimator, it
-is more robust against corrupted data aka outliers. In univariate
-setting, Theil-Sen has a breakdown point of about 29.3% in case of a
-simple linear regression which means that it can tolerate arbitrary
-corrupted data of up to 29.3%.
+:class:`TheilSenRegressor` 媲美 :ref:`Ordinary Least Squares (OLS) <ordinary_least_squares>` （普通最小二乘法（OLS））渐近效率和无偏估计。在对比 OLS, Theil-Sen 是一种非参数方法，这意味着它没有对底层数据的分布假设。由于 Theil-Sen 是基于中位数的估计，它是更适合的对损坏的数据。在单变量的设置，Theil-Sen 在一个简单的线性回归，这意味着它可以容忍任意损坏的数据高达 29.3% 的情况下，约 29.3% 的一个崩溃点。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_theilsen_001.png
    :target: ../auto_examples/linear_model/plot_theilsen.html
    :align: center
    :scale: 50%
 
-The implementation of :class:`TheilSenRegressor` in scikit-learn follows a
-generalization to a multivariate linear regression model [#f1]_ using the
-spatial median which is a generalization of the median to multiple
-dimensions [#f2]_.
+在 scikit-learn 中  :class:`TheilSenRegressor` 实施如下的学习推广到多元线性回归模型 [#f1]_ 利用空间中这是一个概括的中位数多维度 [#f2]_ 。
 
-In terms of time and space complexity, Theil-Sen scales according to
+在时间复杂度和空间复杂度，根据 Theil-Sen 量表
 
 .. math::
     \binom{n_{samples}}{n_{subsamples}}
 
-which makes it infeasible to be applied exhaustively to problems with a
-large number of samples and features. Therefore, the magnitude of a
-subpopulation can be chosen to limit the time and space complexity by
-considering only a random subset of all possible combinations.
+这使得它不适用于大量样本和特征的问题。因此，可以选择一个亚群的大小来限制时间和空间复杂度，只考虑所有可能组合的随机子集。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_theilsen.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     .. [#f1] Xin Dang, Hanxiang Peng, Xueqin Wang and Heping Zhang: `Theil-Sen Estimators in a Multiple Linear Regression Model. <http://home.olemiss.edu/~xdang/papers/MTSE.pdf>`_
 
@@ -887,28 +869,24 @@ considering only a random subset of all possible combinations.
 
 .. _huber_regression:
 
-Huber Regression
-----------------
+Huber Regression（Huber 回归）
+------------------------------
 
-The :class:`HuberRegressor` is different to :class:`Ridge` because it applies a
-linear loss to samples that are classified as outliers.
-A sample is classified as an inlier if the absolute error of that sample is
-lesser than a certain threshold. It differs from :class:`TheilSenRegressor`
-and :class:`RANSACRegressor` because it does not ignore the effect of the outliers
-but gives a lesser weight to them.
+:class:`HuberRegressor` 不同，因为它适用于 :class:`Ridge` 损耗的样品被分类为离群值。如果这个样品的绝对误差小于某一阈值，样品就分为一层。
+它不同于 :class:`TheilSenRegressor` 和 :class:`RANSACRegressor` 因为它无法忽略对离群值的影响，但对它们的权重较小。
 
 .. figure:: /auto_examples/linear_model/images/sphx_glr_plot_huber_vs_ridge_001.png
    :target: ../auto_examples/linear_model/plot_huber_vs_ridge.html
    :align: center
    :scale: 50%
 
-The loss function that :class:`HuberRegressor` minimizes is given by
+这个 :class:`HuberRegressor` 最小化损失函数是由
 
 .. math::
 
   \underset{w, \sigma}{min\,} {\sum_{i=1}^n\left(\sigma + H_m\left(\frac{X_{i}w - y_{i}}{\sigma}\right)\sigma\right) + \alpha {||w||_2}^2}
 
-where
+其中
 
 .. math::
 
@@ -917,7 +895,7 @@ where
          2\epsilon|z| - \epsilon^2, & \text{otherwise}
   \end{cases}
 
-It is advised to set the parameter ``epsilon`` to 1.35 to achieve 95% statistical efficiency.
+建议设置参数 ``epsilon`` 为 1.35 以实现 95% 统计效率。
 
 Notes
 -----

@@ -129,7 +129,7 @@
 .. currentmodule:: sklearn.feature_extraction.text
 
 
-Bags of words（词袋模型）
+词袋模型
 ~~~~~~~~~~~~~
 
 最直接的方法就是用词袋来表示:
@@ -172,7 +172,7 @@ Bags of words（词袋模型）
   方法 ``count_vect.fit_transform`` 表示了两种操作: 学习词汇并将其转换成统计向量。当然也可以将步骤分解开来：首先 ``X_train_counts = count_vect.transform(twenty_train.data)`` ，其次 ``count_vect.fit(twenty_train.data)`` ，但是这样做的话需要进行两次操作.
 
 
-From occurrences to frequencies（从出现次数到词频）
+从出现次数到词频
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 出现次数的统计是非常好的想法，但是有一些问题：长的文本相对于短的文本有更高的平均单词出现次数，尽管都是描述的同一个主题。
@@ -225,8 +225,8 @@ From occurrences to frequencies（从出现次数到词频）
   'OpenGL on the GPU is fast' => comp.graphics
 
 
-建一条管道
--------------------
+建一条 Pipeline（管道）
+-----------------------
 
 为了使得向量化 => 预处理 => 分类器 过程更加简单,``scikit-learn`` 提供了 一个 ``管道`` 来融合成一个混合模型::
 
@@ -352,7 +352,7 @@ From occurrences to frequencies（从出现次数到词频）
   ``GridSearchCV`` 对象也保存了最好的分类器保存在 ``best_estimator_`` 属性中。 在这个例子中, 训练一个仅仅有 400 个文档的子数据集没有什么效果的。
 
 
-Exercises（练习）
+练习
 ~~~~~~~~~
 
 为了做这个练习, 请拷贝 'skeletons' 文件夹到新的文件夹并命名为 'workspace'::

@@ -3,7 +3,7 @@
 ==================
 随机投影
 ==================
-.. 当前模块:: sklearn.random_projection
+.. currentmodule:: sklearn.random_projection
 
 :mod:`sklearn.random_projection` 模块实现了一个简单且高效率的计算方式来减少数据维度，通过牺牲一定的精度（作为附加变量）来加速处理时间及更小的模型尺寸。
 这个模型实现了两类无结构化的随机矩阵:
@@ -30,7 +30,7 @@
 
 .. _johnson_lindenstrauss:
 
-Johnson-Lindenstrauss 引理
+Johnson-Lindenstrauss 辅助定理
 ===============================
 
 支撑随机投影效率的主要理论成果是`Johnson-Lindenstrauss lemma (quoting Wikipedia)

@@ -1,9 +1,9 @@
 =========================
-Putting it all together
+把它们放在一起
 =========================
 
 
-Pipelining（模型管道化）
+模型管道化
 ============
 
 我们已经知道一些模型可以做数据转换，一些模型可以用来预测变量。我们可以建立一个组合模型同时完成以上工作:
@@ -16,7 +16,7 @@ Pipelining（模型管道化）
 .. literalinclude:: ../../auto_examples/plot_digits_pipe.py
     :lines: 23-63
 
-Face recognition with eigenfaces（本征脸技术做人脸识别）
+用特征面进行人脸识别
 =================================
 
 该实例用到的数据集来自 LFW_(Labeled Faces in the Wild)。数据已经进行了初步预处理
@@ -61,7 +61,7 @@ Face recognition with eigenfaces（本征脸技术做人脸识别）
         avg / total       0.86      0.84      0.85       282
 
 
-Open problem: Stock Market Structure（开放性问题: 股票市场结构）
+开放性问题: 股票市场结构
 =====================================
 
 我们可以预测 Google 在特定时间段内的股价变动吗？

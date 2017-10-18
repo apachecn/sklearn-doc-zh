@@ -1,7 +1,7 @@
 .. _cross_decomposition:
 
 ===================
-Cross decomposition（交叉分解）
+交叉分解
 ===================
 
 .. currentmodule:: sklearn.cross_decomposition

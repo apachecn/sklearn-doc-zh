@@ -23,12 +23,12 @@
 
 .. _scoring_parameter:
 
-``scoring`` 参数: defining model evaluation rules（定义模型评估规则）
+``scoring`` 参数: 定义模型评估规则
 ==========================================================
 
 Model selection （模型选择）和 evaluation （评估）使用工具，例如 :class:`model_selection.GridSearchCV` 和 :func:`model_selection.cross_val_score` ，采用 ``scoring`` 参数来控制它们对 estimators evaluated （评估的估计量）应用的指标。
 
-常见场景: predefined values（预定义值）
+常见场景: 预定义值
 -------------------------------
 
 对于最常见的用例, 您可以使用 ``scoring`` 参数指定一个 scorer object （记分对象）; 下表显示了所有可能的值。
@@ -93,7 +93,7 @@ Scoring（得分）                    Function（函数）                     
 
 .. _scoring:
 
-Defining your scoring strategy from metric functions（根据 metric 函数定义您的评分策略）
+根据 metric 函数定义您的评分策略
 -----------------------------------------------------
 
 模块 :mod:`sklearn.metrics` 还公开了一组 measuring a prediction error （测量预测误差）的简单函数，给出了基础真实的数据和预测:
@@ -150,7 +150,7 @@ Defining your scoring strategy from metric functions（根据 metric 函数定�
 
 .. _diy_scoring:
 
-Implementing your own scoring object（实现自己的记分对象）
+实现自己的记分对象
 ------------------------------------
 您可以通过从头开始构建自己的 scoring object （记分对象），而不使用 :func:`make_scorer` factory 来生成更加灵活的 model scorers （模型记分对象）。
 对于被叫做 scorer 来说，它需要符合以下两个规则所指定的协议:
@@ -162,7 +162,7 @@ Implementing your own scoring object（实现自己的记分对象）
 
 .. _multimetric_scoring:
 
-Using multiple metric evaluation（使用多个指数评估）
+使用多个指数评估
 --------------------------------
 
 Scikit-learn 还允许在 ``GridSearchCV``, ``RandomizedSearchCV`` 和 ``cross_validate`` 中评估 multiple metric （多个指数）。
@@ -203,7 +203,7 @@ Scikit-learn 还允许在 ``GridSearchCV``, ``RandomizedSearchCV`` 和 ``cross_v
 
 .. _classification_metrics:
 
-Classification metrics （分类指标）
+分类指标
 =======================
 
 .. currentmodule:: sklearn.metrics
@@ -269,7 +269,7 @@ Classification metrics （分类指标）
 
 在以下小节中，我们将介绍每个这些功能，前面是一些关于通用 API 和 metric 定义的注释。
 
-From binary to multiclass and multilabel（从二分到多分类和 multilabel）
+从二分到多分类和 multilabel
 ----------------------------------------
 
 一些 metrics 基本上是为 binary classification tasks （二分类任务）定义的 (例如 :func:`f1_score`, :func:`roc_auc_score`) 。在这些情况下，默认情况下仅评估 positive label （正标签），假设默认情况下，positive label （正类）标记为 ``1`` （尽管可以通过 ``pos_label`` 参数进行配置）。
@@ -291,8 +291,8 @@ From binary to multiclass and multilabel（从二分到多分类和 multilabel�
 
 .. _accuracy_score:
 
-Accuracy score（精确度得分）
---------------
+精确度得分
+-------------------
 
 :func:`accuracy_score` 函数计算 `accuracy <https://en.wikipedia.org/wiki/Accuracy_and_precision>`_, 正确预测的分数（默认）或计数 (normalize=False)。
 
@@ -330,7 +330,7 @@ In the multilabel case with binary label indicators（在具有二分标签指�
 .. _cohen_kappa:
 
 Cohen's kappa
--------------
+------------------
 
 函数 :func:`cohen_kappa_score` 计算 `Cohen's kappa <https://en.wikipedia.org/wiki/Cohen%27s_kappa>`_ statistic（统计）。
 这个 measure （措施）旨在比较不同人工标注者的标签，而不是 classifier （分类器）与 ground truth （真实数据）。
@@ -349,12 +349,12 @@ Kappa scores 可以计算 binary or multiclass （二分或者多分类）问题
 
 .. _confusion_matrix:
 
-Confusion matrix（混乱矩阵）
+混淆矩阵
 ----------------
 
-:func:`confusion_matrix` 函数通过计算 `confusion matrix（混乱矩阵） <https://en.wikipedia.org/wiki/Confusion_matrix>`_ 来 evaluates classification accuracy （评估分类的准确性）。
+:func:`confusion_matrix` 函数通过计算 `confusion matrix（混淆矩阵） <https://en.wikipedia.org/wiki/Confusion_matrix>`_ 来 evaluates classification accuracy （评估分类的准确性）。
 
-根据定义，confusion matrix （混乱矩阵）中的 entry（条目） :math:`i, j`，是实际上在 group :math:`i` 中的 observations （观察数），但预测在 group :math:`j` 中。这里是一个示例::
+根据定义，confusion matrix （混淆矩阵）中的 entry（条目） :math:`i, j`，是实际上在 group :math:`i` 中的 observations （观察数），但预测在 group :math:`j` 中。这里是一个示例::
 
   >>> from sklearn.metrics import confusion_matrix
   >>> y_true = [2, 0, 2, 2, 0, 1]
@@ -364,7 +364,7 @@ Confusion matrix（混乱矩阵）
          [0, 0, 1],
          [1, 0, 2]])
 
-这是一个这样的 confusion matrix （混乱矩阵）的可视化表示 （这个数字来自于 :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`）:
+这是一个这样的 confusion matrix （混淆矩阵）的可视化表示 （这个数字来自于 :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`）:
 
 .. image:: ../auto_examples/model_selection/images/sphx_glr_plot_confusion_matrix_001.png
    :target: ../auto_examples/model_selection/plot_confusion_matrix.html
@@ -382,17 +382,17 @@ Confusion matrix（混乱矩阵）
 .. topic:: 示例:
 
   * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`
-    例如使用 confusion matrix （混乱矩阵）来评估 classifier （分类器）的输出质量。
+    例如使用 confusion matrix （混淆矩阵）来评估 classifier （分类器）的输出质量。
 
   * 参阅 :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
-    例如使用 confusion matrix （混乱矩阵）来分类手写数字。
+    例如使用 confusion matrix （混淆矩阵）来分类手写数字。
 
   * 参阅 :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
-    例如使用 confusion matrix （混乱矩阵）对文本文档进行分类。
+    例如使用 confusion matrix （混淆矩阵）对文本文档进行分类。
 
 .. _classification_report:
 
-Classification report（分类报告）
+分类报告
 ----------------------
 
 :func:`classification_report` 函数构建一个显示 main classification metrics （主分类指标）的文本报告。这是一个小例子，其中包含自定义的 ``target_names`` 和 inferred labels （推断标签）::
@@ -424,8 +424,8 @@ Classification report（分类报告）
 
 .. _hamming_loss:
 
-Hamming loss（汉明损失）
--------------
+汉明损失
+-----------------
 
 :func:`hamming_loss` 计算两组样本之间的 average Hamming loss （平均汉明损失）或者 `Hamming distance（汉明距离） <https://en.wikipedia.org/wiki/Hamming_distance>`_ 。
 
@@ -455,7 +455,7 @@ Hamming loss（汉明损失）
 
 .. _jaccard_similarity_score:
 
-Jaccard similarity coefficient score（Jaccard 相似系数 score）
+Jaccard 相似系数 score
 -------------------------------------
 
 :func:`jaccard_similarity_score` 函数计算 pairs of label sets （标签组对）之间的 `Jaccard similarity coefficients <https://en.wikipedia.org/wiki/Jaccard_index>`_ 也称作 Jaccard index 的平均值（默认）或总和。
@@ -486,7 +486,7 @@ Jaccard similarity coefficient score（Jaccard 相似系数 score）
 
 .. _precision_recall_f_measure_metrics:
 
-Precision, recall and F-measures（精准，召回和 F-measures）
+精准，召回和 F-measures
 ---------------------------------
 
 直观地来理解，`precision <https://en.wikipedia.org/wiki/Precision_and_recall#Precision>`_ 是 the ability of the classifier not to label as positive a sample that is negative （classifier （分类器）的标签不能被标记为正的样本为负的能力），并且 `recall <https://en.wikipedia.org/wiki/Precision_and_recall#Recall>`_ 是 classifier （分类器）查找所有 positive samples （正样本）的能力。 
@@ -524,7 +524,7 @@ Precision, recall and F-measures（精准，召回和 F-measures）
   * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_precision_recall.py`
     例如 :func:`precision_recall_curve` 用于 evaluate classifier output quality（评估分类器输出质量）。
 
-Binary classification（二分类）
+二分类
 ^^^^^^^^^^^^^^^^^^^^^
 
 在二分类任务中，术语 ''positive（正）'' 和 ''negative（负）'' 是指 classifier's prediction （分类器的预测），术语 ''true（真）'' 和 ''false（假）'' 是指该预测是否对应于 external judgment （外部判断）（有时被称为 ''observation（观测值）''）。给出这些定义，我们可以指定下表: 
@@ -591,7 +591,7 @@ Binary classification（二分类）
 
 
 
-Multiclass and multilabel classification（多类和多标签分类）
+多类和多标签分类
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 在 multiclass and multilabel classification task（多类和多标签分类任务）中，precision（精度）, recall（召回）, and F-measures 的概念可以独立地应用于每个标签。
 有以下几种方法 combine results across labels （将结果跨越标签组合），由 ``average`` 参数指定为 :func:`average_precision_score` （仅用于 multilabel）， :func:`f1_score`, :func:`fbeta_score`, :func:`precision_recall_fscore_support`, :func:`precision_score` 和 :func:`recall_score` 函数，如上 :ref:`above <average>` 所述。请注意，对于在包含所有标签的多类设置中进行 "micro"-averaging （"微"平均），将产生相等的 precision（精度）， recall（召回）和 :math:`F` ，而 "weighted（加权）" averaging（平均）可能会产生 precision（精度）和 recall（召回）之间的 F-score 。
@@ -657,7 +657,7 @@ Similarly, labels not present in the data sample may be accounted for in macro-a
 .. _hinge_loss:
 
 Hinge loss
-----------
+------------------
 
 :func:`hinge_loss` 函数使用 `hinge loss <https://en.wikipedia.org/wiki/Hinge_loss>`_ 计算模型和数据之间的 average distance （平均距离），这是一种只考虑 prediction errors （预测误差）的 one-sided metric （单向指标）。（Hinge loss 用于最大边界分类器，如支持向量机）
 
@@ -712,8 +712,8 @@ Hinge loss
 
 .. _log_loss:
 
-Log loss（Log 损失）
---------
+Log 损失
+-------------
 
 Log loss，又被称为 logistic regression loss（logistic 回归损失）或者 cross-entropy loss（交叉熵损失） 定义在 probability estimates （概率估计）。它通常用于 (multinomial) logistic regression （（多项式）logistic 回归）和 neural networks （神经网络）以及 expectation-maximization （期望最大化）的一些变体中，并且可用于评估分类器的 probability outputs （概率输出）（``predict_proba``）而不是其 discrete predictions （离散预测）。
 
@@ -744,7 +744,7 @@ Log loss，又被称为 logistic regression loss（logistic 回归损失）或�
 
 .. _matthews_corrcoef:
 
-Matthews correlation coefficient（马修斯相关系数）
+马修斯相关系数
 ---------------------------------
 
 :func:`matthews_corrcoef` 函数用于计算 binary classes （二分类）的 `Matthew's correlation coefficient (MCC) <https://en.wikipedia.org/wiki/Matthews_correlation_coefficient>`_ 引用自 Wikipedia:
@@ -788,8 +788,8 @@ Matthews correlation coefficient（马修斯相关系数）
 
 .. _roc_metrics:
 
-Receiver operating characteristic (ROC)（Receiver 工作特性）
----------------------------------------
+Receiver operating characteristic (ROC)
+----------------------------------------------
 
 函数 :func:`roc_curve` 计算 `receiver operating characteristic curve, or ROC curve <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>`_.
 引用 Wikipedia :
@@ -851,7 +851,7 @@ Receiver operating characteristic (ROC)（Receiver 工作特性）
 
 .. _zero_one_loss:
 
-Zero one loss（零一损失）
+零一损失
 --------------
 
 :func:`zero_one_loss` 函数通过 :math:`n_{\text{samples}}` 计算 0-1 classification loss (:math:`L_{0-1}`) 的 sum （和）或 average （平均值）。默认情况下，函数在样本上 normalizes （标准化）。要获得 :math:`L_{0-1}` 的总和，将 ``normalize`` 设置为 ``False``。
@@ -891,7 +891,7 @@ Zero one loss（零一损失）
 .. _brier_score_loss:
 
 Brier 分数损失
-----------------
+--------------------
 
 :func:`brier_score_loss` 函数计算二进制类的 `Brier 分数 <https://en.wikipedia.org/wiki/Brier_score>`_ 。引用维基百科：
 
@@ -1007,7 +1007,7 @@ Brier 分数损失也在0到1之间，分数越低（均方差越小），预测
 .. _label_ranking_loss:
 
 排序损失
-------------
+----------------
 
 :func:`label_ranking_loss` 函数计算在样本上平均排序错误的标签对数量的排序损失，即真实标签的分数低于假标签，由虚假和真实标签的倒数加权。最低可实现的排名损失为零。
 
@@ -1040,8 +1040,8 @@ Brier 分数损失也在0到1之间，分数越低（均方差越小），预测
 
 .. _regression_metrics:
 
-Regression metrics（回归指标）
-==============================
+回归指标
+==================
 
 .. currentmodule:: sklearn.metrics
 
@@ -1258,7 +1258,7 @@ R² score, 可决系数
   0.925...
 
 
-.. topic:: Example:
+.. topic:: 示例:
 
   * See :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
     for an example of R² score usage to
@@ -1278,7 +1278,7 @@ R² score, 可决系数
 .. _dummy_estimators:
 
 
-Dummy estimators（虚拟估计）
+虚拟估计
 ============================
 
 .. currentmodule:: sklearn.dummy

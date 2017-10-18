@@ -2,7 +2,7 @@
 .. _multiclass:
 
 ====================================
-Multiclass and multilabel algorithms
+多分类和多标签算法
 ====================================
 
 .. currentmodule:: sklearn.multiclass
@@ -115,7 +115,7 @@ regression is also supported.
     At present, no metric in :mod:`sklearn.metrics`
     supports the multioutput-multiclass classification task.
 
-Multilabel classification format
+多标签分类格式
 ================================
 
 在 multilabel learning 中，二分类任务的合集表示为二进制数组：每一个样本是 shape 为 (n_samples, n_classes) 的二维数组中的一行二进制值，比如非0元素，1表示为对应标签的
@@ -161,7 +161,7 @@ Multiclass learning
          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2,
          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
 
-Multilabel learning
+多标签学习
 -------------------
 
 :class:`OneVsRestClassifier`  也支持 multilabel classification.
@@ -192,7 +192,7 @@ underlying binary classifiers.
 由于复杂度为 O(n_classes^2)，这个方法通常比 one-vs-the-rest 慢。然而，这个方法也有优点，比如说是在没有很好的缩放 ``n_samples`` 数据的核方法中。每个单独的学习问题只涉及一小部分数据，
 而 one-vs-the-rest 将会使用 ``n_classes`` 个完整的数据。
 
-Multiclass learning
+多类别学习
 -------------------
 
 Below is an example of multiclass learning using OvO::
@@ -219,7 +219,7 @@ Below is an example of multiclass learning using OvO::
 
 .. _ecoc:
 
-Error-Correcting Output-Codes
+误差校正输出代码
 =============================
 
 基于Output-code的方法不同于 one-vs-the-rest 和 one-vs-one。使用这些方法，每一个类将会被映射到欧几里得空间，每一个维度上的值为0或者为1。另一种解释它的方法是，每一个类被表示为二进制
@@ -236,7 +236,7 @@ Error-Correcting Output-Codes
 比 1 大的数字比 one-vs-the-rest 需要更多的分类器数数量。在这种情况下，一些分类器理论上会纠正其他分类器的错误，因此命名为 "error-correcting" 。然而在实际上这通常不会发生，因为许多分类器的错误通常意义上来说是相关的。error-correcting output codes 和 bagging 有一个相似的作用效果。
 
 
-Multiclass learning
+多类别学习
 -------------------
 
 Below is an example of multiclass learning using Output-Codes::
@@ -273,7 +273,7 @@ Below is an example of multiclass learning using Output-Codes::
       Hastie T., Tibshirani R., Friedman J., page 606 (second-edition)
       2008.
 
-Multioutput regression
+多输出回归
 ======================
 
 Multioutput regression 支持 :class:`MultiOutputRegressor` 可以被添加到任何回归器中。这个策略包括对每个目标拟合一个回归。因为每一个目标可以被一个回归器精确的表示，通过检查其他回归器，它可以获取关于目标的知识。因为 :class:`MultiOutputRegressor` 对于每一个目标可以训练出一个回归器，所以它可能忽略属性之间的关系。
@@ -296,7 +296,7 @@ Multioutput regression 支持 :class:`MultiOutputRegressor` 可以被添加到�
          [ 140.72667194,  176.50941682,  -17.50447799],
          [ 149.37967282,  -81.15699552,   -5.72850319]])
 
-Multioutput classification
+多输出分类
 ==========================
 
 Multioutput classification 支持能够被添加到任何分类器中的 :class:`MultiOutputClassifier`. 这种方法训练每一个目标一个分类器。这允许多目标变量分类器。这种类的目的是扩展能够评估一系列目标函数的评估器 (f1,f2,f3…,fn) ，这些函数在一个单独的预测矩阵上训练来预测一系列 (y1,y2,y3…,yn)。
@@ -329,7 +329,7 @@ Below is an example of multioutput classification:
            [0, 0, 2],
            [2, 0, 0]])
 
-Classifier Chain
+链式分类器
 ================
 
 Classifier chains (查看 :class:`ClassifierChain`) 是一种集合多个二分类器为一个单独的 multi-label 模型，能够发掘目标之间的相关性信息。

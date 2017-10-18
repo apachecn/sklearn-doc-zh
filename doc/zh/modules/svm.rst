@@ -1,7 +1,7 @@
 .. _svm:
 
 =======================
-Support Vector Machines（支持向量机）
+支持向量机
 =======================
 
 .. currentmodule:: sklearn.svm
@@ -32,7 +32,7 @@ Support Vector Machines（支持向量机）
 
 .. _svm_classification:
 
-Classification（分类）
+分类
 ==============
 
 :class:`SVC`, :class:`NuSVC` 和 :class:`LinearSVC` 能在数据集中实现多元分类.
@@ -78,7 +78,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 
 .. _svm_multi_class:
 
-Multi-class classification（多元分类）
+多元分类
 --------------------------
 
 :class:`SVC` 和 :class:`NuSVC` 为多元分类实现了 "one-against-one" 的方法 (Knerr et al., 1990) 如果 ``n_class`` 是类别的数量, 那么 ``n_class * (n_class - 1) / 2`` 分类器被重构, 而且每一个从两个类别中训练数据. 为了给其他分类器提供一致的交互, ``decision_function_shape`` 选项允许聚合"one-against-one" 分类器的结果成 ``(n_samples, n_classes)`` 的大小到决策函数::
@@ -151,7 +151,7 @@ Multi-class classification（多元分类）
 
 .. _scores_probabilities:
 
-Scores and 可能性(probability)
+得分和概率
 ------------------------
 
 :class:`SVC` 方法的 ``decision_function`` 给每一个样例每一个类别分
@@ -179,7 +179,7 @@ Platt的方法也有理论问题.
  * Platt
    `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods（SVMs 的概率输出和与规则化似然方法的比较）"<http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`.
 
-Unbalanced problems（非均衡问题）
+非均衡问题
 --------------------
 
 这个问题期望给予某一类或某个别样例能使用的关键词 ``class_weight`` 和 ``sample_weight`` 提高权重(importance).
@@ -213,7 +213,7 @@ Unbalanced problems（非均衡问题）
 
 .. _svm_regression:
 
-Regression（回归）
+回归
 ==========
 
 支持向量分类的方法可以被扩展用作解决回归问题. 这个方法被称作支持向量回归.
@@ -244,7 +244,7 @@ Regression（回归）
 
 .. _svm_outlier_detection:
 
-密度估计, 异常(novelty)检测
+密度估计, 异常（novelty）检测
 =======================================
 
 但类别的 SVM 用于异常检测, 即给予一个样例集, 它会检测这个样例集的 soft boundary 以便给新的数据点分类,
@@ -266,7 +266,7 @@ Regression（回归）
  * :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
 
 
-Complexity（复杂度）
+复杂度
 ==========
 
 支持向量机是个强大的工具，不过它的计算和存储空间要求也会随着要训练向量的数目增加而快速增加。
@@ -279,7 +279,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 :class:`SVC` 更为高效，并且它几乎可以线性缩放到数百万样本或者特征。
 
 
-使用窍门
+使用诀窍
 =====================
 
 
@@ -324,10 +324,10 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 .. _svm_kernels:
 
-内核函数
+核函数
 ================
 
-*内核函数* 可以是以下任何形式：:
+*核函数* 可以是以下任何形式：:
 
   * 线性: :math:`\langle x, x'\rangle`.
 
@@ -349,10 +349,10 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
     'rbf'
 
 
-自定义内核
+自定义核
 --------------
 
-您可以自定义自己的内核，通过使用python函数作为内核或者通过预计算Gram矩阵。
+您可以自定义自己的核，通过使用python函数作为内核或者通过预计算Gram矩阵。
 
 自定义内核的分类器和别的分类器一样，除了下面这几点:
 
@@ -362,7 +362,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
       如果在 ``fit()`` 和 ``predict()`` 之间有数组发生改变，您将会碰到意料外的结果。
 
 
-使用python函数作为内核
+使用 python 函数作为内核
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 在构造时，您同样可以通过一个函数传递到关键词 ``kernel`` ，来使用您自己定义的内核。
@@ -384,7 +384,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
  * :ref:`sphx_glr_auto_examples_svm_plot_custom_kernel.py`.
 
-使用Gram矩阵
+使用 Gram 矩阵
 ~~~~~~~~~~~~~~~~~~~~~
 
 在适应算法中，设置 ``kernel='precomputed'`` 和把X替换为Gram矩阵。
