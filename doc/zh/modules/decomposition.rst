@@ -252,58 +252,36 @@ Truncated singular value decomposition and latent semantic analysis（截断奇�
 特别地， LSA 已知能够抵抗同义词和多义词的影响（两者大致意味着每个单词有多重含义），这导致术语文档矩阵过度稀疏，并且在诸如余弦相似性的度量下表现出差的相似性。
 
 .. note::
-    LSA is also known as latent semantic indexing, LSI,
-    though strictly that refers to its use in persistent indexes
-    for information retrieval purposes.
+    LSA 也被称为潜在语义索引 LSI，尽管严格地说它是指在 persistent indexes （持久索引）中用于 information retrieval （信息检索）的目的。
 
-Mathematically, truncated SVD applied to training samples :math:`X`
-produces a low-rank approximation :math:`X`:
+数学表示中， truncated SVD 应用于训练样本 :math:`X` 产生一个 low-rank approximation （低阶逼近于） :math:`X`:
 
 .. math::
     X \approx X_k = U_k \Sigma_k V_k^\top
 
-After this operation, :math:`U_k \Sigma_k^\top`
-is the transformed training set with :math:`k` features
-(called ``n_components`` in the API).
+在这个操作之后，:math:`U_k \Sigma_k^\top` 是转换后的训练集，其中包括 :math:`k` 个特征（在 API 中被称为 ``n_components`` ）。
 
-To also transform a test set :math:`X`, we multiply it with :math:`V_k`:
+还需要转换一个测试集 :math:`X`, 我们乘以 :math:`V_k`: 
 
 .. math::
     X' = X V_k
 
 .. note::
-    Most treatments of LSA in the natural language processing (NLP)
-    and information retrieval (IR) literature
-    swap the axes of the matrix :math:`X` so that it has shape
-    ``n_features`` × ``n_samples``.
-    We present LSA in a different way that matches the scikit-learn API better,
-    but the singular values found are the same.
+    自然语言处理(NLP) 和信息检索(IR) 文献中的 LSA 的大多数处理方式交换 axes of the :math:`X` matrix （:math:`X` 矩阵的轴）,使其具有形状 ``n_features`` × ``n_samples`` 。
+    我们以 scikit-learn API 相匹配的不同方式呈现 LSA, 但是找到的奇异值是相同的。
 
-:class:`TruncatedSVD` is very similar to :class:`PCA`, but differs
-in that it works on sample matrices :math:`X` directly
-instead of their covariance matrices.
-When the columnwise (per-feature) means of :math:`X`
-are subtracted from the feature values,
-truncated SVD on the resulting matrix is equivalent to PCA.
-In practical terms, this means
-that the :class:`TruncatedSVD` transformer accepts ``scipy.sparse``
-matrices without the need to densify them,
-as densifying may fill up memory even for medium-sized document collections.
+:class:`TruncatedSVD` 非常类似于 :class:`PCA`, 但不同之处在于它适用于示例矩阵 :math:`X` 而不是它们的协方差矩阵。
+当从特征值中减去 :math:`X` 的列（每个特征）手段时，得到的矩阵上的 truncated SVD 相当于 PCA 。
+实际上，这意味着 :class:`TruncatedSVD` transformer（转换器）接受 ``scipy.sparse`` 矩阵，而不需要对它们进行加密，因为即使对于中型文档集合，densifying （密集）也可能填满内存。
 
-While the :class:`TruncatedSVD` transformer
-works with any (sparse) feature matrix,
-using it on tf–idf matrices is recommended over raw frequency counts
-in an LSA/document processing setting.
-In particular, sublinear scaling and inverse document frequency
-should be turned on (``sublinear_tf=True, use_idf=True``)
-to bring the feature values closer to a Gaussian distribution,
-compensating for LSA's erroneous assumptions about textual data.
+虽然 :class:`TruncatedSVD` transformer（转换器）与任何（sparse（稀疏））特征矩阵一起工作，建议在 LSA/document 处理设置中使用它在 tf–idf 矩阵上的原始频率计数。
+特别地，应该打开 sublinear scaling （子线性缩放）和 inverse document frequency （逆文档频率） (``sublinear_tf=True, use_idf=True``) 以使特征值更接近于高斯分布，补偿 LSA 对文本数据的错误假设。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
    * :ref:`sphx_glr_auto_examples_text_document_clustering.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
   * Christopher D. Manning, Prabhakar Raghavan and Hinrich Schütze (2008),
     *Introduction to Information Retrieval*, Cambridge University Press,
@@ -313,75 +291,48 @@ compensating for LSA's erroneous assumptions about textual data.
 
 .. _DictionaryLearning:
 
-Dictionary Learning
-===================
+Dictionary learning（字典学习）
+=============================
 
 .. _SparseCoder:
 
-Sparse coding with a precomputed dictionary
--------------------------------------------
+Sparse coding with a precomputed dictionary（稀疏编码与预先计算的字典）
+--------------------------------------------------------------------
 
-The :class:`SparseCoder` object is an estimator that can be used to transform signals
-into sparse linear combination of atoms from a fixed, precomputed dictionary
-such as a discrete wavelet basis. This object therefore does not
-implement a ``fit`` method. The transformation amounts
-to a sparse coding problem: finding a representation of the data as a linear
-combination of as few dictionary atoms as possible. All variations of
-dictionary learning implement the following transform methods, controllable via
-the ``transform_method`` initialization parameter:
+:class:`SparseCoder` 对象是一个 estimator（估计器），可以用来将信号转换成固定的预先计算的字典的 sparse linear combination （稀疏线性组合），如 discrete wavelet basis 。因此，该对象不实现 ``fit`` 方法。该转换相当于 sparse coding problem （稀疏编码问题）: 将数据的表示尽可能少的 dictionary atoms （字典原子）的线性组合。字典学习的所有变体实现以下变换方法，可以通过 ``transform_method`` 初始化参数进行控制: 
 
-* Orthogonal matching pursuit (:ref:`omp`)
+* Orthogonal matching pursuit(正交匹配 pursuit ) (:ref:`omp`)
 
-* Least-angle regression (:ref:`least_angle_regression`)
+* Least-angle regression (最小角度回归)(:ref:`least_angle_regression`)
 
-* Lasso computed by least-angle regression
+* Lasso computed by least-angle regression(Lasso 通过最小角度回归计算)
 
-* Lasso using coordinate descent (:ref:`lasso`)
+* Lasso using coordinate descent (Lasso 使用梯度下降)(:ref:`lasso`)
 
-* Thresholding
+* Thresholding(阈值)
 
-Thresholding is very fast but it does not yield accurate reconstructions.
-They have been shown useful in literature for classification tasks. For image
-reconstruction tasks, orthogonal matching pursuit yields the most accurate,
-unbiased reconstruction.
+Thresholding （阈值）非常快，但是不能产生精确的 reconstructions（重构）。
+它们在分类任务的文献中已被证明是有用的。对于 image reconstruction tasks （图像重构任务）， orthogonal matching pursuit 产生最精确，unbiased（无偏）的重构。 
 
-The dictionary learning objects offer, via the ``split_code`` parameter, the
-possibility to separate the positive and negative values in the results of
-sparse coding. This is useful when dictionary learning is used for extracting
-features that will be used for supervised learning, because it allows the
-learning algorithm to assign different weights to negative loadings of a
-particular atom, from to the corresponding positive loading.
+dictionary learning（字典学习）对象通过 ``split_code`` 参数提供分类稀疏编码结果中的正值和负值的可能性。当使用 dictionary learning （字典学习）来提取将用于监督学习的特征时，这是有用的，因为它允许学习算法将不同的权重分配给 particular atom （特定原子）的 negative loadings （负的负荷），从相应的 positive loading （正加载）。
 
-The split code for a single sample has length ``2 * n_components``
-and is constructed using the following rule: First, the regular code of length
-``n_components`` is computed. Then, the first ``n_components`` entries of the
-``split_code`` are
-filled with the positive part of the regular code vector. The second half of
-the split code is filled with the negative part of the code vector, only with
-a positive sign. Therefore, the split_code is non-negative.
+split code for a single sample（单个样本的分割代码）具有长度 ``2 * n_components`` ，并使用以下规则构造: 首先，计算长度为 ``n_components`` 的常规代码。然后， ``split_code`` 的第一个 ``n_components`` 条目将用正常代码向量的正部分填充。分割代码的下半部分填充有代码矢量的负部分，只有一个正号。因此， split_code 是非负的。 
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_sparse_coding.py`
 
 
-Generic dictionary learning
----------------------------
+Generic dictionary learning（通用字典学习）
+-----------------------------------------
 
-Dictionary learning (:class:`DictionaryLearning`) is a matrix factorization
-problem that amounts to finding a (usually overcomplete) dictionary that will
-perform good at sparsely encoding the fitted data.
+Dictionary learning（字典学习） (:class:`DictionaryLearning`) 是一个矩阵因式分解问题，相当于找到一个（通常是不完整的）字典，它将在拟合数据的稀疏编码中表现良好。
 
-Representing data as sparse combinations of atoms from an overcomplete
-dictionary is suggested to be the way the mammal primary visual cortex works.
-Consequently, dictionary learning applied on image patches has been shown to
-give good results in image processing tasks such as image completion,
-inpainting and denoising, as well as for supervised recognition tasks.
+将数据表示为来自 overcomplete dictionary（过度完整字典）的稀疏组合的原子被认为是  mammal primary visual cortex works（哺乳动物初级视觉皮层的工作方式）. 
+因此，应用于 image patches （图像补丁）的 dictionary learning （字典学习）已被证明在诸如 image completion ，inpainting（修复） and denoising（去噪）以及监督识别的图像处理任务中给出良好的结果。
 
-Dictionary learning is an optimization problem solved by alternatively updating
-the sparse code, as a solution to multiple Lasso problems, considering the
-dictionary fixed, and then updating the dictionary to best fit the sparse code.
+Dictionary learning（字典学习）是通过交替更新稀疏代码来解决的优化问题，作为解决多个 Lasso 问题的一个解决方案，考虑到 dictionary fixed （字典固定），然后更新字典以最适合 sparse code （稀疏代码）。
 
 .. math::
    (U^*, V^*) = \underset{U, V}{\operatorname{arg\,min\,}} & \frac{1}{2}
@@ -401,12 +352,9 @@ dictionary fixed, and then updating the dictionary to best fit the sparse code.
 .. centered:: |pca_img2| |dict_img2|
 
 
-After using such a procedure to fit the dictionary, the transform is simply a
-sparse coding step that shares the same implementation with all dictionary
-learning objects (see :ref:`SparseCoder`).
+在使用这样一个过程来 fit the dictionary （拟合字典）之后，变换只是一个稀疏的编码步骤，与所有的字典学习对象共享相同的实现。(参见 :ref:`SparseCoder`)。
 
-The following image shows how a dictionary learned from 4x4 pixel image patches
-extracted from part of the image of a raccoon face looks like.
+以下图像显示从 raccoon face （浣熊脸部）图像中提取的 4x4 像素图像补丁中学习的字典如何。
 
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_image_denoising_001.png
@@ -415,12 +363,12 @@ extracted from part of the image of a raccoon face looks like.
     :scale: 50%
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_decomposition_plot_image_denoising.py`
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
   * `"Online dictionary learning for sparse coding"
     <http://www.di.ens.fr/sierra/pdfs/icml09.pdf>`_
