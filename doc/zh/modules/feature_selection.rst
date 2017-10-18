@@ -94,7 +94,7 @@ methods能够计算任何种类的统计相关性，但是是非参数的，需�
 
 .. _rfe:
 
-Recursive feature elimination
+递归特征消除
 =============================
 
 给定一个外部的估计器，将特征设置一定的权重 （比如，线性模型的相关系数），  recursive feature elimination (:class:`RFE`)
@@ -113,7 +113,7 @@ Recursive feature elimination
 
 .. _select_from_model:
 
-Feature selection using SelectFromModel
+使用 SelectFromModel 选取特征
 =======================================
 
 :class:`SelectFromModel` 是一个meta-transformer ，它可以用来处理任何带有 ``coef_`` 或者 ``feature_importances_`` 属性的训练之后的训练器。
@@ -129,7 +129,7 @@ Feature selection using SelectFromModel
 
 .. _l1_feature_selection:
 
-L1-based feature selection
+基于 L1 的特征选取
 --------------------------
 
 .. currentmodule:: sklearn
@@ -158,7 +158,7 @@ L1-based feature selection
 在svm和逻辑回归中，参数C是用来控制稀疏性的：小的C会导致少的特征被选择。使用Lasso,alpha的值越大，
 越少的特征会被选择。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`: Comparison
       of different algorithms for document classification including L1-based
@@ -191,7 +191,7 @@ L1-based feature selection
    http://dsp.rice.edu/sites/dsp.rice.edu/files/cs/baraniukCSlecture07.pdf
 
 
-Tree-based feature selection
+基于 Tree（树）的特征选取
 ----------------------------
 
 基于树的estimators (查阅 :mod:`sklearn.tree` 模块和树的森林 在 :mod:`sklearn.ensemble` 
@@ -224,7 +224,7 @@ meta-transformer)::
     * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_importances_faces.py`: example
       on face recognition data.
 
-Feature selection as part of a pipeline
+特征选取作为 pipeline（管道）的一部分
 =======================================
 
 特征选择通常在实际的学习之前用来做预处理。在scikit-learn中推荐的方式是使用

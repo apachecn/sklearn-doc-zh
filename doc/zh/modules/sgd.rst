@@ -1,7 +1,7 @@
 .. _sgd:
 
 ===========================
-Stochastic Gradient Descent（随机梯度下降）
+随机梯度下降
 ===========================
 
 .. currentmodule:: sklearn.linear_model
@@ -23,7 +23,7 @@ Stochastic Gradient Descent （随机梯度下降法）的优势:
 
     + SGD 对 feature scaling （特征缩放）敏感。
 
-Classification（分类）
+分类
 ==============
 
 .. warning::
@@ -122,7 +122,7 @@ SGD 支持以下 penalties（惩罚）:
 
 对于一个 logistic loss（logistic 损失）的分类，具有 averaging strategy（平衡策略）的 SGD 的另一变种可用于 Stochastic Average Gradient（随即平均梯度）(SAG)算法，作为 :class:`LogisticRegression` 的 solver （求解器）。
 
-Regression（回归）
+回归
 ==========
 
 :class:`SGDRegressor` 类实现了一个简单的随即梯度下降学习程序，它支持不同的损失函数和惩罚来拟合线性回归模型。 :class:`SGDRegressor` 是非常适用于有大量训练样本（>10.000)的回归问题,对于其他问题，我们简易使用 :class:`Ridge`，:class:`Lasso`，或 :class:`ElasticNet`。
@@ -141,7 +141,7 @@ Huber 和 epsilon-insensitive 损失函数可用于 robust regression（稳健�
 对于一个 squared loss（平方损失）和一个 l2 penalty（l2惩罚）的回归，具有 averaging strategy（平衡策略）的 SGD 的另一变种可用于 Stochastic Average Gradient（随即平均梯度）(SAG)算法，作为 :class:`Ridge` 中的 solver（求解器）。
 
 
-Stochastic Gradient Descent for sparse data（稀疏数据的随机梯度下降）
+稀疏数据的随机梯度下降
 ===========================================
 
 .. note:: 由于一个对于截距是缩小的学习率，稀疏实现与密集实现相比产生的结果略有不同。
@@ -152,14 +152,14 @@ Stochastic Gradient Descent for sparse data（稀疏数据的随机梯度下降�
 
  - :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
 
-Complexity（复杂度）
+复杂度
 ==========
 
 SGD 主要的优点在于它的效率，在训练实例的数量上基本是线性的。假如 X 是 size 为 (n, p) 的矩阵，训练成本为 :math:`O(k n \bar p)`，其中 k 是迭代次数， :math:`\bar p` 是每个样本非零属性的平均数。
 
 但是，最近的理论结果表明，在训练集大小增加时，运行时得到的一些期望的优化精度不会增加。
 
-Tips on Practical Use（实用小贴士）
+实用小贴士
 =====================
 
   * 随机梯度下降法对 feature scaling （特征缩放）很敏感，因此强烈建议您缩放您的数据。例如,将输入向量 X 上的每个属性缩放到 [0,1] 或 [- 1，+1]， 或将其标准化，使其均值为 0，方差为 1。请注意，必须将 *相同* 的缩放应用于对应的测试向量中，以获得有意义的结果。使用 :class:`StandardScaler`: 很容易做到这一点：
@@ -189,7 +189,7 @@ Tips on Practical Use（实用小贴士）
 
 .. _sgd_mathematical_formulation:
 
-Mathematical formulation（数学描述）
+数学描述
 ========================
 
 给定一组训练样本 :math:`(x_1, y_1), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^m` ， :math:`y_i \in \{-1,1\}`， 我们的目标是一个线性 scoring function（评价函数） :math:`f(x) = w^T x + b` ，其中模型参数 :math:`w \in \mathbf{R}^m` ，截距 :math:`b \in \mathbf{R}`。为了做预测， 我们只需要看 :math:`f(x)` 的符号。找到模型参数的一般选择是通过最小化由以下式子给出的正则化训练误差
@@ -290,7 +290,7 @@ intercept（截距） :math:`b` 的更新类似但不需要正则化。
    Xu, Wei
 
 
-Implementation details（实现细节）
+实现细节
 ======================
 
 他对 SGD 的实现受到了 Léon Bottou `Stochastic Gradient SVM <http://leon.bottou.org/projects/sgd>`_  的影响。类似于 SvmSGD，权值向量表示为在 L2 正则化的情况下允许有效的权值更新的标量和向量的乘积。

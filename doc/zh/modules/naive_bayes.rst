@@ -141,7 +141,7 @@
    <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.61.5542>`_
    3rd Conf. on Email and Anti-Spam (CEAS).
    
-  堆外朴素贝叶斯模型拟合
+堆外朴素贝叶斯模型拟合
 -------------------------------------
 
 朴素贝叶斯模型可用于应对整个训练集不能放入内存的大规模分类问题。
