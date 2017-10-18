@@ -250,7 +250,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 .. math:: ||A||_{2 1} = \sum_i \sqrt{\sum_j a_{ij}^2}
 
 
- :class:`MultiTaskLasso` 类中的实现使用坐标下降作为拟合系数的算法。
+:class:`MultiTaskLasso` 类中的实现使用坐标下降作为拟合系数的算法。
 
 
 .. _elastic_net:
@@ -477,11 +477,8 @@ Alpha 在这里也是作为一个变量，通过数据中估计得到.
 先验参数 :math:`\alpha` 和 :math:`\lambda`一般是服从 `gamma
 分布 <https://en.wikipedia.org/wiki/Gamma_distribution>`__, 这个分布与高斯成共轭先验关系。
 
-得到的模型一般称为 *贝叶斯岭回归*， 并且这个与传统的 :class:`Ridge`非常相似。
-  参数 :math:`w`, :math:`\alpha` 和
-:math:`\lambda`是在调模型的时候一起估算出的。 剩下的超参数就是gamma分布的先验了。
-:math:`\alpha` and :math:`\lambda`。  它们一般被选择为
-*没有信息量*。模型参数的估计一般利用 *最大似然对数估计法*。
+得到的模型一般称为 *贝叶斯岭回归*， 并且这个与传统的 :class:`Ridge` 非常相似。参数 :math:`w`, :math:`\alpha` 和 :math:`\lambda` 是在调模型的时候一起估算出的。 剩下的超参数就是 gamma 分布的先验了。
+:math:`\alpha` 和 :math:`\lambda` 。  它们一般被选择为 *没有信息量* 。模型参数的估计一般利用 *最大似然对数估计法* 。
 
 默认 :math:`\alpha_1 = \alpha_2 =  \lambda_1 = \lambda_2 = 10^{-6}`.
 
