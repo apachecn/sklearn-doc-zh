@@ -162,94 +162,85 @@ Generators for decomposition（生成器分解）
 
 .. _libsvm_loader:
 
-Datasets in svmlight / libsvm format
+Datasets in svmlight / libsvm format(svmlight / libsvm格式的数据集)
 ====================================
 
-scikit-learn includes utility functions for loading
-datasets in the svmlight / libsvm format. In this format, each line
-takes the form ``<label> <feature-id>:<feature-value>
-<feature-id>:<feature-value> ...``. This format is especially suitable for sparse datasets.
-In this module, scipy sparse CSR matrices are used for ``X`` and numpy arrays are used for ``y``.
+scikit-learn 包含加载svmlight / libsvm格式的数据集的实用函数。此种格式中，每行
+采用``<label> <feature-id>:<feature-value><feature-id>:<feature-value> ...``
+的形式。这种格式尤其适合稀疏数据集，在该模块中，数据集``X``使用的是scipy稀疏CSR矩阵，
+特征集``y``使用的是numpy数组。
 
-You may load a dataset like as follows::
+你可以以如下步骤加载数据集::
 
   >>> from sklearn.datasets import load_svmlight_file
   >>> X_train, y_train = load_svmlight_file("/path/to/train_dataset.txt")
   ...                                                         # doctest: +SKIP
 
-You may also load two (or more) datasets at once::
+你也可以一次性加载两个或多个的数据集::
 
   >>> X_train, y_train, X_test, y_test = load_svmlight_files(
   ...     ("/path/to/train_dataset.txt", "/path/to/test_dataset.txt"))
   ...                                                         # doctest: +SKIP
 
-In this case, ``X_train`` and ``X_test`` are guaranteed to have the same number
-of features. Another way to achieve the same result is to fix the number of
-features::
+这种情况下，保证了``X_train`` 和 ``X_test`` 具有相同的特征数量。
+另一种得到相同结果的方法是固定特征的数量::
 
   >>> X_test, y_test = load_svmlight_file(
   ...     "/path/to/test_dataset.txt", n_features=X_train.shape[1])
   ...                                                         # doctest: +SKIP
 
-.. topic:: Related links:
+.. topic:: 相关链接:
 
- _`Public datasets in svmlight / libsvm format`: https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets
+ _`svmlight / libsvm 格式的公共数据集`: https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets
 
- _`Faster API-compatible implementation`: https://github.com/mblondel/svmlight-loader
+ _`更快的API兼容的实现`: https://github.com/mblondel/svmlight-loader
 
 .. _external_datasets:
 
-Loading from external datasets
+Loading from external datasets(从外部数据集加载)
 ==============================
 
-scikit-learn works on any numeric data stored as numpy arrays or scipy sparse
-matrices. Other types that are convertible to numeric arrays such as pandas
-DataFrame are also acceptable.
- 
-Here are some recommended ways to load standard columnar data into a 
-format usable by scikit-learn: 
+scikit-learn使用任何存储为numpy数组或者scipy稀疏数组的数值数据。
+其他可以转化成数值数组的类型也可以接受，如pandas中的DataFrame。
+
+以下推荐一些将标准纵列形式的数据转换为sklearn-learn可以使用的格式的方法::
 
 * `pandas.io <https://pandas.pydata.org/pandas-docs/stable/io.html>`_ 
-  provides tools to read data from common formats including CSV, Excel, JSON
-  and SQL. DataFrames may also be constructed from lists of tuples or dicts.
-  Pandas handles heterogeneous data smoothly and provides tools for
-  manipulation and conversion into a numeric array suitable for scikit-learn.
+  提供了从常见格式(包括CSV,Excel,JSON,SQL等)中读取数据的工具.DateFrame 也可以从由
+  元组或者字典组成的列表构建而成.Pandas能顺利的处理异构的数据，并且提供了处理和转换
+  成方便scikit-learn使用的数值数据的工具。
+
 * `scipy.io <https://docs.scipy.org/doc/scipy/reference/io.html>`_ 
-  specializes in binary formats often used in scientific computing 
-  context such as .mat and .arff
+  专门处理科学计算领域经常使用的二进制格式，例如.mat和.arff格式的内容。
+
 * `numpy/routines.io <https://docs.scipy.org/doc/numpy/reference/routines.io.html>`_
-  for standard loading of columnar data into numpy arrays
-* scikit-learn's :func:`datasets.load_svmlight_file` for the svmlight or libSVM
-  sparse format
-* scikit-learn's :func:`datasets.load_files` for directories of text files where
-  the name of each directory is the name of each category and each file inside
-  of each directory corresponds to one sample from that category
+  将纵列形式的数据标准的加载为numpy数组
 
-For some miscellaneous data such as images, videos, and audio, you may wish to
-refer to:
+* scikit-learn的 :func:`datasets.load_svmlight_file`处理svmlight或者libSVM稀疏矩阵
 
-* `skimage.io <http://scikit-image.org/docs/dev/api/skimage.io.html>`_ or
+* scikit-learn的 :func:`datasets.load_files` 处理文本文件组成的目录，每个目录名是每个
+  类别的名称，每个目录内的每个文件对应该类别的一个样本
+
+对于一些杂项数据，例如图像，视屏，音频。您可以参考:
+
+* `skimage.io <http://scikit-image.org/docs/dev/api/skimage.io.html>`_ 或
   `Imageio <https://imageio.readthedocs.io/en/latest/userapi.html>`_ 
-  for loading images and videos to numpy arrays
+  将图像或者视屏加载为numpy数组
 * `scipy.misc.imread <https://docs.scipy.org/doc/scipy/reference/generated/scipy.
   misc.imread.html#scipy.misc.imread>`_ (requires the `Pillow
-  <https://pypi.python.org/pypi/Pillow>`_ package) to load pixel intensities
-  data from various image file formats
+  <https://pypi.python.org/pypi/Pillow>`_ package)将各种图像文件格式加载为
+  像素灰度数据
+
 * `scipy.io.wavfile.read 
   <https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.io.wavfile.read.html>`_ 
-  for reading WAV files into a numpy array
+  将WAV文件读入一个numpy数组
 
-Categorical (or nominal) features stored as strings (common in pandas DataFrames) 
-will need converting to integers, and integer categorical variables may be best 
-exploited when encoded as one-hot variables 
-(:class:`sklearn.preprocessing.OneHotEncoder`) or similar. 
-See :ref:`preprocessing`.
+存储为字符串的无序(或者名字)特征(在pandas的DataFrame中很常见)需要转换为整数，当整数类别变量
+被编码成独热变量(:class:`sklearn.preprocessing.OneHotEncoder`)或类似数据时，它或许可以被最好的利用。
+参见 :ref:`preprocessing`.
 
-Note: if you manage your own numerical data it is recommended to use an 
-optimized file format such as HDF5 to reduce data load times. Various libraries
-such as H5Py, PyTables and pandas provides a Python interface for reading and 
-writing data in that format.
-
+注意：如果你要管理你的数值数据，建议使用优化后的文件格式来减少数据加载时间,例如HDF5。像
+H5Py, PyTables和pandas等的各种库提供了一个Python接口，来读写该格式的数据。
 .. make sure everything is in a toc tree
 
 .. toctree::
