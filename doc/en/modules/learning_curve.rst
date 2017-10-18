@@ -6,29 +6,38 @@ Validation curves: plotting scores to evaluate models
 
 .. currentmodule:: sklearn.model_selection
 
-每种估计都其优势和缺陷。它的泛化误差可以用偏差、方差和噪声来分解。估计值的偏差
-**bias**是不同训练集的平均误差。估计值的方差**variance**用来表示它对训练集的
-变化有多敏感。噪声是数据的属性。
+Every estimator has its advantages and drawbacks. Its generalization error
+can be decomposed in terms of bias, variance and noise. The **bias** of an
+estimator is its average error for different training sets. The **variance**
+of an estimator indicates how sensitive it is to varying training sets. Noise
+is a property of the data.
 
-在下面的图中，我们可以看到由函数:math:`f(x) = \cos (\frac{3}{2} \pi x)`_生
-成的一些带噪声数据的样本。 我们用三个不同的估计来拟合函数：多项式特征为1，4和
-15的线性回归。我们看到，第一个估计最多只能为样本和真正的函数提供一个很差的拟合
-，因为它太简单了(高偏差），第二个估计几乎完全近似，最后一个估计完全接近训练数据，
-但不能很好地拟合真实的函数，即对训练数据的变化（高方差）非常敏感。
-
+In the following plot, we see a function :math:`f(x) = \cos (\frac{3}{2} \pi x)`
+and some noisy samples from that function. We use three different estimators
+to fit the function: linear regression with polynomial features of degree 1,
+4 and 15. We see that the first estimator can at best provide only a poor fit
+to the samples and the true function because it is too simple (high bias),
+the second estimator approximates it almost perfectly and the last estimator
+approximates the training data perfectly but does not fit the true function
+very well, i.e. it is very sensitive to varying training data (high variance).
 
 .. figure:: ../auto_examples/model_selection/images/sphx_glr_plot_underfitting_overfitting_001.png
    :target: ../auto_examples/model_selection/plot_underfitting_overfitting.html
    :align: center
    :scale: 50%
 
-偏差和方差是估计的固有属性，我们通常必须选择合适的学习算法和超参数，以使偏差和
-方差都尽可能的低（参见偏差方差困境`Bias-variance dilemma<https://en.wikipedia.org/wiki/Bias-variance_dilemma>`_）。
-减少模型方差的另一种方法是使用更多的训练数据。 如果真实函数过于复杂，不能用一个方
-差较小的估计来近似，则只能去收集更多的训练数据。
+Bias and variance are inherent properties of estimators and we usually have to
+select learning algorithms and hyperparameters so that both bias and variance
+are as low as possible (see `Bias-variance dilemma
+<https://en.wikipedia.org/wiki/Bias-variance_dilemma>`_). Another way to reduce
+the variance of a model is to use more training data. However, you should only
+collect more training data if the true function is too complex to be
+approximated by an estimator with a lower variance.
 
-在示例里简单的一维问题中，我们可以很容易看出估计是否有偏差或方差。 然而，在高维空间中，
-模型可能变得非常难以可视化。 因此，使用下面所描述的工具通常是有帮助的。
+In the simple one-dimensional problem that we have seen in the example it is
+easy to see whether the estimator suffers from bias or variance. However, in
+high-dimensional spaces, models can become very difficult to visualize. For
+this reason, it is often helpful to use the tools described below.
 
 .. topic:: Examples:
 
@@ -39,24 +48,25 @@ Validation curves: plotting scores to evaluate models
 
 .. _validation_curve:
 
-验证曲线
+Validation curve
 ================
 
-为了验证一个模型，我们需要一个评分函数（参见模型评估：:ref:`model_evaluation`），
-例如分类器的准确性。 选择估计的多个超参数的正确方法当然是网格搜索或类似方法
-（参见调整估计的超参数:ref:`grid_search`），其选择一个或多个验证集上的分数最高的超参数。 
-请注意，如果我们基于验证分数优化了超参数，则验证分数就有偏差了，并且不再是一个良好的泛化估计。 
-为了得到正确的泛化估计，我们必须在另一个测试集上计算得分。
-
-然而，绘制单个超参数对训练分数和验证分数的影响,有时有助于发现该估计是否因为某些超参数
-而出现过拟合或欠拟合。
+To validate a model we need a scoring function (see :ref:`model_evaluation`),
+for example accuracy for classifiers. The proper way of choosing multiple
+hyperparameters of an estimator are of course grid search or similar methods
+(see :ref:`grid_search`) that select the hyperparameter with the maximum score
+on a validation set or multiple validation sets. Note that if we optimized
+the hyperparameters based on a validation score the validation score is biased
+and not a good estimate of the generalization any longer. To get a proper
+estimate of the generalization we have to compute the score on another test
+set.
 
 However, it is sometimes helpful to plot the influence of a single
 hyperparameter on the training score and the validation score to find out
 whether the estimator is overfitting or underfitting for some hyperparameter
 values.
 
-本例中,下面的方程 :func:`validation_curve` 能起到如下作用:
+The function :func:`validation_curve` can help in this case::
 
   >>> import numpy as np
   >>> from sklearn.model_selection import validation_curve
@@ -81,9 +91,12 @@ values.
          [ 0.90...,  0.92...,  0.94...],
          [ 0.44...,  0.39...,  0.45...]])
 
-如果训练得分和验证得分都很低，则估计欠拟合。 如果训练得分高，验证得分低，则估计过拟合，
-否则估计会拟合得很好。 通常不可能有较低的训练得分和较高的验证得分。 所有三种情况都可以
-在下面的图中找到，其中我们改变了数字数据集上SVM的参数:math:`\gamma`。
+If the training score and the validation score are both low, the estimator will
+be underfitting. If the training score is high and the validation score is low,
+the estimator is overfitting and otherwise it is working very well. A low
+training score and a high validation score is usually not possible. All three
+cases can be found in the plot below where we vary the parameter
+:math:`\gamma` of an SVM on the digits dataset.
 
 .. figure:: ../auto_examples/model_selection/images/sphx_glr_plot_validation_curve_001.png
    :target: ../auto_examples/model_selection/plot_validation_curve.html
@@ -93,30 +106,39 @@ values.
 
 .. _learning_curve:
 
-学习曲线
+Learning curve
 ==============
 
-学习曲线显示了不同训练样本估计量的验证和训练得分。它可以帮助我们发现从增加更多的训
-练数据中能获益多少，以及估计是否受方差误差或偏差误差的影响更大。如果验证分数和训练
-分数都收敛到一个相对于增加的训练集大小来说过低的值，那么我们将不能从更多的训练数据
-中获益。在下面的图中看到一个例子：朴素贝叶斯大致收敛到一个较低的分数。
+A learning curve shows the validation and training score of an estimator
+for varying numbers of training samples. It is a tool to find out how much
+we benefit from adding more training data and whether the estimator suffers
+more from a variance error or a bias error. If both the validation score and
+the training score converge to a value that is too low with increasing
+size of the training set, we will not benefit much from more training data.
+In the following plot you can see an example: naive Bayes roughly converges
+to a low score.
 
 .. figure:: ../auto_examples/model_selection/images/sphx_glr_plot_learning_curve_001.png
    :target: ../auto_examples/model_selection/plot_learning_curve.html
    :align: center
    :scale: 50%
 
-我们可能需要使用可以学习更复杂概念（即具有较低偏差）的当前估计的一个估计值或参数化。
-如果训练样本的最大时,训练分数比验证分数得分大得多，那么增加训练样本很可能会增加泛化能力。
-在下面的图中，可以看到支持向量机可以从更多的训练样本中获益。
+We will probably have to use an estimator or a parametrization of the
+current estimator that can learn more complex concepts (i.e. has a lower
+bias). If the training score is much greater than the validation score for
+the maximum number of training samples, adding more training samples will
+most likely increase generalization. In the following plot you can see that
+the SVM could benefit from more training examples.
 
 .. figure:: ../auto_examples/model_selection/images/sphx_glr_plot_learning_curve_002.png
    :target: ../auto_examples/model_selection/plot_learning_curve.html
    :align: center
    :scale: 50%
 
-我们可以使用函数:func:`learning_curve`生成绘制这样的学习曲线（已使用的样本数，训练集
-上的平均分数和验证集上的平均分数）所需的值::
+We can use the function :func:`learning_curve` to generate the values
+that are required to plot such a learning curve (number of samples
+that have been used, the average scores on the training sets and the
+average scores on the validation sets)::
 
   >>> from sklearn.model_selection import learning_curve
   >>> from sklearn.svm import SVC
