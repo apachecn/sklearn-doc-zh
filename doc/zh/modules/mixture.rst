@@ -3,12 +3,12 @@
 .. _gmm:
 
 =======================
-Gaussian mixture models
+高斯混合模型
 =======================
 
 .. currentmodule:: sklearn.mixture
 
-``sklearn.mixture``是一个可以学习高斯混合模型（支持diagonal（即对角协方差矩阵），spherical（球形，即使用相同的方差值），
+``sklearn.mixture`` 是一个可以学习高斯混合模型（支持 diagonal（即对角协方差矩阵），spherical（球形，即使用相同的方差值），
 tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协方差矩阵），full（完全协方差矩阵）这几种协方差矩阵）的包，
 它对数据进行抽样，并且根据数据进行估计。同时也提供了一些有助于决定合适的分量
 （component，组件（这里理解为分量）,每一个高斯分布称为一个分量）的数量的设施。
@@ -24,7 +24,7 @@ tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协�
 高斯混合模型是一个假设所有的数据点都是生成于一个混合的有限数量的并且未知参数的高斯分布的概率模型。
 人们可以将混合模型看作是推广k-means聚类算法，以纳入关于数据的协方差结构以及潜在高斯中心的信息。
 
-对应不同的估算策略，Scikit-learn实现了不同的类来估算高斯混合模型。
+对应不同的估算策略，Scikit-learn 实现了不同的类来估算高斯混合模型。
 详细描述如下：
 
 高斯混合
@@ -42,7 +42,7 @@ tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协�
     sample belonging to the various Gaussians may be retrieved using the
     :meth:`GaussianMixture.predict_proba` method.
 
-:class:`GaussianMixture`自带了不同的选项来约束不同估计类的协方差：spherical（球形，即使用相同的方差值）, 
+:class:`GaussianMixture` 自带了不同的选项来约束不同估计类的协方差：spherical（球形，即使用相同的方差值）, 
 diagonal（即对角协方差）, tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协方差） or 
 full（完全协方差）covariance .
 
@@ -79,7 +79,7 @@ full（完全协方差）covariance .
    或者信息理论标准来决定用多少组件。
 
 选择经典高斯混合模型中的分量数
-------------------------------------------------------------------------
+------------------------------------------------------
 
 BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高效地选择高斯混合的分量数。
 理论上，它可以恢复正确的分量数仅当在近似状态下（即如果有大量数据可用，并且假设这些数据实际上是一个混合高斯模型
@@ -116,7 +116,7 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 
 .. _variational_inference:
 
-估计算法: 变分推理（variational inference）
+估计算法: variational inference
 ---------------------------------------------
 
 变分推理是期望最大化（EM）的扩展，它最大化模型证据（包括先验）的下界，而不是数据似然。
@@ -180,7 +180,7 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * 一个用 :class:`GaussianMixture` 和 :class:`BayesianGaussianMixture` 绘制置信椭圆体的例子，
       请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm.py` 
@@ -193,7 +193,7 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
       请查阅:ref:`sphx_glr_auto_examples_mixture_plot_concentration_prior.py`
 
 
- :class:`BayesianGaussianMixture`下的变分推理的优缺点
+ :class:`BayesianGaussianMixture` 下的变分推理的优缺点
 ----------------------------------------------------------------------------
 
 优点
@@ -223,8 +223,8 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 
 .. _dirichlet_process:
 
-狄利克雷过程（The Dirichlet Process）
----------------------
+The Dirichlet Process
+-----------------------------
 
 
 这里我们描述了Dirichlet过程混合的变分推理算法。Dirichlet过程是在*具有

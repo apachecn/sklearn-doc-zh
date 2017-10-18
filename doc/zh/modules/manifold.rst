@@ -72,8 +72,8 @@
 .. _isomap:
 
 Isomap
-======
-流形学习的最早方法之一是Isomap算法，等距映射(Isometric Mapping)的缩写。 Isomap可以被视为多维缩放（Multi-dimensional Scaling：MDS）或Kernel PCA的扩展。 Isomap寻求一个维度较低的嵌入，它保持所有点之间的测量距离。 Isomap可以与 :class:`Isomap` 对象执行。
+=========
+流形学习的最早方法之一是 Isomap 算法，等距映射(Isometric Mapping)的缩写。 Isomap 可以被视为多维缩放（Multi-dimensional Scaling：MDS）或 Kernel PCA 的扩展。 Isomap 寻求一个维度较低的嵌入，它保持所有点之间的测量距离。 Isomap 可以与 :class:`Isomap` 对象执行。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_005.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -81,20 +81,20 @@ Isomap
    :scale: 50
 
 复杂度
-----------
-Isomap算法包括三个阶段:
+-------------
+Isomap 算法包括三个阶段:
 
-1. **搜索最近的邻居.**  Isomap使用
+1. **搜索最近的邻居.**  Isomap 使用
    :class:`sklearn.neighbors.BallTree` 进行有效的邻居搜索。
    对于 :math:`D` 维中 :math:`N` 个点的 :math:`k` 个最近邻，成本约为 :math:`O[D \log(k) N \log(N)]`
 
-2. **最短路径图搜索.**  最有效的已知算法是Dijkstra算法，它的复杂度大约是
-   :math:`O[N^2(k + \log(N))]`，或Floyd-Warshall算法，它的复杂度是 :math:`O[N^3]`.  该算法可以由用户使用isomap的path_method关键字来选择。 如果未指定，则代码尝试为输入数据选择最佳算法。
+2. **最短路径图搜索.**  最有效的已知算法是 Dijkstra 算法，它的复杂度大约是
+   :math:`O[N^2(k + \log(N))]` ，或 Floyd-Warshall 算法，它的复杂度是 :math:`O[N^3]`.  该算法可以由用户使用 isomap 的 path_method 关键字来选择。 如果未指定，则代码尝试为输入数据选择最佳算法。
 
 3. **部分特征值分解.**  嵌入在与 :math:`N \times N` isomap内核的 :math:`d` 
    个最大特征值相对应的特征向量中进行编码。 对于密集求解器，成本约为 :math:`O[d N^2]` 。 通常可以使用ARPACK求解器来提高这个成本。 用户可以使用isomap的path_method关键字来指定特征。 如果未指定，则代码尝试为输入数据选择最佳算法。
    
-Isomap的整体复杂度是
+Isomap 的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[N^2(k + \log(N))] + O[d N^2]`.
 
 * :math:`N` : 训练的数据节点数
@@ -125,18 +125,18 @@ Isomap的整体复杂度是
    :scale: 50
 
 复杂度
-----------
+-------------
 
-标准的LLE算法包括三个阶段:
+标准的 LLE 算法包括三个阶段:
 
-1. **搜索最近的邻居**.  参见上述Isomap讨论。
+1. **搜索最近的邻居**.  参见上述 Isomap 讨论。
 
 2. **权重矩阵构造**. :math:`O[D N k^3]`.
-   LLE权重矩阵的构造涉及每 :math:`N` 个局部邻域的 :math:`k \times k` 线性方程的解
+   LLE 权重矩阵的构造涉及每 :math:`N` 个局部邻域的 :math:`k \times k` 线性方程的解
 
-3. **部分特征值分解**. 参见上述Isomap讨论。
+3. **部分特征值分解**. 参见上述 Isomap 讨论。
 
-标准LLE的整体复杂度是
+标准 LLE 的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[d N^2]`.
 
 * :math:`N` : 训练的数据节点数
@@ -152,7 +152,7 @@ Isomap的整体复杂度是
 
 
 Modified Locally Linear Embedding
-=================================
+=========================================
 
 One well-known issue with LLE is the regularization problem.  When the number
 of neighbors is greater than the number of input dimensions, the matrix
@@ -177,7 +177,7 @@ It requires ``n_neighbors > n_components``.
    :scale: 50
 
 Complexity
-----------
+----------------
 
 The MLLE algorithm comprises three stages:
 
@@ -208,7 +208,7 @@ The overall complexity of MLLE is
 
 
 Hessian Eigenmapping
-====================
+===========================
 
 Hessian Eigenmapping (also known as Hessian-based LLE: HLLE) is another method
 of solving the regularization problem of LLE.  It revolves around a
@@ -227,7 +227,7 @@ It requires ``n_neighbors > n_components * (n_components + 3) / 2``.
    :scale: 50
 
 Complexity
-----------
+---------------
 
 The HLLE algorithm comprises three stages:
 
@@ -257,7 +257,7 @@ The overall complexity of standard HLLE is
 .. _spectral_embedding:
 
 Spectral Embedding
-====================
+=============================
 
 Spectral Embedding is an approach to calculating a non-linear embedding.
 Scikit-learn implements Laplacian Eigenmaps, which finds a low dimensional
@@ -271,7 +271,7 @@ function :func:`spectral_embedding` or its object-oriented counterpart
 :class:`SpectralEmbedding`.
 
 Complexity
-----------
+----------------
 
 The Spectral Embedding (Laplacian Eigenmaps) algorithm comprises three stages:
 
@@ -302,7 +302,7 @@ The overall complexity of spectral embedding is
 
 
 Local Tangent Space Alignment
-=============================
+=======================================
 
 Though not technically a variant of LLE, Local tangent space alignment (LTSA)
 is algorithmically similar enough to LLE that it can be put in this category.
@@ -319,7 +319,7 @@ tangent spaces to learn the embedding.  LTSA can be performed with function
    :scale: 50
 
 Complexity
-----------
+-----------------
 
 The LTSA algorithm comprises three stages:
 
@@ -349,7 +349,7 @@ The overall complexity of standard LTSA is
 .. _multidimensional_scaling:
 
 Multi-dimensional Scaling (MDS)
-===============================
+===========================================
 
 `Multidimensional scaling <https://en.wikipedia.org/wiki/Multidimensional_scaling>`_
 (:class:`MDS`) seeks a low-dimensional
@@ -384,7 +384,7 @@ stress, is then defined by :math:`sum_{i < j} d_{ij}(X) - \hat{d}_{ij}(X)`
 
 
 Metric MDS
-----------
+----------------
 
 The simplest metric :class:`MDS` model, called *absolute MDS*, disparities are defined by
 :math:`\hat{d}_{ij} = S_{ij}`. With absolute MDS, the value :math:`S_{ij}`
@@ -394,7 +394,7 @@ should then correspond exactly to the distance between point :math:`i` and
 Most commonly, disparities are set to :math:`\hat{d}_{ij} = b S_{ij}`.
 
 Nonmetric MDS
--------------
+-------------------
 
 Non metric :class:`MDS` focuses on the ordination of the data. If
 :math:`S_{ij} < S_{kl}`, then the embedding should enforce :math:`d_{ij} <
@@ -429,7 +429,7 @@ order to avoid that, the disparities :math:`\hat{d}_{ij}` are normalized.
 .. _t_sne:
 
 t-distributed Stochastic Neighbor Embedding (t-SNE)
-===================================================
+=====================================================================
 
 t-SNE (:class:`TSNE`) converts affinities of data points to probabilities.
 The affinities in the original space are represented by Gaussian joint
@@ -473,7 +473,7 @@ The disadvantages to using t-SNE are roughly:
    :scale: 50
 
 Optimizing t-SNE
-----------------
+------------------------
 The main purpose of t-SNE is visualization of high-dimensional data. Hence,
 it works best when the data will be embedded on two or three dimensions.
 
@@ -520,7 +520,7 @@ provides a good discussion of the effects of the various parameters, as well
 as interactive plots to explore the effects of different parameters.
 
 Barnes-Hut t-SNE
-----------------
+-------------------------
 
 The Barnes-Hut t-SNE that has been implemented here is usually much slower than
 other manifold learning algorithms. The optimization is quite difficult
@@ -573,7 +573,7 @@ the internal structure of the data.
     L.J.P. van der Maaten.  Journal of Machine Learning Research 15(Oct):3221-3245, 2014.
 
 Tips on practical use
-=====================
+===============================
 
 * Make sure the same scale is used over all features. Because manifold
   learning methods are based on a nearest-neighbor search, the algorithm

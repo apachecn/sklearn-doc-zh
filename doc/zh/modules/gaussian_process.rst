@@ -2,9 +2,9 @@
 
 .. _gaussian_process:
 
-==================
+============
 高斯过程
-==================
+============
 
 .. currentmodule:: sklearn.gaussian_process
 
@@ -30,7 +30,7 @@
 .. _gpr:
 
 高斯过程回归 (GPR)
-=================================
+======================
 
 .. currentmodule:: sklearn.gaussian_process
 
@@ -63,11 +63,11 @@ GaussianProcessRegressor的作用还包括：
  
 
 
-GPR示例
-============
+GPR 示例
+=============
 
-具有噪声级的GPR估计
--------------------------------
+具有噪声级的 GPR 估计
+-------------------------
 
 该示例说明具有包含WhiteKernel的和核的GPR可以估计数据的噪声水平。
 对数边缘似然（LML）景观的图示表明存在LML的两个局部最大值。
@@ -91,8 +91,8 @@ GPR示例
    :align: center
 
 
-GPR和内核岭回归的比较
----------------------------------------------
+GPR 和内核岭回归的比较
+-------------------------
 
 内核脊回归（KRR）和GPR通过内部使用“内核技巧”来学习目标函数。
 KRR学习由相应内核引起的空间中的线性函数，该空间对应于原始空间中的非线性函数。
@@ -123,8 +123,8 @@ GPR中的参数的基于梯度的优化不受此指数缩放的影响，因此�
 预测的时间是相似的; 然而，生成GPR预测分布的方差需要的时间比生成平均值要长。
 
 
-Mauna Loa CO2数据中的GRR
--------------------------
+Mauna Loa CO2 数据中的 GRR
+-------------------------------
 
 该示例基于[RW2006]的第5.4.3节。
 它演示了使用梯度上升的对数边缘似然性的复杂内核工程和超参数优化的示例。
@@ -176,7 +176,7 @@ Mauna Loa CO2数据中的GRR
 .. _gpc:
 
 高斯过程分类（GPC）
-=====================================
+======================
 
 .. currentmodule:: sklearn.gaussian_process
 
@@ -213,11 +213,11 @@ GP先验平均值假定为零。先前的协方差是通过传递:ref:`内核 <g
 但如上所述，基于在内部解决几个二进制分类任务，它们使用一对一或一对一组合。
 
 
-GPC示例
-============
+GPC 示例
+=============
 
-GPC概率预测
-----------------------------------
+GPC 概率预测
+----------------
 
 该示例说明了对于具有不同选项的超参数的RBF内核的GPC预测概率。
 第一个图显示GPC具有任意选择的超参数的预测概率，并且超参数对应于最大对数边缘似然（LML）。
@@ -237,8 +237,8 @@ GPC概率预测
    :align: center
 
 
-GPC在XOR数据集上的举例说明
---------------------------------------
+GPC 在 XOR 数据集上的举例说明
+--------------------------------
 
 .. currentmodule:: sklearn.gaussian_process.kernels
 
@@ -254,8 +254,8 @@ GPC在XOR数据集上的举例说明
 .. currentmodule:: sklearn.gaussian_process
 
 
-iris数据集上的高斯过程分类（GPC）
------------------------------------------------------
+iris 数据集上的高斯过程分类（GPC）
+------------------------------------
 
 该示例说明了用于虹膜数据集的二维版本上各向同性和各向异性RBF核的GPC的预测概率。
 这说明了GPC对非二进制分类的适用性。
@@ -269,7 +269,7 @@ iris数据集上的高斯过程分类（GPC）
 .. _gp_kernels:
 
 高斯过程内核
-==============================
+================
 .. currentmodule:: sklearn.gaussian_process.kernels
 
 内核（也可以叫做GPs上下文中的"协方差函数"）
@@ -284,41 +284,41 @@ iris数据集上的高斯过程分类（GPC）
 更多细节，请参看[RW2006]_的第四章。
 
 
-高斯过程内核API
----------------------------
-:class:`Kernel`主要是用来计算数据点之间的高斯过程协方差。
-为此，内核中``__call__``方法会被调用。该方法可以用于计算
+高斯过程内核 API
+--------------------
+:class:`Kernel` 主要是用来计算数据点之间的高斯过程协方差。
+为此，内核中 ``__call__`` 方法会被调用。该方法可以用于计算
 2d阵列X中所有数据点对的“自动协方差”，或二维阵列X的数据点
 与二维阵列Y中的数据点的所有组合的“互协方差”。以下论断对于
-所有内核k（除了:class:`WhiteKernel`）都是成立的：``k(X) == K(X, Y=X)``。
+所有内核k（除了 :class:`WhiteKernel`）都是成立的：``k(X) == K(X, Y=X)``。
 如果仅仅是自协方差的对角线元素被使用，那么内核的方法``diag()``将会被调用，
-该方法比等价的调用``__call__``: ``np.diag(k(X, X)) == k.diag(X)``
+该方法比等价的调用 ``__call__``: ``np.diag(k(X, X)) == k.diag(X)``
 具有更高的计算效率。
  
-内核通过超参数向量:math:`\theta`进行参数化。这些超参数可以
-控制例如内核的长度尺度或周期性（见下文）。通过设置``__call__``
-方法的参数``eval_gradient=True``，所有的内核支持计算解析
-内核自协方差对于:math:`\theta`的解析梯度。该梯度被用来在
+内核通过超参数向量 :math:`\theta` 进行参数化。这些超参数可以
+控制例如内核的长度尺度或周期性（见下文）。通过设置 ``__call__`` 
+方法的参数 ``eval_gradient=True`` ，所有的内核支持计算解析
+内核自协方差对于 :math:`\theta` 的解析梯度。该梯度被用来在
 高斯过程中（不论是回归型还是分类型的）计算对数边缘似然函数
 的梯度，进而被用来通过梯度下降的方法极大化对数边缘似然函数
-从而确定:math:`\theta`的值。对于每个超参，当对内核的实例
-进行赋值时，初始值和边界值需要被指定。通过内核对象属性``theta``，
-:math:`\theta`的当前值可以被获取或者设置。更重要的是，
-超参的边界值可以被内核属性``bounds``获取。需要注意的是，
+从而确定 :math:`\theta` 的值。对于每个超参，当对内核的实例
+进行赋值时，初始值和边界值需要被指定。通过内核对象属性 ``theta`` ，
+:math:`\theta` 的当前值可以被获取或者设置。更重要的是，
+超参的边界值可以被内核属性 ``bounds`` 获取。需要注意的是，
 以上两种属性值(theta和bounds)都会返回内部使用值的日志转换值，
 这是因为这两种属性值通常更适合基于梯度的优化。每个超参的
-规范:class:`Hyperparameter`以相应内核中的实例的形式存储。
-请注意使用了以"x"命名的超参的内核必然具有self.x和self.x_bounds这两种属性。
+规范 :class:`Hyperparameter` 以相应内核中的实例的形式存储。
+请注意使用了以"x"命名的超参的内核必然具有 self.x 和 self.x_bounds 这两种属性。
 
-所有内核的抽象基类为:class:`Kernel`。Kernel基类实现了
-一个相似的接口:class:`Estimator`，提供了方法``get_params()``,
-``set_params()``以及``clone()``。这也允许通过诸如
-:class:`Pipeline`或者:class:`GridSearch`之类的元估计来设置内核值。
+所有内核的抽象基类为 :class:`Kernel` 。Kernel 基类实现了
+一个相似的接口 :class:`Estimator` ，提供了方法 ``get_params()`` ,
+``set_params()`` 以及 ``clone()`` 。这也允许通过诸如
+:class:`Pipeline` 或者 :class:`GridSearch` 之类的元估计来设置内核值。
 需要注意的是，由于内核的嵌套结构（通过内核操作符，如下所见），
 内核参数的名称可能会变得相对复杂些。通常来说，对于二元内核操作，
-参数的左运算元以``k1__``为前缀，而有运算元以``k2__``为前缀。
-一个额外的便利方法是``clone_with_theta(theta)``，
-该方法返回克隆版本的内核，但是设置超参数为``theta``。
+参数的左运算元以 ``k1__`` 为前缀，而有运算元以 ``k2__`` 为前缀。
+一个额外的便利方法是 ``clone_with_theta(theta)``，
+该方法返回克隆版本的内核，但是设置超参数为 ``theta``。
 示例如下：
 
     >>> from sklearn.gaussian_process.kernels import ConstantKernel, RBF
@@ -347,24 +347,24 @@ iris数据集上的高斯过程分类（GPC）
      [       -inf  2.30258509]]
 
 
-所有的高斯过程内核操作都可以通过:mod:`sklearn.metrics.pairwise`来进行互操作，反之亦然。
-:class:`Kernel`的子类实例可以通过``metric``参数传给:mod:`sklearn.metrics.pairwise`中的
-``pairwise_kernels``。更重要的是，超参数的梯度不是分析的，而是数字，所有这些内核只支持
-各向同性距离。该参数``gamma``被认为是一个超参数，可以进行优化。其他内核参数在初始化时直接设置，
+所有的高斯过程内核操作都可以通过 :mod:`sklearn.metrics.pairwise` 来进行互操作，反之亦然。
+:class:`Kernel` 的子类实例可以通过 ``metric`` 参数传给 :mod:`sklearn.metrics.pairwise` 中的
+ ``pairwise_kernels`` 。更重要的是，超参数的梯度不是分析的，而是数字，所有这些内核只支持
+各向同性距离。该参数 ``gamma`` 被认为是一个超参数，可以进行优化。其他内核参数在初始化时直接设置，
 并保持固定。
 
 
 基础内核
--------------
-:class:`ConstantKernel`内核类可以被用作:class:`Product`内核类的一部分，
+------------
+:class:`ConstantKernel` 内核类可以被用作 :class:`Product` 内核类的一部分，
 在它可以对其他因子（内核）进行度量的场景下或者作为更改高斯过程均值的
-:class:`Sum`类的一部分。这取决于参数:math:`constant\_value`的设置。该方法定义为：
+ :class:`Sum` 类的一部分。这取决于参数 :math:`constant\_value` 的设置。该方法定义为：
 
 .. math::
    k(x_i, x_j) = constant\_value \;\forall\; x_1, x_2
 
-:class:`WhiteKernel`内核类的主要应用实例在于当解释信号的噪声部分时
-可以作为一个和内核的一部分。通过调节参数:math:`noise\_level`，
+:class:`WhiteKernel` 内核类的主要应用实例在于当解释信号的噪声部分时
+可以作为一个和内核的一部分。通过调节参数 :math:`noise\_level`，
 该类可以用来估计噪声级别。具体如下所示：
 
 .. math::
@@ -372,25 +372,25 @@ iris数据集上的高斯过程分类（GPC）
 
 
 内核操作
-----------------
-内核操作是把1~2个基内核与新内核进行合并。内核类:class:`Sum`通过
-:math:`k_{sum}(X, Y) = k1(X, Y) + k2(X, Y)`相加来合并:math:`k1`
-和:math:`k2`内核。内核类:class:`Product`通过
-:math:`k_{product}(X, Y) = k1(X, Y) * k2(X, Y)`把:math:`k1`
-和:math:`k2`内核进行合并。内核类:class:`Exponentiation`通过
-:math:`k_{exp}(X, Y) = k(X, Y)^\text{exponent}`把基内核与
-常量参数:math:`exponent`进行合并。
+------------
+内核操作是把1~2个基内核与新内核进行合并。内核类 :class:`Sum` 通过
+:math:`k_{sum}(X, Y) = k1(X, Y) + k2(X, Y)` 相加来合并 :math:`k1`
+和 :math:`k2` 内核。内核类 :class:`Product` 通过
+:math:`k_{product}(X, Y) = k1(X, Y) * k2(X, Y)` 把 :math:`k1` 
+和 :math:`k2` 内核进行合并。内核类 :class:`Exponentiation` 通过
+:math:`k_{exp}(X, Y) = k(X, Y)^\text{exponent}` 把基内核与
+常量参数 :math:`exponent` 进行合并。
 
 径向基函数内核
-----------------------------------
-:class:`RBF`内核是一个固定内核，它也被称为“平方指数”内核。它通过定长的参数:math:`l>0`
-来对内核进行参数化。该参数既可以是标量（内核的各向同性变体）或者与输入:math:`x`（内核的各向异性变体）
+------------------
+:class:`RBF` 内核是一个固定内核，它也被称为“平方指数”内核。它通过定长的参数 :math:`l>0` 
+来对内核进行参数化。该参数既可以是标量（内核的各向同性变体）或者与输入 :math:`x` （内核的各向异性变体）
 具有相同数量的维度的向量。该内核可以被定义为：
 
 .. math::
    k(x_i, x_j) = \text{exp}\left(-\frac{1}{2} d(x_i / l, x_j / l)^2\right)
 
-这个内核是无限可微的，这意味着这个内核作为协方差函数的GP具有所有阶数的均方差导数，
+这个内核是无限可微的，这意味着这个内核作为协方差函数的 GP 具有所有阶数的均方差导数，
 因此非常平滑。由RBF内核产生的GP的先验和后验示意图如下所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_000.png
@@ -398,38 +398,38 @@ iris数据集上的高斯过程分类（GPC）
    :align: center
 
 
-Matérn内核
--------------
-:class:`Matern`内核是一个固定内核，是:class:`RBF`内核的泛化。它有一个额外的参数:math:`\nu`，
-该参数控制结果函数的平滑程度。它由定长参数:math:`l>0`来实现参数化。该参数既可以是标量
-（内核的各向同性变体）或者与输入:math:`x`（内核的各向异性变体）具有相同数量的维度的向量。
+Matérn 内核
+----------------
+:class:`Matern` 内核是一个固定内核，是 :class:`RBF` 内核的泛化。它有一个额外的参数 :math:`\nu`，
+该参数控制结果函数的平滑程度。它由定长参数 :math:`l>0` 来实现参数化。该参数既可以是标量
+（内核的各向同性变体）或者与输入 :math:`x` （内核的各向异性变体）具有相同数量的维度的向量。
 该内核可以被定义为：
 
 .. math::
 
     k(x_i, x_j) = \sigma^2\frac{1}{\Gamma(\nu)2^{\nu-1}}\Bigg(\gamma\sqrt{2\nu} d(x_i / l, x_j / l)\Bigg)^\nu K_\nu\Bigg(\gamma\sqrt{2\nu} d(x_i / l, x_j / l)\Bigg),
 
-因为:math:`\nu\rightarrow\infty`，Matérn内核收敛到RBF内核。
-当:math:`\nu = 1/2`时，Matérn内核变得与绝对指数内核相同时，即
+因为 :math:`\nu\rightarrow\infty` ，Matérn 内核收敛到 RBF 内核。
+当 :math:`\nu = 1/2` 时，Matérn 内核变得与绝对指数内核相同时，即
 
 .. math::
     k(x_i, x_j) = \sigma^2 \exp \Bigg(-\gamma d(x_i / l, x_j / l) \Bigg) \quad \quad \nu= \tfrac{1}{2}
 
-特别的，当:math:`\nu = 3/2`时：
+特别的，当 :math:`\nu = 3/2` 时：
 
 .. math::
     k(x_i, x_j) = \sigma^2 \Bigg(1 + \gamma \sqrt{3} d(x_i / l, x_j / l)\Bigg) \exp \Bigg(-\gamma \sqrt{3}d(x_i / l, x_j / l) \Bigg) \quad \quad \nu= \tfrac{3}{2}
 
-和:math:`\nu = 5/2`:
+和 :math:`\nu = 5/2` :
 
 .. math::
     k(x_i, x_j) = \sigma^2 \Bigg(1 + \gamma \sqrt{5}d(x_i / l, x_j / l) +\frac{5}{3} \gamma^2d(x_i / l, x_j / l)^2 \Bigg) \exp \Bigg(-\gamma \sqrt{5}d(x_i / l, x_j / l) \Bigg) \quad \quad \nu= \tfrac{5}{2}
 
-是学习函数的常用选择，并且不是无限可微的（由RBF内核假定）
-但是至少具有一阶(:math:`\nu = 3/2`)或者二阶(:math:`\nu = 5/2`)可微性。
+是学习函数的常用选择，并且不是无限可微的（由 RBF 内核假定）
+但是至少具有一阶( :math:`\nu = 3/2` )或者二阶( :math:`\nu = 5/2` )可微性。
 
-通过:math:`\nu`灵活控制学习函数的平滑性可以更加适应真正的底层函数关联属性。
-通过Matérn内核产生的高斯过程的先验和后验如下图所示：
+通过 :math:`\nu` 灵活控制学习函数的平滑性可以更加适应真正的底层函数关联属性。
+通过 Matérn 内核产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_004.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
@@ -438,55 +438,55 @@ Matérn内核
 想要更进一步地了解不同类型的Matérn内核请参阅[RW2006]_, pp84。
 
 有理二次内核
--------------------------
+----------------
 
-:class:`RationalQuadratic`内核可以被看做不同特征尺度下的:class:`RBF`内核的规模混合（一个无穷和）
-它通过长度尺度参数:math:`l>0`和比例混合参数:math:`\alpha>0`进行参数化。
-此时仅支持:math:`l`标量的各向同性变量。内核公式如下：
+:class:`RationalQuadratic` 内核可以被看做不同特征尺度下的 :class:`RBF` 内核的规模混合（一个无穷和）
+它通过长度尺度参数 :math:`l>0` 和比例混合参数 :math:`\alpha>0` 进行参数化。
+此时仅支持 :math:`l` 标量的各向同性变量。内核公式如下：
 
 .. math::
    k(x_i, x_j) = \left(1 + \frac{d(x_i, x_j)^2}{2\alpha l^2}\right)^{-\alpha}
 
-从RBF内核中产生的高斯过程的先验和后验如下图所示：
+从 RBF 内核中产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_001.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
 正弦平方内核
------------------------
+----------------
 
-:class:`ExpSineSquared`内核可以对周期性函数进行建模。它由定长参数:math:`l>0`
-以及周期参数:math:`p>0`来实现参数化。此时仅支持:math:`l`标量的各向同性变量。内核公式如下：
+:class:`ExpSineSquared` 内核可以对周期性函数进行建模。它由定长参数 :math:`l>0` 
+以及周期参数 :math:`p>0` 来实现参数化。此时仅支持 :math:`l` 标量的各向同性变量。内核公式如下：
 
 .. math::
    k(x_i, x_j) = \text{exp}\left(-2 \left(\text{sin}(\pi / p * d(x_i, x_j)) / l\right)^2\right)
 
-从ExpSineSquared内核中产生的高斯过程的先验和后验如下图所示：
+从 ExpSineSquared 内核中产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_002.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
 点乘内核
-------------------
+------------
 
-:class:`DotProduct`内核是非固定内核，它可以通过在线性回归的:math:`x_d (d = 1, . . . , D)`的相关系数上加上
-服从于:math:`N(0, 1)`的先验以及在线性回归的偏置上加上服从于:math:`N(0, \sigma_0^2)`的先验来获得。
-该:class:`DotProduct`内核是不变的关于原点的坐标，而不是翻译的旋转。它通过设置参数:math:`\sigma_0^2`来进行参数化。
-当:math:`\sigma_0^2 = 0`时，该内核叫做同质线性内核；否则该内核是非同质的。内核公式如下：
+:class:`DotProduct` 内核是非固定内核，它可以通过在线性回归的 :math:`x_d (d = 1, . . . , D)` 的相关系数上加上
+服从于 :math:`N(0, 1)` 的先验以及在线性回归的偏置上加上服从于 :math:`N(0, \sigma_0^2)` 的先验来获得。
+该 :class:`DotProduct` 内核是不变的关于原点的坐标，而不是翻译的旋转。它通过设置参数 :math:`\sigma_0^2` 来进行参数化。
+当 :math:`\sigma_0^2 = 0` 时，该内核叫做同质线性内核；否则该内核是非同质的。内核公式如下：
 
 .. math::
    k(x_i, x_j) = \sigma_0 ^ 2 + x_i \cdot x_j
 
-:class:`DotProduct`内核通常和指数分布相结合。实例如下图所示：
+:class:`DotProduct` 内核通常和指数分布相结合。实例如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_003.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
 参考文献
-----------
+------------
 
 .. [RW2006] Carl Eduard Rasmussen and Christopher K.I. Williams, "Gaussian Processes for Machine Learning", MIT Press 2006, Link to an official complete PDF version of the book `here <http://www.gaussianprocess.org/gpml/chapters/RW.pdf>`_ .
 
@@ -495,15 +495,15 @@ Matérn内核
 
 
 传统高斯过程
-=========================
+=================
 
-在本节中，描述了版本0.16.1及之前scikit中高斯过程的实现，
-请注意，此实现已被弃用，将在版本0.18中删除。
+在本节中，描述了版本 0.16.1 及之前 scikit 中高斯过程的实现，
+请注意，此实现已被弃用，将在版本 0.18 中删除。
 
 回归实例介绍
-----------------------------------
+----------------
 
-假定我们要替代这个函数：:math:`g(x) = x \sin(x)`。
+假定我们要替代这个函数：:math:`g(x) = x \sin(x)` 。
 为了做到这一点，该功能被评估到一个实验设计上。然后，
 我们定义一个回归和相关模型可能被其他参数指定的高斯模型，
 并且要求模型能够拟合数据。拟合过程由于受到实例化过程中
@@ -530,25 +530,25 @@ Matérn内核
 
 
 噪声数据拟合
-------------------
+----------------
 
 当含噪声的数据被用来做拟合时，对于每个数据点，高斯过程模型可以指定噪声的方差。
-:class:`GaussianProcess`包含一个被添加到训练数据得到的自相关矩阵对角线中的
-参数 ``nugget``。通常来说这是一种类型的吉洪诺夫正则化方法。
+:class:`GaussianProcess` 包含一个被添加到训练数据得到的自相关矩阵对角线中的
+参数 ``nugget`` 。通常来说这是一种类型的吉洪诺夫正则化方法。
 在平方指数相关函数的特殊情况下，该归一化等效于指定输入中的小数方差。也就是：
 
 .. math::
    \mathrm{nugget}_i = \left[\frac{\sigma_i}{y_i}\right]^2
 
-使用``nugget``以及``corr``正确设置，高斯过程可以更好地用于从噪声数据恢复给定的向量函数。
+使用 ``nugget`` 以及 ``corr`` 正确设置，高斯过程可以更好地用于从噪声数据恢复给定的向量函数。
 
 
 数学形式
-------------------------
+------------
 
 
 初始假设
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
 假设需要对电脑实验的结果进行建模，例如使用一个数学函数：
 
@@ -558,21 +558,21 @@ Matérn内核
            & X \mapsto y = g(X)
 
 
-同时假设这个函数是*一个*有关于*一个*高斯过程:math:`G`的条件采用方法，
-那么从这个假设出发，GPML通常可以表示为如下形式：
+同时假设这个函数是 *一个* 有关于 *一个* 高斯过程 :math:`G` 的条件采用方法，
+那么从这个假设出发，GPML 通常可以表示为如下形式：
 
 .. math::
 
         G(X) = f(X)^T \beta + Z(X)
 
-其中，:math:`f(X)^T \beta`是一个线性回归模型，并且:math:`Z(X)`是一个
+其中， :math:`f(X)^T \beta` 是一个线性回归模型，并且 :math:`Z(X)` 是一个
 以零为均值，协方差函数完全平稳的高斯过程：
 
 .. math::
 
         C(X, X') = \sigma^2 R(|X - X'|)
 
-:math:`\sigma^2`表示其方差，:math:`R` 表示仅仅基于样本之间的绝对相关距离的相关函数，可能是特征（这是平稳性假设）
+:math:`\sigma^2` 表示其方差， :math:`R` 表示仅仅基于样本之间的绝对相关距离的相关函数，可能是特征（这是平稳性假设）
 
 从这些基本的公式中可以注意到GPML仅仅是基本的线性二乘回归问题的扩展。
 
@@ -581,20 +581,20 @@ Matérn内核
         g(X) \approx f(X)^T \beta
 
 除此之外，我们另外假定由相关函数指定的样本之间的一些空间相干性（相关性）。
-事实上，普通最小二乘法假设当:math:`X = X'`时，相关性模型:math:`R(|X - X'|)`
-是1；否则为0，相关性模型为*狄拉克*相关模型--有时在克里金文献中被称为*熔核*相关模型
+事实上，普通最小二乘法假设当 :math:`X = X'` 时，相关性模型 :math:`R(|X - X'|)` 
+是 1；否则为 0 ，相关性模型为 *狄拉克* 相关模型--有时在克里金文献中被称为 *熔核* 相关模型
 
 
 最佳线性无偏预测（BLUP）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-我们现在推导出基于观测结果的*最佳线性无偏预测*:math:`g`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+我们现在推导出基于观测结果的 *最佳线性无偏预测* :math:`g`
 
 .. math::
 
     \hat{G}(X) = G(X | y_1 = g(X_1), ...,
                                 y_{n_{\rm samples}} = g(X_{n_{\rm samples}}))
 
-它可以由*给定的属性*加以派生：
+它可以由 *给定的属性* 加以派生：
 
 - 它是线性的(观测结果的线性组合)
 
@@ -615,7 +615,7 @@ Matérn内核
     \hat{G}(X)^* = \arg \min\limits_{\hat{G}(X)} \;
                                             \mathbb{E}[(G(X) - \hat{G}(X))^2]
 
-因此最优的带权向量:math:`a(X)`是以下等式约束优化问题的解
+因此最优的带权向量 :math:`a(X)` 是以下等式约束优化问题的解
 
 .. math::
 
@@ -626,7 +626,7 @@ Matérn内核
 以拉格朗日形式重写这个受约束的优化问题，并进一步寻求要满足的一阶最优条件，
 从而得到一个以闭合形式表达式为终止形式的预测器 - 参见参考文献中完整的证明。
 
-最后，BLUP为高斯随机变量，其中均值为：
+最后，BLUP 为高斯随机变量，其中均值为：
 					
 .. math::
 
@@ -644,19 +644,19 @@ Matérn内核
 
 其中:
 
-* 根据自相关函数以及内置参数:math:`\theta`所定义的相关性矩阵为：
+* 根据自相关函数以及内置参数 :math:`\theta` 所定义的相关性矩阵为：
 
 .. math::
 
     R_{i\,j} = R(|X_i - X_j|, \theta), \; i,\,j = 1, ..., m
 
-* 在进行预测的点与DOE中的点之间的互相关的向量:
+* 在进行预测的点与 DOE 中的点之间的互相关的向量:
 
 .. math::
 
     r_i = R(|X - X_i|, \theta), \; i = 1, ..., m
 
-* 回归矩阵 (例如范德蒙矩阵 如果:math:`f`以多项式为基):
+* 回归矩阵 (例如范德蒙矩阵 如果 :math:`f` 以多项式为基):
 
 .. math::
 
@@ -677,51 +677,51 @@ Matérn内核
 
 需要重点注意的是，高斯过程预测器的概率输出是完全可分析的并且依赖于基本的线性代数操作。
 更准确地说，预测结果的均值是两个简单线性组合（点积）的和，方差需要两个矩阵反转操作，但关联
-矩阵只能使用Cholesky分解算法分解一次。
+矩阵只能使用 Cholesky 分解算法分解一次。
 
 经验最佳线性无偏估计（EBLUP）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 到现在为止，自相关和回归模型都已假定给出。然而，在实践中，它们从来都是未知的
-因此需要为这些模型:ref:`correlation_models`做出（积极的）经验选择。
+因此需要为这些模型 :ref:`correlation_models` 做出（积极的）经验选择。
 
-根据这些选择，可以来估计BLUP中涉及到的遗留未知参数。为此，需要使用一系列
-被提供的观测值同时结合一系列推断技术。目前使用的方法是基于DACE's Matlab工
-具包的*最大似然估计* - 参见DACE手册中的完全推导公式。最大似然估计的问题在
-自相关参数中是一个全局优化的问题。这种全局优化通过scipy.optimize中的
-fmin_cobyla优化函数加以实现。然而，在各向异性的情况下，我们提供了
-Welch的分量优化算法的实现 - 参见参考。
+根据这些选择，可以来估计 BLUP 中涉及到的遗留未知参数。为此，需要使用一系列
+被提供的观测值同时结合一系列推断技术。目前使用的方法是基于 DACE's Matlab 工
+具包的*最大似然估计* - 参见 DACE 手册中的完全推导公式。最大似然估计的问题在
+自相关参数中是一个全局优化的问题。这种全局优化通过 scipy.optimize 中的
+fmin_cobyla 优化函数加以实现。然而，在各向异性的情况下，我们提供了
+Welch 的分量优化算法的实现 - 参见参考。
 
 .. _correlation_models:
 
 关联模型
-------------------
+------------
 
-由于几乎相等的假设，常用的关联模型和一些有名的SVM内核相匹配。它们必须要满足Mercer条件
+由于几乎相等的假设，常用的关联模型和一些有名的SVM内核相匹配。它们必须要满足 Mercer 条件
 并且需要保持固定形式。然而，请注意，相关模型的选择应该与观察到来的原始实验的已知特性一致。
 例如：
 
-* 如果原始实验被认为是无限可微（平滑），则应使用*平方指数关联模型*。
+* 如果原始实验被认为是无限可微（平滑），则应使用 *平方指数关联模型* 。
 * 如果不是无限可微的, 那么需要使用 *指数关联模型*.
-* 还要注意，存在一个将衍生度作为输入的相关模型：这是Matern相关模型，但这里并没有实现（TODO）.
+* 还要注意，存在一个将衍生度作为输入的相关模型：这是 Matern 相关模型，但这里并没有实现（ TODO ）.
 
-关于选择合适的关联模型更详细的讨论，请参阅Rasmussen＆Williams的文献。
+关于选择合适的关联模型更详细的讨论，请参阅 Rasmussen＆Williams 的文献。
 
 .. _regression_models:
 
 
 回归模型
------------------
+------------
 
 常用的线性回归模型包括零阶（常数）、一阶和二阶多项式。
-但是可以以Python函数的形式指定它自己的特性，它将特征X
+但是可以以 Python 函数的形式指定它自己的特性，它将特征X
 作为输入，并返回一个包含函数集值的向量。唯一加以限制地是，
 函数的个数不能超过有效观测值的数目，因此基本的回归问题不被*确定*。
 
 实现细节
-----------------------
+------------
 
-模型通过DACE的Matlab工具包来实现。
+模型通过 DACE 的 Matlab 工具包来实现。
 
 .. topic:: 参考文献:
 

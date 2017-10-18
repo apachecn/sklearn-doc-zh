@@ -1,8 +1,8 @@
 .. _computational_performance:
 
-=========================
+================================
 Computational Performance
-=========================
+================================
 
 For some applications the performance (mainly latency and throughput at
 prediction time) of estimators is crucial. It may also be of interest to
@@ -27,7 +27,7 @@ non-linear, or with fewer parameters) often run faster but are not always able
 to take into account the same exact properties of the data as more complex ones.
 
 Prediction Latency
-==================
+=========================
 
 One of the most straight-forward concerns one may have when using/choosing a
 machine learning toolkit is the latency at which predictions can be made in a
@@ -43,7 +43,7 @@ A last major parameter is also the possibility to do predictions in bulk or
 one-at-a-time mode.
 
 Bulk versus Atomic mode
------------------------
+--------------------------------
 
 In general doing predictions in bulk (many instances at the same time) is
 more efficient for a number of reasons (branching predictability, CPU cache,
@@ -88,7 +88,7 @@ you an estimate of the order of magnitude of the prediction latency.
     :func:`sklearn.utils.assert_all_finite` within the context.
 
 Influence of the Number of Features
------------------------------------
+--------------------------------------------
 
 Obviously when the number of features increases so does the memory
 consumption of each example. Indeed, for a matrix of :math:`M` instances
@@ -109,7 +109,7 @@ the number of features (non-linear cases can happen depending on the global
 memory footprint and estimator).
 
 Influence of the Input Data Representation
-------------------------------------------
+---------------------------------------------------
 
 Scipy provides sparse matrix datastructures which are optimized for storing
 sparse data. The main feature of sparse formats is that you don't store zeros
@@ -142,7 +142,7 @@ for more information on how to build (or convert your data to) sparse matrix
 formats. Most of the time the ``CSR`` and ``CSC`` formats work best.
 
 Influence of the Model Complexity
----------------------------------
+------------------------------------------
 
 Generally speaking, when model complexity increases, predictive power and
 latency are supposed to increase. Increasing predictive power is usually
@@ -206,7 +206,7 @@ with a speedy linear model but prediction power will very likely suffer in
 the process.
 
 Feature Extraction Latency
---------------------------
+-----------------------------------
 
 Most scikit-learn models are usually pretty fast as they are implemented
 either with compiled Cython extensions or optimized computing libraries.
@@ -229,7 +229,7 @@ feature extraction code as it may be a good place to start optimizing when
 your overall latency is too slow for your application.
 
 Prediction Throughput
-=====================
+==============================
 
 Another important metric to care about when sizing production systems is the
 throughput i.e. the number of predictions you can make in a given amount of
@@ -252,10 +252,10 @@ explanation on how to achieve this is beyond the scope of this documentation
 though.
 
 Tips and Tricks
-===============
+========================
 
 Linear algebra libraries
-------------------------
+----------------------------------
 
 As scikit-learn relies heavily on Numpy/Scipy and linear algebra in general it
 makes sense to take explicit care of the versions of these libraries.
@@ -309,7 +309,7 @@ Debian / Ubuntu.
     that should be immune to this problem.
 
 Model Compression
------------------
+---------------------------
 
 Model compression in scikit-learn only concerns linear models for the moment.
 In this context it means that we want to control the model sparsity (i.e. the
@@ -336,7 +336,7 @@ Furthermore, sparsifying can be very useful to reduce the memory usage of
 predictive models deployed on production servers.
 
 Model Reshaping
----------------
+-------------------------
 
 Model reshaping consists in selecting only a portion of the available features
 to fit a model. In other words, if a model discards features during the
@@ -355,7 +355,7 @@ In the case of sparse input (particularly in ``CSR`` format), it is generally
 sufficient to not generate the relevant features, leaving their columns empty.
 
 Links
------
+---------------
 
   - `scikit-learn developer performance documentation <../developers/performance.html>`_
   - `Scipy sparse matrix formats documentation <http://docs.scipy.org/doc/scipy/reference/sparse.html>`_

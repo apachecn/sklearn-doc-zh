@@ -4,7 +4,7 @@
 大规模计算的策略: 更大量的数据
 =================================================
 
-对于一些应用程序的实例数量，它们需要被处理的特征（或两者）和/或速度对传统的方法而言非常具有挑战性。在这些情况下，scikit-learn有许多你值得考虑的选项可以使你的系统规模化。
+对于一些应用程序的实例数量，它们需要被处理的特征（或两者）和/或速度对传统的方法而言非常具有挑战性。在这些情况下，scikit-learn 有许多你值得考虑的选项可以使你的系统规模化。
 
 使用外核学习实例进行拓展
 =================================================
@@ -42,7 +42,7 @@
       + :class:`sklearn.linear_model.SGDRegressor`
       + :class:`sklearn.linear_model.PassiveAggressiveRegressor`
       + :class:`sklearn.neural_network.MLPRegressor`
-  - Clustering（集群）
+  - Clustering（聚类）
       + :class:`sklearn.cluster.MiniBatchKMeans`
       + :class:`sklearn.cluster.Birch`
   - Decomposition / feature Extraction（分解/特征提取）
@@ -59,7 +59,7 @@
 选择合适的算法时要考虑的另一个方面是，所有这些算法在每个示例中都不会对时间保持一致。比如说， ``Perceptron`` 仍然对错误标签的例子是敏感的，即使经过多次的例子，而 ``SGD*`` 和 ``PassiveAggressive*`` 族对这些鲁棒性更好。相反，在学习速率随着时间不断降低时，合适标记的例子在流中迟来了也变得越来越不重要了，并不会有显著的区别。
 
 示例
---------
+----------
 最后，我们有一个完整的 :ref:`sphx_glr_auto_examples_applications_plot_out_of_core_classification.py` 文本文档的核心分类的示例。旨在为想要构建核心学习系统的人们提供一个起点，并展示上述大多数概念。
 
 此外，它还展现了不同算法性能随着处理例子的数量的演变。
@@ -80,6 +80,6 @@
 
 
 注释
------
+-------
 
 .. [1] 根据算法，mini-batch 大小可以影响结果。SGD*，PassiveAggressive* 和离散的 NaiveBayes 是真正在线的，不受 batch 大小的影响。相反，MiniBatchKMeans 收敛速度受 batch 大小影响。此外，其内存占用可能会随 batch 大小而显着变化。
