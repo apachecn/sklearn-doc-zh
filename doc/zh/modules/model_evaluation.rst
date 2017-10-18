@@ -93,7 +93,7 @@ Scoring（得分）                    Function（函数）                     
 
 .. _scoring:
 
-Defining your scoring strategy from metric functions（根据 metric 函数定义您的评分策略）
+根据 metric 函数定义您的评分策略
 -----------------------------------------------------
 
 模块 :mod:`sklearn.metrics` 还公开了一组 measuring a prediction error （测量预测误差）的简单函数，给出了基础真实的数据和预测:
