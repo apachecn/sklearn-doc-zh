@@ -376,22 +376,14 @@ Dictionary learning（字典学习）是通过交替更新稀疏代码来解决�
 
 .. _MiniBatchDictionaryLearning:
 
-Mini-batch dictionary learning
+小批量字典学习
 ------------------------------
 
-:class:`MiniBatchDictionaryLearning` implements a faster, but less accurate
-version of the dictionary learning algorithm that is better suited for large
-datasets.
+:class:`MiniBatchDictionaryLearning` 实现了更快、更适合大型数据集的字典学习算法，但该版本不太准确。
 
-By default, :class:`MiniBatchDictionaryLearning` divides the data into
-mini-batches and optimizes in an online manner by cycling over the mini-batches
-for the specified number of iterations. However, at the moment it does not
-implement a stopping condition.
+默认情况下，:class:`MiniBatchDictionaryLearning` 将数据分成小批量，并通过在指定次数的迭代中循环使用小批量，以在线方式进行优化。但是，目前它没有实现停止条件。
 
-The estimator also implements ``partial_fit``, which updates the dictionary by
-iterating only once over a mini-batch. This can be used for online learning
-when the data is not readily available from the start, or for when the data
-does not fit into the memory.
+估计器还实现了  ``partial_fit``, 它通过在一个迷你批处理中仅迭代一次来更新字典。 当数据从一开始就不容易获得，或者当数据不适合内存时，这可以用于在线学习。
 
 .. currentmodule:: sklearn.cluster
 
@@ -400,75 +392,57 @@ does not fit into the memory.
     :scale: 50%
     :align: right
 
-.. topic:: **Clustering for dictionary learning**
+.. topic:: **字典学习聚类**
 
-   Note that when using dictionary learning to extract a representation
-   (e.g. for sparse coding) clustering can be a good proxy to learn the
-   dictionary. For instance the :class:`MiniBatchKMeans` estimator is
-   computationally efficient and implements on-line learning with a
-   ``partial_fit`` method.
+   注意，当使用字典学习来提取表示（例如，用于稀疏编码）时，聚类可以是学习字典的良好代理。 
+   例如，:class:`MiniBatchKMeans` 估计器在计算上是有效的，并使用 ``partial_fit`` 方法实现在线学习。
 
-    Example: :ref:`sphx_glr_auto_examples_cluster_plot_dict_face_patches.py`
+   示例: 在线学习面部部分的字典 :ref:`sphx_glr_auto_examples_cluster_plot_dict_face_patches.py`
 
 .. currentmodule:: sklearn.decomposition
 
 .. _FA:
 
-Factor Analysis
+因子分析
 ===============
 
-In unsupervised learning we only have a dataset :math:`X = \{x_1, x_2, \dots, x_n
-\}`. How can this dataset be described mathematically? A very simple
-`continuous latent variable` model for :math:`X` is
+在无监督的学习中，我们只有一个数据集 :math:`X = \{x_1, x_2, \dots, x_n\}`. 
+这个数据集如何在数学上描述？ :math:`X` 的一个非常简单的连续潜变量模型
 
 .. math:: x_i = W h_i + \mu + \epsilon
 
-The vector :math:`h_i` is called "latent" because it is unobserved. :math:`\epsilon` is
-considered a noise term distributed according to a Gaussian with mean 0 and
-covariance :math:`\Psi` (i.e. :math:`\epsilon \sim \mathcal{N}(0, \Psi)`), :math:`\mu` is some
-arbitrary offset vector. Such a model is called "generative" as it describes
-how :math:`x_i` is generated from :math:`h_i`. If we use all the :math:`x_i`'s as columns to form
-a matrix :math:`\mathbf{X}` and all the :math:`h_i`'s as columns of a matrix :math:`\mathbf{H}`
-then we can write (with suitably defined :math:`\mathbf{M}` and :math:`\mathbf{E}`):
+矢量 :math:`h_i` 被称为 "潜在"，因为它是不可观察的。 
+:math:`\epsilon` 被认为是根据高斯分布的噪声项，平均值为0，协方差为 :math:`\Psi` （即 :math:`\epsilon \sim \mathcal{N}(0, \Psi)`）， 
+:math:`\mu` 是一些任意的偏移向量。 这样一个模型被称为 "生成"，因为它描述了如何从 :math:`h_i` 生成 :math:`x_i` 。
+如果我们使用所有的 :math:`x_i` 作为列来形成一个矩阵 :math:`\mathbf{X}`，并将所有的 :math:`h_i` 作为矩阵 :math:`\mathbf{H}` 的列，
+那么我们可以写（适当定义的 :math:`\mathbf{M}` 和 :math:`\mathbf{E}` ）:
 
 .. math::
     \mathbf{X} = W \mathbf{H} + \mathbf{M} + \mathbf{E}
 
-In other words, we *decomposed* matrix :math:`\mathbf{X}`.
-
-If :math:`h_i` is given, the above equation automatically implies the following
-probabilistic interpretation:
+换句话说，我们 *分解* 矩阵 :math:`\mathbf{X}`.
+如果给出 :math:`h_i`，上述方程自动地表示以下概率解释：
 
 .. math:: p(x_i|h_i) = \mathcal{N}(Wh_i + \mu, \Psi)
 
-For a complete probabilistic model we also need a prior distribution for the
-latent variable :math:`h`. The most straightforward assumption (based on the nice
-properties of the Gaussian distribution) is :math:`h \sim \mathcal{N}(0,
-\mathbf{I})`.  This yields a Gaussian as the marginal distribution of :math:`x`:
+对于一个完整的概率模型，我们还需要一个隐变量 :math:`h` 的先验分布。 
+最直接的假设（基于高斯分布的不同属性）是:math:`h \sim \mathcal{N}(0, \mathbf{I})`. 这产生一个高斯作为 :math:`x` 的边际分布:
 
 .. math:: p(x) = \mathcal{N}(\mu, WW^T + \Psi)
 
-Now, without any further assumptions the idea of having a latent variable :math:`h`
-would be superfluous -- :math:`x` can be completely modelled with a mean
-and a covariance. We need to impose some more specific structure on one
-of these two parameters. A simple additional assumption regards the
-structure of the error covariance :math:`\Psi`:
+现在，没有任何进一步的假设，具有隐变量 :math:`h` 的想法将是多余的 -- :math:`x` 可以用均值和协方差来完全建模。 
+我们需要对这两个参数之一施加一些更具体的结构。 一个简单的附加假设是误差协方差的结构 :math:`\Psi`:
 
-* :math:`\Psi = \sigma^2 \mathbf{I}`: This assumption leads to
-  the probabilistic model of :class:`PCA`.
+* :math:`\Psi = \sigma^2 \mathbf{I}`: 这个假设导致 :class:`PCA` 的概率模型。
 
-* :math:`\Psi = \mathrm{diag}(\psi_1, \psi_2, \dots, \psi_n)`: This model is called
-  :class:`FactorAnalysis`, a classical statistical model. The matrix W is
-  sometimes called the "factor loading matrix".
+* :math:`\Psi = \mathrm{diag}(\psi_1, \psi_2, \dots, \psi_n)`: 这个模型称为 :class:`FactorAnalysis`, 一个经典的统计模型。 矩阵W有时称为 "因子加载矩阵"。
 
-Both models essentially estimate a Gaussian with a low-rank covariance matrix.
-Because both models are probabilistic they can be integrated in more complex
-models, e.g. Mixture of Factor Analysers. One gets very different models (e.g.
-:class:`FastICA`) if non-Gaussian priors on the latent variables are assumed.
+两个模型基本上估计出具有低阶协方差矩阵的高斯。 
+因为这两个模型都是概率性的，所以它们可以集成到更复杂的模型中，
+例如 因子分析仪的混合物 如果假设潜在变量上的非高斯先验，则获得非常不同的模型（例如， :class:`FastICA` ）。
 
-Factor analysis *can* produce similar components (the columns of its loading
-matrix) to :class:`PCA`. However, one can not make any general statements
-about these components (e.g. whether they are orthogonal):
+因子分析 *可以* 产生类似的组件（其加载矩阵的列）到 :class:`PCA`。 
+然而，不能对这些组件做出任何一般性的陈述（例如它们是否是正交的）:
 
 .. |pca_img3| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_002.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -480,17 +454,14 @@ about these components (e.g. whether they are orthogonal):
 
 .. centered:: |pca_img3| |fa_img3|
 
-The main advantage for Factor Analysis (over :class:`PCA` is that
-it can model the variance in every direction of the input space independently
-(heteroscedastic noise):
+因子分析(:class:`PCA`) 的主要优点是可以独立地对输入空间的每个方向（异方差噪声）建模方差:
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_008.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
     :align: center
     :scale: 75%
 
-This allows better model selection than probabilistic PCA in the presence
-of heteroscedastic noise:
+在异方差噪声存在的情况下，这可以比概率 PCA 更好的模型选择:
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_pca_vs_fa_model_selection_002.png
     :target: ../auto_examples/decomposition/plot_pca_vs_fa_model_selection.html
@@ -498,26 +469,22 @@ of heteroscedastic noise:
     :scale: 75%
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_fa_model_selection.py`
 
 .. _ICA:
 
-Independent component analysis (ICA)
+独立成分分析（ICA）
 ====================================
 
-Independent component analysis separates a multivariate signal into
-additive subcomponents that are maximally independent. It is
-implemented in scikit-learn using the :class:`Fast ICA <FastICA>`
-algorithm. Typically, ICA is not used for reducing dimensionality but
-for separating superimposed signals. Since the ICA model does not include
-a noise term, for the model to be correct, whitening must be applied.
-This can be done internally using the whiten argument or manually using one
-of the PCA variants.
+独立分量分析将多变量信号分解为最大独立的加性子组件。 
+它使用 :class:`Fast ICA <FastICA>` 算法在 scikit-learn 中实现。 
+通常，ICA 不用于降低维度，而是用于分离叠加信号。 
+由于ICA模型不包括噪声项，因此要使模型正确，必须应用美白。 
+这可以在内部使用 whiten 参数或手动使用其中一种PCA变体进行。
 
-It is classically used to separate mixed signals (a problem known as
-*blind source separation*), as in the example below:
+通常用于分离混合信号（称为 *盲源分离* 的问题），如下例所示:
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_ica_blind_source_separation_001.png
     :target: ../auto_examples/decomposition/plot_ica_blind_source_separation.html
@@ -525,8 +492,7 @@ It is classically used to separate mixed signals (a problem known as
     :scale: 60%
 
 
-ICA can also be used as yet another non linear decomposition that finds
-components with some sparsity:
+ICA也可以被用作发现具有一些稀疏性的组件的另一个非线性分解:
 
 .. |pca_img4| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_002.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -538,7 +504,7 @@ components with some sparsity:
 
 .. centered:: |pca_img4| |ica_img4|
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_ica_blind_source_separation.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_ica_vs_pca.py`
@@ -547,33 +513,28 @@ components with some sparsity:
 
 .. _NMF:
 
-Non-negative matrix factorization (NMF or NNMF)
+非负矩阵分解(NMF 或 NNMF)
 ===============================================
 
-NMF with the Frobenius norm
+NMF 与 Frobenius 规范
 ---------------------------
 
-:class:`NMF` [1]_ is an alternative approach to decomposition that assumes that the
-data and the components are non-negative. :class:`NMF` can be plugged in
-instead of :class:`PCA` or its variants, in the cases where the data matrix
-does not contain negative values. It finds a decomposition of samples
-:math:`X` into two matrices :math:`W` and :math:`H` of non-negative elements,
-by optimizing the distance :math:`d` between :math:`X` and the matrix product
-:math:`WH`. The most widely used distance function is the squared Frobenius
-norm, which is an obvious extension of the Euclidean norm to matrices:
+:class:`NMF` [1]_ 是一种替代的分解方法，假设数据和分量是非负数的。 
+在数据矩阵不包含负值的情况下，可以插入 :class:`NMF` 而不是 :class:`PCA` 或其变体。 
+通过优化 :math:`X` 与矩阵乘积 :math:`WH` 之间的距离 :math:`d` ，可以将样本 :math:`X` 分解为非负元素的两个矩阵 :math:`W` 和 :math:`H`。 
+最广泛使用的距离函数是 Frobenius 方程的平方，这是欧几里德范数到矩阵的明显延伸:
 
 .. math::
     d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{\mathrm{Fro}}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2
 
+与 :class:`PCA` 不同，通过叠加分量而不减去，以加法方式获得向量的表示。这种添加剂模型对于表示图像和文本是有效的。
+
+在 [Hoyer, 2004] [2]_ 中已经观察到，当精心约束时，:class:`NMF` 可以产生数据集的基于零件的表示，导致可解释的模型。 
+以下示例显示了与 PCA 特征面相比， :class:`NMF` 从 Olivetti 面数据集中的图像中发现的16个稀疏组件。
+
 Unlike :class:`PCA`, the representation of a vector is obtained in an additive
 fashion, by superimposing the components, without subtracting. Such additive
 models are efficient for representing images and text.
-
-It has been observed in [Hoyer, 2004] [2]_ that, when carefully constrained,
-:class:`NMF` can produce a parts-based representation of the dataset,
-resulting in interpretable models. The following example displays 16
-sparse components found by :class:`NMF` from the images in the Olivetti
-faces dataset, in comparison with the PCA eigenfaces.
 
 .. |pca_img5| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_002.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -585,41 +546,28 @@ faces dataset, in comparison with the PCA eigenfaces.
 
 .. centered:: |pca_img5| |nmf_img5|
 
+:attr:`init` 属性确定应用的初始化方法，这对方法的性能有很大的影响。 
+:class:`NMF` 实现了非负双奇异值分解方法。NNDSVD [4]_ 基于两个 SVD 过程，一个近似数据矩阵，
+使用单位秩矩阵的代数性质，得到的部分SVD因子的其他近似正部分。
+基本的 NNDSVD 算法更适合稀疏分解。其变体 NNDSVDa（其中全部零设置为等于数据的所有元素的平均值）和 
+NNDSVDar（其中零被设置为小于数据平均值的随机扰动除以100）在密集案件。
 
-The :attr:`init` attribute determines the initialization method applied, which
-has a great impact on the performance of the method. :class:`NMF` implements the
-method Nonnegative Double Singular Value Decomposition. NNDSVD [4]_ is based on
-two SVD processes, one approximating the data matrix, the other approximating
-positive sections of the resulting partial SVD factors utilizing an algebraic
-property of unit rank matrices. The basic NNDSVD algorithm is better fit for
-sparse factorization. Its variants NNDSVDa (in which all zeros are set equal to
-the mean of all elements of the data), and NNDSVDar (in which the zeros are set
-to random perturbations less than the mean of the data divided by 100) are
-recommended in the dense case.
+请注意，乘法更新 ('mu') 求解器无法更新初始化中存在的零，因此当与引入大量零的基本 NNDSVD 算法联合使用时，
+会导致较差的结果; 在这种情况下，应优先使用 NNDSVDa 或 NNDSVDar。
 
-Note that the Multiplicative Update ('mu') solver cannot update zeros present in
-the initialization, so it leads to poorer results when used jointly with the
-basic NNDSVD algorithm which introduces a lot of zeros; in this case, NNDSVDa or
-NNDSVDar should be preferred.
+也可以通过设置 :attr:`init="random"`，使用正确缩放的随机非负矩阵初始化 :class:`NMF` 。
+整数种子或 ``RandomState`` 也可以传递给 :attr:`random_state` 以控制重现性。
 
-:class:`NMF` can also be initialized with correctly scaled random non-negative
-matrices by setting :attr:`init="random"`. An integer seed or a
-``RandomState`` can also be passed to :attr:`random_state` to control
-reproducibility.
-
-In :class:`NMF`, L1 and L2 priors can be added to the loss function in order
-to regularize the model. The L2 prior uses the Frobenius norm, while the L1
-prior uses an elementwise L1 norm. As in :class:`ElasticNet`, we control the
-combination of L1 and L2 with the :attr:`l1_ratio` (:math:`\rho`) parameter,
-and the intensity of the regularization with the :attr:`alpha`
-(:math:`\alpha`) parameter. Then the priors terms are:
+在 :class:`NMF` 中，L1 和 L2 先验可以被添加到损失函数中以使模型正规化。 
+L2 之前使用 Frobenius 范数，而L1 先验使用元素 L1 范数。与 :class:`ElasticNet` 一样，
+我们使用 :attr:`l1_ratio` (:math:`\rho`) 参数和 :attr:`alpha` (:math:`\alpha`) 参数的正则化强度来控制 L1 和 L2 的组合。那么先修课程是:
 
 .. math::
     \alpha \rho ||W||_1 + \alpha \rho ||H||_1
     + \frac{\alpha(1-\rho)}{2} ||W||_{\mathrm{Fro}} ^ 2
     + \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2
 
-and the regularized objective function is:
+正则化目标函数为:
 
 .. math::
     d_{\mathrm{Fro}}(X, WH)
@@ -627,34 +575,27 @@ and the regularized objective function is:
     + \frac{\alpha(1-\rho)}{2} ||W||_{\mathrm{Fro}} ^ 2
     + \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2
 
-:class:`NMF` regularizes both W and H. The public function
-:func:`non_negative_factorization` allows a finer control through the
-:attr:`regularization` attribute, and may regularize only W, only H, or both.
+:class:`NMF` 正规化 W 和 H . 公共函数 :func:`non_negative_factorization` 允许通过 :attr:`regularization` 属性进行更精细的控制，并且可以仅将 W，仅 H 或两者正规化。
 
-NMF with a beta-divergence
+NMF 具有 beta-divergence
 --------------------------
 
-As described previously, the most widely used distance function is the squared
-Frobenius norm, which is an obvious extension of the Euclidean norm to
-matrices:
+如前所述，最广泛使用的距离函数是平方 Frobenius 范数，这是欧几里得范数到矩阵的明显延伸:
 
 .. math::
     d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{Fro}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2
 
-Other distance functions can be used in NMF as, for example, the (generalized)
-Kullback-Leibler (KL) divergence, also referred as I-divergence:
+其他距离函数可用于 NMF，例如（广义） Kullback-Leibler(KL) 发散，也称为 I-divergence:
 
 .. math::
     d_{KL}(X, Y) = \sum_{i,j} (X_{ij} \log(\frac{X_{ij}}{Y_{ij}}) - X_{ij} + Y_{ij})
 
-Or, the Itakura-Saito (IS) divergence:
+或者， Itakura-Saito(IS) 分歧:
 
 .. math::
     d_{IS}(X, Y) = \sum_{i,j} (\frac{X_{ij}}{Y_{ij}} - \log(\frac{X_{ij}}{Y_{ij}}) - 1)
 
-These three distances are special cases of the beta-divergence family, with
-:math:`\beta = 2, 1, 0` respectively [6]_. The beta-divergence are
-defined by :
+这三个距离是 beta-divergence 家族的特殊情况，分别为 :math:`\beta = 2, 1, 0` [6]_ 。 beta-divergence 定义如下:
 
 .. math::
     d_{\beta}(X, Y) = \sum_{i,j} \frac{1}{\beta(\beta - 1)}(X_{ij}^\beta + (\beta-1)Y_{ij}^\beta - \beta X_{ij} Y_{ij}^{\beta - 1})
@@ -664,27 +605,20 @@ defined by :
     :align: center
     :scale: 75%
 
-Note that this definition is not valid if :math:`\beta \in (0; 1)`, yet it can
-be continously extended to the definitions of :math:`d_{KL}` and :math:`d_{IS}`
-respectively.
+请注意，如果在 :math:`\beta \in (0; 1)` ，但是它可以分别连续扩展到 :math:`d_{KL}` 
+和 :math:`d_{IS}` 的定义，则此定义无效。
 
-:class:`NMF` implements two solvers, using Coordinate Descent ('cd') [5]_, and
-Multiplicative Update ('mu') [6]_. The 'mu' solver can optimize every
-beta-divergence, including of course the Frobenius norm (:math:`\beta=2`), the
-(generalized) Kullback-Leibler divergence (:math:`\beta=1`) and the
-Itakura-Saito divergence (:math:`\beta=0`). Note that for
-:math:`\beta \in (1; 2)`, the 'mu' solver is significantly faster than for other
-values of :math:`\beta`. Note also that with a negative (or 0, i.e.
-'itakura-saito') :math:`\beta`, the input matrix cannot contain zero values.
+:class:`NMF` 使用 Coordinate Descent ('cd') [5]_ 和乘法更新 ('mu') [6]_ 来实现两个求解器。 
+'mu' 求解器可以优化每个 beta-divergence，包括 Frobenius 范数 (:math:`\beta=2`) ，
+（广义） Kullback-Leibler 分歧 (:math:`\beta=1`) 和Itakura-Saito分歧（\ beta = 0） ）。
+请注意，对于 :math:`\beta \in (1; 2)`，'mu' 求解器明显快于 :math:`\beta` 的其他值。
+还要注意，使用负数（或0，即 'itakura-saito' ） :math:`\beta`，输入矩阵不能包含零值。
 
-The 'cd' solver can only optimize the Frobenius norm. Due to the
-underlying non-convexity of NMF, the different solvers may converge to
-different minima, even when optimizing the same distance function.
+'cd' 求解器只能优化 Frobenius 规范。由于 NMF 的潜在非凸性，即使优化相同的距离函数，
+不同的求解器也可能会收敛到不同的最小值。
 
-NMF is best used with the ``fit_transform`` method, which returns the matrix W.
-The matrix H is stored into the fitted model in the ``components_`` attribute;
-the method ``transform`` will decompose a new matrix X_new based on these
-stored components::
+NMF最适用于 ``fit_transform`` 方法，该方法返回矩阵W.矩阵 H 在 ``components_`` 属性中存储到拟合模型中;
+方法 ``变换`` 将基于这些存储的组件分解新的矩阵 X_new::
 
     >>> import numpy as np
     >>> X = np.array([[1, 1], [2, 1], [3, 1.2], [4, 1], [5, 0.8], [6, 1]])
@@ -695,13 +629,13 @@ stored components::
     >>> X_new = np.array([[1, 0], [1, 6.1], [1, 0], [1, 4], [3.2, 1], [0, 4]])
     >>> W_new = model.transform(X_new)
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_faces_decomposition.py`
     * :ref:`sphx_glr_auto_examples_applications_plot_topics_extraction_with_nmf_lda.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_beta_divergence.py`
 
-.. topic:: References:
+.. topic:: 参考:
 
     .. [1] `"Learning the parts of objects by non-negative matrix factorization"
       <http://www.columbia.edu/~jwp2128/Teaching/W4721/papers/nmf_nature.pdf>`_
@@ -728,73 +662,59 @@ stored components::
 
 .. _LatentDirichletAllocation:
 
-Latent Dirichlet Allocation (LDA)
+潜在 Dirichlet 分配（LDA）
 =================================
 
-Latent Dirichlet Allocation is a generative probabilistic model for collections of
-discrete dataset such as text corpora. It is also a topic model that is used for
-discovering abstract topics from a collection of documents.
+潜在 Dirichlet 分配是离散数据集（如文本语料库）的集合的生成概率模型。 
+它也是一个主题模型，用于从文档集合中发现抽象主题。
 
-The graphical model of LDA is a three-level Bayesian model:
+LDA的图形模型是一个 three-level 贝叶斯模型:
 
 .. image:: ../images/lda_model_graph.png
    :align: center
 
-When modeling text corpora, the model assumes the following generative process for
-a corpus with :math:`D` documents and :math:`K` topics:
+当建模文本语料库时，该模型假设具有 :math:`D` 文档和 :math:`K` 主题的语料库的以下生成过程:
 
-  1. For each topic :math:`k`, draw :math:`\beta_k \sim \mathrm{Dirichlet}(\eta),\: k =1...K`
+  1. 对于每个主题 :math:`k`，绘制 :math:`\beta_k \sim \mathrm{Dirichlet}(\eta),\: k =1...K`
 
-  2. For each document :math:`d`, draw :math:`\theta_d \sim \mathrm{Dirichlet}(\alpha), \: d=1...D`
+  2. 对于每个文档 :math:`d`，绘制 :math:`\theta_d \sim \mathrm{Dirichlet}(\alpha), \: d=1...D`
 
-  3. For each word :math:`i` in document :math:`d`:
+  3. 对于文档 :math:`d` 中的每个单词 :math:`i`:
 
-    a. Draw a topic index :math:`z_{di} \sim \mathrm{Multinomial}(\theta_d)`
-    b. Draw the observed word :math:`w_{ij} \sim \mathrm{Multinomial}(beta_{z_{di}}.)`
+    a. 绘制主题索引 :math:`z_{di} \sim \mathrm{Multinomial}(\theta_d)`
+    b. 绘制观察词 :math:`w_{ij} \sim \mathrm{Multinomial}(beta_{z_{di}}.)`
 
-For parameter estimation, the posterior distribution is:
+对于参数估计，后验分布为:
 
 .. math::
   p(z, \theta, \beta |w, \alpha, \eta) =
     \frac{p(z, \theta, \beta|\alpha, \eta)}{p(w|\alpha, \eta)}
 
-Since the posterior is intractable, variational Bayesian method
-uses a simpler distribution :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)`
-to approximate it, and those variational parameters :math:`\lambda`, :math:`\phi`,
-:math:`\gamma` are optimized to maximize the Evidence Lower Bound (ELBO):
+由于后验是棘手的，变分贝叶斯方法使用更简单的分布 :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)` 近似，
+并且优化了这些变分参数  :math:`\lambda`, :math:`\phi`, :math:`\gamma` 最大化证据下限 (ELBO):
 
 .. math::
   \log\: P(w | \alpha, \eta) \geq L(w,\phi,\gamma,\lambda) \overset{\triangle}{=}
     E_{q}[\log\:p(w,z,\theta,\beta|\alpha,\eta)] - E_{q}[\log\:q(z, \theta, \beta)]
 
-Maximizing ELBO is equivalent to minimizing the Kullback-Leibler(KL) divergence
-between :math:`q(z,\theta,\beta)` and the true posterior
-:math:`p(z, \theta, \beta |w, \alpha, \eta)`.
+最大化 ELBO 相当于最小化 :math:`q(z,\theta,\beta)` 和真实后 :math:`p(z, \theta, \beta |w, \alpha, \eta)` 之间的 Kullback-Leibler(KL) 发散。
 
-:class:`LatentDirichletAllocation` implements online variational Bayes algorithm and supports
-both online and batch update method.
-While batch method updates variational variables after each full pass through the data,
-online method updates variational variables from mini-batch data points.
+:class:`LatentDirichletAllocation` 实现在线变分贝叶斯算法，支持在线和批量更新方法。
+批处理方法在每次完全传递数据后更新变分变量，联机方法从小批量数据点更新变分变量。
 
 .. note::
+  虽然在线方法保证收敛到局部最优点，最优点的质量和收敛速度可能取决于小批量大小和学习率设置相关的属性。
 
-  Although online method is guaranteed to converge to a local optimum point, the quality of
-  the optimum point and the speed of convergence may depend on mini-batch size and
-  attributes related to learning rate setting.
+当 :class:`LatentDirichletAllocation` 应用于 "文档术语" 矩阵时，矩阵将被分解为 "主题术语" 矩阵和 "文档主题" 矩阵。
+虽然 "主题术语" 矩阵在模型中被存储为 :attr:`components_` ，但是可以通过变换方法计算 "文档主题" 矩阵。
 
-When :class:`LatentDirichletAllocation` is applied on a "document-term" matrix, the matrix
-will be decomposed into a "topic-term" matrix and a "document-topic" matrix. While
-"topic-term" matrix is stored as :attr:`components_` in the model, "document-topic" matrix
-can be calculated from ``transform`` method.
+:class:`LatentDirichletAllocation` 还实现了  ``partial_fit`` 方法。当数据可以顺序提取时使用.
 
-:class:`LatentDirichletAllocation` also implements ``partial_fit`` method. This is used
-when data can be fetched sequentially.
-
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_applications_plot_topics_extraction_with_nmf_lda.py`
 
-.. topic:: References:
+.. topic:: 参考:
 
     * `"Latent Dirichlet Allocation"
       <https://www.cs.princeton.edu/~blei/papers/BleiNgJordan2003.pdf>`_
