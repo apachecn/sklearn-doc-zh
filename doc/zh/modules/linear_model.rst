@@ -824,62 +824,44 @@ set）预测。
 
 .. _theil_sen_regression:
 
-Theil-Sen estimator: generalized-median-based estimator
---------------------------------------------------------
+Theil-Sen estimator: generalized-median-based estimator（Theil-Sen估计量方法：广义中值估计）
+-----------------------------------------------------------------------------------------
 
-The :class:`TheilSenRegressor` estimator uses a generalization of the median in
-multiple dimensions. It is thus robust to multivariate outliers. Note however
-that the robustness of the estimator decreases quickly with the dimensionality
-of the problem. It looses its robustness properties and becomes no
-better than an ordinary least squares in high dimension.
+:class:`TheilSenRegressor` 估计器：使用中位数在多个维度推广，因此对多维离散值是有帮助，但问题是，随着维数的增加，估计器的准确性在迅速下降。准确性的丢失，导致在高维上的估计值比不上普通的最小二乘法。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_theilsen.py`
   * :ref:`sphx_glr_auto_examples_linear_model_plot_robust_fit.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
 
-Theoretical considerations
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Theoretical considerations（理论考虑）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:class:`TheilSenRegressor` is comparable to the :ref:`Ordinary Least Squares
-(OLS) <ordinary_least_squares>` in terms of asymptotic efficiency and as an
-unbiased estimator. In contrast to OLS, Theil-Sen is a non-parametric
-method which means it makes no assumption about the underlying
-distribution of the data. Since Theil-Sen is a median-based estimator, it
-is more robust against corrupted data aka outliers. In univariate
-setting, Theil-Sen has a breakdown point of about 29.3% in case of a
-simple linear regression which means that it can tolerate arbitrary
-corrupted data of up to 29.3%.
+:class:`TheilSenRegressor` 媲美 :ref:`Ordinary Least Squares (OLS) <ordinary_least_squares>` （普通最小二乘法（OLS））渐近效率和无偏估计。在对比 OLS, Theil-Sen 是一种非参数方法，这意味着它没有对底层数据的分布假设。由于 Theil-Sen 是基于中位数的估计，它是更适合的对损坏的数据。在单变量的设置，Theil-Sen 在一个简单的线性回归，这意味着它可以容忍任意损坏的数据高达 29.3% 的情况下，约 29.3% 的一个崩溃点。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_theilsen_001.png
    :target: ../auto_examples/linear_model/plot_theilsen.html
    :align: center
    :scale: 50%
 
-The implementation of :class:`TheilSenRegressor` in scikit-learn follows a
-generalization to a multivariate linear regression model [#f1]_ using the
-spatial median which is a generalization of the median to multiple
-dimensions [#f2]_.
+在 scikit-learn 中  :class:`TheilSenRegressor` 实施如下的学习推广到多元线性回归模型 [#f1]_ 利用空间中这是一个概括的中位数多维度 [#f2]_ 。
 
-In terms of time and space complexity, Theil-Sen scales according to
+在时间复杂度和空间复杂度，根据 Theil-Sen 量表
 
 .. math::
     \binom{n_{samples}}{n_{subsamples}}
 
-which makes it infeasible to be applied exhaustively to problems with a
-large number of samples and features. Therefore, the magnitude of a
-subpopulation can be chosen to limit the time and space complexity by
-considering only a random subset of all possible combinations.
+这使得它不适用于大量样本和特征的问题。因此，可以选择一个亚群的大小来限制时间和空间复杂度，只考虑所有可能组合的随机子集。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_theilsen.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     .. [#f1] Xin Dang, Hanxiang Peng, Xueqin Wang and Heping Zhang: `Theil-Sen Estimators in a Multiple Linear Regression Model. <http://home.olemiss.edu/~xdang/papers/MTSE.pdf>`_
 
@@ -887,28 +869,24 @@ considering only a random subset of all possible combinations.
 
 .. _huber_regression:
 
-Huber Regression
-----------------
+Huber Regression（Huber 回归）
+----------------------------
 
-The :class:`HuberRegressor` is different to :class:`Ridge` because it applies a
-linear loss to samples that are classified as outliers.
-A sample is classified as an inlier if the absolute error of that sample is
-lesser than a certain threshold. It differs from :class:`TheilSenRegressor`
-and :class:`RANSACRegressor` because it does not ignore the effect of the outliers
-but gives a lesser weight to them.
+:class:`HuberRegressor` 不同，因为它适用于 :class:`Ridge` 损耗的样品被分类为离群值。如果这个样品的绝对误差小于某一阈值，样品就分为一层。
+它不同于 :class:`TheilSenRegressor` 和 :class:`RANSACRegressor` 因为它无法忽略对离群值的影响，但对它们的权重较小。
 
 .. figure:: /auto_examples/linear_model/images/sphx_glr_plot_huber_vs_ridge_001.png
    :target: ../auto_examples/linear_model/plot_huber_vs_ridge.html
    :align: center
    :scale: 50%
 
-The loss function that :class:`HuberRegressor` minimizes is given by
+这个 :class:`HuberRegressor` 最小化损失函数是由
 
 .. math::
 
   \underset{w, \sigma}{min\,} {\sum_{i=1}^n\left(\sigma + H_m\left(\frac{X_{i}w - y_{i}}{\sigma}\right)\sigma\right) + \alpha {||w||_2}^2}
 
-where
+其中
 
 .. math::
 
@@ -917,7 +895,7 @@ where
          2\epsilon|z| - \epsilon^2, & \text{otherwise}
   \end{cases}
 
-It is advised to set the parameter ``epsilon`` to 1.35 to achieve 95% statistical efficiency.
+建议设置参数 ``epsilon`` 为 1.35 以实现 95% 统计效率。
 
 Notes
 -----
