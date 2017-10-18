@@ -6,7 +6,7 @@
 
 .. _mldata:
 
-Downloading datasets from the mldata.org repository（从 mldata.org 上下载数据集）
+从 mldata.org 上下载数据集
 ===================================================
 
 `mldata.org <http://mldata.org>`_ 是一个开放的用于机器学习数据的 public repository ,由 `PASCAL network <http://www.pascal-network.org>`_ 支持。

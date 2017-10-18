@@ -1,8 +1,8 @@
 .. _learning_curves:
 
-=====================================================
+===================================================================
 Validation curves: plotting scores to evaluate models
-=====================================================
+===================================================================
 
 .. currentmodule:: sklearn.model_selection
 
@@ -49,7 +49,7 @@ this reason, it is often helpful to use the tools described below.
 .. _validation_curve:
 
 Validation curve
-================
+==============================
 
 To validate a model we need a scoring function (see :ref:`model_evaluation`),
 for example accuracy for classifiers. The proper way of choosing multiple
@@ -107,7 +107,7 @@ cases can be found in the plot below where we vary the parameter
 .. _learning_curve:
 
 Learning curve
-==============
+============================
 
 A learning curve shows the validation and training score of an estimator
 for varying numbers of training samples. It is a tool to find out how much
