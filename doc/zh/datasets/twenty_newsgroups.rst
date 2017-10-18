@@ -1,23 +1,23 @@
 .. _20newsgroups:
 
-The 20 newsgroups text dataset(20个新闻组文本数据集)
+20个新闻组文本数据集
 ==============================
 
 20个新闻组文本数据集包含有关20个主题的大约18000个新闻组，被分为两个子集：一个用于
 训练(或者开发)，另一个用于测试(或者用于性能评估)。训练和测试集的划分是基于某个特定日期
 前后发布的消息。
 
-这个模块包含两个加载器。第一个是:func:`sklearn.datasets.fetch_20newsgroups`，
-返回一个能够被文本特征提取器接受的原始文本列表，例如:class:`sklearn.feature_extraction.text.CountVectorizer`
-使用自定义的参数来提取特征向量。第二个是:func:`sklearn.datasets.fetch_20newsgroups_vectorized`，
+这个模块包含两个加载器。第一个是 :func:`sklearn.datasets.fetch_20newsgroups`，
+返回一个能够被文本特征提取器接受的原始文本列表，例如 :class:`sklearn.feature_extraction.text.CountVectorizer`
+使用自定义的参数来提取特征向量。第二个是 :func:`sklearn.datasets.fetch_20newsgroups_vectorized`，
 返回即用特征，换句话说就是，这样就没必要使用特征提取器了。
 
 用法
 -----
 
-:func:`sklearn.datasets.fetch_20newsgroups` 是一个用于从原始的`20个新闻组网站`_
+ :func:`sklearn.datasets.fetch_20newsgroups` 是一个用于从原始的20个新闻组网址( `20 newsgroups website`_)
 下载数据归档的数据获取/缓存函数，提取``~/scikit_learn_data/20news_home``文件夹中的
-归档内容。并且在训练集或测试集文件夹，或者两者上调用函数:func:`sklearn.datasets.load_files`::
+归档内容。并且在训练集或测试集文件夹，或者两者上调用函数 :func:`sklearn.datasets.load_files`::
 
   >>> from sklearn.datasets import fetch_20newsgroups
   >>> newsgroups_train = fetch_20newsgroups(subset='train')
@@ -45,7 +45,7 @@ The 20 newsgroups text dataset(20个新闻组文本数据集)
    'talk.politics.misc',
    'talk.religion.misc']
 
-真实数据在属性``filenames`` 和 ``target``中，target属性就是类别的整数索引::
+真实数据在属性 ``filenames`` 和 ``target`` 中，target属性就是类别的整数索引::
 
   >>> newsgroups_train.filenames.shape
   (11314,)
@@ -54,7 +54,7 @@ The 20 newsgroups text dataset(20个新闻组文本数据集)
   >>> newsgroups_train.target[:10]
   array([12,  6,  9,  8,  6,  7,  9,  2, 13, 19])
 
-可以通过将类别列表传给:func:`sklearn.datasets.fetch_20newsgroups`函数来实现只加载一部分的类别::
+可以通过将类别列表传给 :func:`sklearn.datasets.fetch_20newsgroups`函数来实现只加载一部分的类别::
 
   >>> cats = ['alt.atheism', 'sci.space']
   >>> newsgroups_train = fetch_20newsgroups(subset='train', categories=cats)
@@ -71,8 +71,8 @@ Converting text to vectors(将文本转换成向量)
 --------------------------
 
 为了用文本数据训练预测或者聚类模型，首先需要做的是将文本转换成适合统计分析的数值
-向量。这能使用``sklearn.feature_extraction.text``的功能来实现，正如下面展示的
-从一个20个新闻的子集中提取单个词的`TF-IDF`_ 向量的例子
+向量。这能使用 ``sklearn.feature_extraction.text`` 的功能来实现，正如下面展示的
+从一个20个新闻的子集中提取单个词的 `TF-IDF`_ 向量的例子
 
   >>> from sklearn.feature_extraction.text import TfidfVectorizer
   >>> categories = ['alt.atheism', 'talk.religion.misc',
@@ -93,7 +93,7 @@ Converting text to vectors(将文本转换成向量)
 :func:`sklearn.datasets.fetch_20newsgroups_vectorized` 是一个返回即用的tfidf特征的函数
 ，而不是返回文件名。
 
-.. _`20个新闻组网址`: http://people.csail.mit.edu/jrennie/20Newsgroups/
+.. _`20 newsgroups website`: http://people.csail.mit.edu/jrennie/20Newsgroups/
 .. _`TF-IDF`: https://en.wikipedia.org/wiki/Tf-idf
 
 
@@ -172,12 +172,12 @@ Filtering text for more realistic training
   0.76995175184521725
 
 
-其他的一些分类器能够更好的处理这个更难版本的任务。试着带``--filter``选项和不带``--filter``选项运行
-:ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py`来比较结果间的差异。
+其他的一些分类器能够更好的处理这个更难版本的任务。试着带 ``--filter`` 选项和不带 ``--filter`` 选项运行
+ :ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py`来比较结果间的差异。
 .. topic:: 推荐
 
   当使用20个新闻组数据中评估文本分类器时，你应该移除与新闻组相关的元数据。你可以通过设置
-  ``remove=('headers', 'footers', 'quotes')``来实现。F分数将更加低因为这更符合实际
+   ``remove=('headers', 'footers', 'quotes')`` 来实现。F分数将更加低因为这更符合实际
 .. topic:: 例子
 
    * :ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py`
