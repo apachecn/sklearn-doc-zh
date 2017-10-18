@@ -179,7 +179,7 @@ Platt的方法也有理论问题.
  * Platt
    `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods（SVMs 的概率输出和与规则化似然方法的比较）"<http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`.
 
-Unbalanced problems（非均衡问题）
+非均衡问题
 --------------------
 
 这个问题期望给予某一类或某个别样例能使用的关键词 ``class_weight`` 和 ``sample_weight`` 提高权重(importance).

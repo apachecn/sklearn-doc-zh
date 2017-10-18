@@ -246,7 +246,7 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` 比较了基于特征变换的有监督和无监督的树.
 
-.. 请参阅::
+.. seealso::
 
    :ref:`manifold` 也可以用于特征空间的非线性表示, 这些方法的关注点同样在降维.
 
@@ -421,7 +421,7 @@ GBRT 的缺点:
 
 .. _gradient_boosting_warm_start:
 
-拟合额外的弱学习器(Fitting additional weak-learners)
+拟合额外的弱学习器
 --------------------------------
 
  :class:`GradientBoostingRegressor` 和 :class:`GradientBoostingClassifier`都支持设置参数
@@ -436,7 +436,7 @@ GBRT 的缺点:
 
 .. _gradient_boosting_tree_size:
 
-控制树的大小(Controlling the tree size)
+控制树的大小
 -------------------------
 
 回归树基本学习器的大小定义了变量影响的级别,这个变量影响可以被梯度提升模型捕获到.通常一棵树的深度
@@ -718,7 +718,7 @@ GBRT可以认为是下面形式的加法模型:
 :class:`VotingClassifier` （投票分类器）的原理是结合了多个不同的机器学习分类器，并且采用 majority vote （多数表决）的方式或者 soft vote （平均预测概率）的方式来预测类标签。这样的分类器（指 Voting Classifier）可以用于一组 equally well performing model （同样出色的模型），以平衡它们各自的弱点。
 
 
-Majority Class Labels （多数类标签） (也叫 Majority/Hard Voting)
+多数类标签（也叫 Majority/Hard Voting）
 --------------------------------------------
 
 majority vote(采用多数投票)的时候，特定样本的预测类标签是每个分类器预测的类标签中占据多数的那个类标签。

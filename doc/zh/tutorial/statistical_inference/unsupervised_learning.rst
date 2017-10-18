@@ -1,8 +1,8 @@
 ============================================================
-Unsupervised learning: seeking representations of the data（无监督学习：寻求数据表示）
+无监督学习: 寻求数据表示
 ============================================================
 
-Clustering: grouping observations together（聚类: 对样本数据进行分组）
+聚类: 对样本数据进行分组
 ============================================
 
 .. topic:: 可以利用聚类解决的问题
@@ -53,7 +53,7 @@ K-means 聚类算法
    :target: ../../auto_examples/cluster/plot_cluster_iris.html
    :scale: 63
 
-.. 注意：
+.. note：
     k_means算法无法保证聚类结果完全绝对真实的反应实际情况。首先，选择正确合适的聚类数量不是一件容易的事情，
     第二，该算法对初始值的设置敏感，容易陷入局部最优。尽管scikit-learn采取了不同的方式来缓解以上问题，目前
     仍没有完美的解决方案。
@@ -98,7 +98,7 @@ K-means 聚类算法
    :target: ../../auto_examples/cluster/plot_face_compress.html
    :scale: 60
 
-.. 主题:: **应用案例:向量量化(vector quantization)**
+.. topic:: **应用案例:向量量化(vector quantization)**
     一般来说聚类，特别是K_means聚类可以作为一种用少量样本来压缩信息的方式。这种方式就是'向量量化(vector quantization)
     <https://en.wikipedia.org/wiki/Vector_quantization>'。例如，K_means算法可以用于对一张图片进行色调分离。
     
@@ -144,7 +144,7 @@ K-means 聚类算法
         - Image histogram
 
 
-Hierarchical agglomerative clustering: Ward（分层聚类算法: 谨慎使用）
+分层聚类算法: 谨慎使用
 ---------------------------------------------
 
 :ref:`hierarchical_clustering` （分层聚类算法）是一种旨在构建聚类层次结构的分析方法，一般来说，实现该算法的大多数方法有以下两种：
@@ -156,7 +156,7 @@ Hierarchical agglomerative clustering: Ward（分层聚类算法: 谨慎使用�
     分裂)，而且从统计学的角度来讲也是不合适的。
 
 
-Connectivity-constrained clustering（连接约束聚类）
+连接约束聚类
 .....................................
 
 对于逐次聚合聚类，通过连接图可以指定哪些样本可以被聚合在一个簇。在 scikit 中，图由邻接矩阵来表示，通常该矩阵是一个稀疏矩阵。这种表示方法是非常有用的，例如在聚类图像时检索连接区域(有时也被称为连接要素):
@@ -174,7 +174,7 @@ Connectivity-constrained clustering（连接约束聚类）
     >>> connectivity = grid_to_graph(*face.shape)
 
 
-Feature agglomeration（特征聚集）
+特征聚集
 ......................
 
 我们已经知道，稀疏性可以缓解特征维度带来的问题，*i.e* 即与特征数量相比，样本数量太少。
@@ -207,9 +207,9 @@ Feature agglomeration（特征聚集）
    Some estimators expose a ``transform`` method, for instance to reduce
    the dimensionality of the dataset.
 
-Decompositions: from a signal to components and loadings（分解: 将一个信息转换成多个成分和载荷）
+分解: 将一个信号转换成多个成份并且加载
 ===========================================================
-.. 主题:: **成分和载荷**
+.. topic:: **成份和加载**
     如果X是多维数据，那么我们试图解决的问题是在不同的观察基础上对
     数据进行重写。我们希望学习得到载荷L和成分C使得X=LC。提取成分C
     有多种不同的方法。
@@ -266,10 +266,10 @@ Principal component analysis: PCA（主成分分析法: PCA）
 
 .. Eigenfaces here?
 
-Independent Component Analysis: ICA（独立成分分析: ICA）
+独立成分分析: ICA
 -------------------------------------
 
-:ref:`ICA`可以提取数据信息中的独立成分，这些成分载荷的分布包含了最多的
+:ref:`ICA` 可以提取数据信息中的独立成分，这些成分载荷的分布包含了最多的
 的独立信息。该方法能够恢复 **non-Gaussian（非高斯）** 独立信号:
 
 .. image:: /auto_examples/decomposition/images/sphx_glr_plot_ica_blind_source_separation_001.png
