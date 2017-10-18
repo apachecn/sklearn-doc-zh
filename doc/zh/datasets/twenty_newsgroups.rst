@@ -135,16 +135,16 @@
 
 你现在可以看到这些特征过拟合了许多东西:
 
-- 几乎所有的组都通过标题是出现更多还是更少来区分，例如``NNTP-Posting-Host:``和``Distribution:``标题
+- 几乎所有的组都通过标题是出现更多还是更少来区分，例如 ``NNTP-Posting-Host:`` 和 ``Distribution:`` 标题
 - 正如他的标头或者签名所表示，另外重要的特征有关发送者是否隶属于一个大学。
-- "article"这个单词是一个重要的特征，它基于人们像"In article [article ID], [name] <[e-mail address]>
-  wrote:"的方式引用原先的帖子频率。
+- "article"这个单词是一个重要的特征，它基于人们像 "In article [article ID], [name] <[e-mail address]>
+  wrote:" 的方式引用原先的帖子频率。
 - 其他特征和当时发布的特定的人的名字和e-mail相匹配。
 
 有如此大量的线索来区分新闻组，分类器根本不需要从文本中识别主题，而且他们的性能都一样好。
 
-由于这个原因，加载20个新闻组数据的函数提供了一个叫做**remove**的参数，来告诉函数需要从文件
-中去除什么类别的信息。**remove**应该是一个来自集合``('headers', 'footers', 'quotes')``的子集
+由于这个原因，加载20个新闻组数据的函数提供了一个叫做 **remove** 的参数，来告诉函数需要从文件
+中去除什么类别的信息。 **remove** 应该是一个来自集合 ``('headers', 'footers', 'quotes')`` 的子集
 的元组，来告诉函数分别移除标头标题，签名块还有引用块。
 
   >>> newsgroups_test = fetch_20newsgroups(subset='test',
@@ -169,9 +169,8 @@
   >>> metrics.f1_score(newsgroups_test.target, pred, average='macro')
   0.76995175184521725
 
-
 其他的一些分类器能够更好的处理这个更难版本的任务。试着带 ``--filter`` 选项和不带 ``--filter`` 选项运行
- :ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py`来比较结果间的差异。
+ :ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py` 来比较结果间的差异。
 .. topic:: 推荐
 
   当使用20个新闻组数据中评估文本分类器时，你应该移除与新闻组相关的元数据。你可以通过设置
