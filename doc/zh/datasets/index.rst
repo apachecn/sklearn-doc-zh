@@ -165,25 +165,25 @@ Generators for decomposition（生成器分解）
 svmlight / libsvm格式的数据集
 ====================================
 
-scikit-learn 包含加载svmlight / libsvm格式的数据集的实用函数。此种格式中，每行
-采用 ``<label> <feature-id>:<feature-value><feature-id>:<feature-value> ...`` 
+scikit-learn 中有加载svmlight / libsvm格式的数据集的功能函数。此种格式中，每行
+采用如 ``<label> <feature-id>:<feature-value><feature-id>:<feature-value> ...`` 
 的形式。这种格式尤其适合稀疏数据集，在该模块中，数据集 ``X`` 使用的是scipy稀疏CSR矩阵，
 特征集 ``y`` 使用的是numpy数组。
 
-你可以以如下步骤加载数据集::
+你可以通过如下步骤加载数据集::
 
   >>> from sklearn.datasets import load_svmlight_file
   >>> X_train, y_train = load_svmlight_file("/path/to/train_dataset.txt")
   ...                                                         # doctest: +SKIP
 
-你也可以一次性加载两个或多个的数据集::
+你也可以一次加载两个或多个的数据集::
 
   >>> X_train, y_train, X_test, y_test = load_svmlight_files(
   ...     ("/path/to/train_dataset.txt", "/path/to/test_dataset.txt"))
   ...                                                         # doctest: +SKIP
 
 这种情况下，保证了 ``X_train`` 和 ``X_test`` 具有相同的特征数量。
-另一种得到相同结果的方法是固定特征的数量::
+固定特征的数量也可以得到同样的结果::
 
   >>> X_test, y_test = load_svmlight_file(
   ...     "/path/to/test_dataset.txt", n_features=X_train.shape[1])
@@ -203,8 +203,7 @@ scikit-learn 包含加载svmlight / libsvm格式的数据集的实用函数。�
 scikit-learn使用任何存储为numpy数组或者scipy稀疏数组的数值数据。
 其他可以转化成数值数组的类型也可以接受，如pandas中的DataFrame。
 
-以下推荐一些将标准纵列形式的数据转换为sklearn-learn可以使用的格式的方法::
-
+以下推荐一些将标准纵列形式的数据转换为scikit-learn可以使用的格式的方法:
 
 * `pandas.io <https://pandas.pydata.org/pandas-docs/stable/io.html>`_ 
   提供了从常见格式(包括CSV,Excel,JSON,SQL等)中读取数据的工具.DateFrame 也可以从由
@@ -242,6 +241,7 @@ scikit-learn使用任何存储为numpy数组或者scipy稀疏数组的数值数�
 
 注意：如果你要管理你的数值数据，建议使用优化后的文件格式来减少数据加载时间,例如HDF5。像
 H5Py, PyTables和pandas等的各种库提供了一个Python接口，来读写该格式的数据。
+
 .. make sure everything is in a toc tree
 
 .. toctree::
