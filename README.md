@@ -93,7 +93,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@sheepmen](https://github.com/sheepmen)（羊三）
 * [@guohao916](https://github.com/guohao916)（guohao_dm）
 * [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
-* [@BWM-蜜蜂](@qq2669307546)（BWM-蜜蜂）
+* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
 * [@夜神月](@qq760514101)（夜神月）
 
 
