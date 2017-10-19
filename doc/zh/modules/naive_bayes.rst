@@ -22,9 +22,9 @@
 
    P(x_i | y, x_1, \dots, x_{i-1}, x_{i+1}, \dots, x_n) = P(x_i | y) ,
 
- 对于所有的 :math`i` ，这个关系可以简化为
+对于所有的 :math`i` ，这个关系可以简化为
 
- .. math::
+.. math::
 
    P(y \mid x_1, \dots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i \mid y)}
                                     {P(x_1, \dots, x_n)}
