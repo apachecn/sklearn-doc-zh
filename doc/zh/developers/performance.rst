@@ -42,9 +42,9 @@ Python, Cython 还是 C/C++?
 
 在使用 Cython 时，可以用以下指令之一
 
-   $ python setup.py build_ext -i
+   ``$ python setup.py build_ext -i``
    
-   $ python setup.py install
+   ``$ python setup.py install``
 
 来生成 C 文件。你需要自行在各个子模块的 ``setup.py`` 中添加 .c/.cpp 扩展名和构建参数。
 
