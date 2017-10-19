@@ -92,6 +92,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@lhwlhw90](https://github.com/lhwlhw90)（lhwlhw90）
 * [@sheepmen](https://github.com/sheepmen)（徐鑫）
 * [@guohao916](https://github.com/guohao916)（guohao_dm）
+* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
 
 
 
