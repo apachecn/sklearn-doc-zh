@@ -90,9 +90,11 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@supportingvector](https://github.com/supportingvector)（supportingvector）
 * [@stealthsMrs](https://github.com/stealthsMrs)（stealthsMrs）
 * [@lhwlhw90](https://github.com/lhwlhw90)（lhwlhw90）
-* [@sheepmen](https://github.com/sheepmen)（徐鑫）
+* [@sheepmen](https://github.com/sheepmen)（羊三）
 * [@guohao916](https://github.com/guohao916)（guohao_dm）
 * [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
+* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
+* [@夜神月](@qq760514101)（夜神月）
 
 
 
