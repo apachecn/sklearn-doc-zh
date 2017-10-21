@@ -6,15 +6,13 @@
 
 .. currentmodule:: sklearn.linear_model
 
-以下是一组用于回归的方法，其中目标值预期是输入变量的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值
-value.
+以下是一组用于回归的方法，其中目标值 y 预期是输入变量 x 的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
 在整个模块中，我们指定向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 并且 :math:`w_0` 作为 ``intercept_``.
 
-要使用广义线性模型进行分类，请参阅
-:ref:`Logistic_regression`.
+要使用广义线性模型进行分类，请参阅 :ref:`Logistic_regression` .
 
 
 .. _ordinary_least_squares:
