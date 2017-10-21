@@ -20,7 +20,8 @@
 普通最小二乘法
 =======================
 
-:class:`LinearRegression` 适合一个带有系数 :math:`w = (w_1, ..., w_p)` 的线性模型 去最小化 (在数据集中观察到的结果) 和 (通过线性近似值预测的结果) 之间方差的和。 在数学上它解决了一个形式如下的问题：
+:class:`LinearRegression` 用系数 :math:`w = (w_1, ..., w_p)` 来拟合一个线性模型, 
+使得数据集实际观测数据和预测数据（估计值）之间残差平方和最小。数学形式可表达为:
 
 .. math:: \underset{w}{min\,} {|| X w - y||_2}^2
 
@@ -29,7 +30,7 @@
    :align: center
    :scale: 50%
 
-:class:`LinearRegression` 将采用其 ``fit`` 拟合方法数组 X, y 并将其线性模型的系数 :math:`w` 存储在其 ``coef_`` 成员中::
+:class:`LinearRegression` 会调用 ``fit`` 方法来拟合数组 X, y，并将其线性模型的系数 :math:`w` 存储在其 ``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.LinearRegression()
@@ -38,9 +39,11 @@
     >>> reg.coef_
     array([ 0.5,  0.5])
 
-然而，普通最小二乘的系数估计依赖于模型项的独立性；当多个项有着相互关系并且设计矩阵 :math:`X` 的列具有近似的线性依赖性时，设计的矩阵变会得接近于单一；并且作为观察到的结果，最小二乘的估计值 将会变得对随机的错误非常敏感，并且会产生很大的方差；这种多重共线性的情况可能出现，例如，当收集没有实验设计过的数据时。
+然而，对于普通最小二乘问题，其系数估计依赖模型各项相互独立。当各项是相关并且设计矩阵 :math:`X` 的各列近似线性相关，
+那么，设计矩阵会趋向于奇异矩阵，这会导致最小二乘估计对于随机误差非常敏感，会产生很大的方差。这种多重共线性(multicollinearity) 
+的情况可能真的会出现，比如未经实验设计收集的数据。
 
-.. topic:: 举例:
+.. topic:: 示例:
 
    * :ref:`sphx_glr_auto_examples_linear_model_plot_ols.py`
 
@@ -86,11 +89,10 @@
     0.13636...
 
 
-.. topic:: 举例:
+.. topic:: 示例:
 
-   * :ref:`sphx_glr_auto_examples_linear_model_plot_ridge_path.py`( 作为正则化的函数，绘制岭系数 )
-   * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`( 使用稀疏特征的文本文档分类 )
-
+   * :ref:`sphx_glr_auto_examples_linear_model_plot_ridge_path.py`
+   * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
 
 岭复杂性
 ----------------
