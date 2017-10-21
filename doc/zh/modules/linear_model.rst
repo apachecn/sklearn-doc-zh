@@ -6,15 +6,13 @@
 
 .. currentmodule:: sklearn.linear_model
 
-以下是一组用于回归的方法，其中目标值预期是输入变量的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值
-value.
+以下是一组用于回归的方法，其中目标值 y 预期是输入变量 x 的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
 在整个模块中，我们指定向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 并且 :math:`w_0` 作为 ``intercept_``.
 
-要使用广义线性模型进行分类，请参阅
-:ref:`Logistic_regression`.
+要使用广义线性模型进行分类，请参阅 :ref:`Logistic_regression` .
 
 
 .. _ordinary_least_squares:
@@ -575,18 +573,18 @@ ARD 也被称为 *稀疏贝叶斯学习* 或
 
 .. _Logistic_regression:
 
-逻辑回归
+logistic 回归
 ===================
 
-逻辑回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，逻辑斯蒂回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
+logistic 回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，logistic 回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
 
-scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了二元（binary）、一对余（one-vs-rest）及多元逻辑斯蒂回归，并带有可选的 L1 和 L2 正则化。
+scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了二元（binary）、一对余（one-vs-rest）及多元 logistic 回归，并带有可选的 L1 和 L2 正则化。
 
-若视为一优化问题，带L2罚项的二分类 logistic 回归要最小化以下代价函数（cost function）：
+若视为一优化问题，带 L2 罚项的二分类 logistic 回归要最小化以下代价函数（cost function）：
 
 .. math:: \underset{w, c}{min\,} \frac{1}{2}w^T w + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-类似地，带 L1 正则的逻辑斯蒂回归需要求解下式：
+类似地，带 L1 正则的 logistic 回归需要求解下式：
 
 .. math:: \underset{w, c}{min\,} \|w\|_1 + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
@@ -598,7 +596,7 @@ scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了�
 
 "sag" 求解器基于平均随机梯度下降算法（Stochastic Average Gradient descent） [6]_。在大数据集上的表现更快，大数据集指样本量大且特征数多。
 
-"saga" solver [7]_ 是 "sag" 的一类变体，它支持非平滑（non-smooth）的 L1 正则选项 ``penalty="l1"`` 。因此对于稀疏多元逻辑回归，往往选用该求解器。
+"saga" solver [7]_ 是 "sag" 的一类变体，它支持非平滑（non-smooth）的 L1 正则选项 ``penalty="l1"`` 。因此对于稀疏多元 logistic 回归 ，往往选用该求解器。
 
 一言以蔽之，选用求解器可遵循如下规则:
 
@@ -636,11 +634,11 @@ L1正则                             	"liblinear" or "saga"
    将预测为负类，而liblinear预测为正类。
    注意，设定了 ``fit_intercept=False`` ，又有很多样本使得 ``decision_function`` 为零的模型，很可能会欠拟合，其表现往往比较差。建议您设置 ``fit_intercept=True`` 并增大 ``intercept_scaling``。
 
-.. note:: **利用稀疏逻辑回归（sparse logisitic regression）进行特征选择**
+.. note:: **利用稀疏 logistic 回归（sparse logisitic regression）进行特征选择**
 
-   带 L1 罚项的逻辑斯蒂回归将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
+   带 L1 罚项的 logistic 回归 将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
 
- :class:`LogisticRegressionCV` 对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最优的参数 C。"newton-cg", "sag", "saga" 和 "lbfgs" 在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳 C 值。
+ :class:`LogisticRegressionCV` 对 logistic 回归 的实现内置了交叉验证（cross-validation），可以找出最优的参数 C。"newton-cg", "sag", "saga" 和 "lbfgs" 在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳 C 值。
 
 .. topic:: 参考文献：
 
