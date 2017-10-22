@@ -965,6 +965,7 @@ L2之前使用Frobenius标准，而L1先验使用元素L1范数。
     + \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2
 
 and the regularized objective function is:
+正则化的目标函数是：
 
 .. math::
     d_{\mathrm{Fro}}(X, WH)
@@ -976,23 +977,33 @@ and the regularized objective function is:
 :func:`non_negative_factorization` allows a finer control through the
 :attr:`regularization` attribute, and may regularize only W, only H, or both.
 
+:class:`NMF` 正则化 W 和 H 。公共函数 :func:`non_negative_factorization`
+允许通过 :attr:`regularization` 属性进行更精细的控制 ，并且可以仅将 W ，仅 H 或两者正规化。
+
+
 NMF with a beta-divergence
+beta-分离的 NMF （NMF with a beta-divergence）
 --------------------------
 
 As described previously, the most widely used distance function is the squared
 Frobenius norm, which is an obvious extension of the Euclidean norm to
 matrices:
+如前所述，最广泛使用的距离函数是Frobenius范数（the squared Frobenius norm）。
+，这是欧氏距离（Euclidean norm，欧几里德范数）一个最广泛的扩展：
 
 .. math::
     d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{Fro}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2
 
 Other distance functions can be used in NMF as, for example, the (generalized)
 Kullback-Leibler (KL) divergence, also referred as I-divergence:
+其他能在 NMF 中使用的距离函数，例如 the (generalized)
+Kullback-Leibler (KL) divergence，也称为 I-divergence ：
 
 .. math::
     d_{KL}(X, Y) = \sum_{i,j} (X_{ij} \log(\frac{X_{ij}}{Y_{ij}}) - X_{ij} + Y_{ij})
 
 Or, the Itakura-Saito (IS) divergence:
+或者, the Itakura-Saito (IS) divergence:
 
 .. math::
     d_{IS}(X, Y) = \sum_{i,j} (\frac{X_{ij}}{Y_{ij}} - \log(\frac{X_{ij}}{Y_{ij}}) - 1)
@@ -1000,6 +1011,9 @@ Or, the Itakura-Saito (IS) divergence:
 These three distances are special cases of the beta-divergence family, with
 :math:`\beta = 2, 1, 0` respectively [6]_. The beta-divergence are
 defined by :
+
+这三种距离函数都属于 beta-divergence 家族， 其参数分别为 :math:`\beta = 2, 1, 0` [6]_。
+beta-divergence 定义为：
 
 .. math::
     d_{\beta}(X, Y) = \sum_{i,j} \frac{1}{\beta(\beta - 1)}(X_{ij}^\beta + (\beta-1)Y_{ij}^\beta - \beta X_{ij} Y_{ij}^{\beta - 1})
@@ -1013,6 +1027,9 @@ Note that this definition is not valid if :math:`\beta \in (0; 1)`, yet it can
 be continously extended to the definitions of :math:`d_{KL}` and :math:`d_{IS}`
 respectively.
 
+请注意： 当 :math:`\beta \in (0; 1)` 时，这个定义是无效的， 然而，它可以是分别是 定义
+:math:`d_{KL}` 和 :math:`d_{IS}` 的连续延伸。
+
 :class:`NMF` implements two solvers, using Coordinate Descent ('cd') [5]_, and
 Multiplicative Update ('mu') [6]_. The 'mu' solver can optimize every
 beta-divergence, including of course the Frobenius norm (:math:`\beta=2`), the
@@ -1022,14 +1039,32 @@ Itakura-Saito divergence (:math:`\beta=0`). Note that for
 values of :math:`\beta`. Note also that with a negative (or 0, i.e.
 'itakura-saito') :math:`\beta`, the input matrix cannot contain zero values.
 
+:class:`NMF` 可以使用两种解决方案， Coordinate Descent ('cd') [5]_， 和
+Multiplicative Update ('mu') [6]_。'mu' 方法可以优化每种 beta-divergence， 包括
+Frobenius norm (:math:`\beta=2`), the
+(generalized) Kullback-Leibler divergence (:math:`\beta=1`) 以及 the
+Itakura-Saito divergence (:math:`\beta=0`)。
+请注意： 当 :math:`\beta \in (1; 2)` 时,  'mu' 方法 明显快于 其他的 :math:`\beta` 值。
+同样请注意， 负的 :math:`\beta` 值 （或，0， 如'itakura-saito'），
+矩阵的输入值不能包含零值。
+
+
 The 'cd' solver can only optimize the Frobenius norm. Due to the
 underlying non-convexity of NMF, the different solvers may converge to
 different minima, even when optimizing the same distance function.
+'cd' 方法仅能优化 Frobenius norm。因为 NMF 可能是非凸的 （Due to the
+underlying non-convexity of NMF）， 不同的方法可能得到不同的最小值，
+即使在优化时使用的是相同的距离函数。
+
 
 NMF is best used with the ``fit_transform`` method, which returns the matrix W.
 The matrix H is stored into the fitted model in the ``components_`` attribute;
 the method ``transform`` will decompose a new matrix X_new based on these
 stored components::
+
+当使用 ``fit_transform`` 方法时，NMF是最好的，它返回矩阵 W。
+矩阵 H 则保存在  fitted model 的 ``components_`` 属性里。
+``transform`` 方法将基于这些保存的成分分解出一个新的矩阵 X_new 。
 
     >>> import numpy as np
     >>> X = np.array([[1, 1], [2, 1], [3, 1.2], [4, 1], [5, 0.8], [6, 1]])
@@ -1040,13 +1075,13 @@ stored components::
     >>> X_new = np.array([[1, 0], [1, 6.1], [1, 0], [1, 4], [3.2, 1], [0, 4]])
     >>> W_new = model.transform(X_new)
 
-.. topic:: Examples:
+.. topic:: Examples例子:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_faces_decomposition.py`
     * :ref:`sphx_glr_auto_examples_applications_plot_topics_extraction_with_nmf_lda.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_beta_divergence.py`
 
-.. topic:: References:
+.. topic:: References参考文献:
 
     .. [1] `"Learning the parts of objects by non-negative matrix factorization"
       <http://www.columbia.edu/~jwp2128/Teaching/W4721/papers/nmf_nature.pdf>`_
@@ -1074,13 +1109,18 @@ stored components::
 .. _LatentDirichletAllocation:
 
 Latent Dirichlet Allocation (LDA)
+
+潜在 Dirichlet 分配 （Latent Dirichlet Allocation，LDA）
 =================================
 
 Latent Dirichlet Allocation is a generative probabilistic model for collections of
 discrete dataset such as text corpora. It is also a topic model that is used for
 discovering abstract topics from a collection of documents.
+Latent Dirichlet Allocation 是离散数据集（如文本语料库）的集合的生成概率模型。
+它也是一个主题模型，用于从文档集合中发现摘要内容。
 
 The graphical model of LDA is a three-level Bayesian model:
+LDA的图形模型是一个三级贝叶斯模型 （three-level Bayesian model）：
 
 .. image:: ../images/lda_model_graph.png
    :align: center
@@ -1088,16 +1128,28 @@ The graphical model of LDA is a three-level Bayesian model:
 When modeling text corpora, the model assumes the following generative process for
 a corpus with :math:`D` documents and :math:`K` topics:
 
+当建模文本语料库时，该模型对文档语料库 :math:`D` 和 主题语料库 :math:`K`
+有以下假设：
+
   1. For each topic :math:`k`, draw :math:`\beta_k \sim \mathrm{Dirichlet}(\eta),\: k =1...K`
+  针对每个主题 :math:`k`， 绘制 :math:`\beta_k \sim \mathrm{Dirichlet}(\eta),\: k =1...K`
 
   2. For each document :math:`d`, draw :math:`\theta_d \sim \mathrm{Dirichlet}(\alpha), \: d=1...D`
+  针对每个文档 :math:`d`， 绘制 :math:`\theta_d \sim \mathrm{Dirichlet}(\alpha), \: d=1...D`
 
   3. For each word :math:`i` in document :math:`d`:
+  针对文档 :math:`d` 中的每个单词 :math:`i` ：
 
     a. Draw a topic index :math:`z_{di} \sim \mathrm{Multinomial}(\theta_d)`
+    绘制主题索引 :math:`z_{di} \sim \mathrm{Multinomial}(\theta_d)`
     b. Draw the observed word :math:`w_{ij} \sim \mathrm{Multinomial}(beta_{z_{di}}.)`
+    绘制出观察到的单词： :math:`w_{ij} \sim \mathrm{Multinomial}(beta_{z_{di}}.)`
+
+
 
 For parameter estimation, the posterior distribution is:
+对于参数估计，后验分布为：
+
 
 .. math::
   p(z, \theta, \beta |w, \alpha, \eta) =
@@ -1107,6 +1159,10 @@ Since the posterior is intractable, variational Bayesian method
 uses a simpler distribution :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)`
 to approximate it, and those variational parameters :math:`\lambda`, :math:`\phi`,
 :math:`\gamma` are optimized to maximize the Evidence Lower Bound (ELBO):
+由于后验分布难以处理，经变化的贝叶斯方法（variational Bayesian method）使用一个简单的分布
+ :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)` 来处理， 这些变化的参数
+ :math:`\lambda`, :math:`\phi`, :math:`\gamma`
+ 经优化后使 Evidence Lower Bound (ELBO) 得到最大化。
 
 .. math::
   \log\: P(w | \alpha, \eta) \geq L(w,\phi,\gamma,\lambda) \overset{\triangle}{=}
@@ -1115,31 +1171,43 @@ to approximate it, and those variational parameters :math:`\lambda`, :math:`\phi
 Maximizing ELBO is equivalent to minimizing the Kullback-Leibler(KL) divergence
 between :math:`q(z,\theta,\beta)` and the true posterior
 :math:`p(z, \theta, \beta |w, \alpha, \eta)`.
+最大化 ELBO 等同于 最小化 Kullback-Leibler(KL) 的 :math:`q(z,\theta,\beta)`
+与 :math:`p(z, \theta, \beta |w, \alpha, \eta)` 之间的差异。
 
 :class:`LatentDirichletAllocation` implements online variational Bayes algorithm and supports
 both online and batch update method.
 While batch method updates variational variables after each full pass through the data,
 online method updates variational variables from mini-batch data points.
+:class:`LatentDirichletAllocation` 实现了在线 变分贝叶斯算法 （variational Bayes algorithm），
+并支持在线和批量更新方法。
+批处理方法在每次完全传递数据后更新变分变量，在线方法从小批量数据点更新变分变量。
 
 .. note::
 
   Although online method is guaranteed to converge to a local optimum point, the quality of
   the optimum point and the speed of convergence may depend on mini-batch size and
   attributes related to learning rate setting.
+  注意: 虽然在线方法保证收敛到局部最优点，
+  但最优点的质量和收敛速度可能取决于小批量大小和学习率设置相关的属性。
 
 When :class:`LatentDirichletAllocation` is applied on a "document-term" matrix, the matrix
 will be decomposed into a "topic-term" matrix and a "document-topic" matrix. While
 "topic-term" matrix is stored as :attr:`components_` in the model, "document-topic" matrix
 can be calculated from ``transform`` method.
+当 :class:`LatentDirichletAllocation` 应用于 "document-term" 矩阵时， 该矩阵将会被分解
+称为 "topic-term" 矩阵和 "document-topic"  矩阵。 在模型中， "topic-term" 矩阵 以参数
+:attr:`components_` 的形式保存， 而 "document-topic"  矩阵 可以从 ``transform`` 方法中
+计算出来。
 
 :class:`LatentDirichletAllocation` also implements ``partial_fit`` method. This is used
 when data can be fetched sequentially.
+:class:`LatentDirichletAllocation` 也实现了 ``partial_fit`` 方法。当数据可以顺序提取时使用。
 
-.. topic:: Examples:
+.. topic:: Examples例子:
 
     * :ref:`sphx_glr_auto_examples_applications_plot_topics_extraction_with_nmf_lda.py`
 
-.. topic:: References:
+.. topic:: References参考文献:
 
     * `"Latent Dirichlet Allocation"
       <https://www.cs.princeton.edu/~blei/papers/BleiNgJordan2003.pdf>`_
