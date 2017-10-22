@@ -221,13 +221,13 @@ GPC 概率预测
 
 
 该示例说明了对于具有不同选项的超参数的RBF内核的GPC预测概率。
-第一个图显示GPC具有任意选择的超参数的预测概率，并且超参数对应于最大对数边缘似然（LML）。
+第一幅图显示GPC具有任意选择的超参数的预测概率，并且与最大LML（对数边缘似然）对应的超参数。
 
-虽然通过优化LML选择的超参数具有相当大的LML，但是它们根据测试数据的对数损失稍微更差。
+虽然通过优化LML选择的超参数具有相当大的LML，但是根据测试数据的对数损失，它们的表现更差。
 该图显示，这是因为它们在阶级边界（这是好的）表现出类概率的急剧变化，
-但预测概率接近0.5远离类边界（这是坏的）这种不良影响是由由GPC内部使用的拉普拉斯逼近。
+但预测概率接近0.5远离类边界（这是坏的）这种不良影响是由于GPC内部使用了拉普拉斯逼近。
 
-第二个图显示了内核超参数的不同选择的对数边缘似然，突出了第一个图中使用的超参数的两个选择的黑点。
+第二幅图显示了内核超参数的不同选择的LML（对数边缘似然），突出了在第一幅图中使用的通过黑点（训练集）选择的两个超参数。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_000.png
    :target: ../auto_examples/gaussian_process/plot_gpc.html
@@ -244,9 +244,9 @@ GPC 在 XOR 数据集上的举例说明
 .. currentmodule:: sklearn.gaussian_process.kernels
 
 
-此示例说明了在XOR数据上的GPC。相对固定的，各向同性的核（:class:`RBF`）和非固定的核（:class:`DotProduct`）。
+此示例说明了在XOR数据上的GPC。各向同性的核（:class:`RBF`）和非固定的核（:class:`DotProduct`）对比固定性。
 在这个特定的数据集上，`DotProduct`内核获得了更好的结果，因为类边界是线性的，与坐标轴重合。
-然而，实际上，诸如:class:`RBF`经常获得更好结果的固定内核。
+然而，实际上，诸如 :class:`RBF` 这样的固定内核经常获得更好结果。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_xor_001.png
    :target: ../auto_examples/gaussian_process/plot_gpc_xor.html
@@ -259,8 +259,8 @@ iris 数据集上的高斯过程分类（GPC）
 -----------------------------------------------------
 
 该示例说明了用于虹膜数据集的二维版本上各向同性和各向异性RBF核的GPC的预测概率。
-这说明了GPC对非二进制分类的适用性。
-各向异性RBF内核通过为两个特征维度分配不同的长度尺度来获得稍高的对数边缘似然。
+这说明了GPC对多类分类的适用性。
+各向异性RBF内核通过为两个特征维度分配不同的长度尺度来获得稍高的LML（对数边缘似然）。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_iris_001.png
    :target: ../auto_examples/gaussian_process/plot_gpc_iris.html
@@ -277,12 +277,12 @@ iris 数据集上的高斯过程分类（GPC）
 是决定高斯过程（GP）先验和后验形状的关键组成部分。
 它们通过定义两个数据点的“相似性”，并结合相似的
 数据点应该具有相似的目标值的假设，对所学习的函数进行编码。
-内核可以分为两类：固定内核只取决于两个数据点的距离，
-而不是依赖于它们的绝对值:math:`k(x_i, x_j)= k(d(x_i, x_j))`
-，因此它们对于输入空间中的转换是不变的；而非固定的内核也取
+内核可以分为两类：固定内核，只取决于两个数据点的距离，
+不依赖于它们的绝对值 :math:`k(x_i, x_j)= k(d(x_i, x_j))` 
+，因此它们对于输入空间中的转换是不变的；非固定的内核，取
 决于数据点的具体值。固定内核可以进一步细分为各向同性和各向
-异性内核，其中各向同性内核也不会在输入空间中旋转。想要了解
-更多细节，请参看[RW2006]_的第四章。
+异性内核，其中各向同性内核不会在输入空间中旋转。想要了解
+更多细节，请参看 [RW2006]_ 的第四章。
 
 
 高斯过程内核 API
@@ -293,24 +293,24 @@ iris 数据集上的高斯过程分类（GPC）
 2d阵列X中所有数据点对的“自动协方差”，或二维阵列X的数据点
 与二维阵列Y中的数据点的所有组合的“互协方差”。以下论断对于
 所有内核k（除了 :class:`WhiteKernel`）都是成立的：``k(X) == K(X, Y=X)``。
-如果仅仅是自协方差的对角线元素被使用，那么内核的方法``diag()``将会被调用，
+如果仅仅是自协方差的对角线元素被使用，那么内核的方法 ``diag()`` 将会被调用，
 该方法比等价的调用 ``__call__``: ``np.diag(k(X, X)) == k.diag(X)``
 具有更高的计算效率。
  
 内核通过超参数向量 :math:`\theta` 进行参数化。这些超参数可以
-控制例如内核的长度尺度或周期性（见下文）。通过设置 ``__call__`` 
+控制例如内核的长度或周期性（见下文）。通过设置 ``__call__`` 
 方法的参数 ``eval_gradient=True`` ，所有的内核支持计算解析
 内核自协方差对于 :math:`\theta` 的解析梯度。该梯度被用来在
-高斯过程中（不论是回归型还是分类型的）计算对数边缘似然函数
-的梯度，进而被用来通过梯度下降的方法极大化对数边缘似然函数
-从而确定 :math:`\theta` 的值。对于每个超参，当对内核的实例
+高斯过程中（不论是回归型还是分类型的）计算LML（对数边缘似然）函数
+的梯度，进而被用来通过梯度下降的方法极大化LML（对数边缘似然）函数
+从而确定 :math:`\theta` 的值。对于每个超参数，当对内核的实例
 进行赋值时，初始值和边界值需要被指定。通过内核对象属性 ``theta`` ，
 :math:`\theta` 的当前值可以被获取或者设置。更重要的是，
 超参的边界值可以被内核属性 ``bounds`` 获取。需要注意的是，
 以上两种属性值(theta和bounds)都会返回内部使用值的日志转换值，
-这是因为这两种属性值通常更适合基于梯度的优化。每个超参的
-规范 :class:`Hyperparameter` 以相应内核中的实例的形式存储。
-请注意使用了以"x"命名的超参的内核必然具有 self.x 和 self.x_bounds 这两种属性。
+这是因为这两种属性值通常更适合基于梯度的优化。每个超参数的
+规范 :class:`Hyperparameter` 以实例形式被存储在相应内核中。
+请注意使用了以"x"命名的超参的内核必然具有self.x和self.x_bounds这两种属性。
 
 所有内核的抽象基类为 :class:`Kernel` 。Kernel 基类实现了
 一个相似的接口 :class:`Estimator` ，提供了方法 ``get_params()`` ,
@@ -318,7 +318,7 @@ iris 数据集上的高斯过程分类（GPC）
 :class:`Pipeline` 或者 :class:`GridSearch` 之类的元估计来设置内核值。
 需要注意的是，由于内核的嵌套结构（通过内核操作符，如下所见），
 内核参数的名称可能会变得相对复杂些。通常来说，对于二元内核操作，
-参数的左运算元以 ``k1__`` 为前缀，而有运算元以 ``k2__`` 为前缀。
+参数的左运算元以 ``k1__`` 为前缀，而右运算元以 ``k2__`` 为前缀。
 一个额外的便利方法是 ``clone_with_theta(theta)``，
 该方法返回克隆版本的内核，但是设置超参数为 ``theta``。
 示例如下：
@@ -366,7 +366,7 @@ iris 数据集上的高斯过程分类（GPC）
    k(x_i, x_j) = constant\_value \;\forall\; x_1, x_2
 
 :class:`WhiteKernel` 内核类的主要应用实例在于当解释信号的噪声部分时
-可以作为一个和内核的一部分。通过调节参数 :math:`noise\_level`，
+可以作为内核集合的一部分。通过调节参数 :math:`noise\_level`，
 该类可以用来估计噪声级别。具体如下所示：
 
 .. math::
@@ -437,7 +437,7 @@ Matérn 内核
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
-想要更进一步地了解不同类型的Matérn内核请参阅[RW2006]_, pp84。
+想要更进一步地了解不同类型的Matérn内核请参阅 [RW2006]_ , pp84。
 
 有理二次内核
 ----------------
@@ -464,7 +464,7 @@ Matérn 内核
 .. math::
    k(x_i, x_j) = \text{exp}\left(-2 \left(\text{sin}(\pi / p * d(x_i, x_j)) / l\right)^2\right)
 
-从 ExpSineSquared 内核中产生的高斯过程的先验和后验如下图所示：
+从ExpSineSquared内核中产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_002.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
@@ -475,7 +475,7 @@ Matérn 内核
 
 :class:`DotProduct` 内核是非固定内核，它可以通过在线性回归的 :math:`x_d (d = 1, . . . , D)` 的相关系数上加上
 服从于 :math:`N(0, 1)` 的先验以及在线性回归的偏置上加上服从于 :math:`N(0, \sigma_0^2)` 的先验来获得。
-该 :class:`DotProduct` 内核是不变的关于原点的坐标，而不是翻译的旋转。它通过设置参数 :math:`\sigma_0^2` 来进行参数化。
+该 :class:`DotProduct` 内核对于原点坐标的旋转是不变的，因此不是转换。它通过设置参数 :math:`\sigma_0^2` 来进行参数化。
 当 :math:`\sigma_0^2 = 0` 时，该内核叫做同质线性内核；否则该内核是非同质的。内核公式如下：
 
 .. math::
