@@ -244,8 +244,8 @@ GPC 在 XOR 数据集上的举例说明
 .. currentmodule:: sklearn.gaussian_process.kernels
 
 
-此示例说明了在XOR数据上的GPC。各向同性的核（:class:`RBF`）和非固定的核（:class:`DotProduct`）对比固定性。
-在这个特定的数据集上，`DotProduct`内核获得了更好的结果，因为类边界是线性的，与坐标轴重合。
+此示例说明了在XOR数据上的GPC。各向同性的核（ :class:`RBF` ）和非固定的核（ :class:`DotProduct` ）对比固定性。
+在这个特定的数据集上， `DotProduct` 内核获得了更好的结果，因为类边界是线性的，与坐标轴重合。
 然而，实际上，诸如 :class:`RBF` 这样的固定内核经常获得更好结果。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_xor_001.png
