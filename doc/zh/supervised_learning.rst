@@ -2,7 +2,7 @@
 
 .. _supervised-learning:
 
-Supervised learning
+监督学习
 -----------------------
 
 .. toctree::

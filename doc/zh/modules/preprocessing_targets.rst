@@ -4,14 +4,13 @@
 .. _preprocessing_targets:
 
 ==========================================
-Transforming the prediction target (``y``)
+预测目标 (``y``) 的转换 
 ==========================================
 
-Label binarization
+标签二值化
 ------------------
 
-:class:`LabelBinarizer` is a utility class to help create a label indicator
-matrix from a list of multi-class labels::
+:class:`LabelBinarizer` 是一个用来从多类别列表创建标签矩阵的工具类::
 
     >>> from sklearn import preprocessing
     >>> lb = preprocessing.LabelBinarizer()
@@ -23,7 +22,7 @@ matrix from a list of multi-class labels::
     array([[1, 0, 0, 0],
            [0, 0, 0, 1]])
 
-For multiple labels per instance, use :class:`MultiLabelBinarizer`::
+对于多类别是实例，可以使用 :class:`MultiLabelBinarizer`::
 
     >>> lb = preprocessing.MultiLabelBinarizer()
     >>> lb.fit_transform([(1, 2), (3,)])
@@ -32,13 +31,11 @@ For multiple labels per instance, use :class:`MultiLabelBinarizer`::
     >>> lb.classes_
     array([1, 2, 3])
 
-Label encoding
+标签编码
 --------------
 
-:class:`LabelEncoder` is a utility class to help normalize labels such that
-they contain only values between 0 and n_classes-1. This is sometimes useful
-for writing efficient Cython routines. :class:`LabelEncoder` can be used as
-follows::
+:class:`LabelEncoder` 是一个可以用来将标签规范化的工具类，它可以将标签的编码值范围限定在[0,n_classes-1]. 
+这在编写高效的Cython程序时是非常有用的. :class:`LabelEncoder` 可以如下使用::
 
     >>> from sklearn import preprocessing
     >>> le = preprocessing.LabelEncoder()
@@ -51,8 +48,7 @@ follows::
     >>> le.inverse_transform([0, 0, 1, 2])
     array([1, 1, 2, 6])
 
-It can also be used to transform non-numerical labels (as long as they are
-hashable and comparable) to numerical labels::
+当然，它也可以用于非数值型标签的编码转换成数值标签（只要它们是可哈希并且可比较的）::
 
     >>> le = preprocessing.LabelEncoder()
     >>> le.fit(["paris", "paris", "tokyo", "amsterdam"])
