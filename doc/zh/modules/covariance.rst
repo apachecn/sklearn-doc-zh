@@ -267,9 +267,6 @@ Raw估计可通过 :class:`MinCovDet` 对象的 ``raw_location_`` 和 ``raw_cova
    :scale: 49%
 
 
-
-____
-
 .. list-table::
     :header-rows: 1
 
