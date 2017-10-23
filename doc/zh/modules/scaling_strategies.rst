@@ -1,107 +1,68 @@
 .. _scaling_strategies:
 
 =================================================
-Strategies to scale computationally: bigger data
+大规模计算的策略: 更大量的数据
 =================================================
 
-For some applications the amount of examples, features (or both) and/or the
-speed at which they need to be processed are challenging for traditional
-approaches. In these cases scikit-learn has a number of options you can
-consider to make your system scale.
+对于一些应用程序的实例数量，它们需要被处理的特征（或两者）和/或速度对传统的方法而言非常具有挑战性。在这些情况下，scikit-learn 有许多你值得考虑的选项可以使你的系统规模化。
 
-Scaling with instances using out-of-core learning
+使用外核学习实例进行拓展
 =================================================
 
-Out-of-core (or "external memory") learning is a technique used to learn from
-data that cannot fit in a computer's main memory (RAM).
+外核（或者称作 “外部存储器”）学习是一种用于学习那些无法装进计算机主存储（RAM）的数据的技术。
 
-Here is sketch of a system designed to achieve this goal:
+这里描述了一种为了实现这一目的而设计的系统：
 
-  1. a way to stream instances
-  2. a way to extract features from instances
-  3. an incremental algorithm
+  1. 一种用流来传输实例的方式
+  2. 一种从实例中提取特征的方法
+  3. 增量式算法
 
-Streaming instances
+流式实例
 -------------------
-Basically, 1. may be a reader that yields instances from files on a
-hard drive, a database, from a network stream etc. However,
-details on how to achieve this are beyond the scope of this documentation.
+基本上， 1. 可能是从硬盘、数据库、网络流等文件中产生实例的读取器。然而，关于如何实现的相关细节已经超出了本文档的讨论范围。
 
-Extracting features
+提取特征
 -------------------
-\2. could be any relevant way to extract features among the
-different :ref:`feature extraction <feature_extraction>` methods supported by
-scikit-learn. However, when working with data that needs vectorization and
-where the set of features or values is not known in advance one should take
-explicit care. A good example is text classification where unknown terms are
-likely to be found during training. It is possible to use a statefull
-vectorizer if making multiple passes over the data is reasonable from an
-application point of view. Otherwise, one can turn up the difficulty by using
-a stateless feature extractor. Currently the preferred way to do this is to
-use the so-called :ref:`hashing trick<feature_hashing>` as implemented by
-:class:`sklearn.feature_extraction.FeatureHasher` for datasets with categorical
-variables represented as list of Python dicts or
-:class:`sklearn.feature_extraction.text.HashingVectorizer` for text documents.
+\2. 可以是 scikit-learn 支持的的不同 :ref: `特征提取 <feature_extraction>` 方法中的任何相关的方法。然而，当处理那些需要矢量化并且特征或值的集合你预先不知道的时候，就得明确注意了。一个好的例子是文本分类，其中在训练的期间你很可能会发现未知的项。从应用的角度上来看，如果在数据上进行多次通过是合理的，则可以使用有状态的向量化器。否则，可以通过使用无状态特征提取器来提高难度。目前，这样做的首选方法是使用所谓的 :ref:`哈希技巧<feature_hashing>`，在 :class:`sklearn.feature_extraction.FeatureHasher` 中，其中有分类变量的表示为 Python 列表或 :class:`sklearn.feature_extraction.text.HashingVectorizer` 文本文档。
 
-Incremental learning
+增量学习
 --------------------
-Finally, for 3. we have a number of options inside scikit-learn. Although all
-algorithms cannot learn incrementally (i.e. without seeing all the instances
-at once), all estimators implementing the ``partial_fit`` API are candidates.
-Actually, the ability to learn incrementally from a mini-batch of instances
-(sometimes called "online learning") is key to out-of-core learning as it
-guarantees that at any given time there will be only a small amount of
-instances in the main memory. Choosing a good size for the mini-batch that
-balances relevancy and memory footprint could involve some tuning [1]_.
+最后，对于3. 我们在 scikit-learn 之中有许多选择。虽软不是所有的算法都能够增量学习（即不能一次性看到所有的实例），所有实 ``partial_fit`` 的 API 估计器都作为了候选。实际上，从小批量的实例（有时称为“在线学习”）逐渐学习的能力是外核学习的关键，因为它保证在任何给定的时间内只有少量的实例在主存储中，选择适合小批量的尺寸来平衡相关性和内存占用可能涉及一些调整 [1]_。
 
-Here is a list of incremental estimators for different tasks:
+以下是针对不同任务的增量估算器列表：
 
-  - Classification
+  - Classification（分类）
       + :class:`sklearn.naive_bayes.MultinomialNB`
       + :class:`sklearn.naive_bayes.BernoulliNB`
       + :class:`sklearn.linear_model.Perceptron`
       + :class:`sklearn.linear_model.SGDClassifier`
       + :class:`sklearn.linear_model.PassiveAggressiveClassifier`
       + :class:`sklearn.neural_network.MLPClassifier`
-  - Regression
+  - Regression（回归）
       + :class:`sklearn.linear_model.SGDRegressor`
       + :class:`sklearn.linear_model.PassiveAggressiveRegressor`
       + :class:`sklearn.neural_network.MLPRegressor`
-  - Clustering
+  - Clustering（聚类）
       + :class:`sklearn.cluster.MiniBatchKMeans`
       + :class:`sklearn.cluster.Birch`
-  - Decomposition / feature Extraction
+  - Decomposition / feature Extraction（分解/特征提取）
       + :class:`sklearn.decomposition.MiniBatchDictionaryLearning`
       + :class:`sklearn.decomposition.IncrementalPCA`
       + :class:`sklearn.decomposition.LatentDirichletAllocation`
-  - Preprocessing
+  - Preprocessing（预处理）
       + :class:`sklearn.preprocessing.StandardScaler`
       + :class:`sklearn.preprocessing.MinMaxScaler`
       + :class:`sklearn.preprocessing.MaxAbsScaler`
 
-For classification, a somewhat important thing to note is that although a
-stateless feature extraction routine may be able to cope with new/unseen
-attributes, the incremental learner itself may be unable to cope with
-new/unseen targets classes. In this case you have to pass all the possible
-classes to the first ``partial_fit`` call using the ``classes=`` parameter.
+对于分类，有一点要注意的是，虽然无状态特征提取程序可能能够应对新的/不可见的属性，但增量学习者本身可能无法应对新的/不可见的目标类。在这种情况下，你必须使用 ``classes=`` 参数将所有可能的类传递给第一个 ``partial_fit`` 调用。
 
-Another aspect to consider when choosing a proper algorithm is that all of them
-don't put the same importance on each example over time. Namely, the
-``Perceptron`` is still sensitive to badly labeled examples even after many
-examples whereas the ``SGD*`` and ``PassiveAggressive*`` families are more
-robust to this kind of artifacts. Conversely, the later also tend to give less
-importance to remarkably different, yet properly labeled examples when they
-come late in the stream as their learning rate decreases over time.
+选择合适的算法时要考虑的另一个方面是，所有这些算法在每个示例中都不会对时间保持一致。比如说， ``Perceptron`` 仍然对错误标签的例子是敏感的，即使经过多次的例子，而 ``SGD*`` 和 ``PassiveAggressive*`` 族对这些鲁棒性更好。相反，在学习速率随着时间不断降低时，合适标记的例子在流中迟来了也变得越来越不重要了，并不会有显著的区别。
 
-Examples
---------
-Finally, we have a full-fledged example of
-:ref:`sphx_glr_auto_examples_applications_plot_out_of_core_classification.py`. It is aimed at
-providing a starting point for people wanting to build out-of-core learning
-systems and demonstrates most of the notions discussed above.
+示例
+----------
+最后，我们有一个完整的 :ref:`sphx_glr_auto_examples_applications_plot_out_of_core_classification.py` 文本文档的核心分类的示例。旨在为想要构建核心学习系统的人们提供一个起点，并展示上述大多数概念。
 
-Furthermore, it also shows the evolution of the performance of different
-algorithms with the number of processed examples.
+此外，它还展现了不同算法性能随着处理例子的数量的演变。
 
 .. |accuracy_over_time| image::  ../auto_examples/applications/images/sphx_glr_plot_out_of_core_classification_001.png
     :target: ../auto_examples/applications/plot_out_of_core_classification.html
@@ -109,11 +70,7 @@ algorithms with the number of processed examples.
 
 .. centered:: |accuracy_over_time|
 
-Now looking at the computation time of the different parts, we see that the
-vectorization is much more expensive than learning itself. From the different
-algorithms, ``MultinomialNB`` is the most expensive, but its overhead can be
-mitigated by increasing the size of the mini-batches (exercise: change
-``minibatch_size`` to 100 and 10000 in the program and compare).
+现在我们来看不同部分的计算时间，我们看到矢量化的过程比学习本身耗时还多。对于不同的算法，MultinomialNB 是耗时最多的，但通过增加其 mini-batches 的大小可以减轻开销。（练习：minibatch_size 在程序中更改为100和10000，并进行比较）。
 
 .. |computation_time| image::  ../auto_examples/applications/images/sphx_glr_plot_out_of_core_classification_003.png
     :target: ../auto_examples/applications/plot_out_of_core_classification.html
@@ -122,11 +79,7 @@ mitigated by increasing the size of the mini-batches (exercise: change
 .. centered:: |computation_time|
 
 
-Notes
------
+注释
+-------
 
-.. [1] Depending on the algorithm the mini-batch size can influence results or
-       not. SGD*, PassiveAggressive*, and discrete NaiveBayes are truly online
-       and are not affected by batch size. Conversely, MiniBatchKMeans
-       convergence rate is affected by the batch size. Also, its memory
-       footprint can vary dramatically with batch size.
+.. [1] 根据算法，mini-batch 大小可以影响结果。SGD*，PassiveAggressive* 和离散的 NaiveBayes 是真正在线的，不受 batch 大小的影响。相反，MiniBatchKMeans 收敛速度受 batch 大小影响。此外，其内存占用可能会随 batch 大小而显着变化。

@@ -17,15 +17,15 @@
   {{ super() }}
   <!-- htmltitle is before nature.css - we use this hack to load bootstrap first -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ pathto('_static/css/bootstrap.min.css', 1) }}" media="screen" />
-  <link rel="stylesheet" href="{{ pathto('_static/css/bootstrap-responsive.css', 1) }}"/>
+  <link rel="stylesheet" href="{{ pathto('http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/css/bootstrap.min.css', 1) }}" media="screen" />
+  <link rel="stylesheet" href="{{ pathto('http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/css/bootstrap-responsive.css', 1) }}"/>
 {% endblock %}
 
 {% block extrahead %}
   {% if pagename != 'index' %}
   {% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="{{ pathto('_static/js/bootstrap.min.js', 1)}}" type="text/javascript"></script>
+  <script src="{{ pathto('http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/js/bootstrap.min.js', 1)}}" type="text/javascript"></script>
   <link rel="canonical" href="http://scikit-learn.org/stable/{{pagename}}.html" />
 
   <script type="text/javascript">
@@ -49,11 +49,11 @@
 {% endblock %}
 
 {%- if pagename == 'index' %}
-    {% set title = 'scikit-learn: machine learning in Python' %}
+    {% set title = 'scikit-learn: Python 中的机器学习' %}
 {%- endif %}
 
 {%- if pagename == 'documentation' %}
-    {% set title = 'Documentation scikit-learn: machine learning in Python' %}
+    {% set title = 'scikit-learn 文档 : Python 中的机器学习' %}
 {%- endif %}
 
 {% block header %}
@@ -62,7 +62,7 @@
     <div class="header">
         {%- if logo %}
         <p class="logo"><a href="{{ pathto(master_doc) }}">
-            <img src="{{ pathto('_static/' + logo, 1) }}" alt="Logo"/>
+            <img src="{{ pathto('http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/' + logo, 1) }}" alt="Logo"/>
         </a>
         </p>
         {%- endif %}
@@ -70,29 +70,31 @@
         {%- block navbar -%}
         <div class="navbar" id="scikit-navbar">
             <ul>
-                <li><a href="{{pathto('index')}}">Home</a></li>
-                <li><a href="{{pathto('install')}}">Installation</a></li>
+                <li><a href="{{pathto('index')}}">首页</a></li>
+                <li><a href="{{pathto('install')}}">安装</a></li>
                 <li class="btn-li"><div class="btn-group">
-              <a href="{{pathto('documentation')}}">Documentation</a>
+              <a href="{{pathto('documentation')}}">文档</a>
               <a class="btn dropdown-toggle" data-toggle="dropdown">
                  <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
             <li class="link-title">Scikit-learn 0.19</li>
-            <li><a href="{{ pathto('tutorial/index') }}">Tutorials</a></li>
-            <li><a href="{{ pathto('user_guide') }}">User guide</a></li>
+            <li><a href="{{ pathto('tutorial/index') }}">教程</a></li>
+            <li><a href="{{ pathto('user_guide') }}">用户指南</a></li>
             <li><a href="{{ pathto('modules/classes') }}">API</a></li>
             <li><a href="{{ pathto('faq') }}">FAQ</a></li>
-            <li><a href="{{ pathto('developers/contributing') }}">Contributing</a></li>
+            <li><a href="{{ pathto('developers/contributing') }}">贡献</a></li>
             <li class="divider"></li>
                 <li><a href="http://scikit-learn.org/stable/documentation.html">Scikit-learn 0.19 (stable)</a></li>
                 <li><a href="http://scikit-learn.org/0.18/documentation.html">Scikit-learn 0.18</a></li>
                 <li><a href="http://scikit-learn.org/0.17/documentation.html">Scikit-learn 0.17</a></li>
-				<li><a href="{{ pathto('_downloads/scikit-learn-docs.pdf', 1) }}">PDF documentation</a></li>
+				<li><a href="{{ pathto('_downloads/scikit-learn-docs.pdf', 1) }}">PDF 文档</a></li>
               </ul>
             </div>
         </li>
-            <li><a href="{{pathto('auto_examples/index')}}">Examples</a></li>
+            <li><a href="{{pathto('auto_examples/index')}}">示例</a></li>
+            <li><a href="{{pathto('translate-progress')}}">翻译进度</a></li>
+            <li><a href="//github.com/apachecn/scikit-learn-doc-zh#%E8%B4%A1%E7%8C%AE%E8%80%85" target="_blank">贡献者</a></li>
             </ul>
             <a href="javascript:void(0);" onclick="showMenu()">
                 <div class="nav-icon">
@@ -138,44 +140,44 @@
 		  <div class="active item">
 		    <a href="{{pathto('auto_examples/classification/plot_classifier_comparison') }}">
 		      <div class="crop-wrapper" style="width: 380px; height: 190px; overflow: hidden">
-			<img src="_images/sphx_glr_plot_classifier_comparison_001_carousel.png"
+			<img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_classifier_comparison_001_carousel.png"
 			     style="max-height: 200px; max-width: 629px; margin-left: -21px;"></div></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{pathto('auto_examples/covariance/plot_outlier_detection') }}">
-		      <img src="_images/sphx_glr_plot_outlier_detection_003_carousel.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_outlier_detection_003_carousel.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{pathto('auto_examples/neighbors/plot_species_kde') }}">
-		      <img src="_images/sphx_glr_plot_species_kde_thumb.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_species_kde_thumb.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{pathto('auto_examples/linear_model/plot_lasso_lars') }}">
-		      <img src="_images/sphx_glr_plot_lasso_lars_thumb.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_lasso_lars_thumb.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{ pathto('auto_examples/cluster/plot_cluster_comparison') }}">
-		      <img src="_images/sphx_glr_plot_cluster_comparison_thumb.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_cluster_comparison_thumb.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{ pathto('auto_examples/ensemble/plot_adaboost_twoclass') }}">
-		      <img src="_images/sphx_glr_plot_adaboost_twoclass_001_carousel.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_adaboost_twoclass_001_carousel.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{pathto('auto_examples/gaussian_process/plot_gpr_co2') }}">
-		      <img src="_images/sphx_glr_plot_gpr_co2_001_carousel.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_gpr_co2_001_carousel.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{ pathto('auto_examples/manifold/plot_compare_methods') }}">
-		      <img src="_images/sphx_glr_plot_compare_methods_001_carousel.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_compare_methods_001_carousel.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{ pathto('auto_examples/mixture/plot_gmm_pdf') }}">
-		      <img src="_images/sphx_glr_plot_gmm_pdf_thumb.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_gmm_pdf_thumb.png"></a>
 		  </div>
 		  <div class="item">
 		    <a href="{{ pathto('auto_examples/cluster/plot_face_ward_segmentation') }}">
-		      <img src="_images/sphx_glr_plot_face_ward_segmentation_thumb.png"></a>
+		      <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/sphx_glr_plot_face_ward_segmentation_thumb.png"></a>
 		  </div>
 		</div>
 		<!-- Carousel nav -->
@@ -188,12 +190,12 @@
     </div>
     <div id="intro_to_sklearn_p" class="span6">
       <h1>scikit-learn</h1>
-      <h2>Machine Learning in Python</h2>
+      <h2>Python 中的机器学习</h2>
       <ul>
-        <li>Simple and efficient tools for data mining and data analysis</li>
-        <li>Accessible to everybody, and reusable in various contexts</li>
-        <li>Built on NumPy, SciPy, and matplotlib</li>
-        <li>Open source, commercially usable - BSD license</li>
+        <li>简单高效的数据挖掘和数据分析工具</li>
+        <li>可供大家使用，可在各种环境中重复使用</li>
+        <li>建立在 NumPy，SciPy 和 matplotlib 上</li>
+        <li>开放源码，可商业使用 - BSD license</li>
       </ul>
     </div>
   </div>
@@ -204,11 +206,11 @@
 
 {% block content %}
 <!-- Github "fork me" ribbon -->
-<a href="https://github.com/scikit-learn/scikit-learn">
+<a href="https://github.com/apachecn/scikit-learn-doc-zh">
   <img class="fork-me"
        style="position: absolute; top: 0; right: 0; border: 0;"
-       src="{{ pathto('_static/img/forkme.png', 1) }}"
-       alt="Fork me on GitHub" />
+       src="{{ pathto('http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/starme.png', 1) }}"
+       alt="Star me on GitHub" />
 </a>
 
 <div class="content-wrapper">
@@ -333,25 +335,26 @@
     {% endif %}
      </div>
 
-    {% if theme_google_analytics|tobool %}
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-22606712-2']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-    {% endif %}
+    <!-- google analytics -->
     <script>
-      (function() {
-        var cx = '016639176250731907682:tjtqbvtvij0';
-        var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
-        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
-      })();
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-102475051-5', 'auto');
+      ga('send', 'pageview');
+    
+    </script>
+    
+    <!-- baidu tongji -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9cbab13b4d28a9811ae1d2d2176dab66";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
     </script>
 {%- endblock %}
