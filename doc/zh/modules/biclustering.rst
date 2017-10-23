@@ -1,14 +1,14 @@
 .. _biclustering:
 
-============
-Biclustering(双向聚类)
-============
+=================
+双向聚类
+=================
 
 Biclustering 可以使用
-:mod:`sklearn.cluster.bicluster`模块. Biclustering 算法对数据矩阵的行列同时进行聚类. 同时对行列进行聚类称之为
-biclusters.每一次聚类都会通过原始数据矩阵的一些属性确定一个子矩阵.
+:mod:`sklearn.cluster.bicluster` 模块. Biclustering 算法对数据矩阵的行列同时进行聚类. 同时对行列进行聚类称之为
+biclusters. 每一次聚类都会通过原始数据矩阵的一些属性确定一个子矩阵.
 
-例如, 一个矩阵 ``(10, 10)`` , 一个bicluster聚类，有三列二行，就是一个子矩阵 ``(3, 2)``::
+例如, 一个矩阵 ``(10, 10)`` , 一个 bicluster 聚类，有三列二行，就是一个子矩阵 ``(3, 2)`` ::
 
     >>> import numpy as np
     >>> data = np.arange(100).reshape(10, 10)
@@ -19,47 +19,47 @@ biclusters.每一次聚类都会通过原始数据矩阵的一些属性确定一
            [21, 22],
            [31, 32]])
 
-为了可视化， 一个bicluster聚类，数据矩阵的行列可以重新分配，使得bi-cluster是连续的.
+为了可视化， 一个 bicluster 聚类，数据矩阵的行列可以重新分配，使得 bi-cluster 是连续的.
 
-算法在如何定义bicluster方面有一些不同，常见类型包括：
+算法在如何定义 bicluster 方面有一些不同，常见类型包括：
 
-* 不变的 values, 不变的 rows, 或者不变的 columns
+* 不变的 values , 不变的 rows, 或者不变的 columns
 * 异常高的或者低的值。
 * 低方差的子矩阵。
-* 相关的rows或者columns。
+* 相关的 rows 或者 columns。
 
-算法在分配给bicluster行列的方式不同, 会导致不同的bicluster结构. 当行和列分成分区时，会发生对角线或者棋盘结构.
+算法在分配给 bicluster 行列的方式不同, 会导致不同的 bicluster 结构. 当行和列分成分区时，会发生对角线或者棋盘结构.
 
-如果每一种行列都只属于一种bicluster,然后重新排列数据矩阵的行和列会,bicluster呈现对角线. 下面是一个例子，biclusters具有比其他行列更高的平均值:
+如果每一种行列都只属于一种 bicluster ,然后重新排列数据矩阵的行和列会, bicluster 呈现对角线. 下面是一个例子，biclusters 具有比其他行列更高的平均值:
 
 .. figure:: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_coclustering_003.png
    :target: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_coclustering_003.png
    :align: center
    :scale: 50
 
-   通过划分行和列形成bicluster的一个例子.
+   通过划分行和列形成 bicluster 的一个例子.
 
-在棋盘结构的例子中, 每一行 属于所有列类别, 每一列属于所有的行类别. 下面是一个这种结构的例子，每个bicluster中的值差异较小:
+在棋盘结构的例子中, 每一行 属于所有列类别, 每一列属于所有的行类别. 下面是一个这种结构的例子，每个 bicluster 中的值差异较小:
 
 .. figure:: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_biclustering_003.png
    :target: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_biclustering_003.png
    :align: center
    :scale: 50
 
-   一个棋盘结构的biclusters.
+   一个棋盘结构的 biclusters.
 
-在拟合模型之后， 可以在``rows_`` 和 ``columns_`` 属性中找到行列cluster membership。
+在拟合模型之后， 可以在 ``rows_`` 和 ``columns_`` 属性中找到行列 cluster membership 。
 ``rows_[i]`` 是一个二进制的向量，
-就是属于bicluster ``i`` 的一行。
-. 同样的, ``columns_[i]`` 就表示属于bicluster ``i``的列.
+就是属于 bicluster ``i`` 的一行。
+. 同样的, ``columns_[i]`` 就表示属于 bicluster ``i`` 的列.
 
 一些模块也有 ``row_labels_`` 何 ``column_labels_`` 属性.
 这些模块对行列进行分区, 例如对角线或者棋盘 bicluster 结构.
 
 .. note::
 
-    Biclustering 在不同的领域有很多其他名称，包括co-clustering, two-mode clustering, two-way clustering, block
-    clustering, coupled two-way clustering等.有一些算法的名称，比如Spectral Co-Clustering algorithm, 反应了这些备用名称.
+    Biclustering 在不同的领域有很多其他名称，包括 co-clustering, two-mode clustering, two-way clustering, block
+    clustering, coupled two-way clustering 等.有一些算法的名称，比如 Spectral Co-Clustering algorithm, 反应了这些备用名称.
 
 
 .. currentmodule:: sklearn.cluster.bicluster
@@ -70,8 +70,8 @@ biclusters.每一次聚类都会通过原始数据矩阵的一些属性确定一
 Spectral Co-Clustering
 ======================
 
- :class:`SpectralCoclustering` 算法找到的bicluster的值比相应的其他行和列更高.
-每一个行和列都只属于一个bicluster,所以重新分配行和列，使得分区连续显示对角线上的high value:
+ :class:`SpectralCoclustering` 算法找到的 bicluster 的值比相应的其他行和列更高.
+每一个行和列都只属于一个 bicluster, 所以重新分配行和列，使得分区连续显示对角线上的 high value:
 
 .. note::
 
@@ -83,15 +83,15 @@ Spectral Co-Clustering
 找到最优归一化剪切的近似解，可以通过图形的 Laplacian 的广义特征值分解。
 通常这意味着直接使用 Laplacian 矩阵. 如果原始数据矩阵 :math:`A` 有形状 :math:`m
 \times n`, 则对应的 bipartite 图的 Laplacian 矩阵具有形状 :math:`(m + n) \times (m + n)`. 
-但是, 在这种情况直接使用 :math:`A`, 因为它更小，更有作用.
+但是, 在这种情况直接使用 :math:`A` , 因为它更小，更有作用.
 
-The input matrix :math:`A` is preprocessed as follows:
+输入矩阵 :math:`A` 被预处理如下:
 
 .. math::
     A_n = R^{-1/2} A C^{-1/2}
 
  :math:`R` 是 :math:`i` 对角线矩阵，和
-:math:`\sum_{j} A_{ij}`相同，  :math:`C` 是 :math:`j`的对角吸纳矩阵，等同于
+:math:`\sum_{j} A_{ij}` 相同，  :math:`C` 是 :math:`j` 的对角吸纳矩阵，等同于
  :math:`\sum_{i} A_{ij}`.
 
 奇异值分解, :math:`A_n = U \Sigma V^\top`,
@@ -105,22 +105,20 @@ The input matrix :math:`A` is preprocessed as follows:
                         C^{-1/2} V
           \end{bmatrix}
 
-:math:`U` 和 :math:`u_2 的列, \dots, u_{\ell +
-1}`, 和 :math:`V` 相似.
+:math:`U` 的列是 :math:`u_2, \dots, u_{\ell +1}`, 和 :math:`V` 相似 .
 
-然后 :math:`Z` 的rows 通过使用 :ref:`k-means
-<k_means>`进行聚类. ``n_rows`` 标签提供行分区,
+然后 :math:`Z` 的 rows 通过使用 :ref:`k-means <k_means>` 进行聚类. ``n_rows`` 标签提供行分区,
 剩下的 ``n_columns`` 标签 提供 列分区.
 
 
 .. topic:: 例子:
 
- * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_coclustering.py`: 如何用bicluster数据矩阵并应用.
+ * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_coclustering.py`: 如何用 bicluster 数据矩阵并应用.
 
- * :ref:`sphx_glr_auto_examples_bicluster_plot_bicluster_newsgroups.py`:一个在20个新闻组数据集中发现biclusters的例子
+ * :ref:`sphx_glr_auto_examples_bicluster_plot_bicluster_newsgroups.py`:一个在 20 个新闻组数据集中发现 biclusters 的例子
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * Dhillon, Inderjit S, 2001. `Co-clustering documents and words using
    bipartite spectral graph partitioning
@@ -130,16 +128,16 @@ The input matrix :math:`A` is preprocessed as follows:
 .. _spectral_biclustering:
 
 Spectral Biclustering 
-=====================
+================================================
 
  :class:`SpectralBiclustering` 算法假设输入的数据矩阵具有隐藏的棋盘结构。 具有这种结构的矩阵的行列
- 可能被分区，使得在笛卡尔积中的 大部分biclusters的 row clusters和column cluster是近似恒定的。
-例如，如果有两个row 分区和三个列分区，每一行属于三个bicluster，每一列属于两个bicluster。 
+ 可能被分区，使得在笛卡尔积中的 大部分 biclusters 的 row clusters 和 column cluster 是近似恒定的。
+例如，如果有两个row 分区和三个列分区，每一行属于三个 bicluster ，每一列属于两个 bicluster。 
 
 这个算法划分矩阵的行和列，以至于提供一个相应的块状不变的棋盘矩阵，近似于原始矩阵。
 
 
-数学模式
+数学表示
 ------------------------
 
 输入矩阵 :math:`A` 先归一化，使得棋盘模式更明显。有三种方法: 
@@ -153,21 +151,21 @@ Spectral Biclustering
 3. **Log 归一化**: 计算数据矩阵的对数 :math:`L =
    \log A`. 列就是 :math:`\overline{L_{i \cdot}}`, 行就是
    :math:`\overline{L_{\cdot j}}`, 总体上来看 :math:`\overline{L_{\cdot
-   \cdot}}` of :math:`L` are computed. 最后矩阵通过下面的公式计算
+   \cdot}}` of :math:`L` 被计算的. 最后矩阵通过下面的公式计算
 
 .. math::
     K_{ij} = L_{ij} - \overline{L_{i \cdot}} - \overline{L_{\cdot
     j}} + \overline{L_{\cdot \cdot}}
 
-归一化后，首先少量的奇异值向量被计算，只是在Spectral Co-Clustering算法中。
+归一化后，首先少量的奇异值向量被计算，只是在 Spectral Co-Clustering 算法中。
 
 
-如果使用log归一化，则所有的奇异向量都是有意义的。但是, 如果是独立的归一化或双曲线化
-被使用，第一个奇异矢量, :math:`u_1` and :math:`v_1`.
+如果使用 log 归一化，则所有的奇异向量都是有意义的。但是, 如果是独立的归一化或双曲线化
+被使用，第一个奇异矢量, :math:`u_1` 和 :math:`v_1`.
 会被丢弃。 从现在开始,  "first" 奇异值向量与
-:math:`u_2 \dots u_{p+1}` 和 :math:`v_2 \dots v_{p+1}`相关，除了日志归一化的情况。
+:math:`u_2 \dots u_{p+1}` 和 :math:`v_2 \dots v_{p+1}` 相关，除了日志归一化的情况。
 
-给定这些奇异值向量， 将他们排序，通过分段常数向量保证最佳近似. 使用一维k-means找到每个向量的近似值
+给定这些奇异值向量， 将他们排序，通过分段常数向量保证最佳近似. 使用一维 k-means 找到每个向量的近似值
 并使用欧几里得距离得分. Some subset of 最好的左右奇异值向量的子集被选择。 下一步,
 数据预计到这个最佳子集的奇异向量和聚类.
 
@@ -177,19 +175,19 @@ Spectral Biclustering
 并且 :math:`V` 对于右边是类似的. 要划分行,
 将 :math:`A`  的 投影到 :math:`q` 维空间:
 :math:`A * V`.  :math:`m` 行 :math:`m \times q`
-矩阵的行作为采样和使用k-means的聚类处理产生行标签. 
+矩阵的行作为采样和使用 k-means 的聚类处理产生行标签. 
 类似地，将列投影到 :math:`A^{\top} * U` ，并且对
 :math:`n \times q` 矩阵进行聚类得到列标签.
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_biclustering.py`: 一个简单的例子
    显示如何生成棋盘矩阵和 bicluster
 .
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * Kluger, Yuval, et. al., 2003. `Spectral biclustering of microarray
    data: coclustering genes and conditions
@@ -201,7 +199,7 @@ Spectral Biclustering
 .. currentmodule:: sklearn.metrics
 
 Biclustering 评测
-=======================
+========================================================
 有两种评估双组分结果的方法：内部和外部。
 诸如群集稳定性等内部措施只依赖于数据和结果本身。
 目前在scikit-learn中没有内部的二集群措施。外部措施是指外部信息来源，例如真正的解决方案。
@@ -216,23 +214,23 @@ Biclustering 评测
     J(A, B) = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}
 
 :math:`A` 和 :math:`B` 是 biclusters, :math:`|A \cap B|` 是交叉点的元素的数量. 
- Jaccard 索引 达到最小值0，当biclusters不重叠的时候，并且当他们相同干的时候，最大值为1.
+ Jaccard 索引 达到最小值0，当 biclusters 不重叠的时候，并且当他们相同干的时候，最大值为1.
 
-有些方法已经开发出来，用来比较两个biclusters的数据集。
+有些方法已经开发出来，用来比较两个 biclusters 的数据集。
 从现在开始 之后 :func:`consensus_score` (Hochreiter et. al., 2010) 是可以用:
 
-1. 使用Jaccard索引或类似措施，计算biclusters的bicluster相似性。
+1. 使用 Jaccard 索引或类似措施，计算 biclusters 的 bicluster 相似性。
 
-2. 以一对一的方式将bicluster分从一组分配给另一组，以最大化其相似性的总和。该步骤使用匈牙利算法执行。
+2. 以一对一的方式将 bicluster 分从一组分配给另一组，以最大化其相似性的总和。该步骤使用匈牙利算法执行。
   
 
 3. 相似性的最终总和除以较大集合的大小。
 
-最小共识得分为0，发生在所有biclusters完全不相似时。当两组biclusters相同时，最大分数为1。
+最小共识得分为0，发生在所有 biclusters 完全不相似时。当两组 biclusters 相同时，最大分数为1。
 
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * Hochreiter, Bodenhofer, et. al., 2010. `FABIA: factor analysis
    for bicluster acquisition
