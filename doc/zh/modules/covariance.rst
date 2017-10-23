@@ -2,7 +2,7 @@
 
 ===================================================
 
-协方差估计（Covariance estimation）
+协方差估计
 ===================================================
 
 .. currentmodule:: sklearn.covariance
@@ -16,8 +16,8 @@
 我们假设观察是独立的，相同分布的 (i.i.d.)。
 
 
-经验协方差 （Empirical covariance）
-====================
+经验协方差 
+================================
 
 已知数据集的协方差矩阵与经典最大似然估计（或“经验协方差”）
 很好地近似，条件是与特征数量（描述观测值的变量）相比，观测数量足够大。
@@ -39,11 +39,11 @@
 
 .. _shrunk_covariance:
 
-收敛协方差（Shrunk Covariance）
-=================
+收敛协方差
+==========================
 
-基本收敛（Basic shrinkage）
----------------
+基本收敛
+-------------------------------------------
 
 尽管是协方差矩阵的无偏估计，
 最大似然估计不是协方差矩阵的特征值的一个很好的估计，
@@ -74,8 +74,8 @@ Tr}\hat{\Sigma}}{p}\rm Id`.
      to data.
 
 
-Ledoit-Wolf收敛（Ledoit-Wolf shrinkage）
----------------------
+Ledoit-Wolf 收敛
+---------------------------------
 
 在他们的2004年的文章 [1]_ 中， O.Ledoit 和 M.Wolf 提出了一个公式，
 用来计算优化的收敛系数 :math:`\alpha` ，
@@ -99,8 +99,8 @@ Ledoit-Wolf收敛（Ledoit-Wolf shrinkage）
 
 .. _oracle_approximating_shrinkage:
 
-Oracle近似收缩（Oracle Approximating Shrinkage）
-------------------------------
+Oracle 近似收缩
+------------------------------------------
 
 在数据为高斯分布的假设下，Chen et al. 等 [2]_  推导出了一个公式，旨在
 产生比 Ledoit 和 Wolf 公式具有更小均方差的收敛系数。
@@ -141,8 +141,8 @@ Oracle近似收缩（Oracle Approximating Shrinkage）
 
 .. _sparse_inverse_covariance:
 
-稀疏逆协方差（Sparse inverse covariance）
-==========================
+稀疏逆协方差
+======================================
 
 协方差矩阵的逆矩阵，通常称为精度矩阵（precision
 matrix），它与部分相关矩阵（partial correlation matrix）成正比。
@@ -210,8 +210,8 @@ matrix），它与部分相关矩阵（partial correlation matrix）成正比。
 
 .. _robust_covariance:
 
-Robust协方差估计（Robust Covariance Estimation）
-============================
+Robust 协方差估计
+=====================================
 
 实际数据集通常是会有测量或记录错误。合格但不常见的观察也可能出于各种原因。
 每个不常见的观察称为异常值。
@@ -225,8 +225,8 @@ Robust协方差估计（Robust Covariance Estimation）
  Minimum Covariance Determinant [3]_ 。
 
 
-最小协方差决定（Minimum Covariance Determinant）
-------------------------------
+最小协方差决定
+-----------------------------------
 
 最小协方差决定（Minimum Covariance Determinant）估计器是
 由 P.J. Rousseeuw 在 [3]_ 中引入的数据集协方差的鲁棒估计 (robust estimator)。
