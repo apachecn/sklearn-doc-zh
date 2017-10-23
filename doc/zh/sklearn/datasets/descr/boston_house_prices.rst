@@ -9,7 +9,7 @@
 
     :属性数量: 13 数值型或类别型，帮助预测的属性
     
-    :中位数(第14个属性)经常是(学习)目标
+    :中位数（第14个属性）经常是学习目标
 
     :属性信息 (按顺序):
         - CRIM     城镇人均犯罪率
@@ -35,7 +35,7 @@
 http://archive.ics.uci.edu/ml/datasets/Housing
 
 
-这个数据集是从位于卡内基梅隆大学维护的StatLib图书馆取得的。
+该数据集是从位于卡内基梅隆大学维护的StatLib图书馆取得的。
 
 Harrison, D. 和 Rubinfeld, D.L. 的波士顿房价数据：'Hedonic 
 prices and the demand for clean air', J. Environ. Economics & Management,
@@ -43,7 +43,7 @@ vol.5, 81-102, 1978，也被使用在 Belsley, Kuh & Welsch 的 'Regression diag
 ...', Wiley, 1980。
 注释：许多变化已经被应用在后者第244-261页的表中。
 
-这个波士顿的房价数据已被用于许多涉及回归问题的机器学习论文。
+波士顿房价数据已被用于许多涉及回归问题的机器学习论文中。
      
 **参考资料**
 
