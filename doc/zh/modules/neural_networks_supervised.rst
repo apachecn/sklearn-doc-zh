@@ -1,7 +1,7 @@
 .. _neural_networks_supervised:
 
 ==================================
-神经网络模块（监督）
+神经网络模块（监督的）
 ==================================
 
 .. currentmodule:: sklearn.neural_network
@@ -47,7 +47,7 @@
 请参阅包含一些这样的缺点的 :ref:`实用使用技巧 <mlp_tips>` 部分。
 
 
-Classification（分类）
+分类
 ==============
 
 类 :class:`MLPClassifier` 实现使用 `Backpropagation <http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm>`_ 进行训练的多层感知器（MLP）。
@@ -116,14 +116,14 @@ MLP 算法使用反向传播的方式。 更准确地说，它训练使用某种
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mlp_training_curves.py`
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mnist_filters.py`
 
-Regression（回归）
+回归
 ==========
 
 类 :class:`MLPRegressor` 实现了一个多层感知器（MLP），它在输出层中使用没有激活功能的反向传播进行训练，也可以看作是使用身份函数作为激活函数。 因此，它使用平方误差作为损失函数，输出是一组连续值。
 
 :class:`MLPRegressor` 还支持多输出回归，其中样本可以有多个目标。
 
-Regularization（正则）
+正则化
 ==============
 
 Both :class:`MLPRegressor` and :class:`MLPClassifier` use parameter ``alpha``
@@ -144,7 +144,7 @@ decision function with value of alpha.
 
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mlp_alpha.py`
 
-Algorithms（算法）
+算法
 ==========
 
 MLP 使用 `Stochastic Gradient Descent（随机梯度下降）(SGD)
@@ -170,15 +170,18 @@ L-BFGS 是近似表示函数的二阶偏导数的 Hessian 矩阵的求解器。 
 
 如果所选择的求解器是 'L-BFGS'，训练不支持在线或小批量学习。
 
-Complexity（复杂性）
+复杂性
 ==========
 
 假设有 :math:`n` 训练样本， :math:`m` 特征， :math:`k` 隐藏层，每个包含 :math:`h` 神经元 - 为简单起见， :math:`o` 输出神经元。 反向传播的时间复杂度是 :math:`O(n\cdot m \cdot h^k \cdot o \cdot i)` ，其中 :math:`i` 是数字的迭代。 由于反向传播具有高时间复杂性，因此是可取的从较小数量的隐藏神经元和几个隐藏层开始训练。
 
-Mathematical formulation（数学表达）
+数学公式
 ========================
 
-给出一组训练示例 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n` 和 :math:`y_i \in \{0, 1\}`，一个隐藏第一层隐藏神经元 MLP 学习功能 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` 其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}`是模型参数。 :math:`W_1, W_2` 表示输入层的权重隐藏层 和 :math:`b_1, b_2` 表示添加的偏见隐藏层和输出层。 :math:`g(\cdot) : R \rightarrow R` 是激活函数，默认设置为双曲线。 它被赋予，
+给出一组训练示例 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n` 和 :math:`y_i \in \{0, 1\}`，一个隐藏第一层隐藏神经元 MLP 学习功能 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` 其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}` 是模型参数.
+:math:`W_1, W_2` 表示输入层的权重隐藏层 和 :math:`b_1, b_2` 表示添加的偏见隐藏层和输出层.
+:math:`g(\cdot) : R \rightarrow R` 是激活函数，默认设置为双曲线.
+它被赋予，
 
 .. math::
       g(z)= \frac{e^z-e^{-z}}{e^z+e^{-z}}
@@ -224,7 +227,7 @@ to the weights （权重）被计算和扣除 :math:`W`。用公式表示为，
 
 .. _mlp_tips:
 
-Tips on Practical Use（实用技巧）
+实用技巧
 =====================
 
   * 多层感知器对 feature scaling （特征的缩放）是敏感的，所以它强烈建议您 scale your data （缩放数据）。 例如，缩放每个属性在输入向量 X 到 [0,1] 或 [-1，+1] ，或 standardize （标准化）以使它具有平均值 0 和方差 1.注意，您必须应用 *相同的* 缩放到测试集中以获得有意义的结果。 您可以使用 :class:`StandardScaler` 进行 standardization （标准化）。
@@ -245,7 +248,7 @@ Tips on Practical Use（实用技巧）
 
 *经验上，我们观察到“L-BFGS”收敛速度更快 在小数据集上有更好的解决方案。 对于比较大 数据集，但是，“adam”是非常强大的。 它通常会收敛 迅速，并提供相当不错的表现。 `SGD`有动力或 另一方面，尼斯特罗夫的势头可以比 这两种算法如果学习率正确调整。
 
-More control with warm_start（使用 warm_start 的更多控制）
+使用 warm_start 的更多控制
 ============================
 
 如果您希望更多地控制 SGD 中的 stopping criteria （停止标准）或 learning rate （学习率），或者想要进行额外的监视，使用 ``warm_start=True`` 和 ``max_iter=1`` 并且自身迭代可能会有所帮助::
@@ -258,8 +261,7 @@ More control with warm_start（使用 warm_start 的更多控制）
     ...     # additional monitoring / inspection # doctest: +ELLIPSIS
     MLPClassifier(...
 
-.. topic:: References:
-参考文献
+.. topic:: 参考文献:
 
     * `"Learning representations by back-propagating errors."
       <http://www.iro.umontreal.ca/~pift6266/A06/refs/backprop_old.pdf>`_

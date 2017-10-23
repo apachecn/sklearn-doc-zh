@@ -1,4 +1,4 @@
-.. _内核近似:
+.. _kernel_approximation:
 
 内核近似
 ====================
@@ -88,7 +88,7 @@ use of larger feature spaces more efficient.
 
 
 可添加的 Chi Squared Kernel（内核）
----------------------------
+-----------------------------------
 
 可添加的 Chi Squared Kernel（内核）是直方图的核心，通常用于计算机视觉。
 
@@ -147,7 +147,7 @@ kernel 方法的一个缺点是，在优化过程中有可能存储大量的kern
 
 
 
-.. topic:: References:
+.. topic:: 参考:
 
     .. [RR2007] `"Random features for large-scale kernel machines"
       <http://www.robots.ox.ac.uk/~vgg/rg/papers/randomfeatures.pdf>`_
