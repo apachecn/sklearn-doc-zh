@@ -1,7 +1,7 @@
 .. _clustering:
 
 ==========
-聚类111
+聚类
 ==========
 
 未标记的数据的 `Clustering（聚类） <https://en.wikipedia.org/wiki/Cluster_analysis>`__ 可以使用模块 :mod:`sklearn.cluster` 来实现。
