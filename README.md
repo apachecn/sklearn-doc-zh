@@ -95,6 +95,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
 * [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
 * [@夜神月](@qq760514101)（夜神月）
+* [@liyangbit](https://github.com/liyangbit)（Lemon）
 
 
 

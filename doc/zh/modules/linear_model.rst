@@ -6,15 +6,13 @@
 
 .. currentmodule:: sklearn.linear_model
 
-以下是一组用于回归的方法，其中目标值预期是输入变量的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值
-value.
+以下是一组用于回归的方法，其中目标值 y 预期是输入变量 x 的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
 在整个模块中，我们指定向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 并且 :math:`w_0` 作为 ``intercept_``.
 
-要使用广义线性模型进行分类，请参阅
-:ref:`Logistic_regression`.
+要使用广义线性模型进行分类，请参阅 :ref:`Logistic_regression` .
 
 
 .. _ordinary_least_squares:
@@ -22,7 +20,8 @@ value.
 普通最小二乘法
 =======================
 
-:class:`LinearRegression` 适合一个带有系数 :math:`w = (w_1, ..., w_p)` 的线性模型 去最小化 (在数据集中观察到的结果) 和 (通过线性近似值预测的结果) 之间方差的和。 在数学上它解决了一个形式如下的问题：
+:class:`LinearRegression` 用系数 :math:`w = (w_1, ..., w_p)` 来拟合一个线性模型, 
+使得数据集实际观测数据和预测数据（估计值）之间残差平方和最小。数学形式可表达为:
 
 .. math:: \underset{w}{min\,} {|| X w - y||_2}^2
 
@@ -31,7 +30,7 @@ value.
    :align: center
    :scale: 50%
 
-:class:`LinearRegression` 将采用其 ``fit`` 拟合方法数组 X, y 并将其线性模型的系数 :math:`w` 存储在其 ``coef_`` 成员中::
+:class:`LinearRegression` 会调用 ``fit`` 方法来拟合数组 X, y，并将其线性模型的系数 :math:`w` 存储在其 ``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.LinearRegression()
@@ -40,9 +39,11 @@ value.
     >>> reg.coef_
     array([ 0.5,  0.5])
 
-然而，普通最小二乘的系数估计依赖于模型项的独立性；当多个项有着相互关系并且设计矩阵 :math:`X` 的列具有近似的线性依赖性时，设计的矩阵变会得接近于单一；并且作为观察到的结果，最小二乘的估计值 将会变得对随机的错误非常敏感，并且会产生很大的方差；这种多重共线性的情况可能出现，例如，当收集没有实验设计过的数据时。
+然而，对于普通最小二乘问题，其系数估计依赖模型各项相互独立。当各项是相关并且设计矩阵 :math:`X` 的各列近似线性相关，
+那么，设计矩阵会趋向于奇异矩阵，这会导致最小二乘估计对于随机误差非常敏感，会产生很大的方差。这种多重共线性(multicollinearity) 
+的情况可能真的会出现，比如未经实验设计收集的数据。
 
-.. topic:: 举例:
+.. topic:: 示例:
 
    * :ref:`sphx_glr_auto_examples_linear_model_plot_ols.py`
 
@@ -88,11 +89,10 @@ value.
     0.13636...
 
 
-.. topic:: 举例:
+.. topic:: 示例:
 
-   * :ref:`sphx_glr_auto_examples_linear_model_plot_ridge_path.py`( 作为正则化的函数，绘制岭系数 )
-   * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`( 使用稀疏特征的文本文档分类 )
-
+   * :ref:`sphx_glr_auto_examples_linear_model_plot_ridge_path.py`
+   * :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
 
 岭复杂性
 ----------------
@@ -573,18 +573,18 @@ ARD 也被称为 *稀疏贝叶斯学习* 或
 
 .. _Logistic_regression:
 
-逻辑回归
+logistic 回归
 ===================
 
-逻辑回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，逻辑斯蒂回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
+logistic 回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，logistic 回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
 
-scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了二元（binary）、一对余（one-vs-rest）及多元逻辑斯蒂回归，并带有可选的 L1 和 L2 正则化。
+scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了二元（binary）、一对余（one-vs-rest）及多元 logistic 回归，并带有可选的 L1 和 L2 正则化。
 
-若视为一优化问题，带L2罚项的二分类 logistic 回归要最小化以下代价函数（cost function）：
+若视为一优化问题，带 L2 罚项的二分类 logistic 回归要最小化以下代价函数（cost function）：
 
 .. math:: \underset{w, c}{min\,} \frac{1}{2}w^T w + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-类似地，带 L1 正则的逻辑斯蒂回归需要求解下式：
+类似地，带 L1 正则的 logistic 回归需要求解下式：
 
 .. math:: \underset{w, c}{min\,} \|w\|_1 + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
@@ -596,7 +596,7 @@ scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了�
 
 "sag" 求解器基于平均随机梯度下降算法（Stochastic Average Gradient descent） [6]_。在大数据集上的表现更快，大数据集指样本量大且特征数多。
 
-"saga" solver [7]_ 是 "sag" 的一类变体，它支持非平滑（non-smooth）的 L1 正则选项 ``penalty="l1"`` 。因此对于稀疏多元逻辑回归，往往选用该求解器。
+"saga" solver [7]_ 是 "sag" 的一类变体，它支持非平滑（non-smooth）的 L1 正则选项 ``penalty="l1"`` 。因此对于稀疏多元 logistic 回归 ，往往选用该求解器。
 
 一言以蔽之，选用求解器可遵循如下规则:
 
@@ -634,11 +634,11 @@ L1正则                             	"liblinear" or "saga"
    将预测为负类，而liblinear预测为正类。
    注意，设定了 ``fit_intercept=False`` ，又有很多样本使得 ``decision_function`` 为零的模型，很可能会欠拟合，其表现往往比较差。建议您设置 ``fit_intercept=True`` 并增大 ``intercept_scaling``。
 
-.. note:: **利用稀疏逻辑回归（sparse logisitic regression）进行特征选择**
+.. note:: **利用稀疏 logistic 回归（sparse logisitic regression）进行特征选择**
 
-   带 L1 罚项的逻辑斯蒂回归将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
+   带 L1 罚项的 logistic 回归 将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
 
- :class:`LogisticRegressionCV` 对逻辑斯蒂回归的实现内置了交叉验证（cross-validation），可以找出最优的参数 C。"newton-cg", "sag", "saga" 和 "lbfgs" 在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳 C 值。
+ :class:`LogisticRegressionCV` 对 logistic 回归 的实现内置了交叉验证（cross-validation），可以找出最优的参数 C。"newton-cg", "sag", "saga" 和 "lbfgs" 在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳 C 值。
 
 .. topic:: 参考文献：
 
@@ -835,7 +835,7 @@ Theil-Sen 预估器: 广义中值估计
 
  * https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator
 
-Theoretical considerations（理论考虑）
+算法理论细节
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :class:`TheilSenRegressor` 媲美 :ref:`Ordinary Least Squares (OLS) <ordinary_least_squares>` （普通最小二乘法（OLS））渐近效率和无偏估计。在对比 OLS, Theil-Sen 是一种非参数方法，这意味着它没有对底层数据的分布假设。由于 Theil-Sen 是基于中位数的估计，它是更适合的对损坏的数据。在单变量的设置，Theil-Sen 在一个简单的线性回归，这意味着它可以容忍任意损坏的数据高达 29.3% 的情况下，约 29.3% 的一个崩溃点。
@@ -866,7 +866,7 @@ Theoretical considerations（理论考虑）
 
 .. _huber_regression:
 
-Huber Regression（Huber 回归）
+Huber 回归
 ------------------------------
 
 :class:`HuberRegressor` 不同，因为它适用于 :class:`Ridge` 损耗的样品被分类为离群值。如果这个样品的绝对误差小于某一阈值，样品就分为一层。
@@ -894,83 +894,59 @@ Huber Regression（Huber 回归）
 
 建议设置参数 ``epsilon`` 为 1.35 以实现 95% 统计效率。
 
-Notes
------
-The :class:`HuberRegressor` differs from using :class:`SGDRegressor` with loss set to `huber`
-in the following ways.
+注意
+-----------------
+:class:`HuberRegressor` 与将损失设置为 `huber` 的 :class:`SGDRegressor` 在以下方面的使用方式上是不同的。
 
-- :class:`HuberRegressor` is scaling invariant. Once ``epsilon`` is set, scaling ``X`` and ``y``
-  down or up by different values would produce the same robustness to outliers as before.
-  as compared to :class:`SGDRegressor` where ``epsilon`` has to be set again when ``X`` and ``y`` are
-  scaled.
+- :class:`HuberRegressor` 是标度不变性的. 一旦设置了 ``epsilon`` , 通过不同的值向上或向下缩放 ``X`` 和 ``y`` ，就会跟以前一样对异常值产生同样的键壮性。相比 :class:`SGDRegressor` 其中 ``epsilon`` 在 ``X`` 和 ``y`` 是缩放的时候必须再次设置。
 
-- :class:`HuberRegressor` should be more efficient to use on data with small number of
-  samples while :class:`SGDRegressor` needs a number of passes on the training data to
-  produce the same robustness.
+- :class:`HuberRegressor` 应该更有效地使用在小样本数据，同时 :class:`SGDRegressor` 需要在训练数据的次数来产生相同的键壮性。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_huber_vs_ridge.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
   * Peter J. Huber, Elvezio M. Ronchetti: Robust Statistics, Concomitant scale estimates, pg 172
 
-Also, this estimator is different from the R implementation of Robust Regression
-(http://www.ats.ucla.edu/stat/r/dae/rreg.htm) because the R implementation does a weighted least
-squares implementation with weights given to each sample on the basis of how much the residual is
-greater than a certain threshold.
+另外，这个估计是不同于 R 实现的 Robust Regression (http://www.ats.ucla.edu/stat/r/dae/rreg.htm) 因为 R 不实现加权最小二乘实现每个样本上给出多少剩余的基础重量大于某一阈值。
 
 .. _polynomial_regression:
 
-Polynomial regression: extending linear models with basis functions
+多项式回归：用基函数展开线性模型
 ===================================================================
 
 .. currentmodule:: sklearn.preprocessing
 
-One common pattern within machine learning is to use linear models trained
-on nonlinear functions of the data.  This approach maintains the generally
-fast performance of linear methods, while allowing them to fit a much wider
-range of data.
+机器学习中一种常见的模式，是使用线性模型训练数据的非线性函数。这种方法保持了一般快速的线性方法的性能，同时允许它们适应更广泛的数据范围。
 
-For example, a simple linear regression can be extended by constructing
-**polynomial features** from the coefficients.  In the standard linear
-regression case, you might have a model that looks like this for
-two-dimensional data:
+例如，可以通过构造系数的 **polynomial features** 来扩展一个简单的线性回归。在标准线性回归的情况下，你可能有一个类似于二维数据的模型: 
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + w_2 x_2
 
-If we want to fit a paraboloid to the data instead of a plane, we can combine
-the features in second-order polynomials, so that the model looks like this:
+如果我们想把抛物面拟合成数据而不是平面，我们可以结合二阶多项式的特征，使模型看起来像这样:
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + w_2 x_2 + w_3 x_1 x_2 + w_4 x_1^2 + w_5 x_2^2
 
-The (sometimes surprising) observation is that this is *still a linear model*:
-to see this, imagine creating a new variable
+（这有时候是令人惊讶的）观察，这还是 *still a linear model* : 看到这个，想象创造一个新的变量
 
 .. math::  z = [x_1, x_2, x_1 x_2, x_1^2, x_2^2]
 
-With this re-labeling of the data, our problem can be written
+有了这些数据的重新标记的数据，我们的问题就可以写了。
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 z_1 + w_2 z_2 + w_3 z_3 + w_4 z_4 + w_5 z_5
 
-We see that the resulting *polynomial regression* is in the same class of
-linear models we'd considered above (i.e. the model is linear in :math:`w`)
-and can be solved by the same techniques.  By considering linear fits within
-a higher-dimensional space built with these basis functions, the model has the
-flexibility to fit a much broader range of data.
+我们看到，导致 *polynomial regression* 是线性模型中的同一类，我们认为以上（即模型是线性 ），可以用同样的方法解决。通过考虑在用这些基函数建立的高维空间中的线性拟合，该模型具有灵活性，可以适应更广泛的数据范围。
 
-Here is an example of applying this idea to one-dimensional data, using
-polynomial features of varying degrees:
+这里是一个例子，应用这个想法，一维数据，使用不同程度的多项式特征:
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_polynomial_interpolation_001.png
    :target: ../auto_examples/linear_model/plot_polynomial_interpolation.html
    :align: center
    :scale: 50%
 
-This figure is created using the :class:`PolynomialFeatures` preprocessor.
-This preprocessor transforms an input data matrix into a new data matrix
-of a given degree.  It can be used as follows::
+这个图是使用 :class:`PolynomialFeatures` 预创建。该预处理器将输入数据矩阵转换为给定度的新数据矩阵。它可以使用如下::
 
     >>> from sklearn.preprocessing import PolynomialFeatures
     >>> import numpy as np
@@ -985,13 +961,9 @@ of a given degree.  It can be used as follows::
            [  1.,   2.,   3.,   4.,   6.,   9.],
            [  1.,   4.,   5.,  16.,  20.,  25.]])
 
-The features of ``X`` have been transformed from :math:`[x_1, x_2]` to
-:math:`[1, x_1, x_2, x_1^2, x_1 x_2, x_2^2]`, and can now be used within
-any linear model.
+``X`` 的特征已经从 :math:`[x_1, x_2]` 转换到 :math:`[1, x_1, x_2, x_1^2, x_1 x_2, x_2^2]`, 并且现在可以用在任何线性模型。
 
-This sort of preprocessing can be streamlined with the
-:ref:`Pipeline <pipeline>` tools. A single object representing a simple
-polynomial regression can be created and used as follows::
+这种预处理可以通过 :ref:`Pipeline <pipeline>` 工具进行简化。可以创建一个表示简单多项式回归的单个对象，并使用如下所示::
 
     >>> from sklearn.preprocessing import PolynomialFeatures
     >>> from sklearn.linear_model import LinearRegression
@@ -1006,19 +978,11 @@ polynomial regression can be created and used as follows::
     >>> model.named_steps['linear'].coef_
     array([ 3., -2.,  1., -1.])
 
-The linear model trained on polynomial features is able to exactly recover
-the input polynomial coefficients.
+利用多项式特征训练的线性模型能够准确地恢复输入多项式系数。
 
-In some cases it's not necessary to include higher powers of any single feature,
-but only the so-called *interaction features*
-that multiply together at most :math:`d` distinct features.
-These can be gotten from :class:`PolynomialFeatures` with the setting
-``interaction_only=True``.
+在某些情况下，没有必要包含任何单个特征的更高的幂，但只需要在大多数 :math:`d` 不同的特征上相乘的所谓 *interaction features（交互特征）* 。这些可以与设定的 ``interaction_only=True`` 的 :class:`PolynomialFeatures` 得到。
 
-For example, when dealing with boolean features,
-:math:`x_i^n = x_i` for all :math:`n` and is therefore useless;
-but :math:`x_i x_j` represents the conjunction of two booleans.
-This way, we can solve the XOR problem with a linear classifier::
+例如，当处理布尔属性， :math:`x_i^n = x_i` 所有 :math:`n` ，因此是无用的；但 :math:`x_i x_j` 代表两布尔合取。这样我们就可以用线性分类器解决异或问题::
 
     >>> from sklearn.linear_model import Perceptron
     >>> from sklearn.preprocessing import PolynomialFeatures
@@ -1036,7 +1000,7 @@ This way, we can solve the XOR problem with a linear classifier::
     >>> clf = Perceptron(fit_intercept=False, max_iter=10, tol=None,
     ...                  shuffle=False).fit(X, y)
 
-And the classifier "predictions" are perfect::
+分类器的 "predictions" 是完美的::
 
     >>> clf.predict(X)
     array([0, 1, 1, 0])

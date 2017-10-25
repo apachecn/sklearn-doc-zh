@@ -37,59 +37,59 @@
      - Geometry (metric used)（几何图形（公制使用））
 
    * - :ref:`K-Means（K-均值） <k_means>`
-     - number of clusters（聚类形成的簇的个数）
+     - 聚类形成的簇的个数
      - 非常大的 ``n_samples``, 中等的 ``n_clusters`` 使用
-       :ref:`MiniBatch code（MiniBatch 代码） <mini_batch_kmeans>`
-     - 通用, 均匀的 cluster size（簇大小）, flat geometry（平面几何）, 不是太多的 clusters（簇）
-     - Distances between points（点之间的距离）
+       :ref:`MiniBatch code <mini_batch_kmeans>`
+     - 通用, 均匀的簇大小, 平面几何, 不是太多的簇
+     - 点之间的距离
 
    * - :ref:`Affinity propagation <affinity_propagation>`
      - damping（阻尼）, sample preference（样本偏好）
-     - Not scalable with n_samples（n_samples 不可扩展）
-     - Many clusters, uneven cluster size, non-flat geometry（许多簇，不均匀的簇大小，非平面几何）
-     - Graph distance (e.g. nearest-neighbor graph)（图形距离（例如，最近邻图））
+     - n_samples 不可扩展
+     - 许多簇，不均匀的簇大小，非平面几何
+     - 图形距离（例如，最近邻图）
 
    * - :ref:`Mean-shift <mean_shift>`
-     - bandwidth（带宽）
-     - Not scalable with ``n_samples`` （不可扩展的 ``n_samples``）
-     - Many clusters, uneven cluster size, non-flat geometry（许多簇，不均匀的簇大小，非平面几何）
-     - Distances between points（点之间的距离）
+     - 带宽
+     - 不可扩展的 ``n_samples``
+     - 许多簇，不均匀的簇大小，非平面几何
+     - 点之间的距离
 
    * - :ref:`Spectral clustering <spectral_clustering>`
-     - number of clusters（簇的个数）
+     - 簇的个数
      - 中等的 ``n_samples``, 小的 ``n_clusters``
-     - Few clusters, even cluster size, non-flat geometry（几个簇，均匀的簇大小，非平面几何）
-     - Graph distance (e.g. nearest-neighbor graph)（图形距离（例如最近邻图））
+     - 几个簇，均匀的簇大小，非平面几何
+     - 图形距离（例如最近邻图）
 
    * - :ref:`Ward hierarchical clustering <hierarchical_clustering>`
-     - number of clusters（簇的个数）
+     - 簇的个数
      - 大的 ``n_samples`` 和 ``n_clusters``
-     - Many clusters, possibly connectivity constraints（很多的簇，可能连接限制）
-     - Distances between points（点之间的距离）
+     - 很多的簇，可能连接限制
+     - 点之间的距离
 
    * - :ref:`Agglomerative clustering <hierarchical_clustering>`
-     - number of clusters（簇的个数）, linkage type（链接类型）, distance（距离）
+     - 簇的个数, 链接类型, 距离
      - 大的 ``n_samples`` 和 ``n_clusters``
-     - Many clusters, possibly connectivity constraints, non Euclidean distances（很多簇，可能连接限制，非欧几里得距离）
-     - Any pairwise distance（任意成对距离）
+     - 很多簇，可能连接限制，非欧几里得距离
+     - 任意成对距离
 
    * - :ref:`DBSCAN <dbscan>`
-     - neighborhood size（neighborhood 的大小）
+     - neighborhood 的大小
      - 非常大的 ``n_samples``, 中等的 ``n_clusters``
-     - Non-flat geometry, uneven cluster sizes（非平面几何，不均匀的簇大小）
-     - Distances between nearest points（最近点之间的距离）
+     - 非平面几何，不均匀的簇大小
+     - 最近点之间的距离
 
-   * - :ref:`Gaussian mixtures（高斯混合） <mixture>`
-     - many（很多）
-     - Not scalable（不可扩展）
-     - Flat geometry, good for density estimation（平面几何，适用于密度估计）
-     - Mahalanobis distances to  centers（Mahalanobis 与中心的距离）
+   * - :ref:`Gaussian mixtures <mixture>`
+     - 很多
+     - 不可扩展
+     - 平面几何，适用于密度估计
+     - Mahalanobis 与中心的距离
 
    * - :ref:`Birch`
-     - branching factor（分支因子）, threshold（阈值）, optional global clusterer（可选全局簇）.
+     - 分支因子, 阈值, 可选全局簇.
      - 大的 ``n_clusters`` 和 ``n_samples``
-     - Large dataset, outlier removal, data reduction.（大数据集，异常值去除，数据简化）
-     - Euclidean distance between points（点之间的欧式距离）
+     - 大数据集，异常值去除，数据简化
+     - 点之间的欧式距离
 
 当 clusters （簇）具有 specific shape （特殊的形状），即 non-flat manifold（非平面 manifold），并且标准欧几里得距离不是正确的 metric （度量标准）时，Non-flat geometry clustering （非平面几何聚类）是非常有用的。这种情况出现在上图的两个顶行中。
 
@@ -100,28 +100,28 @@
 K-means
 ========
 
-:class:`KMeans` 算法通过试图分离 n groups of equal variance（n 个相等方差组）的样本来聚集数据，minimizing （最小化）称为 `inertia <inertia>`_ 或者 within-cluster sum-of-squares （簇内和平方）的 criterion （标准）。
+:class:`KMeans` 算法通过试图分离 n groups of equal variance（n 个相等方差组）的样本来聚集数据，minimizing （最小化）称为 `inertia <inertia>`_ 或者 within-cluster sum-of-squares （簇内平方和）的 criterion （标准）。
 该算法需要指定 number of clusters （簇的数量）。它可以很好地 scales （扩展）到 large number of samples（大量样本），并已经被广泛应用于许多不同领域的应用领域。
 
 k-means 算法将一组 :math:`N` 样本 :math:`X` 划分成 :math:`K` 不相交的 clusters （簇） :math:`C`, 每个都用 cluster （该簇）中的样本的均值 :math:`\mu_j` 描述。
 这个 means （均值）通常被称为 cluster（簇）的 "centroids（质心）"; 注意，它们一般不是从 :math:`X` 中挑选出的点，虽然它们是处在同一个 space（空间）。
-K-means（K-均值）算法旨在选择最小化 *inertia（惯性）* 或  within-cluster sum of squared（簇内和的平方和）的标准的 centroids（质心）:
+K-means（K-均值）算法旨在选择最小化 *inertia* 或  within-cluster sum of squared（簇内和的平方和）的标准的 centroids（质心）:
 
 .. math:: \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_j - \mu_i||^2)
 
-Inertia（惯性）, 或 the within-cluster sum of squares（簇内和平方差） criterion（标准）,可以被认为是 internally coherent clusters （内部想干聚类）的 measure （度量）。
+Inertia, 或 the within-cluster sum of squares（簇内和平方差） criterion（标准）,可以被认为是 internally coherent clusters （内部想干聚类）的 measure （度量）。
 它有各种缺点: 
 
-- Inertia（惯性）假设 clusters （簇）是 convex（凸）的和 isotropic （各项同性），这并不是总是这样。它对 elongated clusters （细长的簇）或具有不规则形状的 manifolds 反应不佳。
+- Inertia假设 clusters （簇）是 convex（凸）的和 isotropic （各项同性），这并不是总是这样。它对 elongated clusters （细长的簇）或具有不规则形状的 manifolds 反应不佳。
 
-- Inertia（惯性）不是一个 normalized metric（归一化度量）: 我们只知道 lower values （较低的值）是更好的，并且 零 是最优的。但是在 very high-dimensional spaces （非常高维的空间）中，欧几里得距离往往会变得 inflated （膨胀）（这就是所谓的 "curse of dimensionality （维度诅咒/维度惩罚）"）。在 k-means 聚类之前运行诸如 `PCA <PCA>`_ 之类的 dimensionality reduction algorithm （降维算法）可以减轻这个问题并加快计算速度。 
+- Inertia不是一个 normalized metric（归一化度量）: 我们只知道 lower values （较低的值）是更好的，并且 零 是最优的。但是在 very high-dimensional spaces （非常高维的空间）中，欧几里得距离往往会变得 inflated （膨胀）（这就是所谓的 "curse of dimensionality （维度诅咒/维度惩罚）"）。在 k-means 聚类之前运行诸如 `PCA <PCA>`_ 之类的 dimensionality reduction algorithm （降维算法）可以减轻这个问题并加快计算速度。 
 
 .. image:: ../auto_examples/cluster/images/sphx_glr_plot_kmeans_assumptions_001.png
    :target: ../auto_examples/cluster/plot_kmeans_assumptions.html
    :align: center
    :scale: 50
 
-K-means 通常被称为 Lloyd's algorithm（劳埃德算法）。在基本术语中，算法有三个步骤。、
+K-means 通常被称为 Lloyd's algorithm（劳埃德算法）。在基本术语中，算法有三个步骤。
 第一步是选择 initial centroids （初始质心），最基本的方法是从 :math:`X` 数据集中选择 :math:`k` 个样本。初始化完成后，K-means 由两个其他步骤之间的循环组成。
 第一步将每个样本分配到其 nearest centroid （最近的质心）。第二步通过取分配给每个先前质心的所有样本的平均值来创建新的质心。计算旧的和新的质心之间的差异，并且算法重复这些最后的两个步骤，直到该值小于阈值。换句话说，算法重复这个步骤，直到质心不再显著移动。
 
@@ -132,7 +132,7 @@ K-means 通常被称为 Lloyd's algorithm（劳埃德算法）。在基本术语
 
 K-means 相当于具有 small, all-equal, diagonal covariance matrix （小的全对称协方差矩阵）的 expectation-maximization algorithm （期望最大化算法）。
 
-该算法也可以通过 `Voronoi diagrams（Voronoi图）<https://en.wikipedia.org/wiki/Voronoi_diagram>`_ 的概念来理解。首先使用 current centroids （当前质心）计算点的 Voronoi 图。
+该算法也可以通过 `Voronoi diagrams <https://en.wikipedia.org/wiki/Voronoi_diagram>`_ 的概念来理解。首先使用 current centroids （当前质心）计算点的 Voronoi 图。
 Voronoi 图中的每个 segment （段）都成为一个 separate cluster （单独的簇）。其次，centroids（质心）被更新为每个 segment （段）的 mean（平均值）。然后，该算法重复此操作，直到满足停止条件。
 通常情况下，当 iterations （迭代）之间的 objective function （目标函数）的相对减小小于给定的 tolerance value （公差值）时，算法停止。在此实现中不是这样: 当质心移动小于 tolerance （公差）时，迭代停止。
 
@@ -1113,7 +1113,7 @@ score （分数）范围为 0 到 1。较高的值表示两个簇之间的良好
 缺点
 ~~~~~~~~~
 
-- 与 inertia（惯性）相反，**FMI-based measures require the knowledge of the ground truth classes（基于 FMI 的测量方案需要了解已标注的真是数据的类）** ，而在实践中几乎不用，或需要人工标注者的人工分配（如在监督学习的学习环境中）。
+- 与 inertia 相反，**FMI-based measures require the knowledge of the ground truth classes（基于 FMI 的测量方案需要了解已标注的真是数据的类）** ，而在实践中几乎不用，或需要人工标注者的人工分配（如在监督学习的学习环境中）。
 
 .. topic:: 参考
 

@@ -6,7 +6,7 @@
 
 .. currentmodule:: sklearn.linear_model
 
-**随机梯度下降(SGD)** 是一个简单但又非常有效的方法，主要用于凸损失函数下对线性分类器的学习，例如(线性) `支持向量机 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 和 `Logistic 回归 <https://en.wikipedia.org/wiki/Logistic_regression>`_ 。
+**随机梯度下降(SGD)** 是一种简单但又非常有效的方法，主要用于凸损失函数下对线性分类器的学习，例如(线性) `支持向量机 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 和 `Logistic 回归 <https://en.wikipedia.org/wiki/Logistic_regression>`_ 。
 尽管 SGD 在机器学习社区已经存在了很长时间, 但是最近在 large-scale learning （大规模学习）方面 SGD 获得了相当大的关注。
 
 SGD 已成功应用于文本分类和自然语言处理中经常遇到的大规模和稀疏的机器学习问题。考虑到数据是稀疏的，本模块的分类器可以轻易的处理超过 10^5 的训练样本和超过10^5的特征。
@@ -105,7 +105,7 @@ SGD 支持以下 penalties（惩罚）:
    :align: center
    :scale: 75
 
-在 multi-class classification （多类分类）的情况下， ``coef_`` 是 ``shape=[n_classes, n_features]`` 的一个二维数组， ``intercept_`` is ``shape=[n_classes]`` 的一个一位数组。 ``coef_`` 的第 i 行保存了第 i 类的 OVA 分类器的权重向量；类以升序索引 （参照属性 ``classes_`` ）。
+在 multi-class classification （多类分类）的情况下， ``coef_`` 是 ``shape=[n_classes, n_features]`` 的一个二维数组， ``intercept_`` is ``shape=[n_classes]`` 的一个一维数组。 ``coef_`` 的第 i 行保存了第 i 类的 OVA 分类器的权重向量；类以升序索引 （参照属性 ``classes_`` ）。
 注意，原则上，由于它们允许创建一个概率模型，所以 ``loss="log"`` 和 ``loss="modified_huber"`` 更适合于 one-vs-all 分类。
 
 :class:`SGDClassifier` 通过拟合参数 ``class_weight`` 和 ``sample_weight`` 来支持 weighted classes （加权类）和 weighted instances（加权实例）。更多信息请参照下面的示例和 :meth:`SGDClassifier.fit` 的文档。
@@ -146,7 +146,7 @@ Huber 和 epsilon-insensitive 损失函数可用于 robust regression（稳健�
 
 .. note:: 由于一个对于截距是缩小的学习率，稀疏实现与密集实现相比产生的结果略有不同。
 
-在 `scipy.sparse <https://docs.scipy.org/doc/scipy/reference/sparse.html>`_ 支持的格式中，任意矩阵都有对稀疏数据的内置支持。但是，为了获得最好的效率，请使用 `scipy.sparse.csr_matrix <http://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_ 中定义的格式.
+在 `scipy.sparse <https://docs.scipy.org/doc/scipy/reference/sparse.html>`_ 支持的格式中，任意矩阵都有对稀疏数据的内置支持。但是，为了获得最好的效率，请使用 `scipy.sparse.csr_matrix <http://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_ 中定义CSR矩阵格式.
 
 .. topic:: 示例:
 
@@ -225,7 +225,7 @@ SGD 主要的优点在于它的效率，在训练实例的数量上基本是线�
      solutions（）.
    - Elastic Net: :math:`R(w) := \frac{\rho}{2} \sum_{i=1}^{n} w_i^2 + (1-\rho) \sum_{i=1}^{n} |w_i|`, a convex combination of L2 and L1, where :math:`\rho` is given by ``1 - l1_ratio``.
 
-下图显示当 :math:`R(w) = 1` 时参数空间中不同正则项的轮廓。
+下图显示当 :math:`R(w) = 1` 时参数空间中不同正则项的轮廓
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_sgd_penalties_001.png
     :target: ../auto_examples/linear_model/plot_sgd_penalties.html
