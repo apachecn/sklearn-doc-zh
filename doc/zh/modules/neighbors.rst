@@ -116,28 +116,28 @@ KDTree 和 BallTree 类
 分类是由每个点的最近邻的简单多数投票中计算得到的：一个查询点的数据类型是由它最近邻点中最具代表性的数据类型来决定的。
 
 scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClassifier` 基于每个查询点的 :math:`k` 个最近邻实现，
-其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsClassifier` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
-其中 :math:`r` 是用户指定的浮点数值。
+   其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsClassifier` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
+   其中 :math:`r` 是用户指定的浮点数值。
 
 :math:`k` -邻居分类是 :class:`KNeighborsClassifier` 下的两种技术中比较常用的一种。:math:`k` 值的最佳选择是高度数据依赖的：
-通常较大的 :math:`k` 是会抑制噪声的影响，但是使得分类界限不明显。
+   通常较大的 :math:`k` 是会抑制噪声的影响，但是使得分类界限不明显。
 
-如果数据是不均匀采样的，那么 :class:`RadiusNeighborsClassifier` 中的基于半径的近邻分类可能是更好的选择。
+   如果数据是不均匀采样的，那么 :class:`RadiusNeighborsClassifier` 中的基于半径的近邻分类可能是更好的选择。
 用户指定一个固定半径 :math:`r`，使得稀疏邻居中的点使用较少的最近邻来分类。
-对于高维参数空间，这个方法会由于所谓的“维度惩罚”而变得不那么有效。
+   对于高维参数空间，这个方法会由于所谓的“维度惩罚”而变得不那么有效。
 
-基本的最近邻分类使用统一的权重：分配给查询点的值是从最近邻的简单多数投票中计算出来的。
-在某些环境下，最好对邻居进行加权，使得近邻更有利于拟合。可以通过 ``weights`` 关键字来实现。
+   基本的最近邻分类使用统一的权重：分配给查询点的值是从最近邻的简单多数投票中计算出来的。
+   在某些环境下，最好对邻居进行加权，使得近邻更有利于拟合。可以通过 ``weights`` 关键字来实现。
 默认值 ``weights = 'uniform'`` 为每个近邻分配统一的权重。而 ``weights = 'distance'`` 分配权重与查询点的距离成反比。
 或者，用户可以自定义一个距离函数用来计算权重。
 
 .. |classification_1| image:: ../auto_examples/neighbors/images/sphx_glr_plot_classification_001.png
-   :target: ../auto_examples/neighbors/plot_classification.html
-   :scale: 50
+:target: ../auto_examples/neighbors/plot_classification.html
+:scale: 50
 
 .. |classification_2| image:: ../auto_examples/neighbors/images/sphx_glr_plot_classification_002.png
-   :target: ../auto_examples/neighbors/plot_classification.html
-   :scale: 50
+:target: ../auto_examples/neighbors/plot_classification.html
+:scale: 50
 
 .. centered:: |classification_1| |classification_2|
 
@@ -153,26 +153,26 @@ scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClas
 最近邻回归是用在数据标签为连续变量，而不是离散变量的情况下。分配给查询点的标签是由它的最近邻标签的均值计算而来的。
 
 scikit-learn 实现了两种不同的最近邻回归：:class:`KNeighborsRegressor` 基于每个查询点的 :math:`k` 个最近邻实现，
-其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsRegressor` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
-其中 :math:`r` 是用户指定的浮点数值。
+   其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsRegressor` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
+   其中 :math:`r` 是用户指定的浮点数值。
 
-在某些环境下，增加权重可能是有利的，使得附近点对于回归所作出的贡献多于远处点。
-这可以通过 ``weights`` 关键字来实现。默认值 ``weights = 'uniform'`` 为所有点分配同等权重。
+   在某些环境下，增加权重可能是有利的，使得附近点对于回归所作出的贡献多于远处点。
+   这可以通过 ``weights`` 关键字来实现。默认值 ``weights = 'uniform'`` 为所有点分配同等权重。
 而 ``weights = 'distance'`` 分配的权重与查询点距离呈反比。
 或者，用户可以自定义一个距离函数用来计算权重。
 
 .. figure:: ../auto_examples/neighbors/images/sphx_glr_plot_regression_001.png
-   :target: ../auto_examples/neighbors/plot_regression.html
+:target: ../auto_examples/neighbors/plot_regression.html
    :align: center
-   :scale: 75
+      :scale: 75
 
-使用多输出的最近邻进行回归分析 :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`。
+   使用多输出的最近邻进行回归分析 :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`。
 在这个示例中，输入 X 是脸上半部分像素，输出 Y 是脸下半部分像素。
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_multioutput_face_completion_001.png
-   :target: ../auto_examples/plot_multioutput_face_completion.html
+:target: ../auto_examples/plot_multioutput_face_completion.html
    :scale: 75
-   :align: center
+      :align: center
 
 
 .. topic:: 示例:
@@ -204,19 +204,19 @@ K-D 树
 为了解决效率低下的暴力计算方法，已经发明了大量的基于树的数据结构。总的来说，
 这些结构试图通过有效地编码样本的 aggregate distance (聚合距离) 信息来减少所需的距离计算量。
 基本思想是，若 :math:`A` 点距离 :math:`B` 点非常远，:math:`B` 点距离 :math:`C` 点非常近，
-可知 :math:`A` 点与 :math:`C` 点很遥远，*不需要明确计算它们的距离*。
+   可知 :math:`A` 点与 :math:`C` 点很遥远，*不需要明确计算它们的距离*。
 通过这样的方式，近邻搜索的计算成本可以降低为 :math:`O[D N \log(N)]` 或更低。
 这是对于暴力搜索在大样本数 large :math:`N` 中表现的显著改善。
 
 
-利用这种聚合信息的早期方法是 *KD tree* 数据结构（* K-dimensional tree* 的简写）,
+   利用这种聚合信息的早期方法是 *KD tree* 数据结构（* K-dimensional tree* 的简写）,
 它将二维 *Quad-trees* 和三维 *Oct-trees 推广到任意数量的维度.
 KD 树是二叉树结构, 它沿着数据轴递归地划分参数空间, 将其划分成嵌套的原点区域, 数据点被归档到其中.
 KD 树的构造非常快：因为只能沿数据轴执行分区, 无需计算 :math:`D`-dimensional 距离.
-一旦构建完成, 查询点的最近邻可以仅使用 :math:`O[\log(N)]` 距离计算来确定.
+   一旦构建完成, 查询点的最近邻可以仅使用 :math:`O[\log(N)]` 距离计算来确定.
 虽然 KD 树的方法对于低维度 (:math:`D < 20`) 近邻搜索非常快, 当 :math:`D` 增长到很大时,
-效率开始降低: 这就是所谓的 "维度灾难" 的一种体现.
-在 scikit-learn 中, KD 树近邻搜索可以使用关键字 ``algorithm = 'kd_tree'`` 来指定,
+   效率开始降低: 这就是所谓的 "维度灾难" 的一种体现.
+   在 scikit-learn 中, KD 树近邻搜索可以使用关键字 ``algorithm = 'kd_tree'`` 来指定,
 并且使用类 :class:`KDTree` 来计算.
 
 .. topic:: References:
@@ -237,8 +237,8 @@ Ball 树
 但是这种数据结构对于高结构化的数据是非常有效的, 即使在高纬度上也是一样.
 
 ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定义的节点,
-使得节点中的每个点位于由 :math:`r` 和 :math:`C` 定义的 hyper-sphere 内.
-通过使用 *triangle inequality（三角不等式）* 减少近邻搜索的候选点数:
+   使得节点中的每个点位于由 :math:`r` 和 :math:`C` 定义的 hyper-sphere 内.
+   通过使用 *triangle inequality（三角不等式）* 减少近邻搜索的候选点数:
 
 .. math::   |x+y| \leq |x| + |y|
 
@@ -264,15 +264,15 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
   * *Brute force* 查询时间增长为 :math:`O[D N]`
   * *Ball tree* 查询时间大约增长 :math:`O[D \log(N)]`
   * *KD tree* 查询时间 :math:`D` 的变化是很难精确描述的.
-    对于较小的 :math:`D` (小于20) 的成本大约是 :math:`O[D\log(N)]`, 并且 KD 树更加有效.
+       对于较小的 :math:`D` (小于20) 的成本大约是 :math:`O[D\log(N)]`, 并且 KD 树更加有效.
     对于较大的 :math:`D` 成本的增加接近 :math:`O[DN]`,
     由于树结构引起的开销会导致查询效率比暴力还要低.
 
   对于小数据集 (:math:`N` 小于30), :math:`\log(N)` 相当于 :math:`N`, 暴力算法比基于树的算法更加有效.
-  :class:`KDTree` 和 :class:`BallTree` 通过提供一个 *leaf size* 参数来解决这个问题:
+     :class:`KDTree` 和 :class:`BallTree` 通过提供一个 *leaf size* 参数来解决这个问题:
   这控制了查询切换到暴力计算样本数量. 使得两种算法的效率都能接近于对较小的 :math:`N` 的暴力计算的效率.
 
-* 数据结构: 数据的 *intrinsic dimensionality* (本征维数) 和/或数据的 *sparsity* (稀疏度).
+   * 数据结构: 数据的 *intrinsic dimensionality* (本征维数) 和/或数据的 *sparsity* (稀疏度).
   本征维数是指数据所在的流形的维数 :math:`d \le D`, 在参数空间可以是线性或非线性的.
   稀疏度指的是数据填充参数空间的程度(这与“稀疏”矩阵中使用的概念不同,
   数据矩阵可能没有零项, 但是从这个意义上来讲,它的 **structure** 仍然是 "稀疏" 的)。
@@ -288,19 +288,19 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 
 * 近邻数 :math:`k` 请求 query point（查询点）.
 
-  * *Brute force* 查询时间几乎不受 :math:`k` 值的影响.
-  * *Ball tree* 和 *KD tree* 的查询时间会随着 :math:`k` 的增加而变慢.
-    这是由于两个影响: 首先, :math:`k` 的值越大在参数空间中搜索的部分就越大.
-    其次, 使用 :math:`k > 1` 进行树的遍历时, 需要对内部进行排序.
+     * *Brute force* 查询时间几乎不受 :math:`k` 值的影响.
+     * *Ball tree* 和 *KD tree* 的查询时间会随着 :math:`k` 的增加而变慢.
+       这是由于两个影响: 首先, :math:`k` 的值越大在参数空间中搜索的部分就越大.
+       其次, 使用 :math:`k > 1` 进行树的遍历时, 需要对内部进行排序.
 
   当 :math:`k` 大于  :math:`N`, 在基于树的查询中修剪树枝的能力是减弱的. 在这种情况下, 暴力查询会更加有效.
 
-* query points（查询点）数.  ball tree 和 KD Tree 都需要一个构建阶段.
-  在许多查询中，这种结构的成本可以忽略不计。
-  如果只执行少量的查询, 可是构建成本却占总成本的很大一部分.
-  如果仅需查询很少的点, 暴力方法会比基于树的方法更好.
+   * query points（查询点）数.  ball tree 和 KD Tree 都需要一个构建阶段.
+     在许多查询中，这种结构的成本可以忽略不计。
+     如果只执行少量的查询, 可是构建成本却占总成本的很大一部分.
+     如果仅需查询很少的点, 暴力方法会比基于树的方法更好.
 
-一般地, ``algorithm = 'auto'`` 选择 ``'kd_tree'`` 如果 :math:`k < N/2`
+   一般地, ``algorithm = 'auto'`` 选择 ``'kd_tree'`` 如果 :math:`k < N/2`
 并且 ``'effective_metric_'`` 在 ``'kd_tree'`` 的列表 ``'VALID_METRICS'`` 中.
 它选择 ``'ball_tree'`` 如果 :math:`k < N/2` 并且
 ``'effective_metric_'`` 在 ``'ball_tree'`` 的列表 ``'VALID_METRICS'`` 中.
@@ -369,12 +369,12 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 在以下例子中, 使用一个较小的 shrink 阀值将模型的准确度从 0.81 提高到 0.82.
 
 .. |nearest_centroid_1| image:: ../auto_examples/neighbors/images/sphx_glr_plot_nearest_centroid_001.png
-   :target: ../auto_examples/neighbors/plot_nearest_centroid.html
-   :scale: 50
+:target: ../auto_examples/neighbors/plot_nearest_centroid.html
+:scale: 50
 
 .. |nearest_centroid_2| image:: ../auto_examples/neighbors/images/sphx_glr_plot_nearest_centroid_002.png
-   :target: ../auto_examples/neighbors/plot_nearest_centroid.html
-   :scale: 50
+:target: ../auto_examples/neighbors/plot_nearest_centroid.html
+:scale: 50
 
 .. centered:: |nearest_centroid_1| |nearest_centroid_2|
 
