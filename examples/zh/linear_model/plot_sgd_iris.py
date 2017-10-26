@@ -1,11 +1,9 @@
 """
 ========================================
-Plot multi-class SGD on the iris dataset
+在虹膜数据集上绘制多分类 SGD
 ========================================
 
-Plot decision surface of multi-class SGD on iris dataset.
-The hyperplanes corresponding to the three one-versus-all (OVA) classifiers
-are represented by the dashed lines.
+在虹膜数据集上绘制多分类 SGD 的决策面。对应于三个 one-versus-all (OVA) 分类器的超平面由虚线表示。
 
 """
 print(__doc__)
