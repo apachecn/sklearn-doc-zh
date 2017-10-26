@@ -10,7 +10,7 @@
 
 :mod:`sklearn.neighbors` 提供了 neighbors-based (基于邻居的) 无监督学习以及监督学习方法的功能。
 无监督的最近邻是许多其它学习方法的基础，尤其是 manifold learning (流行学习) 和 spectral clustering (谱聚类)。
-受监督的 neighbors-based (基于邻居的) 学习分为两种： `分类`_ 针对的是具有离散标签的数据，`回归`_ 针对的是具有连续标签的数据。
+受监督的 neighbors-based (基于邻居的) 学习分为两种： `classification`_ （分类）针对的是具有离散标签的数据，`regression`_ （回归）针对的是具有连续标签的数据。
 
 最近邻方法的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。
 这些点的数量可以是用户自定义的常量（K-最近邻学习），
@@ -33,7 +33,7 @@ standard Euclidean distance（标准欧式距离）是最常见的选择。Neigh
 无监督最近邻
 ==============================
 
-:class:`NearestNeighbors`（最近邻）实现了 unsupervised nearest neighbors learning（无监督的最近邻学习）。
+:class:`NearestNeighbors` （最近邻）实现了 unsupervised nearest neighbors learning（无监督的最近邻学习）。
 它为三种不同的最近邻算法提供统一的接口：:class:`BallTree`, :class:`KDTree`, 还有基于 :mod:`sklearn.metrics.pairwise`
 的 brute-force 算法。选择算法时可通过关键字 ``'algorithm'`` 来控制，
 并指定为 ``['auto', 'ball_tree', 'kd_tree', 'brute']`` 其中的一个即可。当默认值设置为 ``'auto'``
