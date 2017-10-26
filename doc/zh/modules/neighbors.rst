@@ -25,8 +25,9 @@ standard Euclidean distance（标准欧式距离）是最常见的选择。Neigh
 :mod:`sklearn.neighbors` 可以处理 Numpy 数组或 `scipy.sparse` 矩阵作为其输入。
 对于密集矩阵，大多数可能距离的矩阵都是支持的。对于稀疏矩阵，任何 Minkowski 矩阵都支持被搜索。
 
-许多学习方法都是依赖最近邻作为核心。一个例子是：:ref:`kernel density estimation <kernel_density>`（核密度估计）,
-在:ref:`density estimation <density_estimation>`（密度估计）章节中有讨论。
+许多学习方法都是依赖最近邻作为核心。
+一个例子是 :ref:`核密度估计 <kernel_density>` ,
+在 :ref:`密度估计 <density_estimation>` 章节中有更深入的讨论。
 
 .. _unsupervised_neighbors:
 
@@ -37,7 +38,7 @@ standard Euclidean distance（标准欧式距离）是最常见的选择。Neigh
 它为三种不同的最近邻算法提供统一的接口：:class:`BallTree`, :class:`KDTree`, 还有基于 :mod:`sklearn.metrics.pairwise`
 的 brute-force 算法。选择算法时可通过关键字 ``'algorithm'`` 来控制，
 并指定为 ``['auto', 'ball_tree', 'kd_tree', 'brute']`` 其中的一个即可。当默认值设置为 ``'auto'``
-时，算法会尝试从训练数据中确定最佳方法。有关上述每个选项的优缺点，参见 `Nearest Neighbor Algorithms`_。
+时，算法会尝试从训练数据中确定最佳方法。有关上述每个选项的优缺点，参见 `Nearest Neighbor Algorithms`_ 。
 
 
     .. warning::
