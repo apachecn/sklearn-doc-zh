@@ -90,15 +90,11 @@ Spectral Co-Clustering
 .. math::
     A_n = R^{-1/2} A C^{-1/2}
 
- :math:`R` 是 :math:`i` 对角线矩阵，和
-:math:`\sum_{j} A_{ij}` 相同，  :math:`C` 是 :math:`j` 的对角吸纳矩阵，等同于
- :math:`\sum_{i} A_{ij}`.
+:math:`R` 是 :math:`i` 对角线矩阵，和 :math:`\sum_{j} A_{ij}` 相同，  :math:`C` 是 :math:`j` 的对角吸纳矩阵，等同于 :math:`\sum_{i} A_{ij}`.
 
-奇异值分解, :math:`A_n = U \Sigma V^\top`,
-提供了 :math:`A` 行列的分区. 左边的奇异值向量给予行分区，右边的奇异值向量给予列分区.
+奇异值分解, :math:`A_n = U \Sigma V^\top` , 提供了 :math:`A` 行列的分区. 左边的奇异值向量给予行分区，右边的奇异值向量给予列分区.
 
- :math:`\ell = \lceil \log_2 k \rceil` 奇异值向量从第二个开始,
- 提供所需的分区信息. 这些用于形成矩阵 :`Z`:
+:math:`\ell = \lceil \log_2 k \rceil` 奇异值向量从第二个开始, 提供所需的分区信息. 这些用于形成矩阵 :`Z`:
 
 .. math::
     Z = \begin{bmatrix} R^{-1/2} U \\\\
