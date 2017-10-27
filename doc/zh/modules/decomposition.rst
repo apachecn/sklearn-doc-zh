@@ -144,7 +144,7 @@ PCA 使用随机SVD
 ----------------
 
 :class:`KernelPCA` 是 PCA 的扩展，通过使用核方法实现非线性降维（dimensionality reduction） (参阅 :ref:`metrics`)。
-它具有许多应用，包括 denoising（去噪）, compression（压缩） 和 structured prediction（结构化预测） (kernel dependency estimation（内核依赖估计）)。
+它具有许多应用，包括去噪, 压缩和结构化预测（ structured prediction ） (kernel dependency estimation（内核依赖估计）)。
  :class:`KernelPCA` 支持 ``transform`` 和 ``inverse_transform`` 。
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_kernel_pca_001.png
@@ -162,13 +162,13 @@ PCA 使用随机SVD
 稀疏主成分分析 ( SparsePCA 和 MiniBatchSparsePCA )
 --------------------------------------------------------------------
 
-:class:`SparsePCA` 是 PCA 的一个变体，目的是提取能最好地重建数据的 sparse components （稀疏组件）集合。
+:class:`SparsePCA` 是 PCA 的一个变体，目的是提取能最好地重建数据的稀疏组分集合。
 
-Mini-batch sparse PCA（小批量稀疏 PCA） (:class:`MiniBatchSparsePCA`) 是一个 :class:`SparsePCA` 的变种，它速度更快但准确度有所降低。对于给定的迭代次数，通过迭代该组特征的 small chunks （小块）来达到速度的增加。
+小批量稀疏 PCA ( :class:`MiniBatchSparsePCA` ) 是一个 :class:`SparsePCA` 的变种，它速度更快但准确度有所降低。对于给定的迭代次数，通过迭代该组特征的小块来达到速度的增加。
 
 Principal component analysis（主成分分析） (:class:`PCA`) 的缺点在于，通过该方法提取的成分具有唯一的密度表达式，即当表示为原始变量的线性组合时，它们具有非零系数，使之难以解释。在许多情况下，真正的基础组件可以更自然地想象为稀疏向量; 例如在面部识别中，每个组件可能自然地映射到面部的某个部分。
 
-Sparse principal components（稀疏的主成分）产生更简洁、可解释的表达式，明确强调了样本之间的差异性来自哪些原始特征。
+稀疏的主成分产生更简洁、可解释的表达式，明确强调了样本之间的差异性来自哪些原始特征。
 
 以下示例说明了使用稀疏 PCA 提取 Olivetti 人脸数据集中的 16 个组分。可以看出正则化项产生了许多零。此外，数据的自然结构导致了非零系数垂直相邻 （vertically adjacent）。该模型不会在数学上强制执行: 每个组分都是一个向量  :math:`h \in \mathbf{R}^{4096}`,除非人性化地的可视化为 64x64 像素的图像，否则没有垂直相邻性的概念。
 下面显示的组分看起来局部化（appear local)是数据的内在结构的影响，这种局部模式使重建误差最小化。有一种考虑到邻接性和不同结构类型的导致稀疏的规范（sparsity-inducing norms）,参见 [Jen09]_ 对这种方法进行了解。
