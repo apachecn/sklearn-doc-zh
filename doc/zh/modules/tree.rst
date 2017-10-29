@@ -1,7 +1,7 @@
 .. _tree:
 
 ==============
-Decision Trees
+决策树
 ==============
 
 .. currentmodule:: sklearn.tree
@@ -77,11 +77,12 @@ Decision Trees
     >>> clf = tree.DecisionTreeClassifier()
     >>> clf = clf.fit(iris.data, iris.target)
 
-经过训练，我们可以使用 :func:`export_graphviz` 导出器以`Graphviz<http://www.graphviz.org/>`_ 格式导出决策树。如果你是用`conda <http://conda.io>`_ 来管理包，那么安装graphviz二进制文件和python包可以用以下指令安装
+经过训练，我们可以使用 :func:`export_graphviz` 导出器以 `Graphviz <http://www.graphviz.org/>`_ 格式导出决策树.
+如果你是用 `conda <http://conda.io>`_ 来管理包，那么安装 graphviz 二进制文件和 python 包可以用以下指令安装
 
    conda install python-graphviz
 
-或者，可以从 graphviz 项目主页下载 graphviz 的二进制文件，并从 pypi 安装 Python 包装器，并安装 `pip install graphviz` 。以下是在整个 iris 数据集上训练的上述树的 graphviz 导出示例;其结果被保存在 `iris.pdf` 中::
+或者，可以从 graphviz 项目主页下载 graphviz 的二进制文件，并从 pypi 安装 Python 包装器，并安装 `pip install graphviz` .以下是在整个 iris 数据集上训练的上述树的 graphviz 导出示例; 其结果被保存在 `iris.pdf` 中::
 
     >>> import graphviz # doctest: +SKIP
     >>> dot_data = tree.export_graphviz(clf, out_file=None) # doctest: +SKIP
@@ -233,7 +234,7 @@ Scikit-learn提供了更多有效的方法来创建决策树。初始实现（�
 
 .. _tree_algorithms:
 
-决策树算法：ID3，C4.5，C5.0和CART
+决策树算法: ID3, C4.5, C5.0 和 CART
 ==========================================
 
 什么是决策树算法以及它们之间的区别？那么 scikit-learn 中实现何种算法呢？

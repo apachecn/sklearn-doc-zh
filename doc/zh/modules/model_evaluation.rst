@@ -23,12 +23,12 @@
 
 .. _scoring_parameter:
 
-``scoring`` 参数: defining model evaluation rules（定义模型评估规则）
+``scoring`` 参数: 定义模型评估规则
 ==========================================================
 
 Model selection （模型选择）和 evaluation （评估）使用工具，例如 :class:`model_selection.GridSearchCV` 和 :func:`model_selection.cross_val_score` ，采用 ``scoring`` 参数来控制它们对 estimators evaluated （评估的估计量）应用的指标。
 
-常见场景: predefined values（预定义值）
+常见场景: 预定义值
 -------------------------------
 
 对于最常见的用例, 您可以使用 ``scoring`` 参数指定一个 scorer object （记分对象）; 下表显示了所有可能的值。
@@ -93,7 +93,7 @@ Scoring（得分）                    Function（函数）                     
 
 .. _scoring:
 
-Defining your scoring strategy from metric functions（根据 metric 函数定义您的评分策略）
+根据 metric 函数定义您的评分策略
 -----------------------------------------------------
 
 模块 :mod:`sklearn.metrics` 还公开了一组 measuring a prediction error （测量预测误差）的简单函数，给出了基础真实的数据和预测:
@@ -150,7 +150,7 @@ Defining your scoring strategy from metric functions（根据 metric 函数定�
 
 .. _diy_scoring:
 
-Implementing your own scoring object（实现自己的记分对象）
+实现自己的记分对象
 ------------------------------------
 您可以通过从头开始构建自己的 scoring object （记分对象），而不使用 :func:`make_scorer` factory 来生成更加灵活的 model scorers （模型记分对象）。
 对于被叫做 scorer 来说，它需要符合以下两个规则所指定的协议:
@@ -162,7 +162,7 @@ Implementing your own scoring object（实现自己的记分对象）
 
 .. _multimetric_scoring:
 
-Using multiple metric evaluation（使用多个指数评估）
+使用多个指数评估
 --------------------------------
 
 Scikit-learn 还允许在 ``GridSearchCV``, ``RandomizedSearchCV`` 和 ``cross_validate`` 中评估 multiple metric （多个指数）。
@@ -203,19 +203,16 @@ Scikit-learn 还允许在 ``GridSearchCV``, ``RandomizedSearchCV`` 和 ``cross_v
 
 .. _classification_metrics:
 
-Classification metrics
+分类指标
 =======================
 
 .. currentmodule:: sklearn.metrics
 
-The :mod:`sklearn.metrics` module implements several loss, score, and utility
-functions to measure classification performance.
-Some metrics might require probability estimates of the positive class,
-confidence values, or binary decisions values.
-Most implementations allow each sample to provide a weighted contribution
-to the overall score, through the ``sample_weight`` parameter.
+:mod:`sklearn.metrics` 模块实现了几个 loss, score, 和 utility 函数来衡量 classification （分类）性能。
+某些 metrics （指标）可能需要 positive class （正类），confidence values（置信度值）或 binary decisions values （二进制决策值）的概率估计。
+大多数的实现允许每个样本通过 ``sample_weight`` 参数为 overall score （总分）提供 weighted contribution （加权贡献）。
 
-Some of these are restricted to the binary classification case:
+其中一些仅限于二分类案例:
 
 .. autosummary::
    :template: function.rst
@@ -224,7 +221,7 @@ Some of these are restricted to the binary classification case:
    roc_curve
 
 
-Others also work in the multiclass case:
+其他也可以在多分类案例中运行:
 
 .. autosummary::
    :template: function.rst
@@ -235,7 +232,7 @@ Others also work in the multiclass case:
    matthews_corrcoef
 
 
-Some also work in the multilabel case:
+有些还可以在 multilabel case （多重案例）中工作:
 
 .. autosummary::
    :template: function.rst
@@ -252,7 +249,7 @@ Some also work in the multilabel case:
    recall_score
    zero_one_loss
 
-Some are typically used for ranking:
+一些通常用于 ranking:
 
 .. autosummary::
    :template: function.rst
@@ -260,7 +257,8 @@ Some are typically used for ranking:
    dcg_score
    ndcg_score
 
-And some work with binary and multilabel (but not multiclass) problems:
+
+有些工作与 binary 和 multilabel （但不是多类）的问题:
 
 .. autosummary::
    :template: function.rst
@@ -269,77 +267,45 @@ And some work with binary and multilabel (but not multiclass) problems:
    roc_auc_score
 
 
-In the following sub-sections, we will describe each of those functions,
-preceded by some notes on common API and metric definition.
+在以下小节中，我们将介绍每个这些功能，前面是一些关于通用 API 和 metric 定义的注释。
 
-From binary to multiclass and multilabel
+从二分到多分类和 multilabel
 ----------------------------------------
 
-Some metrics are essentially defined for binary classification tasks (e.g.
-:func:`f1_score`, :func:`roc_auc_score`). In these cases, by default
-only the positive label is evaluated, assuming by default that the positive
-class is labelled ``1`` (though this may be configurable through the
-``pos_label`` parameter).
+一些 metrics 基本上是为 binary classification tasks （二分类任务）定义的 (例如 :func:`f1_score`, :func:`roc_auc_score`) 。在这些情况下，默认情况下仅评估 positive label （正标签），假设默认情况下，positive label （正类）标记为 ``1`` （尽管可以通过 ``pos_label`` 参数进行配置）。
 
 .. _average:
 
-In extending a binary metric to multiclass or multilabel problems, the data
-is treated as a collection of binary problems, one for each class.
-There are then a number of ways to average binary metric calculations across
-the set of classes, each of which may be useful in some scenario.
-Where available, you should select among these using the ``average`` parameter.
+将 binary metric （二分指标）扩展为 multiclass （多类）或 multilabel （多标签）问题时，数据将被视为二分问题的集合，每个类都有一个。
+然后可以使用多种方法在整个类中 average binary metric calculations （平均二分指标计算），每种类在某些情况下可能会有用。
+如果可用，您应该使用 ``average`` 参数来选择它们。
 
-* ``"macro"`` simply calculates the mean of the binary metrics,
-  giving equal weight to each class.  In problems where infrequent classes
-  are nonetheless important, macro-averaging may be a means of highlighting
-  their performance. On the other hand, the assumption that all classes are
-  equally important is often untrue, such that macro-averaging will
-  over-emphasize the typically low performance on an infrequent class.
-* ``"weighted"`` accounts for class imbalance by computing the average of
-  binary metrics in which each class's score is weighted by its presence in the
-  true data sample.
-* ``"micro"`` gives each sample-class pair an equal contribution to the overall
-  metric (except as a result of sample-weight). Rather than summing the
-  metric per class, this sums the dividends and divisors that make up the
-  per-class metrics to calculate an overall quotient.
-  Micro-averaging may be preferred in multilabel settings, including
-  multiclass classification where a majority class is to be ignored.
-* ``"samples"`` applies only to multilabel problems. It does not calculate a
-  per-class measure, instead calculating the metric over the true and predicted
-  classes for each sample in the evaluation data, and returning their
-  (``sample_weight``-weighted) average.
-* Selecting ``average=None`` will return an array with the score for each
-  class.
+* ``"macro（宏）"`` 简单地计算 binary metrics （二分指标）的平均值，赋予每个类别相同的权重。在不常见的类别重要的问题上，macro-averaging （宏观平均）可能是突出表现的一种手段。另一方面，所有类别同样重要的假设通常是不真实的，因此 macro-averaging （宏观平均）将过度强调不频繁类的典型的低性能。
+* ``"weighted（加权）"`` 通过计算其在真实数据样本中的存在来对每个类的 score 进行加权的 binary metrics （二分指标）的平均值来计算类不平衡。
+* ``"micro（微）"`` 给每个 sample-class pair （样本类对）对 overall metric （总体指数）（sample-class 权重的结果除外） 等同的贡献。除了对每个类别的 metric 进行求和之外，这个总和构成每个类别度量的 dividends （除数）和 divisors （除数）计算一个整体商。
+  在 multilabel settings （多标签设置）中，Micro-averaging 可能是优先选择的，包括要忽略 majority class （多数类）的 multiclass classification （多类分类）。
+* ``"samples（样本）"`` 仅适用于 multilabel problems （多标签问题）。它 does not calculate a per-class measure （不计算每个类别的 measure），而是计算 evaluation data （评估数据）中的每个样本的 true and predicted classes （真实和预测类别）的 metric （指标），并返回 (``sample_weight``-weighted) 加权平均。
+* 选择 ``average=None`` 将返回一个 array 与每个类的 score 。
 
-While multiclass data is provided to the metric, like binary targets, as an
-array of class labels, multilabel data is specified as an indicator matrix,
-in which cell ``[i, j]`` has value 1 if sample ``i`` has label ``j`` and value
-0 otherwise.
+虽然将 multiclass data （多类数据）提供给 metric ，如 binary targets （二分类目标），作为 array of class labels （类标签的数组），multilabel data （多标签数据）被指定为 indicator matrix（指示符矩阵），其中 cell ``[i, j]`` 具有值 1，如果样本 ``i`` 具有标号 ``j`` ，否则为值 0 。
 
 .. _accuracy_score:
 
-Accuracy score
---------------
+精确度得分
+-------------------
 
-The :func:`accuracy_score` function computes the
-`accuracy <https://en.wikipedia.org/wiki/Accuracy_and_precision>`_, either the fraction
-(default) or the count (normalize=False) of correct predictions.
+:func:`accuracy_score` 函数计算 `accuracy <https://en.wikipedia.org/wiki/Accuracy_and_precision>`_, 正确预测的分数（默认）或计数 (normalize=False)。
 
 
-In multilabel classification, the function returns the subset accuracy. If
-the entire set of predicted labels for a sample strictly match with the true
-set of labels, then the subset accuracy is 1.0; otherwise it is 0.0.
+在 multilabel classification （多标签分类）中，函数返回 subset accuracy（子集精度）。如果样本的 entire set of predicted labels （整套预测标签）与真正的标签组合匹配，则子集精度为 1.0; 否则为 0.0 。
 
-If :math:`\hat{y}_i` is the predicted value of
-the :math:`i`-th sample and :math:`y_i` is the corresponding true value,
-then the fraction of correct predictions over :math:`n_\text{samples}` is
-defined as
+如果 :math:`\hat{y}_i` 是第 :math:`i` 个样本的预测值，:math:`y_i` 是相应的真实值，则 :math:`n_\text{samples}` 上的正确预测的分数被定义为
 
 .. math::
 
    \texttt{accuracy}(y, \hat{y}) = \frac{1}{n_\text{samples}} \sum_{i=0}^{n_\text{samples}-1} 1(\hat{y}_i = y_i)
 
-where :math:`1(x)` is the `indicator function
+其中 :math:`1(x)` 是 `indicator function（指示函数）
 <https://en.wikipedia.org/wiki/Indicator_function>`_.
 
   >>> import numpy as np
@@ -351,34 +317,29 @@ where :math:`1(x)` is the `indicator function
   >>> accuracy_score(y_true, y_pred, normalize=False)
   2
 
-In the multilabel case with binary label indicators: ::
+In the multilabel case with binary label indicators（在具有二分标签指示符的多标签情况下）: ::
 
   >>> accuracy_score(np.array([[0, 1], [1, 1]]), np.ones((2, 2)))
   0.5
 
-.. topic:: Example:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_feature_selection_plot_permutation_test_for_classification.py`
-    for an example of accuracy score usage using permutations of
-    the dataset.
+  * 参阅 :ref:`sphx_glr_auto_examples_feature_selection_plot_permutation_test_for_classification.py`
+    例如使用数据集排列的 accuracy score （精度分数）。
 
 .. _cohen_kappa:
 
 Cohen's kappa
--------------
+------------------
 
-The function :func:`cohen_kappa_score` computes `Cohen's kappa
-<https://en.wikipedia.org/wiki/Cohen%27s_kappa>`_ statistic.
-This measure is intended to compare labelings by different human annotators,
-not a classifier versus a ground truth.
+函数 :func:`cohen_kappa_score` 计算 `Cohen's kappa <https://en.wikipedia.org/wiki/Cohen%27s_kappa>`_ statistic（统计）。
+这个 measure （措施）旨在比较不同人工标注者的标签，而不是 classifier （分类器）与 ground truth （真实数据）。
 
-The kappa score (see docstring) is a number between -1 and 1.
-Scores above .8 are generally considered good agreement;
-zero or lower means no agreement (practically random labels).
+kappa score （参阅 docstring ）是 -1 和 1 之间的数字。
+.8 以上的 scores 通常被认为是很好的 agreement （协议）;
+0 或者 更低表示没有 agreement （实际上是 random labels （随机标签））。
 
-Kappa scores can be computed for binary or multiclass problems,
-but not for multilabel problems (except by manually computing a per-label score)
-and not for more than two annotators.
+Kappa scores 可以计算 binary or multiclass （二分或者多分类）问题，但不能用于 multilabel problems （多标签问题）（除了手动计算 per-label score （每个标签分数）），而不是两个以上的 annotators （注释器）。
 
   >>> from sklearn.metrics import cohen_kappa_score
   >>> y_true = [2, 0, 2, 2, 0, 1]
@@ -388,16 +349,12 @@ and not for more than two annotators.
 
 .. _confusion_matrix:
 
-Confusion matrix
+混淆矩阵
 ----------------
 
-The :func:`confusion_matrix` function evaluates
-classification accuracy by computing the `confusion matrix
-<https://en.wikipedia.org/wiki/Confusion_matrix>`_.
+:func:`confusion_matrix` 函数通过计算 `confusion matrix（混淆矩阵） <https://en.wikipedia.org/wiki/Confusion_matrix>`_ 来 evaluates classification accuracy （评估分类的准确性）。
 
-By definition, entry :math:`i, j` in a confusion matrix is
-the number of observations actually in group :math:`i`, but
-predicted to be in group :math:`j`. Here is an example::
+根据定义，confusion matrix （混淆矩阵）中的 entry（条目） :math:`i, j`，是实际上在 group :math:`i` 中的 observations （观察数），但预测在 group :math:`j` 中。这里是一个示例::
 
   >>> from sklearn.metrics import confusion_matrix
   >>> y_true = [2, 0, 2, 2, 0, 1]
@@ -407,16 +364,14 @@ predicted to be in group :math:`j`. Here is an example::
          [0, 0, 1],
          [1, 0, 2]])
 
-Here is a visual representation of such a confusion matrix (this figure comes
-from the :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py` example):
+这是一个这样的 confusion matrix （混淆矩阵）的可视化表示 （这个数字来自于 :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`）:
 
 .. image:: ../auto_examples/model_selection/images/sphx_glr_plot_confusion_matrix_001.png
    :target: ../auto_examples/model_selection/plot_confusion_matrix.html
    :scale: 75
    :align: center
 
-For binary problems, we can get counts of true negatives, false positives,
-false negatives and true positives as follows::
+对于 binary problems （二分类问题），我们可以得到 true negatives（真 negatives）, false positives（假 positives）, false negatives（假 negatives） 和 true positives（真 positives） 的数量如下::
 
   >>> y_true = [0, 0, 0, 1, 1, 1, 1, 1]
   >>> y_pred = [0, 1, 0, 1, 0, 1, 0, 1]
@@ -424,28 +379,23 @@ false negatives and true positives as follows::
   >>> tn, fp, fn, tp
   (2, 1, 2, 3)
 
-.. topic:: Example:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`
-    for an example of using a confusion matrix to evaluate classifier output
-    quality.
+  * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_confusion_matrix.py`
+    例如使用 confusion matrix （混淆矩阵）来评估 classifier （分类器）的输出质量。
 
-  * See :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
-    for an example of using a confusion matrix to classify
-    hand-written digits.
+  * 参阅 :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
+    例如使用 confusion matrix （混淆矩阵）来分类手写数字。
 
-  * See :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
-    for an example of using a confusion matrix to classify text
-    documents.
+  * 参阅 :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
+    例如使用 confusion matrix （混淆矩阵）对文本文档进行分类。
 
 .. _classification_report:
 
-Classification report
+分类报告
 ----------------------
 
-The :func:`classification_report` function builds a text report showing the
-main classification metrics. Here is a small example with custom ``target_names``
-and inferred labels::
+:func:`classification_report` 函数构建一个显示 main classification metrics （主分类指标）的文本报告。这是一个小例子，其中包含自定义的 ``target_names`` 和 inferred labels （推断标签）::
 
    >>> from sklearn.metrics import classification_report
    >>> y_true = [0, 1, 2, 2, 0]
@@ -461,39 +411,31 @@ and inferred labels::
    avg / total       0.67      0.60      0.59         5
    <BLANKLINE>
 
-.. topic:: Example:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
-    for an example of classification report usage for
-    hand-written digits.
+  * 参阅 :ref:`sphx_glr_auto_examples_classification_plot_digits_classification.py`
+    作为手写数字的分类报告的使用示例。
 
-  * See :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
-    for an example of classification report usage for text
-    documents.
+  * 参阅 :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
+    作为文本文档的分类报告使用的示例。
 
-  * See :ref:`sphx_glr_auto_examples_model_selection_plot_grid_search_digits.py`
-    for an example of classification report usage for
-    grid search with nested cross-validation.
+  * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_grid_search_digits.py`
+    例如使用 grid search with nested cross-validation （嵌套交叉验证进行网格搜索）的分类报告。
 
 .. _hamming_loss:
 
-Hamming loss
--------------
+汉明损失
+-----------------
 
-The :func:`hamming_loss` computes the average Hamming loss or `Hamming
-distance <https://en.wikipedia.org/wiki/Hamming_distance>`_ between two sets
-of samples.
+:func:`hamming_loss` 计算两组样本之间的 average Hamming loss （平均汉明损失）或者 `Hamming distance（汉明距离） <https://en.wikipedia.org/wiki/Hamming_distance>`_ 。
 
-If :math:`\hat{y}_j` is the predicted value for the :math:`j`-th label of
-a given sample, :math:`y_j` is the corresponding true value, and
-:math:`n_\text{labels}` is the number of classes or labels, then the
-Hamming loss :math:`L_{Hamming}` between two samples is defined as:
+如果 :math:`\hat{y}_j` 是给定样本的第 :math:`j` 个标签的预测值，则 :math:`y_j` 是相应的真实值，而 :math:`n_\text{labels}` 是 classes or labels （类或者标签）的数量，则两个样本之间的 Hamming loss （汉明损失） :math:`L_{Hamming}` 定义为:
 
 .. math::
 
    L_{Hamming}(y, \hat{y}) = \frac{1}{n_\text{labels}} \sum_{j=0}^{n_\text{labels} - 1} 1(\hat{y}_j \not= y_j)
 
-where :math:`1(x)` is the `indicator function
+其中 :math:`1(x)` 是 `indicator function（指标函数）
 <https://en.wikipedia.org/wiki/Indicator_function>`_. ::
 
   >>> from sklearn.metrics import hamming_loss
@@ -502,42 +444,29 @@ where :math:`1(x)` is the `indicator function
   >>> hamming_loss(y_true, y_pred)
   0.25
 
-In the multilabel case with binary label indicators: ::
+在具有 binary label indicators （二分标签指示符）的 multilabel （多标签）情况下: ::
 
   >>> hamming_loss(np.array([[0, 1], [1, 1]]), np.zeros((2, 2)))
   0.75
 
 .. note::
 
-    In multiclass classification, the Hamming loss corresponds to the Hamming
-    distance between ``y_true`` and ``y_pred`` which is similar to the
-    :ref:`zero_one_loss` function.  However, while zero-one loss penalizes
-    prediction sets that do not strictly match true sets, the Hamming loss
-    penalizes individual labels.  Thus the Hamming loss, upper bounded by the zero-one
-    loss, is always between zero and one, inclusive; and predicting a proper subset
-    or superset of the true labels will give a Hamming loss between
-    zero and one, exclusive.
+    在 multiclass classification （多类分类）中， Hamming loss （汉明损失）对应于 ``y_true`` 和 ``y_pred`` 之间的 Hamming distance（汉明距离），它类似于 :ref:`zero_one_loss` 函数。然而， zero-one loss penalizes （0-1损失惩罚）不严格匹配真实集合的预测集，Hamming loss （汉明损失）惩罚 individual labels （独立标签）。因此，Hamming loss（汉明损失）高于 zero-one loss（0-1 损失），总是在 0 和 1 之间，包括 0 和 1;预测真正的标签的正确的 subset or superset （子集或超集）将给出 0 和 1 之间的 Hamming loss（汉明损失）。
 
 .. _jaccard_similarity_score:
 
-Jaccard similarity coefficient score
+Jaccard 相似系数 score
 -------------------------------------
 
-The :func:`jaccard_similarity_score` function computes the average (default)
-or sum of `Jaccard similarity coefficients
-<https://en.wikipedia.org/wiki/Jaccard_index>`_, also called the Jaccard index,
-between pairs of label sets.
+:func:`jaccard_similarity_score` 函数计算 pairs of label sets （标签组对）之间的 `Jaccard similarity coefficients <https://en.wikipedia.org/wiki/Jaccard_index>`_ 也称作 Jaccard index 的平均值（默认）或总和。
 
-The Jaccard similarity coefficient of the :math:`i`-th samples,
-with a ground truth label set :math:`y_i` and predicted label set
-:math:`\hat{y}_i`, is defined as
+将第 :math:`i` 个样本的 Jaccard similarity coefficient 与 被标注过的真实数据的标签集 :math:`y_i` 和 predicted label set （预测标签集）:math:`\hat{y}_i` 定义为
 
 .. math::
 
     J(y_i, \hat{y}_i) = \frac{|y_i \cap \hat{y}_i|}{|y_i \cup \hat{y}_i|}.
 
-In binary and multiclass classification, the Jaccard similarity coefficient
-score is equal to the classification accuracy.
+在 binary and multiclass classification （二分和多类分类）中，Jaccard similarity coefficient score 等于 classification accuracy（分类精度）。
 
 ::
 
@@ -550,40 +479,25 @@ score is equal to the classification accuracy.
   >>> jaccard_similarity_score(y_true, y_pred, normalize=False)
   2
 
-In the multilabel case with binary label indicators: ::
+在具有 binary label indicators （二分标签指示符）的 multilabel （多标签）情况下: ::
 
   >>> jaccard_similarity_score(np.array([[0, 1], [1, 1]]), np.ones((2, 2)))
   0.75
 
 .. _precision_recall_f_measure_metrics:
 
-Precision, recall and F-measures
+精准，召回和 F-measures
 ---------------------------------
 
-Intuitively, `precision
-<https://en.wikipedia.org/wiki/Precision_and_recall#Precision>`_ is the ability
-of the classifier not to label as positive a sample that is negative, and
-`recall <https://en.wikipedia.org/wiki/Precision_and_recall#Recall>`_ is the
-ability of the classifier to find all the positive samples.
+直观地来理解，`precision <https://en.wikipedia.org/wiki/Precision_and_recall#Precision>`_ 是 the ability of the classifier not to label as positive a sample that is negative （classifier （分类器）的标签不能被标记为正的样本为负的能力），并且 `recall <https://en.wikipedia.org/wiki/Precision_and_recall#Recall>`_ 是 classifier （分类器）查找所有 positive samples （正样本）的能力。 
 
-The  `F-measure <https://en.wikipedia.org/wiki/F1_score>`_
-(:math:`F_\beta` and :math:`F_1` measures) can be interpreted as a weighted
-harmonic mean of the precision and recall. A
-:math:`F_\beta` measure reaches its best value at 1 and its worst score at 0.
-With :math:`\beta = 1`,  :math:`F_\beta` and
-:math:`F_1`  are equivalent, and the recall and the precision are equally important.
+`F-measure <https://en.wikipedia.org/wiki/F1_score>`_ (:math:`F_\beta` 和 :math:`F_1` measures) 可以解释为 precision （精度）和 recall （召回）的 weighted harmonic mean （加权调和平均值）。 :math:`F_\beta` measure 值达到其最佳值 1 ，其最差分数为 0 。与 :math:`\beta = 1`, :math:`F_\beta` 和 :math:`F_1` 是等价的， recall （召回）和 precision （精度）同样重要。
 
-The :func:`precision_recall_curve` computes a precision-recall curve
-from the ground truth label and a score given by the classifier
-by varying a decision threshold.
+:func:`precision_recall_curve` 通过改变 decision threshold （决策阈值）从 ground truth label （被标记的真实数据标签） 和 score given by the classifier （分类器给出的分数）计算 precision-recall curve （精确召回曲线）。
 
-The :func:`average_precision_score` function computes the average precision
-(AP) from prediction scores. This score corresponds to the area under the
-precision-recall curve. The value is between 0 and 1 and higher is better.
-With random predictions, the AP is the fraction of positive samples.
+:func:`average_precision_score` 函数根据 prediction scores （预测分数）计算出 average precision (AP)（平均精度）。该分数对应于 precision-recall curve （精确召回曲线）下的面积。该值在 0 和 1 之间，并且越高越好。通过 random predictions （随机预测）， AP 是 fraction of positive samples （正样本的分数）。
 
-Several functions allow you to analyze the precision, recall and F-measures
-score:
+几个函数可以让您 analyze the precision （分析精度），recall（召回） 和 F-measures 得分:
 
 .. autosummary::
    :template: function.rst
@@ -596,45 +510,36 @@ score:
    precision_score
    recall_score
 
-Note that the :func:`precision_recall_curve` function is restricted to the
-binary case. The :func:`average_precision_score` function works only in
-binary classification and multilabel indicator format.
+请注意，:func:`precision_recall_curve` 函数仅限于 binary case （二分情况）。 :func:`average_precision_score` 函数只适用于 binary classification and multilabel indicator format （二分类和多标签指示器格式）。
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
-    for an example of :func:`f1_score` usage to classify  text
-    documents.
+  * 参阅 :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
+    例如 :func:`f1_score` 用于分类文本文档的用法。
 
-  * See :ref:`sphx_glr_auto_examples_model_selection_plot_grid_search_digits.py`
-    for an example of :func:`precision_score` and :func:`recall_score` usage
-    to estimate parameters using grid search with nested cross-validation.
+  * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_grid_search_digits.py`
+    例如 :func:`precision_score` 和 :func:`recall_score` 用于 using grid search with nested cross-validation （使用嵌套交叉验证的网格搜索）来估计参数。
 
-  * See :ref:`sphx_glr_auto_examples_model_selection_plot_precision_recall.py`
-    for an example of :func:`precision_recall_curve` usage to evaluate
-    classifier output quality.
+  * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_precision_recall.py`
+    例如 :func:`precision_recall_curve` 用于 evaluate classifier output quality（评估分类器输出质量）。
 
-Binary classification
+二分类
 ^^^^^^^^^^^^^^^^^^^^^
 
-In a binary classification task, the terms ''positive'' and ''negative'' refer
-to the classifier's prediction, and the terms ''true'' and ''false'' refer to
-whether that prediction corresponds to the external judgment (sometimes known
-as the ''observation''). Given these definitions, we can formulate the
-following table:
+在二分类任务中，术语 ''positive（正）'' 和 ''negative（负）'' 是指 classifier's prediction （分类器的预测），术语 ''true（真）'' 和 ''false（假）'' 是指该预测是否对应于 external judgment （外部判断）（有时被称为 ''observation（观测值）''）。给出这些定义，我们可以指定下表: 
 
 +-------------------+------------------------------------------------+
-|                   |    Actual class (observation)                  |
+|                   |    Actual class(实际类别) (observation（观测值）)                  |
 +-------------------+---------------------+--------------------------+
-|   Predicted class | tp (true positive)  | fp (false positive)      |
-|   (expectation)   | Correct result      | Unexpected result        |
+|   Predicted class（预测类别） | tp (true positive（真正）)  | fp (false positive（错正）)      |
+|   (expectation （期望值）)   | Correct result（正确结果）      | Unexpected result（意外结果）        |
 |                   +---------------------+--------------------------+
-|                   | fn (false negative) | tn (true negative)       |
-|                   | Missing result      | Correct absence of result|
+|                   | fn (false negative（错负）) | tn (true negative（真负）)       |
+|                   | Missing result（缺少结果）      | Correct absence of result（正确缺乏结果）|
 +-------------------+---------------------+--------------------------+
 
-In this context, we can define the notions of precision, recall and F-measure:
+在这种情况下，我们可以定义 precision（精度）, recall（召回） 和 F-measure 的概念: 
 
 .. math::
 
@@ -648,7 +553,7 @@ In this context, we can define the notions of precision, recall and F-measure:
 
    F_\beta = (1 + \beta^2) \frac{\text{precision} \times \text{recall}}{\beta^2 \text{precision} + \text{recall}}.
 
-Here are some small examples in binary classification::
+以下是 binary classification （二分类）中的一些小例子::
 
   >>> from sklearn import metrics
   >>> y_pred = [0, 1, 0, 0]
@@ -686,51 +591,39 @@ Here are some small examples in binary classification::
 
 
 
-Multiclass and multilabel classification
+多类和多标签分类
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In multiclass and multilabel classification task, the notions of precision,
-recall, and F-measures can be applied to each label independently.
-There are a few ways to combine results across labels,
-specified by the ``average`` argument to the
-:func:`average_precision_score` (multilabel only), :func:`f1_score`,
-:func:`fbeta_score`, :func:`precision_recall_fscore_support`,
-:func:`precision_score` and :func:`recall_score` functions, as described
-:ref:`above <average>`. Note that for "micro"-averaging in a multiclass setting
-with all labels included will produce equal precision, recall and :math:`F`,
-while "weighted" averaging may produce an F-score that is not between
-precision and recall.
+在 multiclass and multilabel classification task（多类和多标签分类任务）中，precision（精度）, recall（召回）, and F-measures 的概念可以独立地应用于每个标签。
+有以下几种方法 combine results across labels （将结果跨越标签组合），由 ``average`` 参数指定为 :func:`average_precision_score` （仅用于 multilabel）， :func:`f1_score`, :func:`fbeta_score`, :func:`precision_recall_fscore_support`, :func:`precision_score` 和 :func:`recall_score` 函数，如上 :ref:`above <average>` 所述。请注意，对于在包含所有标签的多类设置中进行 "micro"-averaging （"微"平均），将产生相等的 precision（精度）， recall（召回）和 :math:`F` ，而 "weighted（加权）" averaging（平均）可能会产生 precision（精度）和 recall（召回）之间的 F-score 。
 
-To make this more explicit, consider the following notation:
+为了使这一点更加明确，请考虑以下 notation （符号）:
 
-* :math:`y` the set of *predicted* :math:`(sample, label)` pairs
-* :math:`\hat{y}` the set of *true* :math:`(sample, label)` pairs
-* :math:`L` the set of labels
-* :math:`S` the set of samples
-* :math:`y_s` the subset of :math:`y` with sample :math:`s`,
-  i.e. :math:`y_s := \left\{(s', l) \in y | s' = s\right\}`
-* :math:`y_l` the subset of :math:`y` with label :math:`l`
-* similarly, :math:`\hat{y}_s` and :math:`\hat{y}_l` are subsets of
-  :math:`\hat{y}`
+* :math:`y` *predicted（预测）* :math:`(sample, label)` 对
+* :math:`\hat{y}` *true（真）* :math:`(sample, label)` 对
+* :math:`L` labels 集合
+* :math:`S` samples 集合
+* :math:`y_s` :math:`y` 的子集与样本 :math:`s`, 即 :math:`y_s := \left\{(s', l) \in y | s' = s\right\}`
+* :math:`y_l` :math:`y` 的子集与 label :math:`l`
+* 类似的, :math:`\hat{y}_s` 和 :math:`\hat{y}_l` 是 :math:`\hat{y}` 的子集
 * :math:`P(A, B) := \frac{\left| A \cap B \right|}{\left|A\right|}`
 * :math:`R(A, B) := \frac{\left| A \cap B \right|}{\left|B\right|}`
-  (Conventions vary on handling :math:`B = \emptyset`; this implementation uses
-  :math:`R(A, B):=0`, and similar for :math:`P`.)
+  (Conventions （公约）在处理 :math:`B = \emptyset` 有所不同; 这个实现使用 :math:`R(A, B):=0`, 与 :math:`P` 类似.)
 * :math:`F_\beta(A, B) := \left(1 + \beta^2\right) \frac{P(A, B) \times R(A, B)}{\beta^2 P(A, B) + R(A, B)}`
 
-Then the metrics are defined as:
+然后将 metrics （指标）定义为:
 
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``average``    | Precision                                                                                                        | Recall                                                                                                           | F\_beta                                                                                                              |
+|``average（平均）``    | precision（精度）                                                                                                        | Recall（召回）                                                                                                           | F\_beta                                                                                                              |
 +===============+==================================================================================================================+==================================================================================================================+======================================================================================================================+
-|``"micro"``    | :math:`P(y, \hat{y})`                                                                                            | :math:`R(y, \hat{y})`                                                                                            | :math:`F_\beta(y, \hat{y})`                                                                                          |
+|``"micro（微）"``    | :math:`P(y, \hat{y})`                                                                                            | :math:`R(y, \hat{y})`                                                                                            | :math:`F_\beta(y, \hat{y})`                                                                                          |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``"samples"``  | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} P(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} R(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} F_\beta(y_s, \hat{y}_s)`                                              |
+|``"samples（样本）"``  | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} P(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} R(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} F_\beta(y_s, \hat{y}_s)`                                              |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``"macro"``    | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} P(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} R(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} F_\beta(y_l, \hat{y}_l)`                                              |
+|``"macro（宏）"``    | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} P(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} R(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} F_\beta(y_l, \hat{y}_l)`                                              |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``"weighted"`` | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| P(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| R(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| F_\beta(y_l, \hat{y}_l)`|
+|``"weighted（加权）"`` | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| P(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| R(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| F_\beta(y_l, \hat{y}_l)`|
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``None``       | :math:`\langle P(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle R(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle F_\beta(y_l, \hat{y}_l) | l \in L \rangle`                                                            |
+|``None（无）``       | :math:`\langle P(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle R(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle F_\beta(y_l, \hat{y}_l) | l \in L \rangle`                                                            |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
 
   >>> from sklearn import metrics
@@ -764,38 +657,26 @@ Similarly, labels not present in the data sample may be accounted for in macro-a
 .. _hinge_loss:
 
 Hinge loss
-----------
+------------------
 
-The :func:`hinge_loss` function computes the average distance between
-the model and the data using
-`hinge loss <https://en.wikipedia.org/wiki/Hinge_loss>`_, a one-sided metric
-that considers only prediction errors. (Hinge
-loss is used in maximal margin classifiers such as support vector machines.)
+:func:`hinge_loss` 函数使用 `hinge loss <https://en.wikipedia.org/wiki/Hinge_loss>`_ 计算模型和数据之间的 average distance （平均距离），这是一种只考虑 prediction errors （预测误差）的 one-sided metric （单向指标）。（Hinge loss 用于最大边界分类器，如支持向量机）
 
-If the labels are encoded with +1 and -1,  :math:`y`: is the true
-value, and :math:`w` is the predicted decisions as output by
-``decision_function``, then the hinge loss is defined as:
+如果标签用 +1 和 -1 编码，则 :math:`y`: 是真实值，并且 :math:`w` 是由 ``decision_function`` 输出的 predicted decisions （预测决策），则 hinge loss 定义为: 
 
 .. math::
 
   L_\text{Hinge}(y, w) = \max\left\{1 - wy, 0\right\} = \left|1 - wy\right|_+
 
-If there are more than two labels, :func:`hinge_loss` uses a multiclass variant
-due to Crammer & Singer.
-`Here <http://jmlr.csail.mit.edu/papers/volume2/crammer01a/crammer01a.pdf>`_ is
-the paper describing it.
+如果有两个以上的标签， :func:`hinge_loss` 由于 Crammer & Singer 而使用了 multiclass variant （多类型变体）。
+`Here <http://jmlr.csail.mit.edu/papers/volume2/crammer01a/crammer01a.pdf>`_ 是描述它的论文。
 
-If :math:`y_w` is the predicted decision for true label and :math:`y_t` is the
-maximum of the predicted decisions for all other labels, where predicted
-decisions are output by decision function, then multiclass hinge loss is defined
-by:
+如果 :math:`y_w` 是真实标签的 predicted decision （预测决策），并且 :math:`y_t` 是所有其他标签的预测决策的最大值，其中预测决策由 decision function （决策函数）输出，则 multiclass hinge loss 定义如下:
 
 .. math::
 
   L_\text{Hinge}(y_w, y_t) = \max\left\{1 + y_t - y_w, 0\right\}
 
-Here a small example demonstrating the use of the :func:`hinge_loss` function
-with a svm classifier in a binary class problem::
+这里是一个小例子，演示了在 binary class （二类）问题中使用了具有 svm classifier （svm 的分类器）的 :func:`hinge_loss` 函数::
 
   >>> from sklearn import svm
   >>> from sklearn.metrics import hinge_loss
@@ -813,8 +694,7 @@ with a svm classifier in a binary class problem::
   >>> hinge_loss([-1, 1, 1], pred_decision)  # doctest: +ELLIPSIS
   0.3...
 
-Here is an example demonstrating the use of the :func:`hinge_loss` function
-with a svm classifier in a multiclass problem::
+这里是一个示例，演示了在 multiclass problem （多类问题）中使用了具有 svm 分类器的 :func:`hinge_loss` 函数::
 
   >>> X = np.array([[0], [1], [2], [3]])
   >>> Y = np.array([0, 1, 2, 3])
@@ -832,47 +712,27 @@ with a svm classifier in a multiclass problem::
 
 .. _log_loss:
 
-Log loss
---------
+Log 损失
+-------------
 
-Log loss, also called logistic regression loss or
-cross-entropy loss, is defined on probability estimates.  It is
-commonly used in (multinomial) logistic regression and neural networks, as well
-as in some variants of expectation-maximization, and can be used to evaluate the
-probability outputs (``predict_proba``) of a classifier instead of its
-discrete predictions.
+Log loss，又被称为 logistic regression loss（logistic 回归损失）或者 cross-entropy loss（交叉熵损失） 定义在 probability estimates （概率估计）。它通常用于 (multinomial) logistic regression （（多项式）logistic 回归）和 neural networks （神经网络）以及 expectation-maximization （期望最大化）的一些变体中，并且可用于评估分类器的 probability outputs （概率输出）（``predict_proba``）而不是其 discrete predictions （离散预测）。
 
-For binary classification with a true label :math:`y \in \{0,1\}`
-and a probability estimate :math:`p = \operatorname{Pr}(y = 1)`,
-the log loss per sample is the negative log-likelihood
-of the classifier given the true label:
+对于具有真实标签 :math:`y \in \{0,1\}` 的 binary classification （二分类）和 probability estimate （概率估计） :math:`p = \operatorname{Pr}(y = 1)`, 每个样本的 log loss 是给定的分类器的 negative log-likelihood 真正的标签:  
 
 .. math::
 
     L_{\log}(y, p) = -\log \operatorname{Pr}(y|p) = -(y \log (p) + (1 - y) \log (1 - p))
 
-This extends to the multiclass case as follows.
-Let the true labels for a set of samples
-be encoded as a 1-of-K binary indicator matrix :math:`Y`,
-i.e., :math:`y_{i,k} = 1` if sample :math:`i` has label :math:`k`
-taken from a set of :math:`K` labels.
-Let :math:`P` be a matrix of probability estimates,
-with :math:`p_{i,k} = \operatorname{Pr}(t_{i,k} = 1)`.
-Then the log loss of the whole set is
+这扩展到 multiclass case （多类案例）如下。
+让一组样本的真实标签被编码为 1-of-K binary indicator matrix :math:`Y`, 即 如果样本 :math:`i` 具有取自一组 :math:`K` 个标签的标签 :math:`k` ，则 :math:`y_{i,k} = 1` 。令 :math:`P` 为 matrix of probability estimates （概率估计矩阵）， :math:`p_{i,k} = \operatorname{Pr}(t_{i,k} = 1)` 。那么整套的 log loss 就是
 
 .. math::
 
     L_{\log}(Y, P) = -\log \operatorname{Pr}(Y|P) = - \frac{1}{N} \sum_{i=0}^{N-1} \sum_{k=0}^{K-1} y_{i,k} \log p_{i,k}
 
-To see how this generalizes the binary log loss given above,
-note that in the binary case,
-:math:`p_{i,0} = 1 - p_{i,1}` and :math:`y_{i,0} = 1 - y_{i,1}`,
-so expanding the inner sum over :math:`y_{i,k} \in \{0,1\}`
-gives the binary log loss.
+为了看这这里如何 generalizes （推广）上面给出的 binary log loss （二分 log loss），请注意，在 binary case （二分情况下），:math:`p_{i,0} = 1 - p_{i,1}` 和 :math:`y_{i,0} = 1 - y_{i,1}` ，因此扩展 :math:`y_{i,k} \in \{0,1\}` 的 inner sum （内部和），给出 binary log loss （二分 log loss）。
 
-The :func:`log_loss` function computes log loss given a list of ground-truth
-labels and a probability matrix, as returned by an estimator's ``predict_proba``
-method.
+:func:`log_loss` 函数计算出一个 a list of ground-truth labels （已标注的真实数据的标签的列表）和一个 probability matrix （概率矩阵） 的 log loss，由 estimator （估计器）的 ``predict_proba`` 方法返回。
 
     >>> from sklearn.metrics import log_loss
     >>> y_true = [0, 0, 1, 1]
@@ -880,48 +740,33 @@ method.
     >>> log_loss(y_true, y_pred)    # doctest: +ELLIPSIS
     0.1738...
 
-The first ``[.9, .1]`` in ``y_pred`` denotes 90% probability that the first
-sample has label 0.  The log loss is non-negative.
+``y_pred`` 中的第一个 ``[.9, .1]`` 表示第一个样本具有标签 0 的 90% 概率。log loss 是非负数。
 
 .. _matthews_corrcoef:
 
-Matthews correlation coefficient
+马修斯相关系数
 ---------------------------------
 
-The :func:`matthews_corrcoef` function computes the
-`Matthew's correlation coefficient (MCC) <https://en.wikipedia.org/wiki/Matthews_correlation_coefficient>`_
-for binary classes.  Quoting Wikipedia:
+:func:`matthews_corrcoef` 函数用于计算 binary classes （二分类）的 `Matthew's correlation coefficient (MCC) <https://en.wikipedia.org/wiki/Matthews_correlation_coefficient>`_ 引用自 Wikipedia:
 
 
-    "The Matthews correlation coefficient is used in machine learning as a
-    measure of the quality of binary (two-class) classifications. It takes
-    into account true and false positives and negatives and is generally
-    regarded as a balanced measure which can be used even if the classes are
-    of very different sizes. The MCC is in essence a correlation coefficient
-    value between -1 and +1. A coefficient of +1 represents a perfect
-    prediction, 0 an average random prediction and -1 an inverse prediction.
-    The statistic is also known as the phi coefficient."
+    "Matthews correlation coefficient（马修斯相关系数）用于机器学习，作为 binary (two-class) classifications （二分类）分类质量的度量。它考虑到 true and false positives and negatives （真和假的 positives 和 negatives），通常被认为是可以使用的 balanced measure（平衡措施），即使 classes are of very different sizes （类别大小不同）。MCC 本质上是 -1 和 +1 之间的相关系数值。系数 +1 表示完美预测，0 表示平均随机预测， -1 表示反向预测。statistic （统计量）也称为 phi coefficient （phi）系数。"
 
 
-In the binary (two-class) case, :math:`tp`, :math:`tn`, :math:`fp` and
-:math:`fn` are respectively the number of true positives, true negatives, false
-positives and false negatives, the MCC is defined as
+在 binary (two-class) （二分类）情况下，:math:`tp`, :math:`tn`, :math:`fp` 和 :math:`fn` 分别是 true positives, true negatives, false positives 和 false negatives 的数量，MCC 定义为
 
 .. math::
 
   MCC = \frac{tp \times tn - fp \times fn}{\sqrt{(tp + fp)(tp + fn)(tn + fp)(tn + fn)}}.
 
-In the multiclass case, the Matthews correlation coefficient can be `defined
-<http://rk.kvl.dk/introduction/index.html>`_ in terms of a
-:func:`confusion_matrix` :math:`C` for :math:`K` classes.  To simplify the
-definition consider the following intermediate variables:
+在 multiclass case （多类的情况）下， Matthews correlation coefficient（马修斯相关系数） 可以根据 :math:`K` classes （类）的 :func:`confusion_matrix` :math:`C` 定义 `defined <http://rk.kvl.dk/introduction/index.html>`_ 。为了简化定义，考虑以下中间变量: 
 
-* :math:`t_k=\sum_{i}^{K} C_{ik}` the number of times class :math:`k` truly occurred,
-* :math:`p_k=\sum_{i}^{K} C_{ki}` the number of times class :math:`k` was predicted,
-* :math:`c=\sum_{k}^{K} C_{kk}` the total number of samples correctly predicted,
-* :math:`s=\sum_{i}^{K} \sum_{j}^{K} C_{ij}` the total number of samples.
+* :math:`t_k=\sum_{i}^{K} C_{ik}` 真正发生了 :math:`k` 类的次数,
+* :math:`p_k=\sum_{i}^{K} C_{ki}` :math:`k` 类被预测的次数,
+* :math:`c=\sum_{k}^{K} C_{kk}` 正确预测的样本总数,
+* :math:`s=\sum_{i}^{K} \sum_{j}^{K} C_{ij}` 样本总数.
 
-Then the multiclass MCC is defined as:
+然后 multiclass MCC 定义为:
 
 .. math::
     MCC = \frac{
@@ -931,13 +776,9 @@ Then the multiclass MCC is defined as:
         (s^2 - \sum_{k}^{K} t_k^2)
     }}
 
-When there are more than two labels, the value of the MCC will no longer range
-between -1 and +1. Instead the minimum value will be somewhere between -1 and 0
-depending on the number and distribution of ground true labels. The maximum
-value is always +1.
+当有两个以上的标签时， MCC 的值将不再在 -1 和 +1 之间。相反，根据已经标注的真实数据的数量和分布情况，最小值将介于 -1 和 0 之间。最大值始终为 +1 。
 
-Here is a small example illustrating the usage of the :func:`matthews_corrcoef`
-function:
+这是一个小例子，说明了使用 :func:`matthews_corrcoef` 函数:
 
     >>> from sklearn.metrics import matthews_corrcoef
     >>> y_true = [+1, +1, +1, -1]
@@ -948,24 +789,15 @@ function:
 .. _roc_metrics:
 
 Receiver operating characteristic (ROC)
----------------------------------------
+----------------------------------------------
 
-The function :func:`roc_curve` computes the
-`receiver operating characteristic curve, or ROC curve <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>`_.
-Quoting Wikipedia :
+函数 :func:`roc_curve` 计算 `receiver operating characteristic curve, or ROC curve <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>`_.
+引用 Wikipedia :
 
-  "A receiver operating characteristic (ROC), or simply ROC curve, is a
-  graphical plot which illustrates the performance of a binary classifier
-  system as its discrimination threshold is varied. It is created by plotting
-  the fraction of true positives out of the positives (TPR = true positive
-  rate) vs. the fraction of false positives out of the negatives (FPR = false
-  positive rate), at various threshold settings. TPR is also known as
-  sensitivity, and FPR is one minus the specificity or true negative rate."
+  "A receiver operating characteristic (ROC), 或者简单的 ROC 曲线，是一个图形图，说明了 binary classifier （二分分类器）系统的性能，因为 discrimination threshold （鉴别阈值）是变化的。它是通过在不同的阈值设置下，从 true positives out of the positives (TPR = true positive 比例) 与 false positives out of the negatives (FPR = false positive 比例) 绘制 true positive 的比例来创建的。 TPR 也称为 sensitivity（灵敏度），FPR 是减去 specificity（特异性） 或 true negative 比例。"
 
-This function requires the true binary
-value and the target scores, which can either be probability estimates of the
-positive class, confidence values, or binary decisions.
-Here is a small example of how to use the :func:`roc_curve` function::
+该函数需要真正的 binar value （二分值）和 target scores（目标分数），这可以是 positive class 的 probability estimates （概率估计），confidence values（置信度值）或 binary decisions（二分决策）。
+这是一个如何使用 :func:`roc_curve` 函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import roc_curve
@@ -979,19 +811,15 @@ Here is a small example of how to use the :func:`roc_curve` function::
     >>> thresholds
     array([ 0.8 ,  0.4 ,  0.35,  0.1 ])
 
-This figure shows an example of such an ROC curve:
+该图显示了这样的 ROC 曲线的示例:
 
 .. image:: ../auto_examples/model_selection/images/sphx_glr_plot_roc_001.png
    :target: ../auto_examples/model_selection/plot_roc.html
    :scale: 75
    :align: center
 
-The :func:`roc_auc_score` function computes the area under the receiver
-operating characteristic (ROC) curve, which is also denoted by
-AUC or AUROC.  By computing the
-area under the roc curve, the curve information is summarized in one number.
-For more information see the `Wikipedia article on AUC
-<https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve>`_.
+:func:`roc_auc_score` 函数计算 receiver operating characteristic (ROC) 曲线下的面积，也由 AUC 和 AUROC 表示。通过计算 roc 曲线下的面积，曲线信息总结为一个数字。
+有关更多的信息，请参阅 `Wikipedia article on AUC <https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve>`_ .
 
   >>> import numpy as np
   >>> from sklearn.metrics import roc_auc_score
@@ -1000,13 +828,9 @@ For more information see the `Wikipedia article on AUC
   >>> roc_auc_score(y_true, y_scores)
   0.75
 
-In multi-label classification, the :func:`roc_auc_score` function is
-extended by averaging over the labels as :ref:`above <average>`.
+在 multi-label classification （多标签分类）中， :func:`roc_auc_score` 函数通过在标签上进行平均来扩展 :ref:`above <average>` .
 
-Compared to metrics such as the subset accuracy, the Hamming loss, or the
-F1 score, ROC doesn't require optimizing a threshold for each label. The
-:func:`roc_auc_score` function can also be used in multi-class classification,
-if the predicted outputs have been binarized.
+与诸如 subset accuracy （子集精确度），Hamming loss（汉明损失）或 F1 score 的 metrics（指标）相比， ROC 不需要优化每个标签的阈值。:func:`roc_auc_score` 函数也可以用于 multi-class classification （多类分类），如果预测的输出被 binarized （二分化）。
 
 
 .. image:: ../auto_examples/model_selection/images/sphx_glr_plot_roc_002.png
@@ -1014,46 +838,33 @@ if the predicted outputs have been binarized.
    :scale: 75
    :align: center
 
-.. topic:: Examples:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_model_selection_plot_roc.py`
-    for an example of using ROC to
-    evaluate the quality of the output of a classifier.
+  * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_roc.py`
+    例如使用 ROC 来评估分类器输出的质量。
 
-  * See :ref:`sphx_glr_auto_examples_model_selection_plot_roc_crossval.py`
-    for an example of using ROC to
-    evaluate classifier output quality, using cross-validation.
+  * 参阅 :ref:`sphx_glr_auto_examples_model_selection_plot_roc_crossval.py`
+    例如使用 ROC 来评估分类器输出质量，使用 cross-validation （交叉验证）。
 
-  * See :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
-    for an example of using ROC to
-    model species distribution.
+  * 参阅 :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
+    例如使用 ROC 来 model species distribution 模拟物种分布。
 
 .. _zero_one_loss:
 
-Zero one loss
+零一损失
 --------------
 
-The :func:`zero_one_loss` function computes the sum or the average of the 0-1
-classification loss (:math:`L_{0-1}`) over :math:`n_{\text{samples}}`. By
-default, the function normalizes over the sample. To get the sum of the
-:math:`L_{0-1}`, set ``normalize`` to ``False``.
+:func:`zero_one_loss` 函数通过 :math:`n_{\text{samples}}` 计算 0-1 classification loss (:math:`L_{0-1}`) 的 sum （和）或 average （平均值）。默认情况下，函数在样本上 normalizes （标准化）。要获得 :math:`L_{0-1}` 的总和，将 ``normalize`` 设置为 ``False``。
 
-In multilabel classification, the :func:`zero_one_loss` scores a subset as
-one if its labels strictly match the predictions, and as a zero if there
-are any errors.  By default, the function returns the percentage of imperfectly
-predicted subsets.  To get the count of such subsets instead, set
-``normalize`` to ``False``
+在 multilabel classification （多标签分类）中，如果零标签与标签严格匹配，则 :func:`zero_one_loss` 将一个子集作为一个子集，如果有任何错误，则为零。默认情况下，函数返回不完全预测子集的百分比。为了得到这样的子集的计数，将 ``normalize`` 设置为 ``False`` 。
 
-If :math:`\hat{y}_i` is the predicted value of
-the :math:`i`-th sample and :math:`y_i` is the corresponding true value,
-then the 0-1 loss :math:`L_{0-1}` is defined as:
+如果 :math:`\hat{y}_i` 是第 :math:`i` 个样本的预测值，:math:`y_i` 是相应的真实值，则 0-1 loss :math:`L_{0-1}` 定义为:
 
 .. math::
 
    L_{0-1}(y_i, \hat{y}_i) = 1(\hat{y}_i \not= y_i)
 
-where :math:`1(x)` is the `indicator function
-<https://en.wikipedia.org/wiki/Indicator_function>`_.
+其中 :math:`1(x)` 是 `indicator function <https://en.wikipedia.org/wiki/Indicator_function>`_.
 
 
   >>> from sklearn.metrics import zero_one_loss
@@ -1064,8 +875,7 @@ where :math:`1(x)` is the `indicator function
   >>> zero_one_loss(y_true, y_pred, normalize=False)
   1
 
-In the multilabel case with binary label indicators, where the first label
-set [0,1] has an error: ::
+在具有 binary label indicators （二分标签指示符）的 multilabel （多标签）情况下，第一个标签集 [0,1] 有错误: ::
 
   >>> zero_one_loss(np.array([[0, 1], [1, 1]]), np.ones((2, 2)))
   0.5
@@ -1073,43 +883,31 @@ set [0,1] has an error: ::
   >>> zero_one_loss(np.array([[0, 1], [1, 1]]), np.ones((2, 2)),  normalize=False)
   1
 
-.. topic:: Example:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_feature_selection_plot_rfe_with_cross_validation.py`
-    for an example of zero one loss usage to perform recursive feature
-    elimination with cross-validation.
+  * 参阅 :ref:`sphx_glr_auto_examples_feature_selection_plot_rfe_with_cross_validation.py`
+    例如 zero one loss 使用以通过 cross-validation （交叉验证）执行递归特征消除。
 
 .. _brier_score_loss:
 
-Brier score loss
-----------------
+Brier 分数损失
+--------------------
 
-The :func:`brier_score_loss` function computes the
-`Brier score <https://en.wikipedia.org/wiki/Brier_score>`_
-for binary classes. Quoting Wikipedia:
+:func:`brier_score_loss` 函数计算二进制类的 `Brier 分数 <https://en.wikipedia.org/wiki/Brier_score>`_ 。引用维基百科：
 
-    "The Brier score is a proper score function that measures the accuracy of
-    probabilistic predictions. It is applicable to tasks in which predictions
-    must assign probabilities to a set of mutually exclusive discrete outcomes."
+    "Brier 分数是一个特有的分数函数，用于衡量概率预测的准确性。它适用于预测必须将概率分配给一组相互排斥的离散结果的任务。"
 
-This function returns a score of the mean square difference between the actual
-outcome and the predicted probability of the possible outcome. The actual
-outcome has to be 1 or 0 (true or false), while the predicted probability of
-the actual outcome can be a value between 0 and 1.
+该函数返回的是 实际结果与可能结果 的预测概率之间均方差的得分。 实际结果必须为1或0（真或假），而实际结果的预测概率可以是0到1之间的值。
 
-The brier score loss is also between 0 to 1 and the lower the score (the mean
-square difference is smaller), the more accurate the prediction is. It can be
-thought of as a measure of the "calibration" of a set of probabilistic
-predictions.
+Brier 分数损失也在0到1之间，分数越低（均方差越小），预测越准确。它可以被认为是对一组概率预测的 "校准" 的度量。
 
 .. math::
 
    BS = \frac{1}{N} \sum_{t=1}^{N}(f_t - o_t)^2
 
-where : :math:`N` is the total number of predictions, :math:`f_t` is the
-predicted probability of the actual outcome :math:`o_t`.
+其中: :math:`N` 是预测的总数， :math:`f_t` 是实际结果 :math:`o_t` 的预测概率。
 
-Here is a small example of usage of this function:::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import brier_score_loss
@@ -1127,61 +925,46 @@ Here is a small example of usage of this function:::
     0.0
 
 
-.. topic:: Example:
+.. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_calibration_plot_calibration.py`
-    for an example of Brier score loss usage to perform probability
-    calibration of classifiers.
+  * 请参阅分类器的概率校准 :ref:`sphx_glr_auto_examples_calibration_plot_calibration.py` ，通过 Brier 分数损失使用示例 来执行分类器的概率校准。
 
-.. topic:: References:
+.. topic:: 参考文献:
 
-  * G. Brier, `Verification of forecasts expressed in terms of probability
-    <http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf>`_,
-    Monthly weather review 78.1 (1950)
+  * G. Brier, `以概率表示的预测验证 <http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf>`_ , 月度天气评估78.1（1950）
 
 .. _multilabel_ranking_metrics:
 
-Multilabel ranking metrics
+多标签排名指标
 ==========================
 
 .. currentmodule:: sklearn.metrics
 
-In multilabel learning, each sample can have any number of ground truth labels
-associated with it. The goal is to give high scores and better rank to
-the ground truth labels.
+在多分类学习中，每个样本可以具有与其相关联的任何数量的真实标签。目标是给予高分，更好地评价真实标签。
 
 .. _coverage_error:
 
-Coverage error
+覆盖误差
 --------------
 
-The :func:`coverage_error` function computes the average number of labels that
-have to be included in the final prediction such that all true labels
-are predicted. This is useful if you want to know how many top-scored-labels
-you have to predict in average without missing any true one. The best value
-of this metrics is thus the average number of true labels.
+:func:`coverage_error` 函数计算必须包含在最终预测中的标签的平均数，以便预测所有真正的标签。 
+如果您想知道有多少 top 评分标签，您必须通过平均来预测，而不会丢失任何真正的标签，这很有用。 
+因此，此指标的最佳价值是真正标签的平均数量。
 
 .. note::
 
-    Our implementation's score is 1 greater than the one given in Tsoumakas
-    et al., 2010. This extends it to handle the degenerate case in which an
-    instance has 0 true labels.
+    我们的实现的分数比 Tsoumakas 等人在2010年的分数大1。
+    这扩展了它来处理一个具有0个真实标签实例的退化情况。
 
-Formally, given a binary indicator matrix of the ground truth labels
-:math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` and the
-score associated with each label
-:math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}`,
-the coverage is defined as
+正式地，给定真实标签 :math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` 的二进制指示矩阵和与每个标签 :math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}` 相关联的分数，覆盖范围被定义为
 
 .. math::
   coverage(y, \hat{f}) = \frac{1}{n_{\text{samples}}}
     \sum_{i=0}^{n_{\text{samples}} - 1} \max_{j:y_{ij} = 1} \text{rank}_{ij}
 
-with :math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|`.
-Given the rank definition, ties in ``y_scores`` are broken by giving the
-maximal rank that would have been assigned to all tied values.
+与 :math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|` 。给定等级定义，通过给出将被分配给所有绑定值的最大等级， ``y_scores`` 中的关系会被破坏。
 
-Here is a small example of usage of this function::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import coverage_error
@@ -1192,39 +975,27 @@ Here is a small example of usage of this function::
 
 .. _label_ranking_average_precision:
 
-Label ranking average precision
+标签排名平均精度
 -------------------------------
 
-The :func:`label_ranking_average_precision_score` function
-implements label ranking average precision (LRAP). This metric is linked to
-the :func:`average_precision_score` function, but is based on the notion of
-label ranking instead of precision and recall.
+:func:`label_ranking_average_precision_score` 函数实现标签排名平均精度（LRAP）。 
+该度量值与 :func:`average_precision_score` 函数相关联，但是基于标签排名的概念，而不是精确度和召回。
 
-Label ranking average precision (LRAP) is the average over each ground truth
-label assigned to each sample, of the ratio of true vs. total labels with lower
-score. This metric will yield better scores if you are able to give better rank
-to the labels associated with each sample. The obtained score is always strictly
-greater than 0, and the best value is 1. If there is exactly one relevant
-label per sample, label ranking average precision is equivalent to the `mean
-reciprocal rank <https://en.wikipedia.org/wiki/Mean_reciprocal_rank>`_.
+标签排名平均精度（LRAP）是分配给每个样本的每个真实标签的平均值，真实对总标签与较低分数的比率。 
+如果能够为每个样本相关标签提供更好的排名，这个指标就会产生更好的分数。 
+获得的得分总是严格大于0，最佳值为1。如果每个样本只有一个相关标签，则标签排名平均精度等于 `平均倒数等级 <https://en.wikipedia.org/wiki/Mean_reciprocal_rank>`_ 。
 
-Formally, given a binary indicator matrix of the ground truth labels
-:math:`y \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}` and the
-score associated with each label
-:math:`\hat{f} \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}`,
-the average precision is defined as
+正式地，给定真实标签 :math:`y \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}` 的二进制指示矩阵和与每个标签 :math:`\hat{f} \in \mathcal{R}^{n_\text{samples} \times n_\text{labels}}` 相关联的得分，平均精度被定义为
 
 .. math::
   LRAP(y, \hat{f}) = \frac{1}{n_{\text{samples}}}
     \sum_{i=0}^{n_{\text{samples}} - 1} \frac{1}{|y_i|}
     \sum_{j:y_{ij} = 1} \frac{|\mathcal{L}_{ij}|}{\text{rank}_{ij}}
 
+与 :math:`\mathcal{L}_{ij} = \left\{k: y_{ik} = 1, \hat{f}_{ik} \geq \hat{f}_{ij} \right\}`，
+:math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|` 和 :math:`|\cdot|` 是集合的 l0 范数或基数。
 
-with :math:`\mathcal{L}_{ij} = \left\{k: y_{ik} = 1, \hat{f}_{ik} \geq \hat{f}_{ij} \right\}`,
-:math:`\text{rank}_{ij} = \left|\left\{k: \hat{f}_{ik} \geq \hat{f}_{ij} \right\}\right|`
-and :math:`|\cdot|` is the l0 norm or the cardinality of the set.
-
-Here is a small example of usage of this function::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import label_ranking_average_precision_score
@@ -1235,29 +1006,21 @@ Here is a small example of usage of this function::
 
 .. _label_ranking_loss:
 
-Ranking loss
-------------
+排序损失
+----------------
 
-The :func:`label_ranking_loss` function computes the ranking loss which
-averages over the samples the number of label pairs that are incorrectly
-ordered, i.e. true labels have a lower score than false labels, weighted by
-the inverse number of false and true labels. The lowest achievable
-ranking loss is zero.
+:func:`label_ranking_loss` 函数计算在样本上平均排序错误的标签对数量的排序损失，即真实标签的分数低于假标签，由虚假和真实标签的倒数加权。最低可实现的排名损失为零。
 
-Formally, given a binary indicator matrix of the ground truth labels
-:math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` and the
-score associated with each label
-:math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}`,
-the ranking loss is defined as
+正式地，给定真相标签 :math:`y \in \left\{0, 1\right\}^{n_\text{samples} \times n_\text{labels}}` 的二进制指示矩阵和与每个标签 :math:`\hat{f} \in \mathbb{R}^{n_\text{samples} \times n_\text{labels}}` 相关联的得分，排序损失被定义为
 
 .. math::
   \text{ranking\_loss}(y, \hat{f}) =  \frac{1}{n_{\text{samples}}}
     \sum_{i=0}^{n_{\text{samples}} - 1} \frac{1}{|y_i|(n_\text{labels} - |y_i|)}
     \left|\left\{(k, l): \hat{f}_{ik} < \hat{f}_{il}, y_{ik} = 1, y_{il} = 0 \right\}\right|
 
-where :math:`|\cdot|` is the :math:`\ell_0` norm or the cardinality of the set.
+其中 :math:`|\cdot|` 是 :math:`\ell_0` 范数或集合的基数。
 
-Here is a small example of usage of this function::
+这是一个使用这个函数的小例子::
 
     >>> import numpy as np
     >>> from sklearn.metrics import label_ranking_loss
@@ -1271,66 +1034,53 @@ Here is a small example of usage of this function::
     0.0
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
-  * Tsoumakas, G., Katakis, I., & Vlahavas, I. (2010). Mining multi-label data. In
-    Data mining and knowledge discovery handbook (pp. 667-685). Springer US.
+  * Tsoumakas, G., Katakis, I., & Vlahavas, I. (2010). 挖掘多标签数据。在数据挖掘和知识发现手册（第667-685页）。美国 Springer.
 
 .. _regression_metrics:
 
-Regression metrics
-===================
+回归指标
+==================
 
 .. currentmodule:: sklearn.metrics
 
-The :mod:`sklearn.metrics` module implements several loss, score, and utility
-functions to measure regression performance. Some of those have been enhanced
-to handle the multioutput case: :func:`mean_squared_error`,
-:func:`mean_absolute_error`, :func:`explained_variance_score` and
-:func:`r2_score`.
+该 :mod:`sklearn.metrics` 模块实现了一些 loss, score 以及 utility 函数以测量 regression（回归）的性能.
+其中一些已经被加强以处理多个输出的场景: :func:`mean_squared_error`, :func:`mean_absolute_error`, :func:`explained_variance_score` 和 :func:`r2_score`.
 
 
-These functions have an ``multioutput`` keyword argument which specifies the
-way the scores or losses for each individual target should be averaged. The
-default is ``'uniform_average'``, which specifies a uniformly weighted mean
-over outputs. If an ``ndarray`` of shape ``(n_outputs,)`` is passed, then its
-entries are interpreted as weights and an according weighted average is
-returned. If ``multioutput`` is ``'raw_values'`` is specified, then all
-unaltered individual scores or losses will be returned in an array of shape
-``(n_outputs,)``.
+这些函数有 ``multioutput`` 这样一个 keyword（关键的）参数, 它指定每一个目标的 score（得分）或 loss（损失）的平均值的方式.
+默认是 ``'uniform_average'``, 其指定了输出时一致的权重均值.
+如果一个 ``ndarray`` 的 shape ``(n_outputs,)`` 被传递, 则其中的 entries（条目）将被解释为权重，并返回相应的加权平均值.
+如果 ``multioutput`` 指定了 ``'raw_values'`` , 则所有未改变的部分 score（得分）或 loss（损失）将以 ``(n_outputs,)`` 形式的数组返回.
 
 
-The :func:`r2_score` and :func:`explained_variance_score` accept an additional
-value ``'variance_weighted'`` for the ``multioutput`` parameter. This option
-leads to a weighting of each individual score by the variance of the
-corresponding target variable. This setting quantifies the globally captured
-unscaled variance. If the target variables are of different scale, then this
-score puts more importance on well explaining the higher variance variables.
-``multioutput='variance_weighted'`` is the default value for :func:`r2_score`
-for backward compatibility. This will be changed to ``uniform_average`` in the
-future.
+该 :func:`r2_score` 和 :func:`explained_variance_score` 函数接受一个额外的值 ``'variance_weighted'`` 用于 ``multioutput`` 参数.
+该选项通过相应目标变量的方差使得每个单独的 score 进行加权.
+该设置量化了全局捕获的未缩放方差.
+如果目标变量的大小不一样, 则该 score 更好地解释了较高的方差变量.
+``multioutput='variance_weighted'`` 是 :func:`r2_score` 的默认值以向后兼容.
+以后该值会被改成 ``uniform_average``.
+
 
 .. _explained_variance_score:
 
-Explained variance score
+解释方差得分
 -------------------------
 
-The :func:`explained_variance_score` computes the `explained variance
-regression score <https://en.wikipedia.org/wiki/Explained_variation>`_.
+该 :func:`explained_variance_score` 函数计算了 `explained variance
+regression score（解释的方差回归得分） <https://en.wikipedia.org/wiki/Explained_variation>`_.
 
-If :math:`\hat{y}` is the estimated target output, :math:`y` the corresponding
-(correct) target output, and :math:`Var` is `Variance
-<https://en.wikipedia.org/wiki/Variance>`_, the square of the standard deviation,
-then the explained variance is estimated as follow:
+如果 :math:`\hat{y}` 是预估的目标输出, :math:`y` 是相应（正确的）目标输出, 并且 :math:`Var` is `方差
+<https://en.wikipedia.org/wiki/Variance>`_, 标准差的平方, 那么解释的方差预估如下:
 
 .. math::
 
   \texttt{explained\_{}variance}(y, \hat{y}) = 1 - \frac{Var\{ y - \hat{y}\}}{Var\{y\}}
 
-The best possible score is 1.0, lower values are worse.
+最好的得分是 1.0, 值越低越差.
 
-Here is a small example of usage of the :func:`explained_variance_score`
-function::
+下面是一下有关 :func:`explained_variance_score` 函数使用的一些例子::
 
     >>> from sklearn.metrics import explained_variance_score
     >>> y_true = [3, -0.5, 2, 7]
@@ -1348,23 +1098,19 @@ function::
 
 .. _mean_absolute_error:
 
-Mean absolute error
+平均绝对误差
 -------------------
 
-The :func:`mean_absolute_error` function computes `mean absolute
-error <https://en.wikipedia.org/wiki/Mean_absolute_error>`_, a risk
-metric corresponding to the expected value of the absolute error loss or
-:math:`l1`-norm loss.
+该 :func:`mean_absolute_error` 函数计算了 `平均绝对误差 <https://en.wikipedia.org/wiki/Mean_absolute_error>`_, 一个对应绝对误差损失预期值或者 :math:`l1`-norm 损失的风险度量.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample,
-and :math:`y_i` is the corresponding true value, then the mean absolute error
-(MAE) estimated over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则平均绝对误差 (MAE) 预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MAE}(y, \hat{y}) = \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}}-1} \left| y_i - \hat{y}_i \right|.
 
-Here is a small example of usage of the :func:`mean_absolute_error` function::
+下面是一个有关 :func:`mean_absolute_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import mean_absolute_error
   >>> y_true = [3, -0.5, 2, 7]
@@ -1383,24 +1129,19 @@ Here is a small example of usage of the :func:`mean_absolute_error` function::
 
 .. _mean_squared_error:
 
-Mean squared error
+均方误差
 -------------------
 
-The :func:`mean_squared_error` function computes `mean square
-error <https://en.wikipedia.org/wiki/Mean_squared_error>`_, a risk
-metric corresponding to the expected value of the squared (quadratic) error or
-loss.
+该 :func:`mean_squared_error` 函数计算了 `均方误差 <https://en.wikipedia.org/wiki/Mean_squared_error>`_, 一个对应于平方（二次）误差或损失的预期值的风险度量.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample,
-and :math:`y_i` is the corresponding true value, then the mean squared error
-(MSE) estimated over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则均方误差（MSE）预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MSE}(y, \hat{y}) = \frac{1}{n_\text{samples}} \sum_{i=0}^{n_\text{samples} - 1} (y_i - \hat{y}_i)^2.
 
-Here is a small example of usage of the :func:`mean_squared_error`
-function::
+下面是一个有关 :func:`mean_squared_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import mean_squared_error
   >>> y_true = [3, -0.5, 2, 7]
@@ -1420,30 +1161,23 @@ function::
 
 .. _mean_squared_log_error:
 
-Mean squared logarithmic error
+均方误差对数
 ------------------------------
 
-The :func:`mean_squared_log_error` function computes a risk metric
-corresponding to the expected value of the squared logarithmic (quadratic)
-error or loss.
+该 :func:`mean_squared_log_error` 函数计算了一个对应平方对数（二次）误差或损失的预估值风险度量.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample,
-and :math:`y_i` is the corresponding true value, then the mean squared
-logarithmic error (MSLE) estimated over :math:`n_{\text{samples}}` is
-defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则均方误差对数（MSLE）预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MSLE}(y, \hat{y}) = \frac{1}{n_\text{samples}} \sum_{i=0}^{n_\text{samples} - 1} (\log_e (1 + y_i) - \log_e (1 + \hat{y}_i) )^2.
 
-Where :math:`\log_e (x)` means the natural logarithm of :math:`x`. This metric
-is best to use when targets having exponential growth, such as population
-counts, average sales of a commodity over a span of years etc. Note that this
-metric penalizes an under-predicted estimate greater than an over-predicted
-estimate.
+其中 :math:`\log_e (x)` 表示 :math:`x` 的自然对数.
+当目标具有指数增长的趋势时, 该指标最适合使用, 例如人口数量, 跨年度商品的平均销售额等.
+请注意, 该指标会对低于预测的估计值进行估计.
 
-Here is a small example of usage of the :func:`mean_squared_log_error`
-function::
+下面是一个有关 :func:`mean_squared_log_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import mean_squared_log_error
   >>> y_true = [3, 5, 2.5, 7]
@@ -1457,25 +1191,22 @@ function::
 
 .. _median_absolute_error:
 
-Median absolute error
+中位绝对误差
 ---------------------
 
-The :func:`median_absolute_error` is particularly interesting because it is
-robust to outliers. The loss is calculated by taking the median of all absolute
-differences between the target and the prediction.
+该 :func:`median_absolute_error` 函数尤其有趣, 因为它的离群值很强.
+通过取目标和预测之间的所有绝对差值的中值来计算损失.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample
-and :math:`y_i` is the corresponding true value, then the median absolute error
-(MedAE) estimated over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则中位绝对误差（MedAE）预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   \text{MedAE}(y, \hat{y}) = \text{median}(\mid y_1 - \hat{y}_1 \mid, \ldots, \mid y_n - \hat{y}_n \mid).
 
-The :func:`median_absolute_error` does not support multioutput.
+该 :func:`median_absolute_error` 函数不支持多输出.
 
-Here is a small example of usage of the :func:`median_absolute_error`
-function::
+下面是一个有关 :func:`median_absolute_error` 函数用法的小例子::
 
   >>> from sklearn.metrics import median_absolute_error
   >>> y_true = [3, -0.5, 2, 7]
@@ -1485,28 +1216,24 @@ function::
 
 .. _r2_score:
 
-R² score, the coefficient of determination
+R² score, 可决系数
 -------------------------------------------
 
-The :func:`r2_score` function computes R², the `coefficient of
-determination <https://en.wikipedia.org/wiki/Coefficient_of_determination>`_.
-It provides a measure of how well future samples are likely to
-be predicted by the model. Best possible score is 1.0 and it can be negative
-(because the model can be arbitrarily worse). A constant model that always
-predicts the expected value of y, disregarding the input features, would get a
-R^2 score of 0.0.
+该 :func:`r2_score` 函数计算了 computes R², 即 `可决系数 <https://en.wikipedia.org/wiki/Coefficient_of_determination>`_.
+它提供了将来样本如何可能被模型预测的估量.
+最佳分数为 1.0, 可以为负数（因为模型可能会更糟）.
+总是预测 y 的预期值，不考虑输入特征的常数模型将得到 R^2 得分为 0.0.
 
-If :math:`\hat{y}_i` is the predicted value of the :math:`i`-th sample
-and :math:`y_i` is the corresponding true value, then the score R² estimated
-over :math:`n_{\text{samples}}` is defined as
+如果 :math:`\hat{y}_i` 是 :math:`i`-th 样本的预测值,
+并且 :math:`y_i` 是对应的真实值, 则 R² 得分预估的 :math:`n_{\text{samples}}` 定义如下
 
 .. math::
 
   R^2(y, \hat{y}) = 1 - \frac{\sum_{i=0}^{n_{\text{samples}} - 1} (y_i - \hat{y}_i)^2}{\sum_{i=0}^{n_\text{samples} - 1} (y_i - \bar{y})^2}
 
-where :math:`\bar{y} =  \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}} - 1} y_i`.
+其中 :math:`\bar{y} =  \frac{1}{n_{\text{samples}}} \sum_{i=0}^{n_{\text{samples}} - 1} y_i`.
 
-Here is a small example of usage of the :func:`r2_score` function::
+下面是一个有关 :func:`r2_score` 函数用法的小例子::
 
   >>> from sklearn.metrics import r2_score
   >>> y_true = [3, -0.5, 2, 7]
@@ -1531,7 +1258,7 @@ Here is a small example of usage of the :func:`r2_score` function::
   0.925...
 
 
-.. topic:: Example:
+.. topic:: 示例:
 
   * See :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
     for an example of R² score usage to
@@ -1539,44 +1266,39 @@ Here is a small example of usage of the :func:`r2_score` function::
 
 .. _clustering_metrics:
 
-Clustering metrics
+聚类指标
 ======================
 
 .. currentmodule:: sklearn.metrics
 
-The :mod:`sklearn.metrics` module implements several loss, score, and utility
-functions. For more information see the :ref:`clustering_evaluation`
-section for instance clustering, and :ref:`biclustering_evaluation` for
-biclustering.
+该 :mod:`sklearn.metrics` 模块实现了一些 loss, score 和 utility 函数.
+更多信息请参阅 :ref:`clustering_evaluation` 部分, 例如聚类, 以及用于二分聚类的 :ref:`biclustering_evaluation`.
 
 
 .. _dummy_estimators:
 
 
-Dummy estimators
-=================
+虚拟估计
+============================
 
 .. currentmodule:: sklearn.dummy
 
-When doing supervised learning, a simple sanity check consists of comparing
-one's estimator against simple rules of thumb. :class:`DummyClassifier`
-implements several such simple strategies for classification:
+在进行监督学习的过程中，简单的 sanity check（理性检查）包括将人的估计与简单的经验法则进行比较.
+:class:`DummyClassifier` 实现了几种简单的分类策略:
 
-- ``stratified`` generates random predictions by respecting the training
-  set class distribution.
-- ``most_frequent`` always predicts the most frequent label in the training set.
+- ``stratified`` 通过在训练集类分布方面来生成随机预测. 
+- ``most_frequent`` 总是预测训练集中最常见的标签.
 - ``prior`` always predicts the class that maximizes the class prior
   (like ``most_frequent`) and ``predict_proba`` returns the class prior.
-- ``uniform`` generates predictions uniformly at random.
-- ``constant`` always predicts a constant label that is provided by the user.
+- ``uniform`` 随机产生预测.
+- ``constant`` 总是预测用户提供的常量标签.
    A major motivation of this method is F1-scoring, when the positive class
    is in the minority.
+   这种方法的主要动机是 F1-scoring, 当 positive class（正类）较少时.
 
-Note that with all these strategies, the ``predict`` method completely ignores
-the input data!
+请注意, 这些所有的策略, ``predict`` 方法彻底的忽略了输入数据!
 
-To illustrate :class:`DummyClassifier`, first let's create an imbalanced
-dataset::
+为了说明 :class:`DummyClassifier`, 首先让我们创建一个 imbalanced dataset::
 
   >>> from sklearn.datasets import load_iris
   >>> from sklearn.model_selection import train_test_split
@@ -1585,7 +1307,7 @@ dataset::
   >>> y[y != 1] = -1
   >>> X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
-Next, let's compare the accuracy of ``SVC`` and ``most_frequent``::
+接下来, 让我们比较一下 ``SVC`` 和  ``most_frequent`` 的准确性.
 
   >>> from sklearn.dummy import DummyClassifier
   >>> from sklearn.svm import SVC
@@ -1598,31 +1320,26 @@ Next, let's compare the accuracy of ``SVC`` and ``most_frequent``::
   >>> clf.score(X_test, y_test)  # doctest: +ELLIPSIS
   0.57...
 
-We see that ``SVC`` doesn't do much better than a dummy classifier. Now, let's
-change the kernel::
+我们看到 ``SVC`` 没有比一个 dummy classifier（虚拟分类器）好很多.
+现在, 让我们来更改一下 kernel::
 
   >>> clf = SVC(kernel='rbf', C=1).fit(X_train, y_train)
   >>> clf.score(X_test, y_test)  # doctest: +ELLIPSIS
   0.97...
 
-We see that the accuracy was boosted to almost 100%.  A cross validation
-strategy is recommended for a better estimate of the accuracy, if it
-is not too CPU costly. For more information see the :ref:`cross_validation`
-section. Moreover if you want to optimize over the parameter space, it is highly
-recommended to use an appropriate methodology; see the :ref:`grid_search`
-section for details.
+我们看到准确率提升到将近 100%.
+建议采用交叉验证策略, 以更好地估计精度, 如果不是太耗 CPU 的话.
+更多信息请参阅 :ref:`cross_validation` 部分.
+此外，如果要优化参数空间，强烈建议您使用适当的方法;
+更多详情请参阅 :ref:`grid_search` 部分.
 
-More generally, when the accuracy of a classifier is too close to random, it
-probably means that something went wrong: features are not helpful, a
-hyperparameter is not correctly tuned, the classifier is suffering from class
-imbalance, etc...
+通常来说，当分类器的准确度太接近随机情况时，这可能意味着出现了一些问题: 特征没有帮助, 超参数没有正确调整, class 不平衡造成分类器有问题等...
 
-:class:`DummyRegressor` also implements four simple rules of thumb for regression:
+:class:`DummyRegressor` 还实现了四个简单的经验法则来进行回归:
 
-- ``mean`` always predicts the mean of the training targets.
-- ``median`` always predicts the median of the training targets.
-- ``quantile`` always predicts a user provided quantile of the training targets.
-- ``constant`` always predicts a constant value that is provided by the user.
+- ``mean`` 总是预测训练目标的平均值.
+- ``median`` 总是预测训练目标的中位数.
+- ``quantile`` 总是预测用户提供的训练目标的 quantile（分位数）.
+- ``constant`` 总是预测由用户提供的常数值.
 
-In all these strategies, the ``predict`` method completely ignores
-the input data.
+在以上所有的策略中, ``predict`` 方法完全忽略了输入数据.

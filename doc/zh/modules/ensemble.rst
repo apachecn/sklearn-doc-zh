@@ -1,87 +1,63 @@
 .. _ensemble:
 
 ================
-Ensemble methods
+集成方法
 ================
 
 .. currentmodule:: sklearn.ensemble
 
-The goal of **ensemble methods** is to combine the predictions of several
-base estimators built with a given learning algorithm in order to improve
-generalizability / robustness over a single estimator.
+``注意，在本文中bagging和boosting为了更好的保留原文意图，不进行翻译``
+``estimator->估计器  base estimator->基估计器``
 
-Two families of ensemble methods are usually distinguished:
+**集成方法** 的目标是把使用给定学习算法构建的几个基估计器的预测结果结合起来，从而获得比单个估计器更好的泛化能力/鲁棒性。
 
-- In **averaging methods**, the driving principle is to build several
-  estimators independently and then to average their predictions. On average,
-  the combined estimator is usually better than any of the single base
-  estimator because its variance is reduced.
+集成方法通常分为两种:
 
-  **Examples:** :ref:`Bagging methods <bagging>`, :ref:`Forests of randomized trees <forest>`, ...
+- **平均方法**，该方法的驱动原则是构建几个独立的估计器，然后平均化它们的预测结果。一般来说组合之后的估计器是会要比单个估计器要好的，因为它的方差减小了。
 
-- By contrast, in **boosting methods**, base estimators are built sequentially
-  and one tries to reduce the bias of the combined estimator. The motivation is
-  to combine several weak models to produce a powerful ensemble.
+  **示例:** :ref:`Bagging 方法 <bagging>`, :ref:`随机森林 <forest>`, ...
 
-  **Examples:** :ref:`AdaBoost <adaboost>`, :ref:`Gradient Tree Boosting <gradient_boosting>`, ...
+- 相比之下，在 **boosting 方法** 中，基估计器是依次构建的并且每一个都尝试去减少组合估计器的偏差。主要目的是为了把多个弱模型相结合变得更加强大。
+
+  **示例:** :ref:`AdaBoost <adaboost>`, :ref:`梯度提升树 <gradient_boosting>`, ...
 
 
 .. _bagging:
 
-Bagging meta-estimator
-======================
+Bagging meta-estimator（Bagging 元估计）
+========================================
 
-In ensemble algorithms, bagging methods form a class of algorithms which build
-several instances of a black-box estimator on random subsets of the original
-training set and then aggregate their individual predictions to form a final
-prediction. These methods are used as a way to reduce the variance of a base
-estimator (e.g., a decision tree), by introducing randomization into its
-construction procedure and then making an ensemble out of it. In many cases,
-bagging methods constitute a very simple way to improve with respect to a
-single model, without making it necessary to adapt the underlying base
-algorithm. As they provide a way to reduce overfitting, bagging methods work
-best with strong and complex models (e.g., fully developed decision trees), in
-contrast with boosting methods which usually work best with weak models (e.g.,
-shallow decision trees).
+在集成算法中，bagging方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
+该方法通过在构建模型的过程中引入随机性，以此来减少基估计器的方差(例如，决策树)。
+在多数情况下，bagging方法提供了一种非常简单的方式来对单一模型进行改进，同时无需适应底层算法。
+因为bagging方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下boosting方法在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
 
-Bagging methods come in many flavours but mostly differ from each other by the
-way they draw random subsets of the training set:
 
-  * When random subsets of the dataset are drawn as random subsets of the
-    samples, then this algorithm is known as Pasting [B1999]_.
+bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
-  * When samples are drawn with replacement, then the method is known as
-    Bagging [B1996]_.
+  * 如果抽取的数据集是样本的的子集，我们叫做粘贴(Pasting) [B1999]_ 。
 
-  * When random subsets of the dataset are drawn as random subsets of
-    the features, then the method is known as Random Subspaces [H1998]_.
+  * 如果样本抽取是放回的，我们称为Bagging [B1996]_ 。
 
-  * Finally, when base estimators are built on subsets of both samples and
-    features, then the method is known as Random Patches [LG2012]_.
+  * 如果抽取的数据集的随机子集是特征的随机子集，我们叫做随机子空间(Random Subspaces) [H1998]_ 。
 
-In scikit-learn, bagging methods are offered as a unified
-:class:`BaggingClassifier` meta-estimator  (resp. :class:`BaggingRegressor`),
-taking as input a user-specified base estimator along with parameters
-specifying the strategy to draw random subsets. In particular, ``max_samples``
-and ``max_features`` control the size of the subsets (in terms of samples and
-features), while ``bootstrap`` and ``bootstrap_features`` control whether
-samples and features are drawn with or without replacement. When using a subset
-of the available samples the generalization accuracy can be estimated with the
-out-of-bag samples by setting ``oob_score=True``. As an example, the
-snippet below illustrates how to instantiate a bagging ensemble of
-:class:`KNeighborsClassifier` base estimators, each built on random subsets of
-50% of the samples and 50% of the features.
+  * 最后，如果估计器构建在样本和特征的子集之上时，我们叫做随机补丁(Random Patches) [LG2012]_ 。
+
+
+
+在sklearn中，bagging方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor` ），输入的参数和策略由用户指定。``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
+当使用样本子集时，通过设置 ``oob_score=True`` ，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何实构造一个 :class:`KNeighborsClassifier` 估计器的bagging集成，每一个基估计器都建立在50%的样本随机子集和特征随机子集上。
 
     >>> from sklearn.ensemble import BaggingClassifier
     >>> from sklearn.neighbors import KNeighborsClassifier
     >>> bagging = BaggingClassifier(KNeighborsClassifier(),
     ...                             max_samples=0.5, max_features=0.5)
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_bias_variance.py`
 
-.. topic:: References
+.. topic:: 参考文献
 
   .. [B1999] L. Breiman, "Pasting small votes for classification in large
          databases and on-line", Machine Learning, 36(1), 85-103, 1999.
@@ -98,21 +74,17 @@ snippet below illustrates how to instantiate a bagging ensemble of
 
 .. _forest:
 
-Forests of randomized trees
+由随机树组成的森林
 ===========================
 
-The :mod:`sklearn.ensemble` module includes two averaging algorithms based
-on randomized :ref:`decision trees <tree>`: the RandomForest algorithm
-and the Extra-Trees method. Both algorithms are perturb-and-combine
-techniques [B1998]_ specifically designed for trees. This means a diverse
-set of classifiers is created by introducing randomness in the classifier
-construction.  The prediction of the ensemble is given as the averaged
-prediction of the individual classifiers.
+:mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees算法。
+这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques） [B1998]_ 。
+这意味着通过在分类器构造过程中引入随机性来创建一组不同的分类器。集成分类器的预测是单个分类器预测结果的平均值。 
 
-As other classifiers, forest classifiers have to be fitted with two
-arrays: a sparse or dense array X of size ``[n_samples, n_features]`` holding the
-training samples, and an array Y of size ``[n_samples]`` holding the
-target values (class labels) for the training samples::
+
+与其他分类器一样，森林分类器必须拟合（fitted）两个数组：
+保存训练样本的数组（可能稀疏或稠密）X，大小为 ``[n_samples, n_features]``。
+保存训练样本目标值（类标签）的数组Y，大小为 ``[n_samples]``::
 
     >>> from sklearn.ensemble import RandomForestClassifier
     >>> X = [[0, 0], [1, 1]]
@@ -120,41 +92,29 @@ target values (class labels) for the training samples::
     >>> clf = RandomForestClassifier(n_estimators=10)
     >>> clf = clf.fit(X, Y)
 
-Like :ref:`decision trees <tree>`, forests of trees also extend
-to :ref:`multi-output problems <tree_multioutput>`  (if Y is an array of size
-``[n_samples, n_outputs]``).
 
-Random Forests
+同 :ref:`决策树 <tree>` 一样，随机森林算法（forests of trees）也能够通过扩展来解决 :ref:`多输出问题 <tree_multioutput>` (如果 Y 的大小是 ``[n_samples, n_outputs])``. 
+
+随机森林
 --------------
 
-In random forests (see :class:`RandomForestClassifier` and
-:class:`RandomForestRegressor` classes), each tree in the ensemble is
-built from a sample drawn with replacement (i.e., a bootstrap sample)
-from the training set. In addition, when splitting a node during the
-construction of the tree, the split that is chosen is no longer the
-best split among all features. Instead, the split that is picked is the
-best split among a random subset of the features. As a result of this
-randomness, the bias of the forest usually slightly increases (with
-respect to the bias of a single non-random tree) but, due to averaging,
-its variance also decreases, usually more than compensating for the
-increase in bias, hence yielding an overall better model.
+在随机森林中（参见 :class:`ExtraTreesClassifier` 和 :class:`ExtraTreesRegressor` 类），
+集成模型中的每棵树构建时的样本都是由训练集经过替换得来的（例如，自助采样法-bootstrap sample，这里采用西瓜书中的译法）。
+另外，在构建树的过程中进行结点分割时，选择的分割点不再是所有特征中最佳分割点，而是特征的随机子集中的最佳分割点。
+由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于平均，其方差也会减小，通常能够补偿偏差的增加，从而产生更好的模型。
 
-In contrast to the original publication [B2001]_, the scikit-learn
-implementation combines classifiers by averaging their probabilistic
-prediction, instead of letting each classifier vote for a single class.
 
-Extremely Randomized Trees
+与原始版本的实现 [B2001]_ 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对类别进行投票。 
+
+
+极限随机树
 --------------------------
 
-In extremely randomized trees (see :class:`ExtraTreesClassifier`
-and :class:`ExtraTreesRegressor` classes), randomness goes one step
-further in the way splits are computed. As in random forests, a random
-subset of candidate features is used, but instead of looking for the
-most discriminative thresholds, thresholds are drawn at random for each
-candidate feature and the best of these randomly-generated thresholds is
-picked as the splitting rule. This usually allows to reduce the variance
-of the model a bit more, at the expense of a slightly greater increase
-in bias::
+在极限随机树中（参见 :class:`ExtraTreesClassifier` 和 :class:`ExtraTreesRegressor` 类)，
+计算分割点方法中的随机性进一步增强。 
+在随机森林中，使用的是候选特征的随机子集，而不是寻找最具有区分度的阈值，
+这里的阈值是针对每个候选特征而随机生成的，并且会把这些随机生成的阈值中的最佳值作为分割规则。
+这种做法通常能够更多地减少模型的方差，代价则是轻微地增大偏差：
 
     >>> from sklearn.model_selection import cross_val_score
     >>> from sklearn.datasets import make_blobs
@@ -188,59 +148,46 @@ in bias::
     :align: center
     :scale: 75%
 
-Parameters
+参数
 ----------
 
-The main parameters to adjust when using these methods is ``n_estimators``
-and ``max_features``. The former is the number of trees in the forest. The
-larger the better, but also the longer it will take to compute. In
-addition, note that results will stop getting significantly better
-beyond a critical number of trees. The latter is the size of the random
-subsets of features to consider when splitting a node. The lower the
-greater the reduction of variance, but also the greater the increase in
-bias. Empirical good default values are ``max_features=n_features``
-for regression problems, and ``max_features=sqrt(n_features)`` for
-classification tasks (where ``n_features`` is the number of features
-in the data). Good results are often achieved when setting ``max_depth=None``
-in combination with ``min_samples_split=1`` (i.e., when fully developing the
-trees). Bear in mind though that these values are usually not optimal, and
-might result in models that consume a lot of RAM. The best parameter values
-should always be cross-validated. In addition, note that in random forests,
-bootstrap samples are used by default (``bootstrap=True``)
-while the default strategy for extra-trees is to use the whole dataset
-(``bootstrap=False``).
-When using bootstrap sampling the generalization accuracy can be estimated
-on the left out or out-of-bag samples. This can be enabled by
-setting ``oob_score=True``.
+使用这些方法时要调整的参数主要是 ``n_estimators`` 和 ``max_features``。
+前者（n_estimators）是森林里的树木数量，越大越好，但是计算时间会增加。
+此外要注意树的数量超过临界值之后算法的效果并不会很显著的变好。
+后者（max_features）是分割节点时要考虑的特征的随机子集的大小。
+方差减小得越多，偏差增大得越多。
+根据经验回归问题最好使用默认值 max_features = n_features，
+分类问题最好使用 ``max_features = sqrt（n_features``
+（其中 ``n_features`` 是特征的个数）。
+``max_depth = None 和 min_samples_split = 1`` 结合通常会有不错的效果。
+请记住，这些（默认）值通常不是最佳的，同时还可能消耗大量的内存，最佳参数值应由交叉验证获得。
+另外，请注意，在随机林中，默认使用自助采样法（``bootstrap = True``），
+然而extra-trees的默认策略是使用整个数据集（``bootstrap = False``）。
+当使用自助采样法方法抽样时，泛化精度是可以通过剩余的或者袋子外的样本来估算的，设置 ``oob_score = True`` 即可。 
 
-.. note::
+.. topic:: 提示:
 
-    The size of the model with the default parameters is :math:`O( M * N * log (N) )`,
-    where :math:`M` is the number of trees and :math:`N` is the number of samples.
-    In order to reduce the size of the model, you can change these parameters:
-    ``min_samples_split``, ``min_samples_leaf``, ``max_leaf_nodes`` and ``max_depth``.
+    默认参数下模型复杂度是：``O(M*N*log(N))``， 
+    其中M是树的数目，``N`` 是样本数。 
+    可以通过设置以下参数来降低模型复杂度：``min_samples_split``, ``min_samples_leaf``, ``max_leaf_nodes`` and ``max_depth``. 
 
-Parallelization
+
+并行化 
 ---------------
 
-Finally, this module also features the parallel construction of the trees
-and the parallel computation of the predictions through the ``n_jobs``
-parameter. If ``n_jobs=k`` then computations are partitioned into
-``k`` jobs, and run on ``k`` cores of the machine. If ``n_jobs=-1``
-then all cores available on the machine are used. Note that because of
-inter-process communication overhead, the speedup might not be linear
-(i.e., using ``k`` jobs will unfortunately not be ``k`` times as
-fast). Significant speedup can still be achieved though when building
-a large number of trees, or when building a single tree requires a fair
-amount of time (e.g., on large datasets).
+最后，这个模块还支持树的并行构建，可以通过 ``n_jobs`` 参数来规划并行计算。
+如果 ``n_jobs = k``，则计算被划分为 ``k`` 个作业，并运行在机器的 ``k`` 个核上。 
+如果 ``n_jobs = -1``，则可以使用机器的所有核。 
+注意由于进程间通信具有开销，这里的提速并不是线性的（即，使用 ``k`` 个作业不会快k倍）。 
+当然，在建立大量的树，或者构建单个树需要相当长的时间（例如，在大型数据集上）时，（通过并行化）仍然可以实现显著的加速。 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_iris.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_importances_faces.py`
  * :ref:`sphx_glr_auto_examples_plot_multioutput_face_completion.py`
 
-.. topic:: References
+.. topic:: 参考文献
 
  .. [B2001] L. Breiman, "Random Forests", Machine Learning, 45(1), 5-32, 2001.
 
@@ -251,35 +198,25 @@ amount of time (e.g., on large datasets).
 
 .. _random_forest_feature_importance:
 
-Feature importance evaluation
+特征重要性评估
 -----------------------------
 
-The relative rank (i.e. depth) of a feature used as a decision node in a
-tree can be used to assess the relative importance of that feature with
-respect to the predictability of the target variable. Features used at
-the top of the tree contribute to the final prediction decision of a 
-larger fraction of the input samples. The **expected fraction of the 
-samples** they contribute to can thus be used as an estimate of the
-**relative importance of the features**.
+特征对目标变量预测的重要性可以通过（树中的决策节点的）特征使用的顺序（即深度）来进行评估。
+决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该 **特征相对重要性** 。 
 
-By **averaging** those expected activity rates over several randomized
-trees one can **reduce the variance** of such an estimate and use it
-for feature selection.
 
-The following example shows a color-coded representation of the relative
-importances of each individual pixel for a face recognition task using
-a :class:`ExtraTreesClassifier` model.
+通过 **平均** 多个随机树中的 **预期贡献率** （expected activity rates），可以减少这种估计的 **方差** ，并将其用于特征选择。 
+
+
+下面的例子展示了在面部识别中用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_forest_importances_faces_001.png
    :target: ../auto_examples/ensemble/plot_forest_importances_faces.html
    :align: center
    :scale: 75
 
-In practice those estimates are stored as an attribute named
-``feature_importances_`` on the fitted model. This is an array with shape
-``(n_features,)`` whose values are positive and sum to 1.0. The higher
-the value, the more important is the contribution of the matching feature
-to the prediction function.
+实际上，在拟合模型时这些估计值存储在 ``feature_importances_`` 属性中。
+这是一个大小为``(n_features,)``的数组，其值为正，并且总和为1.0。值越高，匹配特征对预测函数的贡献越大。 
 
 .. topic:: Examples:
 
@@ -288,39 +225,30 @@ to the prediction function.
 
 .. _random_trees_embedding:
 
-Totally Random Trees Embedding
+完全随机树嵌入
 ------------------------------
 
-:class:`RandomTreesEmbedding` implements an unsupervised transformation of the
-data.  Using a forest of completely random trees, :class:`RandomTreesEmbedding`
-encodes the data by the indices of the leaves a data point ends up in.  This
-index is then encoded in a one-of-K manner, leading to a high dimensional,
-sparse binary coding.
-This coding can be computed very efficiently and can then be used as a basis
-for other learning tasks.
-The size and sparsity of the code can be influenced by choosing the number of
-trees and the maximum depth per tree. For each tree in the ensemble, the coding
-contains one entry of one. The size of the coding is at most ``n_estimators * 2
-** max_depth``, the maximum number of leaves in the forest.
+:class:`RandomTreesEmbedding` 实现了无监督的数据转换。
+通过由完全随机树构成的森林，:class:`RandomTreesEmbedding` 使用数据尾部的叶子节点的索引对数据进行编码。
+该索引以one-of-K方式编码，能够形成一个高维的稀疏二进制编码。 这种编码的方式非常高效，可以作为其他学习任务的基础。
+编码的大小和稀疏度可以通过选择树的数量和每棵树的最大深度来影响。对于集成中的每棵树，编码包含一个实体。 
+编码的大小最多为 ``n_estimators * 2 ** max_depth``，即森林中的叶子节点的最大数。 
 
-As neighboring data points are more likely to lie within the same leaf of a tree,
-the transformation performs an implicit, non-parametric density estimation.
 
-.. topic:: Examples:
+由于相邻数据点更可能位于树的同一叶子中，此时该变换表现为隐式非参数密度估计。 
+
+
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_random_forest_embedding.py`
 
- * :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` compares non-linear
-   dimensionality reduction techniques on handwritten digits.
+ * :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` 比较手写体数字的非线性降维技术。
 
- * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` compares
-   supervised and unsupervised tree based feature transformations.
+ * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` 比较了基于特征变换的有监督和无监督的树.
 
 .. seealso::
 
-   :ref:`manifold` techniques can also be useful to derive non-linear
-   representations of feature space, also these approaches focus also on
-   dimensionality reduction.
+   :ref:`manifold` 也可以用于特征空间的非线性表示, 这些方法的关注点同样在降维.
 
 
 .. _adaboost:
@@ -352,7 +280,7 @@ AdaBoost既可以用在分类问题也可以用在回归问题中:
 
   - For regression, :class:`AdaBoostRegressor` implements AdaBoost.R2 [D1997]_.
 
-Usage
+用法
 -----
 
 下面的例子展示了如何用100个弱学习器来拟合一个AdaBoost分类器::
@@ -389,7 +317,7 @@ Usage
  * :ref:`sphx_glr_auto_examples_ensemble_plot_adaboost_regression.py` demonstrates regression
    with the AdaBoost.R2 algorithm.
 
-.. topic:: References
+.. topic:: 参考
 
  .. [FS1995] Y. Freund, and R. Schapire, "A Decision-Theoretic Generalization of
              On-Line Learning and an Application to Boosting", 1997.
@@ -405,14 +333,14 @@ Usage
 
 .. _gradient_boosting:
 
-梯度树提升(Gradient Tree Boosting)
-======================
+梯度树提升（Gradient Tree Boosting）
+====================================
 
 `Gradient Tree Boosting <https://en.wikipedia.org/wiki/Gradient_boosting>`_
 或梯度提升回归树(GBRT)是提升算法推广到任意可微的损失函数的泛化.GBRT是一个准确高效的现有程序,
 它既能用于分类问题也可以用于回归问题.梯度树提升模型被应用到各种领域包括网页搜索排名和生态领域.
 
-GBRT的优点:
+GBRT 的优点:
 
   + 对混合型数据的自然处理(异构特性)
 
@@ -420,13 +348,13 @@ GBRT的优点:
 
   + 在输出空间中对异常点的鲁棒性(通过鲁棒损失函数实现)
 
-GBRT的缺点:
+GBRT 的缺点:
 
   + 可扩展性差.由于提升算法的有序性(也就是说下一步的结果依赖于上一步),因此很难做并行.
 
 模型 :mod:`sklearn.ensemble` 通过梯度提升树提供了分类和回归的方法.
 
-分类(Classification)
+分类
 ---------------
 
 :class:`GradientBoostingClassifier` 既支持二分类又支持多分类问题.
@@ -453,7 +381,7 @@ GBRT的缺点:
    于 ``n_classes * n_estimators`` .对于拥有大量类别的数据集我们强烈推荐使用
    :class:`RandomForestClassifier` 来代替 :class:`GradientBoostingClassifier` .
 
-回归(Regression)
+回归
 ----------
 
 对于回归问题 :class:`GradientBoostingRegressor` 支持 :ref:`different loss functions <gradient_boosting_loss>` ,
@@ -493,7 +421,7 @@ GBRT的缺点:
 
 .. _gradient_boosting_warm_start:
 
-拟合额外的弱学习器(Fitting additional weak-learners)
+拟合额外的弱学习器
 --------------------------------
 
  :class:`GradientBoostingRegressor` 和 :class:`GradientBoostingClassifier`都支持设置参数
@@ -508,7 +436,7 @@ GBRT的缺点:
 
 .. _gradient_boosting_tree_size:
 
-控制树的大小(Controlling the tree size)
+控制树的大小
 -------------------------
 
 回归树基本学习器的大小定义了变量影响的级别,这个变量影响可以被梯度提升模型捕获到.通常一棵树的深度
@@ -525,7 +453,7 @@ GBRT的缺点:
 也会损失一点训练误差作为代价.参数 ``max_leaf_nodes`` 对应于文章 [F2001]_ 中的梯度提升章节的变量 ``J``
 同时与R语言的gbm包的参数 ``interaction.depth`` 相关,两者间的关系是 ``max_leaf_nodes == interaction.depth + 1``.
 
-数学公式(Mathematical formulation)
+数学公式
 -------------------------
 
 GBRT可以认为是下面形式的加法模型:
@@ -575,7 +503,7 @@ GBRT可以认为是下面形式的加法模型:
 
 .. _gradient_boosting_loss:
 
-损失函数(Loss Functions)
+损失函数
 ...............
 
 以下就是目前支持的损失函数,这些损失函数可以通过参数``loss``指定:
@@ -601,13 +529,13 @@ GBRT可以认为是下面形式的加法模型:
     * Exponential loss (``'exponential'``): 与 :class:`AdaBoostClassifier` 相同的损失
       函数.相比如 ``'deviance'`` 对于有错误类别的样本的鲁棒性很差,只能用在二分类问题中.
 
-正则化(Regularization)
+正则化
 ----------------
 
 .. _gradient_boosting_shrinkage:
 
-缩减(Shrinkage)
-..........
+缩减（Shrinkage）
+.................
 
 [F2001]_ 提出了一种简单的正则化策略,通过一个因素 :math:`\nu`来缩小每个弱学习器对于最终结果的贡献:
 
@@ -623,8 +551,8 @@ GBRT可以认为是下面形式的加法模型:
 (例如: ``learning_rate <= 0.1`` )同时通过提前停止策略来选择合适的 ``n_estimators`` .
 有关 ``learning_rate`` 和 ``n_estimators`` 更详细的讨论可以参考 [R2007]_.
 
-子采样(Subsampling)
-............
+子采样（Subsampling）
+.....................
 
 [F1999]_ 提出了随机梯度提升,这种方法将梯度提升和bootstrap averaging(bagging)结合.在每次迭代
 中,基本分类器通过抽取所有训练数据中一小部分的 ``subsample`` 来训练得到.子样本采用无放回的方式采
@@ -654,13 +582,13 @@ GBRT可以认为是下面形式的加法模型:
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_oob.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`
 
-解释性(Interpretation)
+解释性
 --------------
 
 单棵决策树可通过简单的可视化树结构来解释.然而对于梯度提升模型来说,一般拥有几百棵树,因此它们不可能简单的通
 过可视化单独的每一棵树来解释.幸运的是,有很多关于总结和解释梯度提升模型的技术被提出.
 
-特征重要性(Feature importance)
+特征重要性
 ..................
 
 通常情况下每个特征对于预测膜表的贡献不是相同的.在很多情形下大多数特征实际上是无关的.当解释一个模型时,第一
@@ -689,7 +617,7 @@ GBRT可以认为是下面形式的加法模型:
 
 .. _partial_dependence:
 
-部分依赖(Partial dependence)
+部分依赖
 ..................
 
 部分依赖图(PDP)展示了目标响应和一系列目标特征的依赖关系,同时边缘化了其他所有特征值(候选特征).
@@ -756,7 +684,7 @@ GBRT可以认为是下面形式的加法模型:
 入该分支的训练样本的占比,最后,部分依赖通过所有访问的叶节点的权重的平均值给出.对于树组合的结果,
 需要对每棵树的结果再次平均得到.
 
-.. rubric:: Footnotes
+.. rubric:: 附录
 
 .. [1] For classification with ``loss='deviance'``  the target
    response is logit(p).
@@ -765,12 +693,12 @@ GBRT可以认为是下面形式的加法模型:
    accounting for the initial model; partial dependence plots
    do not include the ``init`` model.
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_partial_dependence.py`
 
 
-.. topic:: References
+.. topic:: 参考
 
  .. [F2001] J. Friedman, "Greedy Function Approximation: A Gradient Boosting Machine",
    The Annals of Statistics, Vol. 29, No. 5, 2001.
@@ -784,44 +712,37 @@ GBRT可以认为是下面形式的加法模型:
 
  .. _voting_classifier:
 
-Voting Classifier
-========================
+投票分类器
+=============================
 
-The idea behind the :class:`VotingClassifier` is to combine
-conceptually different machine learning classifiers and use a majority vote
-or the average predicted probabilities (soft vote) to predict the class labels.
-Such a classifier can be useful for a set of equally well performing model
-in order to balance out their individual weaknesses.
+:class:`VotingClassifier` （投票分类器）的原理是结合了多个不同的机器学习分类器，并且采用 majority vote （多数表决）的方式或者 soft vote （平均预测概率）的方式来预测类标签。这样的分类器（指 Voting Classifier）可以用于一组 equally well performing model （同样出色的模型），以平衡它们各自的弱点。
 
 
-Majority Class Labels (Majority/Hard Voting)
+多数类标签（也叫 Majority/Hard Voting）
 --------------------------------------------
 
-In majority voting, the predicted class label for a particular sample is
-the class label that represents the majority (mode) of the class labels
-predicted by each individual classifier.
+majority vote(采用多数投票)的时候，特定样本的预测类标签是每个分类器预测的类标签中占据多数的那个类标签。
 
-E.g., if the prediction for a given sample is
+举个例子, 如果给定一个样本进行预测
 
-- classifier 1 -> class 1
-- classifier 2 -> class 1
-- classifier 3 -> class 2
+- 分类器 1 预测得到的结果是 类别 1
+- 分类器 2 预测得到的结果是 类别 1
+- 分类器 3 预测得到的结果是 类别 2
 
-the VotingClassifier (with ``voting='hard'``) would classify the sample
-as "class 1" based on the majority class label.
+类别 1 占据多数，所以 VotingClassifier (投票分类器)使用 ``voting='hard'`` ，即 majority vote (多数表决)的方式，会得到该样本的预测结果是类别 1。
 
-In the cases of a tie, the `VotingClassifier` will select the class based
-on the ascending sort order. E.g., in the following scenario
+如果得到的票数最多的类标签不止一个，VotingClassifier(投票分类器)会按照类标签升序排序的结果，选择靠前的类标签。
+举个例子，在下边的场景中:
 
-- classifier 1 -> class 2
-- classifier 2 -> class 1
+- 分类器1 预测得到的结果是 类别2
+- 分类器2 预测得到的结果是 类别1
 
-the class label 1 will be assigned to the sample.
+这种情况下，该样本的预测结果会是类别1。
 
-Usage
+用法
 .....
 
-The following example shows how to fit the majority rule classifier::
+下边这个示例程序说明了如何去 fit (拟合)、去构建一个采用 majority vote (多数表决)方法的分类器::
 
    >>> from sklearn import datasets
    >>> from sklearn.model_selection import cross_val_score
@@ -848,40 +769,31 @@ The following example shows how to fit the majority rule classifier::
    Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
 
-Weighted Average Probabilities (Soft Voting)
+加权平均概率（也叫 Soft Voting）
 --------------------------------------------
 
-In contrast to majority voting (hard voting), soft voting
-returns the class label as argmax of the sum of predicted probabilities.
+与多数表决 (majority voting / hard voting) 的方法相反，采用加权平均概率的方法得到的是预测概率值总和最大的那一个类标签。
 
-Specific weights can be assigned to each classifier via the ``weights``
-parameter. When weights are provided, the predicted class probabilities
-for each classifier are collected, multiplied by the classifier weight,
-and averaged. The final class label is then derived from the class label
-with the highest average probability.
+可以通过参数 ``weights`` 来给每个分类器分配一个特定的权重。
+当提供参数 ``weights`` 时，每个分类器的预测类概率需要乘以分类器权重并平均化。
+最后得到的类标签采用拥有最高平均概率的类标签。
 
-To illustrate this with a simple example, let's assume we have 3
-classifiers and a 3-class classification problems where we assign
-equal weights to all classifiers: w1=1, w2=1, w3=1.
+用一个简单的例子来说明上述这个方法。假设现在有一个分类问题，可供选择的类标签有 3 个，我们有 3 个分类器，在这里我们给这三个分类器分配相同的权重：w1=1, w2=1, w3=1.
 
-The weighted average probabilities for a sample would then be
-calculated as follows:
+如下所示，针对一个特定的样本输入，来计算加权平均概率：
 
 ================  ==========    ==========      ==========
-classifier        class 1       class 2         class 3
+  分类器            类别 1         类别 2          类别 3
 ================  ==========    ==========      ==========
-classifier 1	  w1 * 0.2      w1 * 0.5        w1 * 0.3
-classifier 2	  w2 * 0.6      w2 * 0.3        w2 * 0.1
-classifier 3      w3 * 0.3      w3 * 0.4        w3 * 0.3
-weighted average  0.37	        0.4             0.23
+  分类器 1          w1 * 0.2      w1 * 0.5        w1 * 0.3
+  分类器 2          w2 * 0.6      w2 * 0.3        w2 * 0.1
+  分类器 3          w3 * 0.3      w3 * 0.4        w3 * 0.3
+ 加权平均的结果       0.37	   0.4             0.23
 ================  ==========    ==========      ==========
 
-Here, the predicted class label is 2, since it has the
-highest average probability.
+这里可以看出，预测的类标签是类别 2，因为它有 highest average probability (最大的平均概率)。
 
-The following example illustrates how the decision regions may change
-when a soft `VotingClassifier` is used based on an linear Support
-Vector Machine, a Decision Tree, and a K-nearest neighbor classifier::
+下边的示例程序说明了当加权平均概率(也叫 soft voting )是基于 linear SupportVector Machine (线性支持向量机)、Decision Tree(决策树)、K-nearest neighbor(K近邻)这三种分类器的时候，decision regions (决策域) 可能会变化:
 
    >>> from sklearn import datasets
    >>> from sklearn.tree import DecisionTreeClassifier
@@ -911,11 +823,10 @@ Vector Machine, a Decision Tree, and a K-nearest neighbor classifier::
     :align: center
     :scale: 75%
 
-Using the `VotingClassifier` with `GridSearch`
-----------------------------------------------
+Using the `VotingClassifier` with `GridSearch`（网格搜索下的投票分类器）
+------------------------------------------------------------------------
 
-The `VotingClassifier` can also be used together with `GridSearch` in order
-to tune the hyperparameters of the individual estimators::
+为了调整每个 estimators 的 hyperparameters ，`VotingClassifier` 可以和 `GridSearch` 一起使用::
 
    >>> from sklearn.model_selection import GridSearchCV
    >>> clf1 = LogisticRegression(random_state=1)
@@ -928,15 +839,13 @@ to tune the hyperparameters of the individual estimators::
    >>> grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
    >>> grid = grid.fit(iris.data, iris.target)
 
-Usage
+用法
 .....
 
-In order to predict the class labels based on the predicted
-class-probabilities (scikit-learn estimators in the VotingClassifier
-must support ``predict_proba`` method)::
+根据预测的类概率来预测类标签(在 VotingClassifier 中的 scikit-learn estimators 必须支持 ``predict_proba`` 函数方法)::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft')
 
-Optionally, weights can be provided for the individual classifiers::
+可选地，也可以为单个分类器提供权重::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft', weights=[2,5,1])

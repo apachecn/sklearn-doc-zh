@@ -49,11 +49,11 @@
 {% endblock %}
 
 {%- if pagename == 'index' %}
-    {% set title = 'scikit-learn: machine learning in Python' %}
+    {% set title = 'scikit-learn: Python 中的机器学习' %}
 {%- endif %}
 
 {%- if pagename == 'documentation' %}
-    {% set title = 'Documentation scikit-learn: machine learning in Python' %}
+    {% set title = 'scikit-learn 文档 : Python 中的机器学习' %}
 {%- endif %}
 
 {% block header %}
@@ -94,6 +94,7 @@
         </li>
             <li><a href="{{pathto('auto_examples/index')}}">示例</a></li>
             <li><a href="{{pathto('translate-progress')}}">翻译进度</a></li>
+            <li><a href="//github.com/apachecn/scikit-learn-doc-zh#%E8%B4%A1%E7%8C%AE%E8%80%85" target="_blank">贡献者</a></li>
             </ul>
             <a href="javascript:void(0);" onclick="showMenu()">
                 <div class="nav-icon">
