@@ -530,13 +530,13 @@ Jaccard 相似系数 score
 在二分类任务中，术语 ''positive（正）'' 和 ''negative（负）'' 是指 classifier's prediction （分类器的预测），术语 ''true（真）'' 和 ''false（假）'' 是指该预测是否对应于 external judgment （外部判断）（有时被称为 ''observation（观测值）''）。给出这些定义，我们可以指定下表: 
 
 +-------------------+------------------------------------------------+
-|                   |    Actual class(实际类别) (observation（观测值）)                  |
+|                   |    Actual class (observation)                  |
 +-------------------+---------------------+--------------------------+
-|   Predicted class（预测类别） | tp (true positive（真正）)  | fp (false positive（错正）)      |
-|   (expectation （期望值）)   | Correct result（正确结果）      | Unexpected result（意外结果）        |
+|   Predicted class | tp (true positive)  | fp (false positive)      |
+|   (expectation)   | Correct result      | Unexpected result        |
 |                   +---------------------+--------------------------+
-|                   | fn (false negative（错负）) | tn (true negative（真负）)       |
-|                   | Missing result（缺少结果）      | Correct absence of result（正确缺乏结果）|
+|                   | fn (false negative) | tn (true negative)       |
+|                   | Missing result      | Correct absence of result|
 +-------------------+---------------------+--------------------------+
 
 在这种情况下，我们可以定义 precision（精度）, recall（召回） 和 F-measure 的概念: 
