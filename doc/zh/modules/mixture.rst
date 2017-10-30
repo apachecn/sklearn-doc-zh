@@ -8,21 +8,20 @@
 
 .. currentmodule:: sklearn.mixture
 
-``sklearn.mixture`` 是一个可以学习高斯混合模型（支持 diagonal（即对角协方差矩阵），spherical（球形，即使用相同的方差值），
-tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协方差矩阵），full（完全协方差矩阵）这几种协方差矩阵）的包，
-它对数据进行抽样，并且根据数据进行估计。同时也提供了一些有助于决定合适的分量
-（component，组件（这里理解为分量）,每一个高斯分布称为一个分量）的数量的设施。
+``sklearn.mixture`` 是一个应用高斯混合模型进行非监督学习的包，支持 diagonal，spherical，tied，full四种协方差矩阵
+（注：diagonal指每个分量分布为各自不同对角协方差矩阵，spherical指每个分量分布为各自不同的简单协方差矩阵，
+tied指所有分量分布有相同的标准协方差矩阵，full指每个分量分布有各自不同的标准协方差矩阵）
+，它对数据进行抽样，并且根据数据估计模型。同时包也提供了相关支持，来帮助决定合适的分量分布数量。
 
  .. figure:: ../auto_examples/mixture/images/sphx_glr_plot_gmm_pdf_001.png
    :target: ../auto_examples/mixture/plot_gmm_pdf.html
    :align: center
    :scale: 50%
 
-   **Two-component Gaussian mixture model:** *data points, and equi-probability
-   surfaces of the model.*
+   **2-分量 高斯混合模型:** *数据点，以及模型等概率线。*
 
 高斯混合模型是一个假设所有的数据点都是生成于一个混合的有限数量的并且未知参数的高斯分布的概率模型。
-人们可以将混合模型看作是推广k-means聚类算法，以纳入关于数据的协方差结构以及潜在高斯中心的信息。
+我们可以将混合模型看作是k-means聚类算法的推广，它利用关于数据的协方差结构以及潜在高斯中心的信息。
 
 对应不同的估算策略，Scikit-learn 实现了不同的类来估算高斯混合模型。
 详细描述如下：
@@ -32,19 +31,19 @@ tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协�
 
   :class:`GaussianMixture` 对象实现了用来拟合高斯混合模型的
   :ref:`期望最大化 <expectation_maximization>` (EM)
-算法。它还可以为多变量模型画置信椭圆，和计算BIC（Bayesian Information Criterion，贝叶斯信息准则）
+算法。它还可以为多变量模型画置信椭圆，以及计算BIC（Bayesian Information Criterion，贝叶斯信息准则）
 来评估数据中聚类的数量。
-  :meth:`GaussianMixture.fit` 方法提供了从训练集学习高斯混合模型的方法。 
-给定测试集，它可以分配给每个样本最有可能属于使用 :meth:`GaussianMixture.predict` 方法的高斯分布。
+  :meth:`GaussianMixture.fit` 方法提供了从训练集应用高斯混合模型进行机器学习的方法。 
+给定测试集，使用 :meth:`GaussianMixture.predict` 方法，可以预测每个样本最有可能对应的高斯分布。
 
 ..
     Alternatively, the probability of each
     sample belonging to the various Gaussians may be retrieved using the
     :meth:`GaussianMixture.predict_proba` method.
 
-:class:`GaussianMixture` 自带了不同的选项来约束不同估计类的协方差：spherical（球形，即使用相同的方差值）, 
-diagonal（即对角协方差）, tied（连接，是指所有的马尔可夫隐含状态使用相同的完全协方差） or 
-full（完全协方差）covariance .
+:class:`GaussianMixture` 自带了不同的选项来约束不同估计类的协方差：spherical（每个分量分布为各自不同的简单协方差矩阵），
+diagonal（每个分量分布为各自不同对角协方差矩阵），tied（所有分量分布有相同的标准协方差矩阵），或
+full（每个分量分布有各自不同的标准协方差矩阵）。
 
 .. figure:: ../auto_examples/mixture/images/sphx_glr_plot_gmm_covariances_001.png
    :target: ../auto_examples/mixture/plot_gmm_covariances.html
@@ -53,7 +52,7 @@ full（完全协方差）covariance .
 
 .. topic:: 示例:
 
-    * 一个在虹膜数据集上用高斯混合作为聚类，请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm_covariances.py` 
+    * 一个在虹膜数据集上用高斯混合模型聚类，请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm_covariances.py` 
 
     * 一个绘制密度估计的例子，请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm_pdf.py`
 
@@ -63,18 +62,18 @@ full（完全协方差）covariance .
 优点
 ....
 
-:速度: 是学习混合模型最快的算法。
+:速度: 是学习混合模型中最快的算法。
 
-:不可知论: 这个算法仅仅只是最大化可能性，并不能使均值偏向于0，或是使聚类大小偏向于
-  可能适用或者可能不适用的特殊的结构。
+:无偏差性: 这个算法仅仅只是最大化可能性，并不能使均值偏向于0，或是使聚类大小偏向于
+  可能适用或者可能不适用的特殊结构。
 
 缺点
 ....
 
-:奇点: 当每个混合没有足够的点时，估算协方差变得困难起来，同时算法会发散并且找具有无限可能的解，
+:奇异性: 当每个混合模型没有足够的点时，估算协方差变得困难起来，同时算法会发散并且找具有无穷大可能性的解，
    除非人为地对协方差进行正则化。
    
-:分量的数量: 这个算法将会总是用所有它能用的分量（component，每一个高斯分布称为一个分量），
+:分量分布的数量: 这个算法将会总是用所有它能用的分量（component，每一个高斯分布称为一个分量），
    所以在没有外部线索的情况下需要留出数据（held-out data，将数据集分为两个互斥的集合，分别是训练集和测试集），
    或者信息理论标准来决定用多少分量。
 
@@ -82,8 +81,8 @@ full（完全协方差）covariance .
 ------------------------------------------------------
 
 BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高效地选择高斯混合的分量数。
-理论上，它可以恢复正确的分量数仅当在近似状态下（即如果有大量数据可用，并且假设这些数据实际上是一个混合高斯模型
-生成的）。注意：使用 :ref:`变分贝叶斯高斯混合 <bgmm>`避免高斯混合模型的分量数的规范。
+理论上，它可以恢复正确的分量数仅当在近似状态下（即如果有大量数据可用，并且假设这些数据实际上是一个混合高斯模型独立同分布
+生成的）。注意：使用 :ref:`变分贝叶斯高斯混合 <bgmm>` 可以避免高斯混合模型中分量数目的选择。
 
 .. figure:: ../auto_examples/mixture/images/sphx_glr_plot_gmm_selection_001.png
    :target: ../auto_examples/mixture/plot_gmm_selection.html
@@ -97,14 +96,14 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 估计算法期望最大化（EM）
 -----------------------------------------------
 
-在从无标签的数据中学习高斯混合模型主要的困难在于通常不知道哪个点来自哪个潜在分量
-（如果可以获取到这些信息，就可以很容易将每个独立的高斯分布去拟合数据集的每个点）。
+在从无标签的数据中应用高斯混合模型主要的困难在于，通常不知道哪个点来自哪个潜在分量
+（如果可以获取到这些信息，就可以很容易通过相应的数据点，拟合每个独立的高斯分布）。
 `期望最大化（Expectation-maximization，EM）
 <https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm>`_
-是一个有根据的统计算法，通过迭代来解决这个问题。首先，假设一个随机分量
+是一个理论完善的统计算法，其通过迭代方式来解决这个问题。首先，假设一个随机分量
 （选择随机地一个中心点，可以用k-means算法得到，或者甚至就直接地随便分布在原点周围），
-并且为每个点计算由模型的每个分量生成的概率。然后，调整参数以最大化给出这些分配的数据的可能性。
-重复这个过程保证总是收敛到局部最优解。
+并且为每个点计算由模型的每个分量生成的概率。然后，调整模型参数以最大化模型生成这些参数的可能性。
+重复这个过程，该算法保证过程中的参数总会收敛到局部最优解。
 
 .. _bgmm:
 
