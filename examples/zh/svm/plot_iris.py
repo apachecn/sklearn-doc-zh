@@ -85,10 +85,10 @@ models = (svm.SVC(kernel='linear', C=C),
 models = (clf.fit(X, y) for clf in models)
 
 # 绘图区域的标题
-titles = ('使用 linear kernel 的 SVC',
+titles = ('SVC with linear kernel',
           'LinearSVC (linear kernel)',
-          '使用 RBF kernel 的 SVC',
-          '使用 polynomial (degree 3) kernel 的 SVC')
+          'SVC with RBF kernel',
+          'SVC with polynomial (degree 3) kernel')
 
 # 设置 2x2 的网格进行绘制.
 fig, sub = plt.subplots(2, 2)
