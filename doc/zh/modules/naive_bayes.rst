@@ -1,8 +1,8 @@
 .. _naive_bayes:
 
-===========
+=================
 朴素贝叶斯
-===========
+=================
 
 .. currentmodule:: sklearn.naive_bayes
 
@@ -22,7 +22,7 @@
 
    P(x_i | y, x_1, \dots, x_{i-1}, x_{i+1}, \dots, x_n) = P(x_i | y) ,
 
-对于所有的 :math`i` ，这个关系可以简化为
+对于所有的 :math:`i` ，这个关系可以简化为
 
 .. math::
 
@@ -39,7 +39,7 @@
 
    \hat{y} = \arg\max_y P(y) \prod_{i=1}^{n} P(x_i \mid y),
    
-我们可以使用最大后验概率(Maximum A Posteriori, MAP)来估计 :math:`P(y)` 和 :math:`P(x_i \mid y)` ; 前者即为训练集中类别 :math:`y` 的相对频率。
+我们可以使用最大后验概率(Maximum A Posteriori, MAP) 来估计 :math:`P(y)` 和 :math:`P(x_i \mid y)` ; 前者即为训练集中类别 :math:`y` 的相对频率。
  
 不同的朴素贝叶斯分类器的差异大部分来自于处理 :math:`P(x_i \mid y)` 分布时的所做的假设不同。
  
