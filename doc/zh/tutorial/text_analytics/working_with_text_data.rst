@@ -4,48 +4,48 @@
 使用文本数据
 ======================
 
-本指南的目标是在一个实际任务中探索一些主要的 ``scikit-learn`` 工具: 分析 20 个不同主题的文本文档（新闻组帖子）集合.
+本指南的旨在一个单独实际任务中探索一些主要的 ``scikit-learn`` 工具: 分析关于20 个不同主题的一个文件汇编（新闻组帖子）.
 
 在本节中，我们将会学习如何:
 
   - 读取文件内容以及所属的类别
 
-  - 提取特征向量为机器学习算法提供数据
+  - 提取合适于机器学习的特征向量
 
   - 训练一个线性模型来进行分类
 
-  - 使用网格搜索策略来发现特征提取组件以及分类器的最佳配置
+  - 使用网格搜索策略来找到特征提取组件以及分类器的最佳配置
 
 
 
 教程设置
 --------------
 
-开始这篇教程之前，必须首先安装 *scikit-learn* 以及依赖的所有库。
+开始这篇教程之前，必须首先安装 *scikit-learn* 以及所有其要求的库。
 
-请参考 :ref:`安装说明 <installation-instructions>` 获取更多信息以及安装指导。
+更多信息和系统安装指导请参考 :ref:`安装说明 <installation-instructions>` 。
 
-这篇入门教程的源代码在您的 scikit-learn 文件夹下面::
+这篇入门教程的源代码可以在您的 scikit-learn 文件夹下面找到::
 
     scikit-learn/doc/tutorial/text_analytics/
 
-在这个入门教程中，应该包含以下的子文件夹:
+这个入门教程应该包含以下的子文件夹:
 
-  * ``*.rst files`` - 使用 sphinx 编写的教程文档的源代码
+  * ``*.rst files`` - 用 sphinx 编写的该教程的源代码
 
-  * ``data`` - 在该教程中所用到的数据集文件夹
+  * ``data`` - 用来存放在该教程中用到的数据集的文件夹
 
-  * ``skeletons`` - 一些练习所用到的待完成的脚本
+  * ``skeletons`` - 用来练习的未完成的示例脚本
 
   * ``solutions`` - 练习的答案
 
 
-你也可以将这个文件夹拷贝到您的电脑的硬盘里命名为 ``sklearn_tut_workspace`` 来完成练习而不会破坏原始的代码结构::
+你也可以将这个文件结构拷贝到您的电脑的硬盘里名为 ``sklearn_tut_workspace`` 的文件夹中来编辑你自己的文件完成练习，同时保持原结构紧凑::
 
     % cp -r skeletons work_directory/sklearn_tut_workspace
 
 机器学习算法需要数据.
-进入每一个 ``$TUTORIAL_HOME/data`` 子文件夹，并且运行 ``fetch_data.py`` 脚本（首先确保您已经读取完成）.
+进入每一个 ``$TUTORIAL_HOME/data`` 子文件夹，然后运行 ``fetch_data.py`` 脚本（在您已经事先读取它们之后）.
 
 例如::
 
@@ -57,22 +57,22 @@
 加载 20 个新闻组数据集
 ---------------------------------
 
-该数据集被称为 "Twenty Newsgroups".
-下面就是这个数据集的介绍, 来自于 `网站 <http://people.csail.mit.edu/jrennie/20Newsgroups/>`_:
+该数据集名为 "Twenty Newsgroups".
+下面就是这个数据集的介绍, 来源于 `网站 <http://people.csail.mit.edu/jrennie/20Newsgroups/>`_:
 
-  20 个新闻组数据集是大约 20,000 的集合新闻组文件，分区（几乎）平均 20 个不同新闻组。
-  据我们所知，这些最初是由 Ken Lang 收集的 ，可能是为了他的论文 "Newsweeder: Learning to filter netnews," 虽然他没有明确提及这个集合。
-  现在 20 个新闻组集已成为一个流行的数据集，广泛应用于机器学习中的文本应用，如文本分类和文本聚类。
+  20 个新闻组数据集是一个近 包括了20,000 个新闻组文件的汇编，（几乎）平均分成了 20 个不同新闻组。
+  据我们所知，这最初是由 Ken Lang 收集的 ，很可能是为了他的论文 "Newsweeder: Learning to filter netnews," 尽管他没有明确提及这个汇编。
+  这20 个新闻组汇编已成为一个流行的数据集，用于机器学习中的文本应用的试验中，如文本分类和文本聚类。
 
-接下来我们会使用 scikit-learn 中的内置数据集读取函数.
-当然, 也可以手动从网站上下载数据集，然后使用函数 :func:`sklearn.datasets.load_files` 以及指明 ``20news-bydate-train`` 子文件夹，该子文件夹包含了未压缩的数据集。
+接下来我们会使用 scikit-learn 中的这个内置数据集加载器来加载这20个新闻组.
+或者, 也可以手动从网站上下载数据集，然后通过指向未压缩的文件夹下的 ``20news-bydate-train`` 子文件夹来使用函数 :func:`sklearn.datasets.load_files` 。
 
-为了节约时间，在第一个示例中我们先简单测试 20 类别中 4 个类别::
+为了在第一个示例中节约时间，我们将使用部分数据：从20类别中选出4个::
 
   >>> categories = ['alt.atheism', 'soc.religion.christian',
   ...               'comp.graphics', 'sci.med']
 
-接下来我们能够读取列表中对应的类别的文件::
+如下所示，我们现在能够加载包含对应类别的文件的列表::
 
   >>> from sklearn.datasets import fetch_20newsgroups
   >>> twenty_train = fetch_20newsgroups(subset='train',
