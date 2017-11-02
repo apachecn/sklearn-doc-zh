@@ -43,9 +43,9 @@
    :align: center
 
 
-:class:`SVC` 和 :class:`NuSVC` 是相似的方法, 但是接受稍许不同的参数设置并且有不同的数学方程(在这部分看 :ref:`svm_mathematical_formulation`). 另一方面, :class:`LinearSVC` 是另一个实现线性核函数的支持向量分类. 记住 :class:`LinearSVC` 不接受关键词 ``kernel``, 因为它被假设为线性的. 它也缺少一些:class:`SVC` 和 :class:`NuSVC` 的成员(members) 比如 ``support_``.
+:class:`SVC` 和 :class:`NuSVC` 是相似的方法, 但是接受稍许不同的参数设置并且有不同的数学方程(在这部分看 :ref:`svm_mathematical_formulation`). 另一方面, :class:`LinearSVC` 是另一个实现线性核函数的支持向量分类. 记住 :class:`LinearSVC` 不接受关键词 ``kernel``, 因为它被假设为线性的. 它也缺少一些 :class:`SVC` 和 :class:`NuSVC` 的成员(members) 比如 ``support_`` .
 
-和其他分类器一样, :class:`SVC`, :class:`NuSVC` 和 :class:`LinearSVC` 将两个数组作为输入:  ``[n_samples, n_features]`` 大小的数组 X 作为训练样本, ``[n_samples]`` 大小的数组y作为类别标签(字符串或者整数)::
+和其他分类器一样, :class:`SVC`, :class:`NuSVC` 和 :class:`LinearSVC` 将两个数组作为输入:  ``[n_samples, n_features]`` 大小的数组 X 作为训练样本, ``[n_samples]`` 大小的数组 y 作为类别标签(字符串或者整数)::
 
 
     >>> from sklearn import svm
@@ -81,7 +81,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 多元分类
 --------------------------
 
-:class:`SVC` 和 :class:`NuSVC` 为多元分类实现了 "one-against-one" 的方法 (Knerr et al., 1990) 如果 ``n_class`` 是类别的数量, 那么 ``n_class * (n_class - 1) / 2`` 分类器被重构, 而且每一个从两个类别中训练数据. 为了给其他分类器提供一致的交互, ``decision_function_shape`` 选项允许聚合"one-against-one" 分类器的结果成 ``(n_samples, n_classes)`` 的大小到决策函数::
+:class:`SVC` 和 :class:`NuSVC` 为多元分类实现了 "one-against-one" 的方法 (Knerr et al., 1990) 如果 ``n_class`` 是类别的数量, 那么 ``n_class * (n_class - 1) / 2`` 分类器被重构, 而且每一个从两个类别中训练数据. 为了给其他分类器提供一致的交互, ``decision_function_shape`` 选项允许聚合 "one-against-one" 分类器的结果成 ``(n_samples, n_classes)`` 的大小到决策函数::
 
     >>> X = [[0], [1], [2], [3]]
     >>> Y = [0, 1, 2, 3]
@@ -113,11 +113,11 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 
 参见 :ref:`svm_mathematical_formulation` 查看决策函数的完整描述.
 
-记住 :class:`LinearSVC` 也实现了可选择的多类别策略, 通过使用选项 ``multi_class='crammer_singer'``, 所谓的多元 SVM 由 Crammer 和 Singer 明确表达. 这个方法是一致的, 对于 one-vs-rest 是不正确的. 实际上, one-vs-rest 分类通常收到青睐, 因为结果大多数是相似的, 但是运行时间却显著减少.
+记住 :class:`LinearSVC` 也实现了可选择的多类别策略, 通过使用选项 ``multi_class='crammer_singer'``, 所谓的多元 SVM 由 Crammer 和 Singer 明确表达. 这个方法是一致的, 对于 one-vs-rest 是不正确的. 实际上, one-vs-rest 分类通常受到青睐, 因为结果大多数是相似的, 但是运行时间却显著减少.
 
 对于 "one-vs-rest" :class:`LinearSVC`, 属性 ``coef_`` 和 ``intercept_`` 分别具有 ``[n_class, n_features]`` 和 ``[n_class]`` 尺寸. 系数的每一行符合 ``n_class`` 的许多 one-vs-rest 分类器之一, 并且就以这一类的顺序与拦截器(intercepts)相似.
 
-至于 one-vs-one :class:`SVC`, 属性特征的布局(layout)有少多些复杂. 考虑到有一种线性核函数,``coef_`` 和 ``intercept_`` 的布局(layout)与上文描述成 :class:`LinearSVC` 相似, 除了 ``coef_`` 的形状 ``[n_class * (n_class - 1) / 2, n_features]``, 与许多二元的分类器相似. 0到n的类别顺序是 "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", "1 vs 3", "1 vs n", . . . "n-1 vs n".
+至于 one-vs-one :class:`SVC`, 属性特征的布局(layout)有少多些复杂. 考虑到有一种线性核函数, ``coef_`` 和 ``intercept_`` 的布局(layout)与上文描述成 :class:`LinearSVC` 相似, 除了 ``coef_`` 的形状 ``[n_class * (n_class - 1) / 2, n_features]``, 与许多二元的分类器相似. 0到n的类别顺序是 "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", "1 vs 3", "1 vs n", . . . "n-1 vs n".
 
 ``dual_coef_`` 的形状是 ``[n_class-1, n_SV]``, 这个结构有些难以理解.
 对应于支持向量的列与 ``n_class * (n_class - 1) / 2`` "one-vs-one" 分类器相关.
@@ -154,21 +154,14 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 得分和概率
 ------------------------
 
-:class:`SVC` 方法的 ``decision_function`` 给每一个样例每一个类别分
-值(scores)(或者在一个二元类中每一个样例一个分值).
-当构造器(constructor)选项 ``probability`` 设置为 ``True``的时候,
-类成员可能性评估开启.(来自 ``predict_proba`` 和 ``predict_log_proba`` 方法)
-在二元分类中,概率使用Platt scaling进行标准化:在SVM分数上的逻辑回归,在训练集上用额外的交
-叉验证来拟合.在多类情况下,这可以扩展为per Wu et al.(2004)
+:class:`SVC` 方法的 ``decision_function`` 给每一个样例每一个类别分值(scores)(或者在一个二元类中每一个样例一个分值).
+当构造器(constructor)选项 ``probability`` 设置为 ``True`` 的时候, 类成员可能性评估开启.(来自 ``predict_proba`` 和 ``predict_log_proba`` 方法)
+在二元分类中,概率使用 Platt scaling 进行标准化: 在 SVM 分数上的逻辑回归,在训练集上用额外的交叉验证来拟合.在多类情况下,这可以扩展为 per Wu et al.(2004)
 
-不用说,对于大数据集来说,在Platt scaling中进行交叉验证是一项昂贵的操作.
-另外,可能性预测可能与scores不一致,因为scores的"argmax"可能不是可能性的argmax.
-(例如,在二元分类中,
-一个样本可能被标记为一个有可能性的类``predict`` <½ according to ``predict_proba``.)
-Platt的方法也有理论问题.
-如果 confidence scores 必要,但是这些没必要是可能性,
-那么建议设置 ``probability=False``
-并使用 ``decision_function`` 而不是 ``predict_proba``.
+不用说,对于大数据集来说,在 Platt scaling 中进行交叉验证是一项昂贵的操作.
+另外,可能性预测可能与 scores 不一致,因为 scores 的 "argmax" 可能不是可能性的 argmax.
+(例如,在二元分类中,一个样本可能被标记为一个有可能性的类 ``predict`` <½ according to ``predict_proba``.) Platt 的方法也有理论问题.
+如果 confidence scores 必要,但是这些没必要是可能性, 那么建议设置 ``probability=False`` 并使用 ``decision_function`` 而不是 ``predict_proba``.
 
 .. topic:: 参考:
 
@@ -177,14 +170,14 @@ Platt的方法也有理论问题.
  
  
  * Platt
-   `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods（SVMs 的概率输出和与规则化似然方法的比较）"<http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`.
+   `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods（SVMs 的概率输出和与规则化似然方法的比较）"<http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`_ .
 
 非均衡问题
 --------------------
 
 这个问题期望给予某一类或某个别样例能使用的关键词 ``class_weight`` 和 ``sample_weight`` 提高权重(importance).
 
-:class:`SVC` (而不是 :class:`NuSVC`) 在 ``fit`` 方法中生成了一个关键词 ``class_weight``. 它是形如``{class_label : value}`` 的字典, value是浮点数大于0的值, 把类 ``class_label`` 的参数``C`` 设置为 ``C * value``.
+:class:`SVC` (而不是 :class:`NuSVC`) 在 ``fit`` 方法中生成了一个关键词 ``class_weight``. 它是形如 ``{class_label : value}`` 的字典, value 是浮点数大于 0 的值, 把类 ``class_label`` 的参数 ``C`` 设置为 ``C * value``.
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_separating_hyperplane_unbalanced_001.png
    :target: ../auto_examples/svm/plot_separating_hyperplane_unbalanced.html
