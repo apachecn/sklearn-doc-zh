@@ -1,9 +1,9 @@
 """
 ===================================================================
-Support Vector Regression (SVR) using linear and non-linear kernels
+支持向量回归（SVR），使用 linear and non-linear 内核
 ===================================================================
 
-Toy example of 1D regression using linear, polynomial and RBF kernels.
+使用 linear, polynomial 和 RBF 内核的 1D 回归的玩具示例。
 
 """
 print(__doc__)
@@ -23,6 +23,17 @@ y[::5] += 3 * (0.5 - np.random.rand(8))
 
 # #############################################################################
 # Fit regression model
+'''
+SVR
+kernel：string，optional（default ='rbf'）
+    指定算法中要使用的内核类型。它必须是 ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’ 或可调用的之一。如果没有给出，将使用'rbf'。如果给出了一个可调用函数，它将用于预计算内核矩阵。
+C：float，optional（default = 1.0）
+    错误项的惩罚参数C。
+gamma：float，可选（default ='auto'）
+    'rbf'，'poly'和'sigmoid'的内核系数。如果gamma是'auto'，那么将使用1 / n_features。
+degree：int，可选（默认= 3）
+    多项式核函数的程度（'poly'）。被所有其他内核忽略。
+'''
 svr_rbf = SVR(kernel='rbf', C=1e3, gamma=0.1)
 svr_lin = SVR(kernel='linear', C=1e3)
 svr_poly = SVR(kernel='poly', C=1e3, degree=2)
