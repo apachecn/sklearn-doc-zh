@@ -1,25 +1,14 @@
 """
 ======================================================
-Imputing missing values before building an estimator
+在构建估计器之前估算缺失值
 ======================================================
 
-此示例显示，丢弃缺少的值可以比丢弃包含任何缺失值的样本更好的结果。 
-估算并不总是改进预测，因此请通过交叉验证进行检查。 
+此示例显示，丢弃缺少的值可以比丢弃包含任何缺失值的样本更好的结果。
+估算并不总是改进预测，因此请通过交叉验证进行检查。
 有时删除行或使用标记值更有效。
 
-缺省值可以用平均值，中值或最常用的值替换为策略超参数。 
-中位数是具有高幅度变量的数据的更强大的估计，可以主导结果（也称为“长尾”）。
-
-This example shows that imputing the missing values can give better
-results than discarding the samples containing any missing value.
-Imputing does not always improve the predictions, so please check via
-cross-validation.  Sometimes dropping rows or using marker values is
-more effective.
-
-Missing values can be replaced by the mean, the median or the most frequent
-value using the ``strategy`` hyper-parameter.
-The median is a more robust estimator for data with high magnitude variables
-which could dominate results (otherwise known as a 'long tail').
+缺省值可以用平均值，中值或最常用的值替换为 ``策略`` 超参数。
+中位数是具有高幅度变量的数据的更强大的估计，可以主导结果（也称为 '长尾'）。
 
 脚本输出 ::
 
