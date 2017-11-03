@@ -1,97 +1,85 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 ==================================================
-Explicit feature map approximation for RBF kernels
+RBF kernels 的显示特征图近似
 ==================================================
 
-An example illustrating the approximation of the feature map
-of an RBF kernel.
+说明 RBF kernel 的特征图近似的示例。
 
 .. currentmodule:: sklearn.kernel_approximation
 
-It shows how to use :class:`RBFSampler` and :class:`Nystroem` to
-approximate the feature map of an RBF kernel for classification with an SVM on
-the digits dataset. Results using a linear SVM in the original space, a linear
-SVM using the approximate mappings and using a kernelized SVM are compared.
-Timings and accuracy for varying amounts of Monte Carlo samplings (in the case
-of :class:`RBFSampler`, which uses random Fourier features) and different sized
-subsets of the training set (for :class:`Nystroem`) for the approximate mapping
-are shown.
+它显示如何使用 :class:`RBFSampler` 和 :class:`Nystroem` 来近似 RBF kernel 的 feature map ，以便在数字数据集上使用 SVM 进行分类。 比较在原始空间中使用线性 SVM 的结果，使用 approximate mapping 并使用核心化 SVM 的线性 SVM 进行比较。
+对于不同数量的 Monte Carlo 取样（在 :class:`RBFSampler` ）和用于 approximate mapping 的训练集（用于 :class:`Nystroem` ）的不同大小的子集的时间和精度所示。
 
-Please note that the dataset here is not large enough to show the benefits
-of kernel approximation, as the exact SVM is still reasonably fast.
+请注意，这里的数据集不足以显示内核近似的好处，因为确切的 SVM 仍然相当快。
 
-Sampling more dimensions clearly leads to better classification results, but
-comes at a greater cost. This means there is a tradeoff between runtime and
-accuracy, given by the parameter n_components. Note that solving the Linear
-SVM and also the approximate kernel SVM could be greatly accelerated by using
-stochastic gradient descent via :class:`sklearn.linear_model.SGDClassifier`.
-This is not easily possible for the case of the kernelized SVM.
+抽样更多的维度明显地能够得到更好的分类结果，但是成本相对来说会更高。这意味着由参数 n_components 给出的运行时间和精度之间存在折中效果。请注意，通过使用随机梯度下降 class:`sklearn.linear_model.SGDClassifier` ，可以通过这种方式大大加快求解线性 SVM 及近似 kernel SVM 。
+在 kernelized SVM 的情况下，这是不容易的。
 
-The second plot visualized the decision surfaces of the RBF kernel SVM and
-the linear SVM with approximate kernel maps.
-The plot shows decision surfaces of the classifiers projected onto
-the first two principal components of the data. This visualization should
-be taken with a grain of salt since it is just an interesting slice through
-the decision surface in 64 dimensions. In particular note that
-a datapoint (represented as a dot) does not necessarily be classified
-into the region it is lying in, since it will not lie on the plane
-that the first two principal components span.
+第二个图展示了 RBF kernel SVM 的决策面和具有 approximate kernel maps 的线性 SVM 。
+该图显示了投影到数据的前两个主要分量上的分类器的决策面。 这种可视化应该采用 a grain of salt ，因为它只是一个通过决策表面在64维度的有趣的切片。 特别要注意的是，数据点（表示为点）不一定被分类到它所在的区域中，因为它不会位于前两个主要分量跨越的平面上。
 
-The usage of :class:`RBFSampler` and :class:`Nystroem` is described in detail
-in :ref:`kernel_approximation`.
+:class:`RBFSampler` 和 :class:`Nystroem` 的使用，在 :ref:`kernel_approximation` 详细介绍了。
 
 """
 print(__doc__)
 
 # Author: Gael Varoquaux <gael dot varoquaux at normalesup dot org>
 #         Andreas Mueller <amueller@ais.uni-bonn.de>
+#         Joy yx <chinachenyyx@gmail.com>
 # License: BSD 3 clause
 
-# Standard scientific Python imports
+# 导入 numpy, matplotlib 等需要使用的模块
 import matplotlib.pyplot as plt
 import numpy as np
 from time import time
 
-# Import datasets, classifiers and performance metrics
+# 导入数据集，分类器和性能指标
 from sklearn import datasets, svm, pipeline
 from sklearn.kernel_approximation import (RBFSampler,
                                           Nystroem)
 from sklearn.decomposition import PCA
 
-# The digits dataset
+# 导入 digits 数据集
 digits = datasets.load_digits(n_class=9)
 
-# To apply an classifier on this data, we need to flatten the image, to
-# turn the data in a (samples, feature) matrix:
+# 要对此数据应用分类器，我们需要 flatten images，以 (样本, 特征) 矩阵转换数据
 n_samples = len(digits.data)
 data = digits.data / 16.
+# mean() 求取均值
 data -= data.mean(axis=0)
 
-# We learn the digits on the first half of the digits
+# 我们在数字的前半部分学习数字，即 data_train 是数据集的前半部分
+# targets_train 是数据集的标签的前半部分
 data_train, targets_train = (data[:n_samples // 2],
                              digits.target[:n_samples // 2])
 
 
-# Now predict the value of the digit on the second half:
+# 现在我们预测剩下的半部分数据集的标签
 data_test, targets_test = (data[n_samples // 2:],
                            digits.target[n_samples // 2:])
 # data_test = scaler.transform(data_test)
 
-# Create a classifier: a support vector classifier
+# 创建一个 svc 分类器
 kernel_svm = svm.SVC(gamma=.2)
 linear_svm = svm.LinearSVC()
 
-# create pipeline from kernel approximation
-# and linear svm
+# 从 kernel approximation 和 线性 SVM 中创建 pipeline
+# RBFSampler() --- 通过其傅立叶变换的 Monte Carlo 近似的 近似 RBF kernel 的特征图。它实现了 Random Kitchen Sinks 的变体。
 feature_map_fourier = RBFSampler(gamma=.2, random_state=1)
+# Nystroem() --- 使用训练数据的子集近似一个 kernel map, 使用数据的子集作为基础构建任意 kernel 的近似特征图。
 feature_map_nystroem = Nystroem(gamma=.2, random_state=1)
+# pipeline.Pipeline() --- final estimator 的变换 pipeline 。pipeline 的目的是组装几个可以交叉验证的步骤，同时设置不同的参数。
+# 详情参见：http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
 fourier_approx_svm = pipeline.Pipeline([("feature_map", feature_map_fourier),
                                         ("svm", svm.LinearSVC())])
 
 nystroem_approx_svm = pipeline.Pipeline([("feature_map", feature_map_nystroem),
                                         ("svm", svm.LinearSVC())])
 
-# fit and predict using linear and kernel svm:
+# 使用 线性 svm 和 kernel svm 来拟合并预测
 
 kernel_svm_time = time()
 kernel_svm.fit(data_train, targets_train)
@@ -125,10 +113,10 @@ for D in sample_sizes:
     nystroem_scores.append(nystroem_score)
     fourier_scores.append(fourier_score)
 
-# plot the results:
+# 将预测的结果绘制出来
 plt.figure(figsize=(8, 8))
 accuracy = plt.subplot(211)
-# second y axis for timeings
+# 第二个 y 轴为时间
 timescale = plt.subplot(212)
 
 accuracy.plot(sample_sizes, nystroem_scores, label="Nystroem approx. kernel")
@@ -139,7 +127,7 @@ accuracy.plot(sample_sizes, fourier_scores, label="Fourier approx. kernel")
 timescale.plot(sample_sizes, fourier_times, '--',
                label='Fourier approx. kernel')
 
-# horizontal lines for exact rbf and linear kernels:
+# 精确 rbf 和 线性 kernel 的水平线
 accuracy.plot([sample_sizes[0], sample_sizes[-1]],
               [linear_svm_score, linear_svm_score], label="linear svm")
 timescale.plot([sample_sizes[0], sample_sizes[-1]],
@@ -150,10 +138,10 @@ accuracy.plot([sample_sizes[0], sample_sizes[-1]],
 timescale.plot([sample_sizes[0], sample_sizes[-1]],
                [kernel_svm_time, kernel_svm_time], '--', label='rbf svm')
 
-# vertical line for dataset dimensionality = 64
+# 数据集维数的垂直线 = 64
 accuracy.plot([64, 64], [0.7, 1], label="n_features")
 
-# legends and labels
+# 图例 和 标签
 accuracy.set_title("Classification accuracy")
 timescale.set_title("Training times")
 accuracy.set_xlim(sample_sizes[0], sample_sizes[-1])
@@ -165,23 +153,22 @@ timescale.set_ylabel("Training time in seconds")
 accuracy.legend(loc='best')
 timescale.legend(loc='best')
 
-# visualize the decision surface, projected down to the first
-# two principal components of the dataset
+# 可视化决策面，预测到数据集的前两个主要分量
 pca = PCA(n_components=8).fit(data_train)
 
 X = pca.transform(data_train)
 
-# Generate grid along first two principal components
+# 沿着前两个主要分量生成网格
 multiples = np.arange(-2, 2, 0.1)
-# steps along first component
+# 沿着第一个分量的步骤
 first = multiples[:, np.newaxis] * pca.components_[0, :]
-# steps along second component
+# 沿着第二个分量的步骤
 second = multiples[:, np.newaxis] * pca.components_[1, :]
-# combine
+# 组合
 grid = first[np.newaxis, :, :] + second[:, np.newaxis, :]
 flat_grid = grid.reshape(-1, data.shape[1])
 
-# title for the plots
+# 加上绘制图上的 title
 titles = ['SVC with rbf kernel',
           'SVC (linear kernel)\n with Fourier rbf feature map\n'
           'n_components=100',
@@ -191,20 +178,19 @@ titles = ['SVC with rbf kernel',
 plt.tight_layout()
 plt.figure(figsize=(12, 5))
 
-# predict and plot
+# 预测并且绘制出来
 for i, clf in enumerate((kernel_svm, nystroem_approx_svm,
                          fourier_approx_svm)):
-    # Plot the decision boundary. For that, we will assign a color to each
-    # point in the mesh [x_min, x_max]x[y_min, y_max].
+    # 绘制决策边界。为此，我们将为网格 [x_min, x_max]x[y_min, y_max] 中的每个点分配一个颜色。
     plt.subplot(1, 3, i + 1)
     Z = clf.predict(flat_grid)
 
-    # Put the result into a color plot
+    # 将结果绘制到彩色图中
     Z = Z.reshape(grid.shape[:-1])
     plt.contourf(multiples, multiples, Z, cmap=plt.cm.Paired)
     plt.axis('off')
 
-    # Plot also the training points
+    # 绘制训练点
     plt.scatter(X[:, 0], X[:, 1], c=targets_train, cmap=plt.cm.Paired,
                 edgecolors=(0, 0, 0))
 

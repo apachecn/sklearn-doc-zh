@@ -3,20 +3,18 @@
 Lasso and Elastic Net for Sparse Signals
 ========================================
 
-Estimates Lasso and Elastic-Net regression models on a manually generated
-sparse signal corrupted with an additive noise. Estimated coefficients are
-compared with the ground-truth.
+估计手动产生的稀疏信号 Lasso 和 Elastic-Net 回归模型与附加噪声相关。 估计的系数与真实数据进行比较。
 
 """
 print(__doc__)
 
 import numpy as np
 import matplotlib.pyplot as plt
-
 from sklearn.metrics import r2_score
 
 # #############################################################################
 # Generate some sparse data to play with
+# 生成一些稀疏数据来使用
 np.random.seed(42)
 
 n_samples, n_features = 50, 200
@@ -39,6 +37,18 @@ X_test, y_test = X[n_samples // 2:], y[n_samples // 2:]
 # Lasso
 from sklearn.linear_model import Lasso
 
+# '''
+# Lasso：是估计稀疏系数的线性模型
+# alpha
+#     参数控制估计系数的稀疏度。
+#     将L1项倍增的常数，默认为1.0。
+#     alpha=0 相当于通过 LinearRegression 对象求解的普通最小二乘法。
+#     出于数值原因，不建议使用 alpha=0 与 Lasso 对象。给定这个，你应该使用 LinearRegression 对象。
+#     其中 C 是通过 alpha=1/C 或者 alpha=1/(n_samples*C) 得到的。
+# '''
+# reg = linear_model.Lasso(alpha=0.1)
+# print reg.fit([[0, 0], [1, 1]], [0, 1])
+# print reg.predict([[1, 1]])
 alpha = 0.1
 lasso = Lasso(alpha=alpha)
 

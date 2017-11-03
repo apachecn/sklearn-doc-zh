@@ -2,7 +2,7 @@
 .. _multiclass:
 
 ====================================
-多分类和多标签算法
+多类和多标签算法
 ====================================
 
 .. currentmodule:: sklearn.multiclass
@@ -12,41 +12,39 @@
     out-of-the-box. You don't need to use the :mod:`sklearn.multiclass` module
     unless you want to experiment with different multiclass strategies.
 
-The :mod:`sklearn.multiclass` module implements *meta-estimators* to solve
-``multiclass`` and ``multilabel`` classification problems
-by decomposing such problems into binary classification problems. Multitarget
-regression is also supported.
+:mod:`sklearn.multiclass` 模块采用了 *元评估器* ，通过把``多类`` 和 ``多标签`` 分类问题分解为
+二元分类问题去解决。这同样适用于多目标回归问题。
 
-- **Multiclass classification** 意味着一个分类任务有多于两个类的类别。比如，分类一系列橘子、
-苹果、或者梨的水果图片。多分类假设每一个样本都有一个并且仅仅一个标签：一个水果可能是苹果，也可能
-是梨，但不能同时是两者。
+- **Multiclass classification** **多类分类** 意味着一个分类任务需要对多于两个类的数据进行分类。比如，对一系列的橘子，
+苹果或者梨的图片进行分类。多类分类假设每一个样本有且仅有一个标签：一个水果可以被归类为苹果，也可以
+是梨，但不能同时被归类为两类。
 
-- **Multilabel classification** 多标签分类 给每一个样本分配一系列标签。这可以被认为是预测不
-相互排斥的数据点的属性，例如与文档类型相关的主题。一个文本可以属于许多类别，可以同时为政治、金融、
-教育或者不属于任何这些类别。
+- **Multilabel classification** **多标签分类** 给每一个样本分配一系列标签。这可以被认为是预测不
+相互排斥的数据点的属性，例如与文档类型相关的主题。一个文本可以归类为任意类别，例如可以同时为政治、金融、
+教育相关或者不属于以上任何类别。
 
-- **Multioutput regression** 为每个样本分配一组目标值。这可以认为是为每一个样本预测多个属性，
-比如说在一个确定的地点风的方向和大小。
+- **Multioutput regression** **多输出分类** 为每个样本分配一组目标值。这可以认为是预测每一个样本的多个属性，
+比如说一个具体地点的风的方向和大小。
 
-- **Multioutput-multiclass classification** and **multi-task classification**
-  意味着单个的训练器要解决多个联合的分类任务。这是只考虑二分类的 multi-label classification 
-  任务的推广，  *输出的格式是一个二维数组或者一个稀疏矩阵。*
+- **Multioutput-multiclass classification** and **multi-task classification** **多输出-多类分类和
+多任务分类** 意味着单个的评估器要解决多个联合的分类任务。这是只考虑二分类的 multi-label classification 
+  和 multi-class classification 任务的推广。 *此类问题输出的格式是一个二维数组或者一个稀疏矩阵。*
 
- 每个输出变量的标签集合可以是各不相同的。比如说，一个水果样本可以将梨作为一个输出变量，这个输出变
- 量在一个比如梨、苹果等的有限集合中取可能的值；输出蓝色或者黄色的第二个输出变量在一个有限的颜色集
- 合绿色、红色、蓝色等取可能的值...
+ 每个输出变量的标签集合可以是各不相同的。比如说，一个样本可以将“梨”作为一个输出变量的值，这个输出变
+ 量在一个含有“梨”、“苹果”等水果种类的有限集合中取可能的值；将“蓝色”或者“绿色”作为第二个输出变量的值，
+ 这个输出变量在一个含有“绿色”、“红色”、“蓝色”等颜色种类的有限集合中取可能的值...
 
- 这意味着任何处理 multi-output multiclass or multi-task classification 的分类器，在特殊的
+ 这意味着任何处理 multi-output multiclass or multi-task classification 任务的分类器，在特殊的
  情况下支持 multi-label classification 任务。Multi-task classification 与具有不同模型公式
  的 multi-output classification 相似。详细情况请查阅相关的分类器的文档。
 
 所有的 scikit-learn 分类器都能处理 multiclass classification 任务，
-但是 :mod:`sklearn.multiclass` 提供的 meta-estimators 允许改变处理超多两类的方式，因为这会对分类器的性能产生影响
+但是 :mod:`sklearn.multiclass` 提供的元评估器允许改变在处理超过两类数据时的方式，因为这会对分类器的性能产生影响
 （无论是在泛化误差或者所需要的计算资源方面）
 
-下面是按照 scikit-learn 策略分组的分类器的总结，如果你使用其中的一个，则不需要此类中的 meta-estimators，除非你想要定值多分类方式。
+下面是按照 scikit-learn 策略分组的分类器的总结，如果你使用其中的一个，则不需要此类中的元评估器，除非你想要自定义的多分类方式。
 
-- **Inherently multiclass:**
+- **固有的多类分类器:**
 
   - :class:`sklearn.naive_bayes.BernoulliNB`
   - :class:`sklearn.tree.DecisionTreeClassifier`
@@ -69,14 +67,14 @@ regression is also supported.
   - :class:`sklearn.linear_model.RidgeClassifierCV`
 
 
-- **Multiclass as One-Vs-One:**
+- **1对1的多类分类器:**
 
   - :class:`sklearn.svm.NuSVC`
   - :class:`sklearn.svm.SVC`.
   - :class:`sklearn.gaussian_process.GaussianProcessClassifier` (setting multi_class = "one_vs_one")
 
 
-- **Multiclass as One-Vs-All:**
+- **1对多的多类分类器:**
 
   - :class:`sklearn.ensemble.GradientBoostingClassifier`
   - :class:`sklearn.gaussian_process.GaussianProcessClassifier` (setting multi_class = "one_vs_rest")
@@ -88,7 +86,7 @@ regression is also supported.
   - :class:`sklearn.linear_model.PassiveAggressiveClassifier`
 
 
-- **Support multilabel:**
+- **支持多标签分类的分类器:**
 
   - :class:`sklearn.tree.DecisionTreeClassifier`
   - :class:`sklearn.tree.ExtraTreeClassifier`
@@ -100,7 +98,7 @@ regression is also supported.
   - :class:`sklearn.linear_model.RidgeClassifierCV`
 
 
-- **Support multiclass-multioutput:**
+- **支持多类-多输出分类的分类器:**
 
   - :class:`sklearn.tree.DecisionTreeClassifier`
   - :class:`sklearn.tree.ExtraTreeClassifier`
@@ -118,13 +116,10 @@ regression is also supported.
 多标签分类格式
 ================================
 
-在 multilabel learning 中，二分类任务的合集表示为二进制数组：每一个样本是 shape 为 (n_samples, n_classes) 的二维数组中的一行二进制值，比如非0元素，1表示为对应标签的
+在 multilabel learning 中，二元分类任务的合集表示为二进制数组：每一个样本是大小为 (n_samples, n_classes) 的二维数组中的一行二进制值，比如非0元素，表示为对应标签的
 子集。 一个数组 ``np.array([[1, 0, 0], [0, 1, 1], [0, 0, 0]])`` 表示第一个样本属于第 0 个标签，第二个样本属于第一个和第二个标签，第三个样本不属于任何标签。
 
-Producing multilabel data as a list of sets of labels may be more intuitive.
-The :class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>`
-transformer can be used to convert between a collection of collections of
-labels and the indicator format.
+通过一系列的标签来产生多标签数据可能更为直观。 :class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>` 转换器可以用来在标签接口和格式指示器接口之间进行转换。
 
   >>> from sklearn.preprocessing import MultiLabelBinarizer
   >>> y = [[2, 3, 4], [2], [0, 1, 3], [0, 1, 2, 3, 4], [0, 1, 2]]
@@ -137,12 +132,14 @@ labels and the indicator format.
 
 .. _ovr_classification:
 
-One-Vs-The-Rest
+1对其余
 ===============
 
-这个方法也被称为 **one-vs-all**, 在 :class:`OneVsRestClassifier` 模块中执行。 这个方法在于每一个类都将拟合出一个分类器。对于每一个分类器，该类将会和其他所有的类区别。除了她的计算效率之外 (只需要 `n_classes` 个分类器), 这种方法的优点是它具有可解释性。通过检查相关的分类器它可以获得知识。这是最常用的方法，也是一个公平的默认选择。
+这个方法也被称为 **1对多**, 在 :class:`OneVsRestClassifier` 模块中执行。 这个方法在于每一个类都将用一个分类器进行拟合。
+对于每一个分类器，该类将会和其他所有的类有所区别。除了它的计算效率之外 (只需要 `n_classes` 个分类器), 这种方法的优点是它具有可解释性。
+因为每一个类都可以通过有且仅有一个分类器来代表，所以通过检查一个类相关的分类器就可以获得该类的信息。这是最常用的方法，也是一个合理的默认选择。
 
-Multiclass learning
+多类学习
 -------------------
 
 下面是一个使用 OvR 的一个例子：
@@ -164,8 +161,8 @@ Multiclass learning
 多标签学习
 -------------------
 
-:class:`OneVsRestClassifier`  也支持 multilabel classification.
-要使用该功能，给分类器提供一个指示矩阵，比如 [i,j] 表示样本 i 的标签为 j。
+:class:`OneVsRestClassifier` 1对其余分类器  也支持 multilabel classification.
+要使用该功能，给分类器提供一个指示矩阵，比如 [i,j] 表示第i个样本中的第j个标签。
 
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_multilabel_001.png
@@ -180,17 +177,16 @@ Multiclass learning
 
 .. _ovo_classification:
 
-One-Vs-One
+1对1
 ==========
 
-:class:`OneVsOneClassifier` 将会为每一对类别构造出一个分类器，在预测阶段，收到最多投票的类别将会被选择出来。在两个类具有同样的票数的时候， it
-selects the class with the highest aggregate classification confidence by
-summing over the pair-wise classification confidence levels computed by the
-underlying binary classifiers.
+:class:`OneVsOneClassifier` 1对1分类器 将会为每一对类别构造出一个分类器，在预测阶段，收到最多投票的类别将会被挑选出来。
+当存在结时（两个类具有同样的票数的时候）， 1对1分类器会选择总分类置信度最高的类，其中总分类置信度是由下层的二元分类器
+计算出的成对置信等级累加而成。
 
 因为这需要训练出 ``n_classes * (n_classes - 1) / 2`` 个分类器,
-由于复杂度为 O(n_classes^2)，这个方法通常比 one-vs-the-rest 慢。然而，这个方法也有优点，比如说是在没有很好的缩放 ``n_samples`` 数据的核方法中。每个单独的学习问题只涉及一小部分数据，
-而 one-vs-the-rest 将会使用 ``n_classes`` 个完整的数据。
+由于复杂度为 O(n_classes^2)，这个方法通常比 one-vs-the-rest 慢。然而，这个方法也有优点，比如说是在没有很好的缩放 ``n_samples`` 数据的核方法中。
+这是由于每个单独的学习问题只涉及一小部分数据，而 one-vs-the-rest 将会使用 ``n_classes`` 次完整的数据。
 
 多类别学习
 -------------------
@@ -222,18 +218,18 @@ Below is an example of multiclass learning using OvO::
 误差校正输出代码
 =============================
 
-基于Output-code的方法不同于 one-vs-the-rest 和 one-vs-one。使用这些方法，每一个类将会被映射到欧几里得空间，每一个维度上的值为0或者为1。另一种解释它的方法是，每一个类被表示为二进制
-码（一个 0 和 1 数组）。保存 location （位置）/ 每一个类的编码的矩阵被称为 code book。编码的大小是前面提到的欧几里得空间的纬度。直观上，每一个类应该使用一个唯一的编码，好的 code book 应该能够优化分类的精度。
-在实现上，我们使用随机产生的 code book，正如在 [3]_ 提倡的方式，然而，更加详尽的方法会在未来加入进来。
+基于Output-code的方法不同于 one-vs-the-rest 和 one-vs-one。使用这些方法，每一个类将会被映射到欧几里得空间，每一个维度上的值只能为0或者1。另一种解释它的方法是，每一个类被表示为二进制
+码（一个 由0 和 1 组成的数组）。保存 location （位置）/ 每一个类的编码的矩阵被称为 code book。编码的大小是前面提到的欧几里得空间的纬度。直观上来说，每一个类应该使用一个唯一的编码，同时，好的 code book 应该能够优化分类的精度。
+在实现上，我们使用随机产生的 code book，正如在 [3]_ 提倡的方式，即使更加详尽的方法可能会在未来被加入其中。
 
 在训练时，code book 每一位的二分类器将会被训练。在预测时，分类器将映射到类空间中选中的点的附近。
  
 在 :class:`OutputCodeClassifier`, ``code_size`` 属性允许用户设置将会用到的分类器的数量。
 它是类别总数的百分比。
 
-在 0 或 1 之中的一个数字会比 one-vs-the-rest 使用更少的分类器。理论上 ``log2(n_classes) / n_classes`` 足以明确表示每个类。然而，在实际上，这也许会导致不太好的精确度，因为 ``log2(n_classes)`` 小于 n_classes.
+在 0 或 1 之中的一个数字会比 one-vs-the-rest 使用更少的分类器。理论上 ``log2(n_classes) / n_classes`` 足以明确表示每个类。然而在实际情况中，这也许会导致不太好的精确度，因为 ``log2(n_classes)`` 小于 n_classes.
 
-比 1 大的数字比 one-vs-the-rest 需要更多的分类器数数量。在这种情况下，一些分类器理论上会纠正其他分类器的错误，因此命名为 "error-correcting" 。然而在实际上这通常不会发生，因为许多分类器的错误通常意义上来说是相关的。error-correcting output codes 和 bagging 有一个相似的作用效果。
+比 1 大的数字比 one-vs-the-rest 需要更多的分类器。在这种情况下，一些分类器在理论上会纠正其他分类器的错误，因此命名为 "error-correcting" 。然而在实际上这通常不会发生，因为许多分类器的错误通常意义上来说是相关的。error-correcting output codes 和 bagging 有一个相似的作用效果。
 
 
 多类别学习
@@ -276,7 +272,8 @@ Below is an example of multiclass learning using Output-Codes::
 多输出回归
 ======================
 
-Multioutput regression 支持 :class:`MultiOutputRegressor` 可以被添加到任何回归器中。这个策略包括对每个目标拟合一个回归。因为每一个目标可以被一个回归器精确的表示，通过检查其他回归器，它可以获取关于目标的知识。因为 :class:`MultiOutputRegressor` 对于每一个目标可以训练出一个回归器，所以它可能忽略属性之间的关系。
+多输出回归支持 :class:`MultiOutputRegressor` 可以被添加到任何回归器中。这个策略包括对每个目标拟合一个回归器。因为每一个目标可以被一个回归器精确地表示，通过检查对应的回归器，可以获取关于目标的信息。
+因为 :class:`MultiOutputRegressor` 对于每一个目标可以训练出一个回归器，所以它无法利用目标之间的相关度信息。
 
 以下是 multioutput regression（多输出回归）的示例:
 
@@ -299,9 +296,10 @@ Multioutput regression 支持 :class:`MultiOutputRegressor` 可以被添加到�
 多输出分类
 ==========================
 
-Multioutput classification 支持能够被添加到任何分类器中的 :class:`MultiOutputClassifier`. 这种方法训练每一个目标一个分类器。这允许多目标变量分类器。这种类的目的是扩展能够评估一系列目标函数的评估器 (f1,f2,f3…,fn) ，这些函数在一个单独的预测矩阵上训练来预测一系列 (y1,y2,y3…,yn)。
+Multioutput classification 支持能够被添加到任何带有 :class:`MultiOutputClassifier` 标志的分类器中. 这种方法为每一个目标训练一个分类器。
+这就允许产生多目标变量分类器。这种类的目的是扩展评估器用于评估一系列目标函数 (f1,f2,f3…,fn) ，这些函数在一个单独的预测矩阵上进行训练以此来预测一系列的响应 (y1,y2,y3…,yn)。
 
-Below is an example of multioutput classification:
+下面是多输出分类的一个例子:
     
     >>> from sklearn.datasets import make_classification
     >>> from sklearn.multioutput import MultiOutputClassifier
@@ -332,13 +330,14 @@ Below is an example of multioutput classification:
 链式分类器
 ================
 
-Classifier chains (查看 :class:`ClassifierChain`) 是一种集合多个二分类器为一个单独的 multi-label 模型，能够发掘目标之间的相关性信息。
+Classifier chains (查看 :class:`ClassifierChain`) 是一种集合多个二分类器为一个单独的多标签模型的方法，这种方法能够发掘目标之间的相关性信息。
 
-有 N 个类别的 multi-label 分类问题，将 N 个二分类器分配 0 到 N-1 之间的一个整数。这些整数定义了模型在 chain 中的顺序。 每一个分类器在可用的训练数据加上具有较低数字的模型的类的真正标签上训练。
+对于有 N 个类的多标签分类问题，为 N 个二元分类器分配 0 到 N-1 之间的一个整数。这些整数定义了模型在 chain 中的顺序。将每个分类器拟合可用的训练数据与真实的类别标签，标签数字相对较小。
 
-当预测时，真正的标签将不可利用。每一个模型的预测将会传递个链上的下一个模型来作为特征使用。
+当进行预测时，真正的标签将无法使用。相反，每一个模型的预测结果将会传递给链上的下一个模型作为特征来进行使用。
 
-很明显链的顺序是十分重要的。链上的第一个模型没有关于其他标签的有效的利用信息，而链上的最后一个模型将会具有所有其他的标签信息。在一般情况下，不知道链上模型最优的顺序，因此通常会使用许多随机的顺序，将他们的预测求平均。
+很明显，链的顺序是十分重要的。链上的第一个模型没有关于其他标签的信息，而链上的最后一个模型将会具有所有其他标签的信息。
+在一般情况下，我们并不知道链上模型最优的顺序，因此通常会使用许多随机的顺序，将他们的预测求平均。
 
 .. topic:: 参考文献:
 
