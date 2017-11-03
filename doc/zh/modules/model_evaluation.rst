@@ -1155,9 +1155,8 @@ regression score（解释的方差回归得分） <https://en.wikipedia.org/wiki
 
 .. topic:: Examples:
 
-  * See :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
-    for an example of mean squared error usage to
-    evaluate gradient boosting regression.
+  * 点击 :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
+    查看均方误差用于梯度上升（gradient boosting）回归的使用例子。
 
 .. _mean_squared_log_error:
 
@@ -1260,9 +1259,8 @@ R² score, 可决系数
 
 .. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
-    for an example of R² score usage to
-    evaluate Lasso and Elastic Net on sparse signals.
+  * 点击 :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
+    查看关于R²用于评估在Lasso and Elastic Net on sparse signals上的使用.
 
 .. _clustering_metrics:
 
