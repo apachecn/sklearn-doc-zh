@@ -1,33 +1,33 @@
 .. _datasets:
 
 =========================
-Dataset loading utilities（数据集加载工具）
+数据集加载工具
 =========================
 
 .. currentmodule:: sklearn.datasets
 
-该 ``sklearn.datasets`` 包装嵌入了 :ref:`Getting Started <loading_example_dataset>` 部分中介绍的一些小型玩具数据集。
+该 ``sklearn.datasets`` 包装在 :ref:`Getting Started <loading_example_dataset>` 部分中嵌入了介绍一些小型玩具的数据集。
 
 为了在控制数据的统计特性（通常是特征的 correlation （相关性）和 informativeness （信息性））的同时评估数据集 (``n_samples`` 和 ``n_features``) 的规模的影响，也可以生成综合数据。
 
 这个软件包还具有帮助用户获取更大的数据集的功能，这些数据集通常由机器学习社区使用，用于对来自 'real world' 的数据进行检测算法。
 
 
-General dataset API（通用数据集 API）
-===================
+通用数据集 API
+=======================
 
 对于不同类型的数据集，有三种不同类型的数据集接口。最简单的是样品图像的界面，下面在 :ref:`sample_images` 部分中进行了描述。
 
-数据集生成函数和 svmlight 加载器分享了一个过于简单的接口，返回一个由 ``n_samples`` * ``n_features`` 组成的 tuple ``(X, y)`` 其中的 ``X`` 是 numpy 数组 ``y`` 是包含目标值的 ``n_samples`` 长度的数组
+数据集生成函数和 svmlight 加载器分享了一个较为简化的接口，返回一个由 ``n_samples`` * ``n_features`` 组成的 tuple ``(X, y)`` 其中的 ``X`` 是 numpy 数组 ``y`` 是包含目标值的长度为 ``n_samples`` 的数组
 
-玩具数据集以及 'real world' 数据集和从 mldata.org 获取的数据集具有更复杂的结构。这些函数返回一个类似于字典的对象包含至少两项：一个具有 ``data`` 键的 ``n_samples`` * ``n_features`` 形状的数组（除了20个新组之外）和一个具有 ``target`` 键的包含 target values （目标值）的 ``n_samples`` 长度的 numpy 数组。
+玩具数据集以及 'real world' 数据集和从 mldata.org 获取的数据集具有更复杂的结构。这些函数返回一个类似于字典的对象包含至少两项：一个具有 ``data`` 键（key）的 ``n_samples`` * ``n_features`` 形状的数组（除了20个新组之外except for 20newsgroups）和一个具有 ``target`` 键（key）的包含 target values （目标值）的 ``n_samples`` 长度的 numpy 数组。
 
-数据集还包含一些描述 ``DESCR`` ，一些包含 ``feature_names`` 和 ``target_names``。有关详细信息，请参阅下面的数据集说明
+数据集还包含一些对``DESCR`` 描述，同时一部分也包含 ``feature_names`` 和 ``target_names``的特征。有关详细信息，请参阅下面的数据集说明
 
-Toy datasets（玩具数据集）
-============
+玩具数据集
+=================
 
-scikit-learn 有一些小型标准数据集，不需要从某个外部网站下载任何文件。
+scikit-learn 内置有一些小型标准数据集，不需要从某个外部网站下载任何文件。
 
 .. autosummary::
 
@@ -43,14 +43,14 @@ scikit-learn 有一些小型标准数据集，不需要从某个外部网站下�
    load_breast_cancer
 
 
-这些数据集有助于快速说明在 scikit 中实现的各种算法的行为。然而，它们往往太小，无法代表真实世界的机器学习任务。
+这些数据集有助于快速说明在 scikit 中实现的各种算法的行为。然而，它们数据规模往往太小，无法代表真实世界的机器学习任务。
 
 .. _sample_images:
 
-Sample images（样本图片）
+样本图片
 =============
 
-scikit 还嵌入了几个样本 JPEG 图片公布了通过他们的作者共同授权。这些图像对 test algorithms （测试算法）和 pipeline on 2D data （二维数据管道）是有用的。
+scikit 在通过图片的作者共同授权下嵌入了几个样本 JPEG 图片。这些图像为了方便用户对 test algorithms （测试算法）和 pipeline on 2D data （二维数据管道）进行测试。
 
 .. autosummary::
 
@@ -77,46 +77,46 @@ scikit 还嵌入了几个样本 JPEG 图片公布了通过他们的作者共同�
 
 .. _sample_generators:
 
-Sample generators（样本生成器）
+样本生成器
 =================
 
-此外，scikit-learn 包括各种随机样本的生成器，可以用来建立控制的大小和复杂性人工数据集。
+此外，scikit-learn 包括各种随机样本的生成器，可以用来建立可控制的大小和复杂性人工数据集。
 
-Generators for classification and clustering（分类和聚类生成器）
+分类和聚类生成器
 --------------------------------------------
 
-这些生成器产生的特征和相应的离散矩阵目标。
+这些生成器将产生一个相应特征的离散矩阵。
 
-Single label（单标签）
+单标签
 ~~~~~~~~~~~~
 
-:func:`make_blobs` 和 :func:`make_classification` 通过分配每个类的一个或多个正态分布的点的群集创建的多类数据集。 :func:`make_blobs` 提供了更大的控制对于中心和各簇的标准偏差，并用于演示聚类。 :func:`make_classification` 专门通过引入噪声相关，多余的和均匀的特点；多高斯集群每类的特征空间上的线性变换。
+:func:`make_blobs` 和  :func:`make_classification` 通过分配每个类的一个或多个正态分布的点的群集创建的多类数据集。 :func:`make_blobs` 对于中心和各簇的标准偏差提供了更好的控制，可用于演示聚类。 :func:`make_classification` 专门通过引入相关的，冗余的和未知的噪音特征；将高斯集群的每类复杂化；在特征空间上进行线性变换。
 
-:func:`make_gaussian_quantiles` 分 single Gaussian cluster （单高斯簇）成近乎相等大小的同心超球面分离。 :func:`make_hastie_10_2` 产生类似的二进制、10维问题。
+:func:`make_gaussian_quantiles`  将single Gaussian cluster （单高斯簇）分成近乎相等大小的同心超球面分离。 :func:`make_hastie_10_2` 产生类似的二进制、10维问题。
 
 .. image:: ../auto_examples/datasets/images/sphx_glr_plot_random_dataset_001.png
    :target: ../auto_examples/datasets/plot_random_dataset.html
    :scale: 50
    :align: center
 
-:func:`make_circles` and :func:`make_moons`生成二维二分类数据集时，某些算法的挑战（如质心聚类或线性分类），包括可选的高斯噪声。它们对于可视化是有用的用球面决策边界生成二值分类高斯数据。
+:func:`make_circles` and :func:`make_moons`生成二维分类数据集时可以帮助确定算法（如质心聚类或线性分类），包括可以选择性加入高斯噪声。它们有利于可视化。用球面决策边界对高斯数据生成二值分类。
 
-Multilabel（多标签）
-~~~~~~~~~~
+多标签
+~~~~~~~~~~~~~~
 
-:func:`make_multilabel_classification` 生成随机样本与多个标签，反映一个 bag of words （词袋）从 mixture of topics（混合的主题画）。每个文档的主题数是从泊松分布中提取的，并且主题本身是从固定的随机分布中提取的。同样地，单词的数目是从泊松图中提取的，用多项式抽取的单词，其中每个主题定义了单词的概率分布。相对于真正的简化包括 bag-of-words mixtures （单词混合包）：
+:func:`make_multilabel_classification` 生成多个标签的随机样本，反映从a mixture of topics（一个混合的主题）中引用a bag of words （一个词袋）。每个文档的主题数是基于泊松分布随机提取的，同时主题本身也是从固定的随机分布中提取的。同样地，单词的数目是基于泊松分布提取的，单词通过多项式被抽取，其中每个主题定义了单词的概率分布。在以下方面真正简化了 bag-of-words mixtures （单词混合包）：
 
-* 每个主题词分布都是独立绘制的，在现实中，所有这些都会受到稀疏基分布的影响，并将相互关联。
-* 对于从多个主题生成的文档，所有主题在生成单词包时都是同等权重的。
-* 没有标签的随机文件，而不是从基础分布的文档
+* 独立绘制的每个主题词分布，在现实中，所有这些都会受到稀疏基分布的影响，并将相互关联。
+* 对于从文档中生成多个主题，所有主题在生成单词包时都是同等权重的。
+* 随机产生没有标签的文件，而不是基于分布（base distribution）来产生文档
 
 .. image:: ../auto_examples/datasets/images/sphx_glr_plot_random_multilabel_dataset_001.png
    :target: ../auto_examples/datasets/plot_random_multilabel_dataset.html
    :scale: 50
    :align: center
 
-Biclustering（双聚类）
-~~~~~~~~~~~~
+二分聚类
+~~~~~~~~~~~~~~~
 
 .. autosummary::
 
@@ -127,15 +127,15 @@ Biclustering（双聚类）
    make_checkerboard
 
 
-Generators for regression（回归生成器）
+回归生成器
 -------------------------
 
-:func:`make_regression` 产生回归的目标作为一个可选择的稀疏线性组合的随机特性，噪声。它的信息特征可能是不相关的，或低秩（少数特征占大多数的方差）。
+:func:`make_regression` 产生的回归目标作为一个可选择的稀疏线性组合的具有噪声的随机的特征。它的信息特征可能是不相关的或低秩（少数特征占大多数的方差）。
 
-其他回归生成器产生确定性的随机特征函数。 :func:`make_sparse_uncorrelated` 产生目标为四具有固定系数的线性组合。其他编码明确的非线性关系：:func:`make_friedman1` 通过多项式和正弦相关变换； :func:`make_friedman2` 包括特征相乘与交互；和 :func:`make_friedman3` 类似目标的反正切变换。
+其他回归生成器产生确定性的随机特征函数。 :func:`make_sparse_uncorrelated` 产生目标为一个有四个固定系数的线性组合。其他编码明确的非线性关系：:func:`make_friedman1` 与多项式和正弦相关变换相联系； :func:`make_friedman2` 包括特征相乘与交互； :func:`make_friedman3` 类似与对目标的反正切变换。
 
 
-Generators for manifold learning（流形学习生成器）
+流形学习生成器
 --------------------------------
 
 .. autosummary::
@@ -146,7 +146,7 @@ Generators for manifold learning（流形学习生成器）
    make_s_curve
    make_swiss_roll
 
-Generators for decomposition（生成器分解）
+生成器分解
 ----------------------------
 
 .. autosummary::
@@ -163,92 +163,84 @@ Generators for decomposition（生成器分解）
 .. _libsvm_loader:
 
 Datasets in svmlight / libsvm format
-====================================
+===================================================
 
-scikit-learn includes utility functions for loading
-datasets in the svmlight / libsvm format. In this format, each line
-takes the form ``<label> <feature-id>:<feature-value>
-<feature-id>:<feature-value> ...``. This format is especially suitable for sparse datasets.
-In this module, scipy sparse CSR matrices are used for ``X`` and numpy arrays are used for ``y``.
+scikit-learn 中有加载svmlight / libsvm格式的数据集的功能函数。此种格式中，每行
+采用如 ``<label> <feature-id>:<feature-value><feature-id>:<feature-value> ...`` 
+的形式。这种格式尤其适合稀疏数据集，在该模块中，数据集 ``X`` 使用的是scipy稀疏CSR矩阵，
+特征集 ``y`` 使用的是numpy数组。
 
-You may load a dataset like as follows::
+你可以通过如下步骤加载数据集::
 
   >>> from sklearn.datasets import load_svmlight_file
   >>> X_train, y_train = load_svmlight_file("/path/to/train_dataset.txt")
   ...                                                         # doctest: +SKIP
 
-You may also load two (or more) datasets at once::
+你也可以一次加载两个或多个的数据集::
 
   >>> X_train, y_train, X_test, y_test = load_svmlight_files(
   ...     ("/path/to/train_dataset.txt", "/path/to/test_dataset.txt"))
   ...                                                         # doctest: +SKIP
 
-In this case, ``X_train`` and ``X_test`` are guaranteed to have the same number
-of features. Another way to achieve the same result is to fix the number of
-features::
+这种情况下，保证了 ``X_train`` 和 ``X_test`` 具有相同的特征数量。
+固定特征的数量也可以得到同样的结果::
 
   >>> X_test, y_test = load_svmlight_file(
   ...     "/path/to/test_dataset.txt", n_features=X_train.shape[1])
   ...                                                         # doctest: +SKIP
 
-.. topic:: Related links:
+.. topic:: 相关链接:
 
- _`Public datasets in svmlight / libsvm format`: https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets
+ _`svmlight / libsvm 格式的公共数据集`: https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets
 
- _`Faster API-compatible implementation`: https://github.com/mblondel/svmlight-loader
+ _`更快的API兼容的实现`: https://github.com/mblondel/svmlight-loader
 
 .. _external_datasets:
 
-Loading from external datasets
-==============================
+从外部数据集加载
+=============================================
 
-scikit-learn works on any numeric data stored as numpy arrays or scipy sparse
-matrices. Other types that are convertible to numeric arrays such as pandas
-DataFrame are also acceptable.
- 
-Here are some recommended ways to load standard columnar data into a 
-format usable by scikit-learn: 
+scikit-learn使用任何存储为numpy数组或者scipy稀疏数组的数值数据。
+其他可以转化成数值数组的类型也可以接受，如pandas中的DataFrame。
+
+以下推荐一些将标准纵列形式的数据转换为scikit-learn可以使用的格式的方法:
 
 * `pandas.io <https://pandas.pydata.org/pandas-docs/stable/io.html>`_ 
-  provides tools to read data from common formats including CSV, Excel, JSON
-  and SQL. DataFrames may also be constructed from lists of tuples or dicts.
-  Pandas handles heterogeneous data smoothly and provides tools for
-  manipulation and conversion into a numeric array suitable for scikit-learn.
+  提供了从常见格式(包括CSV,Excel,JSON,SQL等)中读取数据的工具.DateFrame 也可以从由
+  元组或者字典组成的列表构建而成.Pandas能顺利的处理异构的数据，并且提供了处理和转换
+  成方便scikit-learn使用的数值数据的工具。
+
 * `scipy.io <https://docs.scipy.org/doc/scipy/reference/io.html>`_ 
-  specializes in binary formats often used in scientific computing 
-  context such as .mat and .arff
+  专门处理科学计算领域经常使用的二进制格式，例如.mat和.arff格式的内容。
+
 * `numpy/routines.io <https://docs.scipy.org/doc/numpy/reference/routines.io.html>`_
-  for standard loading of columnar data into numpy arrays
-* scikit-learn's :func:`datasets.load_svmlight_file` for the svmlight or libSVM
-  sparse format
-* scikit-learn's :func:`datasets.load_files` for directories of text files where
-  the name of each directory is the name of each category and each file inside
-  of each directory corresponds to one sample from that category
+  将纵列形式的数据标准的加载为numpy数组
 
-For some miscellaneous data such as images, videos, and audio, you may wish to
-refer to:
+* scikit-learn的 :func:`datasets.load_svmlight_file`处理svmlight或者libSVM稀疏矩阵
 
-* `skimage.io <http://scikit-image.org/docs/dev/api/skimage.io.html>`_ or
+* scikit-learn的 :func:`datasets.load_files` 处理文本文件组成的目录，每个目录名是每个
+  类别的名称，每个目录内的每个文件对应该类别的一个样本
+
+对于一些杂项数据，例如图像，视屏，音频。您可以参考:
+
+* `skimage.io <http://scikit-image.org/docs/dev/api/skimage.io.html>`_ 或
   `Imageio <https://imageio.readthedocs.io/en/latest/userapi.html>`_ 
-  for loading images and videos to numpy arrays
+  将图像或者视屏加载为numpy数组
 * `scipy.misc.imread <https://docs.scipy.org/doc/scipy/reference/generated/scipy.
   misc.imread.html#scipy.misc.imread>`_ (requires the `Pillow
-  <https://pypi.python.org/pypi/Pillow>`_ package) to load pixel intensities
-  data from various image file formats
+  <https://pypi.python.org/pypi/Pillow>`_ package)将各种图像文件格式加载为
+  像素灰度数据
+
 * `scipy.io.wavfile.read 
   <https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.io.wavfile.read.html>`_ 
-  for reading WAV files into a numpy array
+  将WAV文件读入一个numpy数组
 
-Categorical (or nominal) features stored as strings (common in pandas DataFrames) 
-will need converting to integers, and integer categorical variables may be best 
-exploited when encoded as one-hot variables 
-(:class:`sklearn.preprocessing.OneHotEncoder`) or similar. 
-See :ref:`preprocessing`.
+存储为字符串的无序(或者名字)特征(在pandas的DataFrame中很常见)需要转换为整数，当整数类别变量
+被编码成独热变量(:class:`sklearn.preprocessing.OneHotEncoder`)或类似数据时，它或许可以被最好的利用。
+参见 :ref:`preprocessing`.
 
-Note: if you manage your own numerical data it is recommended to use an 
-optimized file format such as HDF5 to reduce data load times. Various libraries
-such as H5Py, PyTables and pandas provides a Python interface for reading and 
-writing data in that format.
+注意：如果你要管理你的数值数据，建议使用优化后的文件格式来减少数据加载时间,例如HDF5。像
+H5Py, PyTables和pandas等的各种库提供了一个Python接口，来读写该格式的数据。
 
 .. make sure everything is in a toc tree
 

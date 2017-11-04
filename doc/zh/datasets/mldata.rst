@@ -6,23 +6,19 @@
 
 .. _mldata:
 
-Downloading datasets from the mldata.org repository
+从 mldata.org 上下载数据集
 ===================================================
 
-`mldata.org <http://mldata.org>`_ is a public repository for machine learning
-data, supported by the `PASCAL network <http://www.pascal-network.org>`_ .
+`mldata.org <http://mldata.org>`_ 是一个公开的机器学习数据 repository ,由 `PASCAL network <http://www.pascal-network.org>`_ 负责支持。
 
-The ``sklearn.datasets`` package is able to directly download data
-sets from the repository using the function
-:func:`sklearn.datasets.fetch_mldata`.
+``sklearn.datasets`` 包可以使用函数 :func:`sklearn.datasets.fetch_mldata` 直接从 repository 下载数据集。
 
-For example, to download the MNIST digit recognition database::
+举个例子，下载 MNIST 手写数字字符识别数据集::
 
   >>> from sklearn.datasets import fetch_mldata
   >>> mnist = fetch_mldata('MNIST original', data_home=custom_data_home)
 
-The MNIST database contains a total of 70000 examples of handwritten digits
-of size 28x28 pixels, labeled from 0 to 9::
+MNIST 手写数字字符数据集包含有 70000 个样本，每个样本带有从 0 到 9 的标签，并且样本像素尺寸大小为 28x28::
 
   >>> mnist.data.shape
   (70000, 784)
@@ -31,23 +27,16 @@ of size 28x28 pixels, labeled from 0 to 9::
   >>> np.unique(mnist.target)
   array([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9.])
 
-After the first download, the dataset is cached locally in the path
-specified by the ``data_home`` keyword argument, which defaults to
-``~/scikit_learn_data/``::
+首次下载之后，数据集被缓存在本地的由 ``data_home`` 关键字指定的路径中，路径默认是 ``~/scikit_learn_data/`` ::
 
   >>> os.listdir(os.path.join(custom_data_home, 'mldata'))
   ['mnist-original.mat']
 
-Data sets in `mldata.org <http://mldata.org>`_ do not adhere to a strict
-naming or formatting convention. :func:`sklearn.datasets.fetch_mldata` is
-able to make sense of the most common cases, but allows to tailor the
-defaults to individual datasets:
+`mldata.org <http://mldata.org>`_ 里的数据集在命名规则和数据格式上不遵循严格的约定。
+:func:`sklearn.datasets.fetch_mldata` 可以应对大多数的常见情况，并且允许个人对数据集的默认设置进行调整:
 
-* The data arrays in `mldata.org <http://mldata.org>`_ are most often
-  shaped as ``(n_features, n_samples)``. This is the opposite of the
-  ``scikit-learn`` convention, so :func:`sklearn.datasets.fetch_mldata`
-  transposes the matrix by default. The ``transpose_data`` keyword controls
-  this behavior::
+* `mldata.org <http://mldata.org>`_ 中的数据大多都是以 ``(n_features, n_samples)`` 这样的组织形式存在。
+  这与 ``scikit-learn`` 中的习惯约定是不一致的，所以 :func:`sklearn.datasets.fetch_mldata` 默认情况下通过 ``transpose_data`` 关键字控制对这个矩阵进行转置运算。::
 
     >>> iris = fetch_mldata('iris', data_home=custom_data_home)
     >>> iris.data.shape
@@ -57,14 +46,12 @@ defaults to individual datasets:
     >>> iris.data.shape
     (4, 150)
 
-* For datasets with multiple columns, :func:`sklearn.datasets.fetch_mldata`
-  tries to identify the target and data columns and rename them to ``target``
-  and ``data``. This is done by looking for arrays named ``label`` and
-  ``data`` in the dataset, and failing that by choosing the first array to be
-  ``target`` and the second to be ``data``. This behavior can be changed with
-  the ``target_name`` and ``data_name`` keywords, setting them to a specific
-  name or index number (the name and order of the columns in the datasets
-  can be found at its `mldata.org <http://mldata.org>`_ under the tab "Data"::
+* 数据集有多列的时候，:func:`sklearn.datasets.fetch_mldata` 这个函数会识别目标列和数据列，
+  并将它们重命名为 ``target（目标）`` 和 ``data（数据）`` 。
+  这是通过在数据集中寻找名为 ``label（标签）`` 和 ``data（数据）`` 的数组来完成的，
+  如果选择第一个数组是 ``target（目标）``，而第二个数组是 ``data（数据）`` ，则前边的设置会失效。
+  这个行为可以通过对关键字 ``target_name`` 和 ``data_name`` 进行设置来改变，设置的值可以是具体的名字也可以是索引数字，
+  数据集中列的名字和索引序号都可以在 `mldata.org <http://mldata.org>`_ 中的 "Data" 选项卡下找到::
 
     >>> iris2 = fetch_mldata('datasets-UCI iris', target_name=1, data_name=0,
     ...                      data_home=custom_data_home)

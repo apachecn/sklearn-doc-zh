@@ -24,8 +24,8 @@
 
 .. _bagging:
 
-Bagging元估计(Bagging meta-estimator)
-======================
+Bagging meta-estimator（Bagging 元估计）
+========================================
 
 在集成算法中，bagging方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
 该方法通过在构建模型的过程中引入随机性，以此来减少基估计器的方差(例如，决策树)。
@@ -33,7 +33,7 @@ Bagging元估计(Bagging meta-estimator)
 因为bagging方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下boosting方法在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
 
 
-bagging方法有很多种，区别大多数在于抽取训练子集的方法：
+bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
   * 如果抽取的数据集是样本的的子集，我们叫做粘贴(Pasting) [B1999]_ 。
 
@@ -74,7 +74,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
 .. _forest:
 
-由随机树组成的森林(Forests of randomized trees)
+由随机树组成的森林
 ===========================
 
 :mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees算法。
@@ -246,7 +246,7 @@ bagging方法有很多种，区别大多数在于抽取训练子集的方法：
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` 比较了基于特征变换的有监督和无监督的树.
 
-.. 请参阅::
+.. seealso::
 
    :ref:`manifold` 也可以用于特征空间的非线性表示, 这些方法的关注点同样在降维.
 
@@ -280,7 +280,7 @@ AdaBoost既可以用在分类问题也可以用在回归问题中:
 
   - For regression, :class:`AdaBoostRegressor` implements AdaBoost.R2 [D1997]_.
 
-Usage
+用法
 -----
 
 下面的例子展示了如何用100个弱学习器来拟合一个AdaBoost分类器::
@@ -317,7 +317,7 @@ Usage
  * :ref:`sphx_glr_auto_examples_ensemble_plot_adaboost_regression.py` demonstrates regression
    with the AdaBoost.R2 algorithm.
 
-.. topic:: References
+.. topic:: 参考
 
  .. [FS1995] Y. Freund, and R. Schapire, "A Decision-Theoretic Generalization of
              On-Line Learning and an Application to Boosting", 1997.
@@ -333,14 +333,14 @@ Usage
 
 .. _gradient_boosting:
 
-梯度树提升(Gradient Tree Boosting)
-======================
+梯度树提升（Gradient Tree Boosting）
+====================================
 
 `Gradient Tree Boosting <https://en.wikipedia.org/wiki/Gradient_boosting>`_
 或梯度提升回归树(GBRT)是提升算法推广到任意可微的损失函数的泛化.GBRT是一个准确高效的现有程序,
 它既能用于分类问题也可以用于回归问题.梯度树提升模型被应用到各种领域包括网页搜索排名和生态领域.
 
-GBRT的优点:
+GBRT 的优点:
 
   + 对混合型数据的自然处理(异构特性)
 
@@ -348,13 +348,13 @@ GBRT的优点:
 
   + 在输出空间中对异常点的鲁棒性(通过鲁棒损失函数实现)
 
-GBRT的缺点:
+GBRT 的缺点:
 
   + 可扩展性差.由于提升算法的有序性(也就是说下一步的结果依赖于上一步),因此很难做并行.
 
 模型 :mod:`sklearn.ensemble` 通过梯度提升树提供了分类和回归的方法.
 
-分类(Classification)
+分类
 ---------------
 
 :class:`GradientBoostingClassifier` 既支持二分类又支持多分类问题.
@@ -381,7 +381,7 @@ GBRT的缺点:
    于 ``n_classes * n_estimators`` .对于拥有大量类别的数据集我们强烈推荐使用
    :class:`RandomForestClassifier` 来代替 :class:`GradientBoostingClassifier` .
 
-回归(Regression)
+回归
 ----------
 
 对于回归问题 :class:`GradientBoostingRegressor` 支持 :ref:`different loss functions <gradient_boosting_loss>` ,
@@ -421,7 +421,7 @@ GBRT的缺点:
 
 .. _gradient_boosting_warm_start:
 
-拟合额外的弱学习器(Fitting additional weak-learners)
+拟合额外的弱学习器
 --------------------------------
 
  :class:`GradientBoostingRegressor` 和 :class:`GradientBoostingClassifier`都支持设置参数
@@ -436,7 +436,7 @@ GBRT的缺点:
 
 .. _gradient_boosting_tree_size:
 
-控制树的大小(Controlling the tree size)
+控制树的大小
 -------------------------
 
 回归树基本学习器的大小定义了变量影响的级别,这个变量影响可以被梯度提升模型捕获到.通常一棵树的深度
@@ -453,7 +453,7 @@ GBRT的缺点:
 也会损失一点训练误差作为代价.参数 ``max_leaf_nodes`` 对应于文章 [F2001]_ 中的梯度提升章节的变量 ``J``
 同时与R语言的gbm包的参数 ``interaction.depth`` 相关,两者间的关系是 ``max_leaf_nodes == interaction.depth + 1``.
 
-数学公式(Mathematical formulation)
+数学公式
 -------------------------
 
 GBRT可以认为是下面形式的加法模型:
@@ -503,7 +503,7 @@ GBRT可以认为是下面形式的加法模型:
 
 .. _gradient_boosting_loss:
 
-损失函数(Loss Functions)
+损失函数
 ...............
 
 以下就是目前支持的损失函数,这些损失函数可以通过参数``loss``指定:
@@ -529,13 +529,13 @@ GBRT可以认为是下面形式的加法模型:
     * Exponential loss (``'exponential'``): 与 :class:`AdaBoostClassifier` 相同的损失
       函数.相比如 ``'deviance'`` 对于有错误类别的样本的鲁棒性很差,只能用在二分类问题中.
 
-正则化(Regularization)
+正则化
 ----------------
 
 .. _gradient_boosting_shrinkage:
 
-缩减(Shrinkage)
-..........
+缩减（Shrinkage）
+.................
 
 [F2001]_ 提出了一种简单的正则化策略,通过一个因素 :math:`\nu`来缩小每个弱学习器对于最终结果的贡献:
 
@@ -551,8 +551,8 @@ GBRT可以认为是下面形式的加法模型:
 (例如: ``learning_rate <= 0.1`` )同时通过提前停止策略来选择合适的 ``n_estimators`` .
 有关 ``learning_rate`` 和 ``n_estimators`` 更详细的讨论可以参考 [R2007]_.
 
-子采样(Subsampling)
-............
+子采样（Subsampling）
+.....................
 
 [F1999]_ 提出了随机梯度提升,这种方法将梯度提升和bootstrap averaging(bagging)结合.在每次迭代
 中,基本分类器通过抽取所有训练数据中一小部分的 ``subsample`` 来训练得到.子样本采用无放回的方式采
@@ -582,13 +582,13 @@ GBRT可以认为是下面形式的加法模型:
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_oob.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`
 
-解释性(Interpretation)
+解释性
 --------------
 
 单棵决策树可通过简单的可视化树结构来解释.然而对于梯度提升模型来说,一般拥有几百棵树,因此它们不可能简单的通
 过可视化单独的每一棵树来解释.幸运的是,有很多关于总结和解释梯度提升模型的技术被提出.
 
-特征重要性(Feature importance)
+特征重要性
 ..................
 
 通常情况下每个特征对于预测膜表的贡献不是相同的.在很多情形下大多数特征实际上是无关的.当解释一个模型时,第一
@@ -617,7 +617,7 @@ GBRT可以认为是下面形式的加法模型:
 
 .. _partial_dependence:
 
-部分依赖(Partial dependence)
+部分依赖
 ..................
 
 部分依赖图(PDP)展示了目标响应和一系列目标特征的依赖关系,同时边缘化了其他所有特征值(候选特征).
@@ -684,7 +684,7 @@ GBRT可以认为是下面形式的加法模型:
 入该分支的训练样本的占比,最后,部分依赖通过所有访问的叶节点的权重的平均值给出.对于树组合的结果,
 需要对每棵树的结果再次平均得到.
 
-.. rubric:: Footnotes
+.. rubric:: 附录
 
 .. [1] For classification with ``loss='deviance'``  the target
    response is logit(p).
@@ -693,12 +693,12 @@ GBRT可以认为是下面形式的加法模型:
    accounting for the initial model; partial dependence plots
    do not include the ``init`` model.
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_partial_dependence.py`
 
 
-.. topic:: References
+.. topic:: 参考
 
  .. [F2001] J. Friedman, "Greedy Function Approximation: A Gradient Boosting Machine",
    The Annals of Statistics, Vol. 29, No. 5, 2001.
@@ -712,44 +712,37 @@ GBRT可以认为是下面形式的加法模型:
 
  .. _voting_classifier:
 
-Voting Classifier
-========================
+投票分类器
+=============================
 
-The idea behind the :class:`VotingClassifier` is to combine
-conceptually different machine learning classifiers and use a majority vote
-or the average predicted probabilities (soft vote) to predict the class labels.
-Such a classifier can be useful for a set of equally well performing model
-in order to balance out their individual weaknesses.
+:class:`VotingClassifier` （投票分类器）的原理是结合了多个不同的机器学习分类器，并且采用 majority vote （多数表决）的方式或者 soft vote （平均预测概率）的方式来预测类标签。这样的分类器（指 Voting Classifier）可以用于一组 equally well performing model （同样出色的模型），以平衡它们各自的弱点。
 
 
-Majority Class Labels (Majority/Hard Voting)
+多数类标签（也叫 Majority/Hard Voting）
 --------------------------------------------
 
-In majority voting, the predicted class label for a particular sample is
-the class label that represents the majority (mode) of the class labels
-predicted by each individual classifier.
+majority vote(采用多数投票)的时候，特定样本的预测类标签是每个分类器预测的类标签中占据多数的那个类标签。
 
-E.g., if the prediction for a given sample is
+举个例子, 如果给定一个样本进行预测
 
-- classifier 1 -> class 1
-- classifier 2 -> class 1
-- classifier 3 -> class 2
+- 分类器 1 预测得到的结果是 类别 1
+- 分类器 2 预测得到的结果是 类别 1
+- 分类器 3 预测得到的结果是 类别 2
 
-the VotingClassifier (with ``voting='hard'``) would classify the sample
-as "class 1" based on the majority class label.
+类别 1 占据多数，所以 VotingClassifier (投票分类器)使用 ``voting='hard'`` ，即 majority vote (多数表决)的方式，会得到该样本的预测结果是类别 1。
 
-In the cases of a tie, the `VotingClassifier` will select the class based
-on the ascending sort order. E.g., in the following scenario
+如果得到的票数最多的类标签不止一个，VotingClassifier(投票分类器)会按照类标签升序排序的结果，选择靠前的类标签。
+举个例子，在下边的场景中:
 
-- classifier 1 -> class 2
-- classifier 2 -> class 1
+- 分类器1 预测得到的结果是 类别2
+- 分类器2 预测得到的结果是 类别1
 
-the class label 1 will be assigned to the sample.
+这种情况下，该样本的预测结果会是类别1。
 
-Usage
+用法
 .....
 
-The following example shows how to fit the majority rule classifier::
+下边这个示例程序说明了如何去 fit (拟合)、去构建一个采用 majority vote (多数表决)方法的分类器::
 
    >>> from sklearn import datasets
    >>> from sklearn.model_selection import cross_val_score
@@ -776,40 +769,31 @@ The following example shows how to fit the majority rule classifier::
    Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
 
-Weighted Average Probabilities (Soft Voting)
+加权平均概率（也叫 Soft Voting）
 --------------------------------------------
 
-In contrast to majority voting (hard voting), soft voting
-returns the class label as argmax of the sum of predicted probabilities.
+与多数表决 (majority voting / hard voting) 的方法相反，采用加权平均概率的方法得到的是预测概率值总和最大的那一个类标签。
 
-Specific weights can be assigned to each classifier via the ``weights``
-parameter. When weights are provided, the predicted class probabilities
-for each classifier are collected, multiplied by the classifier weight,
-and averaged. The final class label is then derived from the class label
-with the highest average probability.
+可以通过参数 ``weights`` 来给每个分类器分配一个特定的权重。
+当提供参数 ``weights`` 时，每个分类器的预测类概率需要乘以分类器权重并平均化。
+最后得到的类标签采用拥有最高平均概率的类标签。
 
-To illustrate this with a simple example, let's assume we have 3
-classifiers and a 3-class classification problems where we assign
-equal weights to all classifiers: w1=1, w2=1, w3=1.
+用一个简单的例子来说明上述这个方法。假设现在有一个分类问题，可供选择的类标签有 3 个，我们有 3 个分类器，在这里我们给这三个分类器分配相同的权重：w1=1, w2=1, w3=1.
 
-The weighted average probabilities for a sample would then be
-calculated as follows:
+如下所示，针对一个特定的样本输入，来计算加权平均概率：
 
 ================  ==========    ==========      ==========
-classifier        class 1       class 2         class 3
+  分类器            类别 1         类别 2          类别 3
 ================  ==========    ==========      ==========
-classifier 1	  w1 * 0.2      w1 * 0.5        w1 * 0.3
-classifier 2	  w2 * 0.6      w2 * 0.3        w2 * 0.1
-classifier 3      w3 * 0.3      w3 * 0.4        w3 * 0.3
-weighted average  0.37	        0.4             0.23
+  分类器 1          w1 * 0.2      w1 * 0.5        w1 * 0.3
+  分类器 2          w2 * 0.6      w2 * 0.3        w2 * 0.1
+  分类器 3          w3 * 0.3      w3 * 0.4        w3 * 0.3
+ 加权平均的结果       0.37	   0.4             0.23
 ================  ==========    ==========      ==========
 
-Here, the predicted class label is 2, since it has the
-highest average probability.
+这里可以看出，预测的类标签是类别 2，因为它有 highest average probability (最大的平均概率)。
 
-The following example illustrates how the decision regions may change
-when a soft `VotingClassifier` is used based on an linear Support
-Vector Machine, a Decision Tree, and a K-nearest neighbor classifier::
+下边的示例程序说明了当加权平均概率(也叫 soft voting )是基于 linear SupportVector Machine (线性支持向量机)、Decision Tree(决策树)、K-nearest neighbor(K近邻)这三种分类器的时候，decision regions (决策域) 可能会变化:
 
    >>> from sklearn import datasets
    >>> from sklearn.tree import DecisionTreeClassifier
@@ -839,11 +823,10 @@ Vector Machine, a Decision Tree, and a K-nearest neighbor classifier::
     :align: center
     :scale: 75%
 
-Using the `VotingClassifier` with `GridSearch`
-----------------------------------------------
+Using the `VotingClassifier` with `GridSearch`（网格搜索下的投票分类器）
+------------------------------------------------------------------------
 
-The `VotingClassifier` can also be used together with `GridSearch` in order
-to tune the hyperparameters of the individual estimators::
+为了调整每个 estimators 的 hyperparameters ，`VotingClassifier` 可以和 `GridSearch` 一起使用::
 
    >>> from sklearn.model_selection import GridSearchCV
    >>> clf1 = LogisticRegression(random_state=1)
@@ -856,15 +839,13 @@ to tune the hyperparameters of the individual estimators::
    >>> grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
    >>> grid = grid.fit(iris.data, iris.target)
 
-Usage
+用法
 .....
 
-In order to predict the class labels based on the predicted
-class-probabilities (scikit-learn estimators in the VotingClassifier
-must support ``predict_proba`` method)::
+根据预测的类概率来预测类标签(在 VotingClassifier 中的 scikit-learn estimators 必须支持 ``predict_proba`` 函数方法)::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft')
 
-Optionally, weights can be provided for the individual classifiers::
+可选地，也可以为单个分类器提供权重::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft', weights=[2,5,1])

@@ -30,7 +30,7 @@ sklearn.model_selection
 
 
 网格追踪法--穷尽的网格搜索
-======================
+====================================
 
 :class:`GridSearchCV` 提供的网格搜索从通过 ``param_grid`` 参数确定的网格参数值中全面生成候选。例如，下面的 ``param_grid``::
 
@@ -146,7 +146,7 @@ sklearn.model_selection
 
 
 并行机制
------------
+-----------------
 
 :class:`GridSearchCV` 和 :class:`RandomizedSearchCV` 可以独立地评估每个参数设置。如果您的OS支持,通过使用关键字 ``n_jobs=-1`` 可以使计算并行运行。
 有关详细信息, 请参见函数签名。

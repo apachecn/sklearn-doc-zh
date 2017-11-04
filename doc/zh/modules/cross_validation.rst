@@ -2,21 +2,20 @@
 .. _cross_validation:
 
 ===================================================
-交叉验证（Cross-validation）: 评估（衡量）机器学习模型的性能
+交叉验证: 评估（衡量）机器学习模型的性能
 ===================================================
 
 .. currentmodule:: sklearn.model_selection
 
-学习预测函数的参数，并在相同数据集上进行测试是一个错误的做法: 一个仅仅
-重复样本标签的模型只能得出一个漂亮的分数，但对于尚未出现过的数据
+学习一个预测函数的参数，并在相同数据集上进行测试是一种错误的做法:  一个仅给出测试用例标签的模型将会获得极高的分数，但对于尚未出现过的数据
 它则无法预测出任何有用的信息。
-这种场景被叫做“过拟合”（overfitting）.
-为了避免这种情况，在进行（监督）机器学习实验时，取出部分可利用数据作为实验测试集（test set）是较为常用的做法。
-即将原数据集分为2个集合：``X_test, y_test``。
+这种情况称为“过拟合”（overfitting）.
+为了避免这种情况，在进行（监督）机器学习实验时，通常取出部分可利用数据作为实验测试集（test set）：
+``X_test, y_test``。
 
 需要强调的是这里说的“实验（experiment）”并不仅限于学术（academic），因为即使是在商业场景下机器学习也往往是从实验开始的。
 
-利用scikit-learn包中的`train_test_split`辅助函数可以很快地将实验数据集任意划分为训练集（training sets）和测试集（test sets）。
+利用scikit-learn包中的`train_test_split`辅助函数可以很快地将实验数据集划分为任何训练集（training sets）和测试集（test sets）。
 下面让我们载入 iris 数据集，并在此数据集上训练出线性支持向量机::
 
   >>> import numpy as np
@@ -28,7 +27,7 @@
   >>> iris.data.shape, iris.target.shape
   ((150, 4), (150,))
 
-此时，我们能快速取样原数据集的40%作为测试集，从而测试（评估）我们的分类器::
+我们能快速采样到原数据集的40%作为测试集，从而测试（评估）我们的分类器::
 
   >>> X_train, X_test, y_train, y_test = train_test_split(
   ...     iris.data, iris.target, test_size=0.4, random_state=0)
@@ -42,30 +41,30 @@
   >>> clf.score(X_test, y_test)                           # doctest: +ELLIPSIS
   0.96...
 
-当评估估计器的不同设置（超参数）时，例如手动为SVM设置的“C”参数，
+当评价估计器的不同设置（超参数）时，例如手动为SVM设置的“C”参数，
 由于在训练集上，通过调整参数设置使估计器的性能达到了最佳状态；但在测试集上可能会出现过拟合的情况。
-此时，测试集上的信息反馈足以颠覆训练好的模型，评估的指标不在有效反应出模型的泛化性能。
+此时，测试集上的信息反馈足以颠覆训练好的模型，评估的指标不再有效反映出模型的泛化性能。
 为了解决此类问题，还应该准备另一部分被称为“验证集”的数据集，模型训练完成以后在验证集上对模型进行评估。
 当验证集上的评估实验比较成功时，在测试集上进行最后的评估。
 
 然而，通过将原始数据分为3个数据集合，我们就大大减少了可用于模型学习的样本数量，
-并且得到的结果依赖于集合（训练，验证）对的随机选择。
+并且得到的结果依赖于集合对（训练，验证）的随机选择。
 
-针对这个问题，可以通过被称之为
+这个问题可以通过
 `交叉验证（CV 缩写） <https://en.wikipedia.org/wiki/Cross-validation_(statistics)>`_
-的程序得到解决。
+来解决。
 交叉验证仍需要测试集做最后的模型评估，但不再需要验证集。
 
 最基本的方法被称之为，*k-折交叉验证*。
-k-折交叉验证将训练集划分为 k 个较小的集合（其它的方法将以同样的方式在下文中介绍）。
+k-折交叉验证将训练集划分为 k 个较小的集合（其他方法会在下面描述，主要原则基本相同）。
 每一个*k*折都会遵循下面的过程：
 
  * 将k-1份训练集子集作为训练集训练模型，
  * 将剩余的1份训练集子集作为验证集用于模型验证（也就是利用该数据集计算模型的性能指标，例如准确率）。
 
-*k*-折交叉验证得出的性能指标是通过循环计算中的平均值。
-该方法虽然是计算昂贵的，但是它不会浪费太多的数据（就像是固定了一个任意的测试集），
-在处理样本数据集较少的问题（例如，逆向推理）时，这是一个主要的优势。
+*k*-折交叉验证得出的性能指标是循环计算中每个值的平均值。
+该方法虽然计算代价很高，但是它不会浪费太多的数据（就像是固定了一个任意的测试集），
+在处理样本数据集较少的问题（例如，逆向推理）时比较有优势。
 
 
 计算交叉验证的指标
@@ -154,7 +153,7 @@ validation iterator instead, for instance::
 .. _multimetric_cross_validation:
 
 The cross_validate function and multiple metric evaluation
-----------------------------------------------------------
+----------------------------------------------------------------------
 
 The ``cross_validate`` function differs from ``cross_val_score`` in two ways -
 
@@ -242,7 +241,7 @@ section.
     * :ref:`sphx_glr_auto_examples_model_selection_plot_nested_cross_validation_iris.py`.
 
 交叉验证迭代器
-==========================
+=====================
 
 The following sections list utilities to generate indices
 that can be used to generate dataset splits according to different cross
@@ -251,7 +250,7 @@ validation strategies.
 .. _iid_cv:
 
 交叉验证迭代器--循环遍历数据
-==========================================
+========================================
 
 Assuming that some data is Independent and Identically Distributed (i.i.d.) is
 making the assumption that all samples stem from the same generative process
@@ -272,7 +271,7 @@ devices) it safer to use :ref:`group-wise cross-validation <group_cv>`.
 
 
 K-fold
-------
+------------------
 
 :class:`KFold` divides all the samples in :math:`k` groups of samples,
 called folds (if :math:`k = n`, this is equivalent to the *Leave One
@@ -300,8 +299,8 @@ Thus, one can create the training/test sets using numpy indexing::
   >>> X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 
 
-重复K-折交叉验证
----------------
+重复 K-折交叉验证
+-----------------------
 
 :class:`RepeatedKFold` repeats K-Fold n times. It can be used when one
 requires to run :class:`KFold` n times, producing different splits in
@@ -328,7 +327,7 @@ with different randomization in each repetition.
 
 
 留一交叉验证 (LOO)
--------------------
+--------------------------
 
 :class:`LeaveOneOut` (or LOO) is a simple cross-validation. Each learning
 set is created by taking all the samples except one, the test set being
@@ -386,7 +385,7 @@ fold cross validation should be preferred to LOO.
 
 
 Leave P Out (LPO)
------------------
+-----------------------------
 
 :class:`LeavePOut` is very similar to :class:`LeaveOneOut` as it creates all
 the possible training/test sets by removing :math:`p` samples from the complete
@@ -444,7 +443,7 @@ the proportion of samples on each side of the train / test split.
 
 
 基于类标签、具有分层的交叉验证迭代器
-=====================================================================
+===================================================
 
 Some classification problems can exhibit a large imbalance in the distribution
 of the target classes: for instance there could be several times more negative
@@ -454,7 +453,7 @@ stratified sampling as implemented in :class:`StratifiedKFold` and
 approximately preserved in each train and validation fold.
 
 Stratified k-fold
------------------
+-----------------------------
 
 :class:`StratifiedKFold` is a variation of *k-fold* which returns *stratified*
 folds: each set contains approximately the same percentage of samples of each
@@ -509,7 +508,7 @@ parameter.
 
 
 Group k-fold
-------------
+------------------------
 
 :class:`GroupKFold` is a variation of k-fold which ensures that the same group is
 not represented in both testing and training sets. For example if the data is
@@ -539,7 +538,7 @@ size due to the imbalance in the data.
 
 
 Leave One Group Out
--------------------
+-------------------------------
 
 :class:`LeaveOneGroupOut` is a cross-validation scheme which holds out
 the samples according to a third-party provided array of integer groups. This
@@ -570,7 +569,7 @@ groups could be the year of collection of the samples and thus allow
 for cross-validation against time-based splits.
 
 Leave P Groups Out
-------------------
+------------------------------
 
 :class:`LeavePGroupsOut` is similar as :class:`LeaveOneGroupOut`, but removes
 samples related to :math:`P` groups for each training/test set.
@@ -650,7 +649,7 @@ solution is provided by :class:`TimeSeriesSplit`.
 
 
 Time Series Split
------------------
+----------------------------
 
 :class:`TimeSeriesSplit` is a variation of *k-fold* which
 returns first :math:`k` folds as train set and the :math:`(k+1)` th
@@ -679,7 +678,7 @@ Example of 3-split time series cross-validation on a dataset with 6 samples::
 
 
 A note on shuffling
-===================
+==============================
 
 If the data ordering is not arbitrary (e.g. samples with the same class label
 are contiguous), shuffling it first may be essential to get a meaningful cross-
