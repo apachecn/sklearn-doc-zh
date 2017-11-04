@@ -29,19 +29,16 @@ scikit拥有很多围绕Scipy构建的科学工具箱。你可以在 `<https://s
 **对于一般的机器学习问题**, 请使用
 `交叉验证 <http://stats.stackexchange.com>`_ 和 ``[machine-learning]`` 。
 
-**对于scikit-learn使用的问题**, 请点击 `Stack Overflow <http://stackoverflow.com/questions/tagged/scikit-learn>`_
-带有 ``[scikit-learn]`` 和 ``[python]`` 标签的部分。 你也可以使用 `联系列表 <https://mail.python.org/mailman/listinfo/scikit-learn>`_.
+**对于scikit-learn使用的问题**, 请点击 `Stack Overflow <http://stackoverflow.com/questions/tagged/scikit-learn>`_ 带有 ``[scikit-learn]`` 和 ``[python]`` 标签的部分。 你也可以使用 `联系列表 <https://mail.python.org/mailman/listinfo/scikit-learn>`_ .
 
 请确保包您的代码段较小(最好少于10行)，并且可以突出显示玩具数据集上的问题 (例如从 ``sklearn.datasets`` 或者是用固定随机数种子 ``numpy.random`` 函数生成). 请删除任何不需要重现您的问题的代码行。该问题因该可以在安装了scikit-learn的python命令行中简单地通过复制粘贴您的代码重现. 并且不要忘了import语句.
 
 编写能够重现的代码的更多指南可以在以下网址找到:
-
 http://stackoverflow.com/help/mcve
 
 你的代码依旧引起了你即使Google过也不明白的异常，请确保你在运行复制的脚本时包含完整的回溯。
 
-关于错误报告或者功能请求，请参阅
-`issue tracker on Github <https://github.com/scikit-learn/scikit-learn/issues>`_ 。
+关于错误报告或者功能请求，请参阅 `issue tracker on Github <https://github.com/scikit-learn/scikit-learn/issues>`_ 。
 
 你还可以在 `scikit-learn Gitter channel <https://gitter.im/scikit-learn/scikit-learn>`_ 找到一些用户与开发人员。
 
@@ -146,7 +143,7 @@ scikit-learn 估计器假设您将为他们提供实值特征向量。这个假�
 为什么我有时会在 OSX 或 Linux 下遇到 n_jobs > 1 崩溃/冻结?
 ----------------------------------------------------------------------------------------
 
-一些例如 ``GridSearchCV`` 和 ``cross_val_score`` 的scikit-learn工具，它们可以依靠 Python 的内置 `多重处理` 模块，通过 ``n_jobs > 1`` 作为参数，将执行并行化到多个 Python 进程。
+一些例如 ``GridSearchCV`` 和 ``cross_val_score`` 的scikit-learn工具，它们可以依靠 Python 的内置 `multiprocessing` 模块，通过 ``n_jobs > 1`` 作为参数，将执行并行化到多个 Python 进程。
 
 问题是 Python 由于性能原因 ``multiprocessing`` 会执行 ``fork`` 系统调用，而不是 ``exec`` 系统调用。许多库如 OSX 下的（某些版本的）Accelerate / vecLib, (某些版本的) MKL, GCC 的 OpenMP 运行时,nvidia 的 Cuda (可能还有一些其他的),都是自行管理自己的内部线程池。在调用 `fork` 时，子进程中的线程池状态已损坏：线程池认为它有许多线程，而只有主线程状态已被 fork。有可能更改库，使它们在发生 fork 时检测，并在该情况下重新初始化线程池：我们对 OpenBLAS 执行了此操作（从 0.2.10 开始在 master 中合并），并且我们向 GCC 的 OpenMP 运行时提供了一个 `补丁 <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=60035>`_ 
 (尚未审查)。
