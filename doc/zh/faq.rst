@@ -16,7 +16,8 @@ sy-kit learn。sci代表着科学!
 
 选择 scikit的理由 ?
 ----------------------------
-scikit拥有很多围绕Scipy构建的科学工具箱。你可以在 `<https://scikits.appspot.com/scikits>` 查找工具列表_除了scikit-learn, `scikit-image <http://scikit-image.org/>` _同样受欢迎 。
+scikit拥有很多围绕Scipy构建的科学工具箱。你可以在 `<https://scikits.appspot.com/scikits>` 查找工具列表。 `scikit-image <http://scikit-image.org/>` 和 scikit-learn_一样受欢迎 。
+
 
 如何才能为 scikit-learn 贡献自己的力量?
 ---------------------------------------------
@@ -29,7 +30,7 @@ scikit拥有很多围绕Scipy构建的科学工具箱。你可以在 `<https://s
 **对于一般的机器学习问题**, 请使用
 `交叉验证 <http://stats.stackexchange.com>`_ 和 ``[machine-learning]`` 。
 
-**对于scikit-learn使用的问题**, 请点击 `Stack Overflow <http://stackoverflow.com/questions/tagged/scikit-learn>`_ 带有 ``[scikit-learn]`` 和 ``[python]`` 标签的部分。 你也可以使用 `联系列表 <https://mail.python.org/mailman/listinfo/scikit-learn>`_ .
+**对于scikit-learn使用的问题**, 请点击 `Stack Overflow <http://stackoverflow.com/questions/tagged/scikit-learn>`_ 中带有 ``[scikit-learn]`` 和 ``[python]`` 标签的部分。 你也可以使用 `联系列表 <https://mail.python.org/mailman/listinfo/scikit-learn>`_ .
 
 请确保包您的代码段较小(最好少于10行)，并且可以突出显示玩具数据集上的问题 (例如从 ``sklearn.datasets`` 或者是用固定随机数种子 ``numpy.random`` 函数生成). 请删除任何不需要重现您的问题的代码行。该问题因该可以在安装了scikit-learn的python命令行中简单地通过复制粘贴您的代码重现. 并且不要忘了import语句.
 
