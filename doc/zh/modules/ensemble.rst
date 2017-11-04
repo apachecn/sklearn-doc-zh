@@ -523,8 +523,8 @@ GBRT 可以认为是以下形式的可加模型:
 
     * Binomial deviance (``'deviance'``): 对于二分类问题(提供概率估计)即负的二项log似然
       损失函数.模型以log的比值比来初始化.
-    * Multinomial deviance (``'deviance'``): 对于多分类问题的负的多项log似然损失函数具有 ``n_classes`` 个互斥的类.提供概率估计.初始模型由每个类的先验概率给出.在每一次迭代中
-       ``n_classes`` 回归树被构建,这使得 GBRT 在处理多类别数据集时相当低效.
+    * Multinomial deviance (``'deviance'``): 对于多分类问题的负的多项log似然损失函数具有 ``n_classes`` 个互斥的类.提供概率估计.
+      初始模型由每个类的先验概率给出.在每一次迭代中 ``n_classes`` 回归树被构建,这使得 GBRT 在处理多类别数据集时相当低效.
     * Exponential loss (``'exponential'``): 与 :class:`AdaBoostClassifier` 具有相同的损失
       函数.与 ``'deviance'`` 相比，对具有错误标记的样本的鲁棒性较差,仅用于在二分类问题.
 
