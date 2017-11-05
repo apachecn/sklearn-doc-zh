@@ -7,17 +7,17 @@
 
 .. topic:: 监督学习解决的问题
 
-   :ref:`监督学习 <supervised-learning>`在于学习两个数据集的联系：观察数据 ``X`` 和我们正在尝试预测的额外变量 ``y``(通常称“目标”或“标签”)， 而且通常是长度为 ``n_samples`` 的一维数组。
+   :ref:`监督学习 <supervised-learning>` 在于学习两个数据集的联系：观察数据 ``X`` 和我们正在尝试预测的额外变量 ``y`` (通常称“目标”或“标签”)， 而且通常是长度为 ``n_samples`` 的一维数组。
 
-   scikit-learn 中所有监督的`估计量 <https://en.wikipedia.org/wiki/Estimator>`都有一个用来拟合模型的 ``fit(X, y)`` 方法，和根据给定的未标签观察值 ``X`` 返回预测的带标签的 ``y``的 ``predict(X)`` 方法。
+   scikit-learn 中所有监督的 `估计量 <https://en.wikipedia.org/wiki/Estimator>` 都有一个用来拟合模型的 ``fit(X, y)`` 方法，和根据给定的没有标签观察值 ``X`` 返回预测的带标签的 ``y`` 的 ``predict(X)`` 方法。
 
 .. topic:: 词汇：分类和回归
 
-   如果预测任务是为了将观察值分类到有限的标签集合中，换句话说，就是给观察对象命名，那任务就被称为 **分类** 任务。另外，如果任务是为了预测一个不间断的目标变量，那就被称为 **回归** 任务。
+   如果预测任务是为了将观察值分类到有限的标签集合中，换句话说，就是给观察对象命名，那任务就被称为 **分类** 任务。另外，如果任务是为了预测一个连续的目标变量，那就被称为 **回归** 任务。
 
-   当在 scikit-learn 中执行分类时，``y`` 是一个整数或字符型的向量。
+   当在 scikit-learn 中进行分类时，``y`` 是一个整数或字符型的向量。
 
-   注：可以查看 :ref:`用 scikit-learn 进行机器学习介绍 <introduction>`快速了解机器学习中的基础词汇。
+   注：可以查看 :ref: `用 scikit-learn 进行机器学习介绍 <introduction>` 快速了解机器学习中的基础词汇。
 
 最近邻和维度惩罚
 =================================================
@@ -29,7 +29,7 @@
         :align: right
 	:scale: 65
 
-    鸢尾属植物数据集是一个根据花瓣、萼片长度、萼片宽度3种不同类型来对鸢尾属植物进行分类的任务::
+    鸢尾属植物数据集是根据花瓣长度、花瓣度度、萼片长度和萼片宽度4个特征对3种不同类型的鸢尾属植物进行分类::
 
         >>> import numpy as np
         >>> from sklearn import datasets
@@ -39,14 +39,14 @@
         >>> np.unique(iris_y)
         array([0, 1, 2])
 
-K 个最近邻分类器
+K近邻分类器
 -------------------------------
 
-`最近邻 <https://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm>`_: 也许是最简单的分类器：给定一个新的观察值 ``X_test``，用最接近的特征向量在训练集(比如，用于训练估计器的数据)找到观察值。(请看 Scikit 在线学习文档的 :ref:`最近邻章节<neighbors>` 获取更多关于这种分类器的信息)
+`最近邻 <https://en.wikipedia.org/wiki/K-nearest_neighbor_algorithm>`_: 也许是最简单的分类器：给定一个新的观察值 ``X_test``，用最接近的特征向量在训练集(比如，用于训练估计器的数据)找到观察值。(请看 Scikit-learn 在线学习文档的 :ref:`最近邻章节<neighbors>` 获取更多关于这种分类器的信息)
 
 .. topic:: 训练集和测试集
 
-   当用任何的学习算法进行实验时，最重要的就是不要在用于拟合估计器的数据上测试一个估计器的预期值，因为这不会评估在 **新数据** 上估计器的执行情况。这就是为什么数据集通查被分解为 *训练* 和 *测试* 数据。
+   当用任意的学习算法进行实验时，最重要的就是不要在用于拟合估计器的数据上测试一个估计器的预期值，因为这不会评估在 **新数据** 上估计器的执行情况。这也是数据集经常被分为 *训练* 和 *测试* 数据的原因。
 
 **KNN(k 最近邻)分类器例子**:
 
@@ -82,7 +82,7 @@ K 个最近邻分类器
 维度惩罚
 -------------------------------
 
-为了使一个估计器有效，你需要邻接点的距离小于一些值： :math: `d`，这取决于具体问题。在一维中，这需要平均 `n \sim 1/d` 点。在上文 :math:`k`-NN 例子中，如果数据只是由一个0到1的特征值和 :math:`n` 训练观察值所描述，那么新数据将不会超过 :math:`1/n`。因此，最近邻决策规则会很有效率，因为与类间特征变量范围相比， :math:`1/n` 很小。
+为了使一个估计器有效，你需要邻接点间的距离小于一些值：:math:`d`，这取决于具体问题。在一维中，这需要平均 `n \sim 1/d` 点。在上文 :math:`k`-NN 例子中，如果数据只是由一个0到1的特征值和 :math:`n` 训练观察值所描述，那么新数据将不会超过 :math:`1/n`。因此，最近邻决策规则会很有效率，因为与类间特征变量范围相比， :math:`1/n` 很小。
 
 如果特征数是 :math:`p`，你现在就需要 :math:`n \sim 1/d^p` 点。也就是说我们在一维 :math:`[0, 1]` 空间里需要10个点，在 :math:`p` 维里就需要 :math:`10^p` 个点。当 :math:`p` 增大时，为了得到一个好的估计器，相应的训练点数量就需要成倍增大。
 
@@ -148,7 +148,7 @@ Linear models: :math:`y = X\beta + \epsilon`
 收缩
 ----------
 
-如果每个维度的数据点很少，观察噪声就会引起很大的误差：
+如果每个维度的数据点很少，观察噪声就会导致很大的方差：
 
 .. image:: /auto_examples/linear_model/images/sphx_glr_plot_ols_ridge_variance_001.png
    :target: ../../auto_examples/linear_model/plot_ols_ridge_variance.html
@@ -172,7 +172,7 @@ Linear models: :math:`y = X\beta + \epsilon`
     ...    plt.plot(test, regr.predict(test)) # doctest: +SKIP
     ...    plt.scatter(this_X, y, s=3)  # doctest: +SKIP
 
-高纬统计学习中的一个解决方法是 *收缩* 回归系数到0：任何两个随机选择的观察值数据集都很可能是不相关的。这称为`岭回归`：
+高纬统计学习中的一个解决方法是 *收缩* 回归系数到0：任何两个随机选择的观察值数据集都很可能是不相关的。这称为 `岭回归` ：
 
 .. image:: /auto_examples/linear_model/images/sphx_glr_plot_ols_ridge_variance_002.png
    :target: ../../auto_examples/linear_model/plot_ols_ridge_variance.html
@@ -205,7 +205,7 @@ Linear models: :math:`y = X\beta + \epsilon`
 
 .. note::
 
-    捕获拟合参数噪声使得模型不能归纳新的数据称为 `过度拟合 <https://en.wikipedia.org/wiki/Overfitting>`_。岭回归产生的偏差被称为 `正则化 <https://en.wikipedia.org/wiki/Regularization_%28machine_learning%29>`_。
+    捕获拟合参数噪声使得模型不能归纳新的数据称为 `过拟合 <https://en.wikipedia.org/wiki/Overfitting>`_。岭回归产生的偏差被称为 `正则化 <https://en.wikipedia.org/wiki/Regularization_%28machine_learning%29>`_。
 
 .. _sparsity:
 
@@ -261,7 +261,7 @@ Linear models: :math:`y = X\beta + \epsilon`
 
 .. topic:: **同一个问题的不同算法**
 
-    不同的算法可以用于解决同一个数学问题。比如在 scikit 里 ``Lasso`` 对象使用 `coordinate descent <https://en.wikipedia.org/wiki/Coordinate_descent>`_ 方法解决 lasso 回归问题，对于大型数据集很有效。但是，scikit 也提供了使用 *LARS* 算法 的:class:`LassoLars` 对象，对于处理带权向量非常稀疏的数据非常有效(比如，问题的观察值很少)。
+    不同的算法可以用于解决同一个数学问题。比如在 scikit-learn 里 ``Lasso`` 对象使用 `coordinate descent <https://en.wikipedia.org/wiki/Coordinate_descent>`_ 方法解决 lasso 回归问题，对于大型数据集很有效。但是，scikit-learn 也提供了使用 *LARS* 算法 的:class:`LassoLars` 对象，对于处理带权向量非常稀疏的数据非常有效(比如，问题的观察值很少)。
 
 .. _clf_tut:
 
@@ -299,14 +299,14 @@ Linear models: :math:`y = X\beta + \epsilon`
 
    如果你有很多类需要预测，一种常用方法就是去拟合一对多分类器，然后使用根据投票为最后做决定。
 
-.. topic:: 收缩和使用 logistic 回归进行稀疏
+.. topic:: 使用 logistic 回归进行收缩和稀疏
 
    :class:`LogisticRegression` 对象中的 ``C`` 参数控制着正则化数量：``C`` 值越大，正则化数量越小。``penalty="l2"`` 提供 :ref:`收缩`(比如，无稀疏系数)，同时 ``penalty="l1"`` 提供`稀疏化`。
 
 .. topic:: **练习**
    :class: green
 
-   尝试用最近邻和线性模型分类数字数据集。留出最后 10%，并测试观察值预期效果。
+   尝试用最近邻和线性模型分类数字数据集。留出最后 10%的数据，并测试观察值预期效果。
 
    .. literalinclude:: ../../auto_examples/exercises/plot_digits_classification_exercise.py
        :lines: 15-19
@@ -345,7 +345,7 @@ Linear models: :math:`y = X\beta + \epsilon`
  - :ref:`sphx_glr_auto_examples_svm_plot_iris.py`
 
 
-SVMs 可以用于回归 --:class:`SVR`(支持向量回归)--，或者分类 --:class:`SVC` (支持向量分类)。
+SVMs 可以用于回归 --:class: `SVR` (支持向量回归)--，或者分类 --:class: `SVC` (支持向量分类)。
 
 ::
 
@@ -363,10 +363,10 @@ SVMs 可以用于回归 --:class:`SVR`(支持向量回归)--，或者分类 --:c
 
 .. _using_kernels_tut:
 
-使用内核
+使用核
 --------------
 
-类在特征空间不总是线性可分的。解决办法就是构建一个不是线性的但能是多项式的函数做代替。这要使用 *kernel trick*，它可以被看作通过设置   *kernels* 在观察样例上创建决策力量：
+在特征空间类并不总是线性可分的。解决办法就是构建一个不是线性的但能是多项式的函数做代替。这要使用 *核技巧(kernel trick)*，它可以被看作通过设置   *kernels* 在观察样例上创建决策力量：
 
 .. |svm_kernel_linear| image:: /auto_examples/svm/images/sphx_glr_plot_svm_kernels_001.png
    :target: ../../auto_examples/svm/plot_svm_kernels.html
@@ -382,9 +382,9 @@ SVMs 可以用于回归 --:class:`SVR`(支持向量回归)--，或者分类 --:c
 
      *
 
-       - **线性内核**
+       - **线性核**
 
-       - **多项式内核**
+       - **多项式核**
 
 
 
@@ -435,7 +435,7 @@ SVMs 可以用于回归 --:class:`SVR`(支持向量回归)--，或者分类 --:c
 
 .. topic:: **交互例子**
 
-   查看 :ref:`SVM GUI  <sphx_glr_auto_examples_applications_svm_gui.py>` 下载
+   查看 :ref:`SVM GUI  <sphx_glr_auto_examples_applications_svm_gui.py>` 通过下载
    ``svm_gui.py``；通过左右按键添加两类数据点，拟合模型并改变参数和数据。
 
 .. image:: /auto_examples/datasets/images/sphx_glr_plot_iris_dataset_001.png
