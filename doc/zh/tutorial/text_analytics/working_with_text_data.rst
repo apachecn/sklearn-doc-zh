@@ -179,7 +179,9 @@
 .. note:
 
   方法 ``count_vect.fit_transform`` 执行了两种操作: 学习词汇并将文档们转换成计数向量.
-  当然也可以将步骤分开来做：首先 ``count_vect.fit(twenty_train.data)`` ，其次 ``X_train_counts = count_vect.transform(twenty_train.data)`` ，但是这样做的话每个文件的分词化和向量化就执行了两次.
+  当然也可以将步骤分开来做：首先 ``count_vect.fit(twenty_train.data)`` 
+  ，其次 ``X_train_counts = count_vect.transform(twenty_train.data)`` 
+  ，但是这样做的话每个文件的分词化和向量化就执行了两次.
 
 
 从出现次数到出现频率
@@ -191,7 +193,7 @@
 
 基于这词频上的精简提炼的是降低这个文集里出现在很多文档中的单词的比重，因此它会比那些仅出现在一些文档中的单词有更少的信息量.
 
-这种降低比重 （downscaling） 的方法称为 `tf–idf`_ ，全称为 "Term Frequency times Inverse Document Frequency".
+这种downscaling（降低比重）的方法称为 `tf–idf`_ ，全称为 "Term Frequency times Inverse Document Frequency".
 
 .. _`tf–idf`: https://en.wikipedia.org/wiki/Tf–idf
 
@@ -204,8 +206,8 @@
   >>> X_train_tf.shape
   (2257, 35788)
 
-在上面的例子中，我们首先使用了 ``fit(..)`` 方法来拟合数据，接下来使用 ``transform(..)`` 方法来构建 `tf-idf` 矩阵.
-这两步可以直接使用一步. 使用 ``fit_transform(..)`` 方法::
+在上面的例子中，我们首先使用了 ``fit(..)`` 方法来拟合数据的estimator(估算器)，接下来使用 ``transform(..)`` 方法来把我们的次数矩阵转换成 `tf-idf` 型.
+这两步可以结合起来，通过省去多余的处理来更快地得到同样的结果. 那就是使用上节提到过的 ``fit_transform(..)`` 方法，如下::
 
   >>> tfidf_transformer = TfidfTransformer()
   >>> X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
@@ -216,15 +218,15 @@
 训练分类器
 ---------------------
 
-现在我们有了特征，我们来训练一个分类器来预测文章所属的类别.
-我们来使用 :ref:`朴素贝叶斯 <naive_bayes>` 分类器, 该分类器在该任务上表现是特别好的.
-``scikit-learn`` 包含了这种分类器的各种变种;一个在该问题上最好的分类器就是多项式分类器::
+现在我们有了自己的特征，我们可以训练一个分类器来预测一个帖子所属的类别.
+让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始吧. 该分类器为该任务上提供了一个好的准线.
+``scikit-learn`` 包含了该分类器的若干变种;最适用在该问题上的变种是多项式分类器::
 
   >>> from sklearn.naive_bayes import MultinomialNB
   >>> clf = MultinomialNB().fit(X_train_tfidf, twenty_train.target)
 
-为了预测新文档所属的类别我们和之前一样需要抽取新文档的特征值.
-不同的地方在于使用 ``transform`` 而不是 ``fit_transform`` 因为文档已经在训练集的时候处理过了::
+为了尝试预测新文档所属的类别，我们需要和之前同样的步骤来抽取特征.
+区别是，对transformer使用 ``transform`` 而不是 ``fit_transform`` ，因为文档已经与训练集拟合了::
 
   >>> docs_new = ['God is love', 'OpenGL on the GPU is fast']
   >>> X_new_counts = count_vect.transform(docs_new)
@@ -242,7 +244,7 @@
 构建 Pipeline（管道）
 -----------------------
 
-为了使得 向量化 => 转换 => 分类器 过程更加简单,``scikit-learn`` 提供了一个 ``Pipeline`` 类，它更像一个复合分类器::
+为了使得 向量化 => 转换 => 分类器 过程更加简单,``scikit-learn`` 提供了一个 ``Pipeline`` 类，操作起来像一个复合分类器::
 
   >>> from sklearn.pipeline import Pipeline
   >>> text_clf = Pipeline([('vect', CountVectorizer()),
@@ -250,9 +252,9 @@
   ...                      ('clf', MultinomialNB()),
   ... ])
 
-名称 ``vect``, ``tfidf`` 和 ``clf`` （分类器）都是固定的.
-我们将会在下面看到如何使用它们进行网格搜索.
-接下来我们使用下列操作来训练模型::
+名称 ``vect``, ``tfidf`` 和 ``clf`` （分类器）都是任意的.
+我们将会在下面的 grid search（网格搜索）小节中看到它们的用法.
+现在我们使用下行命令来训练模型::
 
   >>> text_clf.fit(twenty_train.data, twenty_train.target)  # doctest: +ELLIPSIS
   Pipeline(...)
