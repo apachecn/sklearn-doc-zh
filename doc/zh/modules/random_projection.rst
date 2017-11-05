@@ -10,7 +10,7 @@
 :ref:`Gaussian random matrix <gaussian_random_matrix>` 和
 :ref:`sparse random matrix <sparse_random_matrix>`.
 
-随机投影矩阵的维度和分布是受控制的，所以可以保存任何两个数据集的距离。因此随机投影适用于基于距离的方法。
+随机投影矩阵的维度和分布是受控制的，所以可以保存任意两个数据集的距离。因此随机投影适用于基于距离的方法。
 
 
 .. topic:: 参考:
