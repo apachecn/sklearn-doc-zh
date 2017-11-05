@@ -1,22 +1,20 @@
 .. _isotonic:
 
 ===================
-Isotonic regression
+等式回归
 ===================
 
 .. currentmodule:: sklearn.isotonic
 
-The class :class:`IsotonicRegression` fits a non-decreasing function to data.
-It solves the following problem:
+:class:`IsotonicRegression` 类对数据进行非降函数拟合.
+它解决了如下的问题:
 
-  minimize :math:`\sum_i w_i (y_i - \hat{y}_i)^2`
+  最小化 :math:`\sum_i w_i (y_i - \hat{y}_i)^2`
 
-  subject to :math:`\hat{y}_{min} = \hat{y}_1 \le \hat{y}_2 ... \le \hat{y}_n = \hat{y}_{max}`
+  服从于 :math:`\hat{y}_{min} = \hat{y}_1 \le \hat{y}_2 ... \le \hat{y}_n = \hat{y}_{max}`
 
-where each :math:`w_i` is strictly positive and each :math:`y_i` is an
-arbitrary real number. It yields the vector which is composed of non-decreasing
-elements the closest in terms of mean squared error. In practice this list
-of elements forms a function that is piecewise linear.
+其中每一个 :math:`w_i` 都是正数，每个 :math:`y_i` 是任意实数。
+它生成一个由均方差接近的不减元素组成的向量。实际上这些元素形成一个分段线性函数。
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_isotonic_regression_001.png
    :target: ../auto_examples/plot_isotonic_regression.html
