@@ -24,10 +24,10 @@ PCA: 主成份分析
 
    * :ref: 'sphx_glr_auto_examples_applications_plot_face_recognition.py'
 
-随机预测
+随机投影
 -------------------
 
-模块: :mod:`random_projection` 提供了几种用于通过随机预测减少数据的工具.
+模块: :mod:`random_projection` 提供了几种用于通过随机投影减少数据的工具.
 请参阅文档的相关部分: :ref:`random_projection`.
 
 .. topic:: **示例**

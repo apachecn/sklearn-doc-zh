@@ -124,7 +124,6 @@ The :class:`sklearn.random_projection.GaussianRandomProjection` 通过将原始�
   >>> X_new.shape
   (100, 3947)
 
-
 .. topic:: 参考:
 
  * D. Achlioptas. 2003.
