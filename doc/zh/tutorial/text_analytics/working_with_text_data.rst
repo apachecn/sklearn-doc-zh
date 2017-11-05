@@ -4,7 +4,7 @@
 使用文本数据
 ======================
 
-本指南的旨在一个单独实际任务中探索一些主要的 ``scikit-learn`` 工具: 分析关于20 个不同主题的一个文件汇编（新闻组帖子）.
+本指南旨在一个单独实际任务中探索一些主要的 ``scikit-learn`` 工具: 分析关于20 个不同主题的一个文件汇编（新闻组帖子）.
 
 在本节中，我们将会学习如何:
 
@@ -21,9 +21,9 @@
 教程设置
 --------------
 
-开始这篇教程之前，必须首先安装 *scikit-learn* 以及所有其要求的库。
+开始这篇教程之前，必须首先安装 *scikit-learn* 以及所有其要求的库.
 
-更多信息和系统安装指导请参考 :ref:`安装说明 <installation-instructions>` 。
+更多信息和系统安装指导请参考 :ref:`安装说明 <installation-instructions>` .
 
 这篇入门教程的源代码可以在您的 scikit-learn 文件夹下面找到::
 
@@ -54,18 +54,18 @@
     % python fetch_data.py
 
 
-加载 20 个新闻组数据集
+加载这20个新闻组的数据集
 ---------------------------------
 
 该数据集名为 "Twenty Newsgroups".
 下面就是这个数据集的介绍, 来源于 `网站 <http://people.csail.mit.edu/jrennie/20Newsgroups/>`_:
 
-  20 个新闻组数据集是一个近 包括了20,000 个新闻组文件的汇编，（几乎）平均分成了 20 个不同新闻组。
-  据我们所知，这最初是由 Ken Lang 收集的 ，很可能是为了他的论文 "Newsweeder: Learning to filter netnews," 尽管他没有明确提及这个汇编。
-  这20 个新闻组汇编已成为一个流行的数据集，用于机器学习中的文本应用的试验中，如文本分类和文本聚类。
+  20 个新闻组数据集是一个近 包括了20,000 个新闻组文件的汇编，（几乎）平均分成了 20 个不同新闻组.
+  据我们所知，这最初是由 Ken Lang 收集的 ，很可能是为了他的论文 "Newsweeder: Learning to filter netnews," 尽管他没有明确提及这个汇编.
+  这20 个新闻组汇编已成为一个流行的数据集，用于机器学习中的文本应用的试验中，如文本分类和文本聚类.
 
 接下来我们会使用 scikit-learn 中的这个内置数据集加载器来加载这20个新闻组.
-或者, 也可以手动从网站上下载数据集，然后通过指向未压缩的文件夹下的 ``20news-bydate-train`` 子文件夹来使用函数 :func:`sklearn.datasets.load_files` 。
+或者, 也可以手动从网站上下载数据集，然后通过指向未压缩的文件夹下的 ``20news-bydate-train`` 子文件夹来使用函数 :func:`sklearn.datasets.load_files` .
 
 为了在第一个示例中节约时间，我们将使用部分数据：从20类别中选出4个::
 
@@ -78,20 +78,20 @@
   >>> twenty_train = fetch_20newsgroups(subset='train',
   ...     categories=categories, shuffle=True, random_state=42)
 
-返回的数据类型是 ``scikit-learn`` "bunch": 一个简单的数据类型能够与 python 中的 ``dict`` keys 或 ``object`` 中属性来读取, 比如 ``target_names`` 包含了所有类别的名称::
+返回的数据类型是一个 ``scikit-learn`` "bunch": 一个简单的包含多个 "field" 的存储对象 ， 方便使python 中的 ``dict`` keys 或 ``object`` 中属性来读取, 比如 ``target_names`` 包含了所要求的类别名称::
 
   >>> twenty_train.target_names
   ['alt.atheism', 'comp.graphics', 'sci.med', 'soc.religion.christian']
 
 这些文件本身被读进内存的 ``data`` 属性中.
-这些文件名称也可以容易获取到::
+另外，这些文件名称也可以容易获取到::
 
   >>> len(twenty_train.data)
   2257
   >>> len(twenty_train.filenames)
   2257
 
-让我们打印出所加载的第一个文件的第一行::
+让我们打印出所加载的第一个文件的前几行::
 
   >>> print("\n".join(twenty_train.data[0].split("\n")[:3]))
   From: sd345@city.ac.uk (Michael Collier)
@@ -101,17 +101,17 @@
   >>> print(twenty_train.target_names[twenty_train.target[0]])
   comp.graphics
 
-针对训练集中的每个文档，监督学习需要与之对应的类别标签.
-在这个例子中，类别是每个新闻组的名称，同时也是每个文件夹的名称，来区分不同的文本文件。.
+监督学习需要让训练集中的每个文档对应一个类别标签.
+在这个例子中，类别是每个新闻组的名称，也刚好是每个储存文本文件的文件夹的名称.
 
-考虑到速度以及空间效率问题 ``scikit-learn`` 加载目标属性作为一个整型数组,
+由于速度和空间上效率的原因 ``scikit-learn`` 加载目标属性为一个整型数列,
 它与 ``target_names`` 列表中类别名称的 index（索引）相对应.
-每个样本的类别的整型值 id 存放在 ``target`` 属性中::
+每个样本的类别的整数型 id 存放在 ``target`` 属性中::
 
   >>> twenty_train.target[:10]
   array([1, 1, 3, 3, 3, 3, 3, 2, 2, 2])
 
-也可以使用如下方式获得类别名称::
+也可以通过如下方式取得类别名称::
 
   >>> for t in twenty_train.target[:10]:
   ...     print(twenty_train.target_names[t])
@@ -127,40 +127,40 @@
   sci.med
   sci.med
 
-你可以发现所有的样本都被随机打乱（使用了修正的 RNG 种子）: 在进行整个数据集训练之前，需要快速训练一个模型的时候以及验证想时，这是非常有用的。
+你可以发现所有的样本都被随机打乱（使用了修正的 RNG 种子）: 当你在训练进行整个数据集之前，你只要选取前几个样本来快速训练一个模型的时候以及获得初步结果.这是非常有用的.
 
 
 从文本文件中提取特征
 -----------------------------------
 
-为了在文本文件中应用机器学习算法, 我们首先要做的就是将文本内容转化成数值形式的特征向量。
+为了在文本文件中执行机器学习算法, 我们首先要做的是将文本内容转化成数值形式的特征向量.
 
 .. currentmodule:: sklearn.feature_extraction.text
 
 
-词袋模型
+词袋
 ~~~~~~~~~~~~~
 
-最直接的方法就是用词袋来表示:
+最直观的方法就是用词袋来表示:
 
-  1. 在训练集中使用合适的数值来表示每一个单词的出现次数（比如建立一个从单词到数值的字典）.
+  1. 在训练集中每一个出现在任意文中的单词分配一个特定的整数id（比如，通过建立一个从单词到整数索引的字典）.
 
-  2. 对于每个文档 ``#i``，计算每个单词 ``w`` 的出现次数并将其存储在 ``X[i, j]`` 中作为特征 ``#j`` 的值，其中 ``j`` 是词典中词 ``w`` 的索引.
+  2. 对于每个文档 ``#i``，计算每个单词 ``w`` 的出现次数并将其存储在 ``X[i, j]`` 中作为特征 ``#j`` 的值，其中 ``j`` 是在字典中词 ``w`` 的索引.
 
-词袋模型中 ``n_features`` 是整个不同单词的数量: 这个值一般来说超过 100,000.
+在这种方法中 ``n_features`` 是在整个文集（文章集合的缩写，下同）中不同单词的数量: 这个值一般来说超过 100,000.
 
-如果 ``n_samples == 10000``, 使用 numpy 数组来存储 ``X`` 将会需要 10000 x 100000 x 4 bytes = **4GB内存** ，在当前的计算机中不太可能的。
+如果 ``n_samples == 10000``, 存储 ``X`` 为 "float32" 型的numpy数组将会需要 10000 x 100000 x 4 bytes = **4GB内存** ，在当前的计算机中非常不好管理的.
 
-幸运的是, **X 数组中大多是 0** ，是因为文档中使用的单词数量远远少于总体的词袋单词个数. 因此我们可以称词袋模型是典型的
-**high-dimensional sparse datasets（高维稀疏数据集）**. 我们能够通过只保存那些非0的部分表示的特征向量来节约内存。
+幸运的是, **X 数组中大多是 0** ，是因为特定的文档中使用的单词数量远远少于总体的词袋单词个数. 因此我们可以称词袋模型是典型的
+**high-dimensional sparse datasets（高维稀疏数据集）**. 我们可以通过只保存那些非0的部分的特征向量在内存中来节省大量内存.
 
-``scipy.sparse`` 数据结构就是这样的功能,同时 ``scikit-learn`` 有内置的模块支持这样的数据结构
+``scipy.sparse`` 矩阵正是能完成上述操作的数据结构,同时 ``scikit-learn`` 有内置的支持这样的数据结构.
 
 
 使用 ``scikit-learn`` 来对文本进行分词
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-文本预处理, 分词并且过滤停词包含在高级组件中, 它们可以构建特征字典和将文本转换成特征向量::
+文本的预处理, 分词以及过滤停词包含在可以构建特征字典和将文本转换成特征向量的高级组件中 ::
 
   >>> from sklearn.feature_extraction.text import CountVectorizer
   >>> count_vect = CountVectorizer()
@@ -169,29 +169,29 @@
   (2257, 35788)
 
 :class:`CountVectorizer` 提供了 N-gram 模型以及连续词模型.
-一旦使用, 向量化程序就会构建特征索引字典::
+一旦拟合, 向量化程序就会构建一个包含特征索引的字典::
 
   >>> count_vect.vocabulary_.get(u'algorithm')
   4690
 
-在字典中一个单词的索引值代表了该单词在整个词袋中出现的频率.
+在词汇表中一个单词的索引值对应的是该单词在整个训练的文集中出现的频率.
 
 .. note:
 
-  方法 ``count_vect.fit_transform`` 表示了两种操作: 学习词汇并将其转换成统计向量.
-  当然也可以将步骤分解开来：首先 ``X_train_counts = count_vect.transform(twenty_train.data)`` ，其次 ``count_vect.fit(twenty_train.data)`` ，但是这样做的话需要进行两次操作.
+  方法 ``count_vect.fit_transform`` 执行了两种操作: 学习词汇并将文档们转换成计数向量.
+  当然也可以将步骤分开来做：首先 ``count_vect.fit(twenty_train.data)`` ，其次 ``X_train_counts = count_vect.transform(twenty_train.data)`` ，但是这样做的话每个文件的分词化和向量化就执行了两次.
 
 
-从出现次数到词频
+从出现次数到出现频率
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-出现次数的统计是非常好的想法，但是有一些问题：长的文本相对于短的文本有更高的平均单词出现次数，尽管都是描述的同一个主题。
+出现次数的统计是非常好的开始，但是有个问题：长的文本相对于短的文本有更高的平均单词出现次数，尽管他们可能在描述同一个主题.
 
-为了防止这种潜在的缺点，使用每个单词出现的次数除以总共单词出现的次数：这个特征称之为词频（tf）。
+使用每个单词出现的次数被除以总共单词出现的次数，这种方法就能避免以上这种潜在的差别：这些新的特征称之为词频（tf）.
 
-另一种情况就是，有些单词在很多文档中出现，但是有更小的信息量相对于其他的仅仅在一些文档中出现的次数。
+基于这词频上的精简提炼的是降低这个文集里出现在很多文档中的单词的比重，因此它会比那些仅出现在一些文档中的单词有更少的信息量.
 
-这种下 downscaling （缩减比例）称为 `tf–idf`_ ，用于 "Term Frequency times Inverse Document Frequency".
+这种降低比重 （downscaling） 的方法称为 `tf–idf`_ ，全称为 "Term Frequency times Inverse Document Frequency".
 
 .. _`tf–idf`: https://en.wikipedia.org/wiki/Tf–idf
 
@@ -250,8 +250,8 @@
   ...                      ('clf', MultinomialNB()),
   ... ])
 
-名称 ``vect``, ``tfidf`` 和 ``clf`` （分类器）都是固定的。
-我们将会在下面看到如何使用它们进行网格搜索。
+名称 ``vect``, ``tfidf`` 和 ``clf`` （分类器）都是固定的.
+我们将会在下面看到如何使用它们进行网格搜索.
 接下来我们使用下列操作来训练模型::
 
   >>> text_clf.fit(twenty_train.data, twenty_train.target)  # doctest: +ELLIPSIS
@@ -271,7 +271,7 @@
   >>> np.mean(predicted == twenty_test.target)            # doctest: +ELLIPSIS
   0.834...
 
-如上, 我们模型的精度为 83.4%。
+如上, 我们模型的精度为 83.4%.
 我们使用线性分类模型 :ref:`支持向量机（SVM） <svm>`, 一种公认的最好的文本分类算法（尽管训练速度没有朴素贝叶斯快）.
 我们改变分类算法只需要在 pipeline（管道）中添加不同的算法即可::
 
@@ -315,12 +315,12 @@
 
 .. note:
 
-  SGD 表示 Stochastic Gradient Descent（随机梯度下降算法）。
+  SGD 表示 Stochastic Gradient Descent（随机梯度下降算法）.
   这是一个非常简单的优化算法，尤其是在大规模数据集下显得特别有效.
 
   通过设置 ``loss="hinge"`` 和 ``penalty="l2"`` 我们可以通过微调分类算法的参数来设置支持向量机的损失函数.
 
-  当然我们也可以使用 ``sklearn.svm.LinearSVC`` （线性支持向量机分类器），提供了一种基于 C 语言编写的 liblinear 库的损失函数优化器。
+  当然我们也可以使用 ``sklearn.svm.LinearSVC`` （线性支持向量机分类器），提供了一种基于 C 语言编写的 liblinear 库的损失函数优化器.
 
 .. _liblinear: http://www.csie.ntu.edu.tw/~cjlin/liblinear/
 
@@ -331,7 +331,7 @@
 我们已经接触了类似于 ``TfidfTransformer`` 中 ``use_idf`` 这样的参数 ，分类器有多种这样的参数;
 比如, ``MultinomialNB`` 包含了平滑参数 ``alpha`` 以及 ``SGDClassifier`` 有惩罚参数 ``alpha`` 和设置损失以及惩罚因子（更多信息请使用 python 的 ``help`` 文档）.
 
-而不是调整 chain（链条）的各种组件的参数, 通过构建巨大的网格搜索来寻找最佳参数也是可以的。
+而不是调整 chain（链条）的各种组件的参数, 通过构建巨大的网格搜索来寻找最佳参数也是可以的.
 我们可以对线性支持向量机使用每个单词或者使用 n-gram, 是否使用 idf, 以及设置从 0.01 到 0.001 的惩罚参数::
 
   >>> from sklearn.model_selection import GridSearchCV
@@ -346,7 +346,7 @@
 
   >>> gs_clf = GridSearchCV(text_clf, parameters, n_jobs=-1)
 
-网格搜索在 ``scikit-learn`` 中是非常常见的。
+网格搜索在 ``scikit-learn`` 中是非常常见的.
 让我们来选择一部分训练集来加速训练::
 
   >>> gs_clf = gs_clf.fit(twenty_train.data[:400], twenty_train.target[:400])
@@ -373,8 +373,8 @@
 
 .. note:
 
-  ``GridSearchCV`` 对象也保存了最好的分类器保存在 ``best_estimator_`` 属性中。
-  在这个例子中, 训练一个仅仅有 400 个文档的子数据集没有什么效果的。
+  ``GridSearchCV`` 对象也保存了最好的分类器保存在 ``best_estimator_`` 属性中.
+  在这个例子中, 训练一个仅仅有 400 个文档的子数据集没有什么效果的.
 
 
 练习
@@ -384,7 +384,7 @@
 
   % cp -r skeletons workspace
 
-这时候可以任意更改练习的代码而不会破坏原始的代码结构。
+这时候可以任意更改练习的代码而不会破坏原始的代码结构.
 
 然后启动 ipython 交互环境，并键入以下代码::
 
@@ -394,7 +394,7 @@
 
 迭代更改答案直到练习完成.
 
-**在每个练习中, skeleton 文件包含了做练习使用的一切数据及代码。**
+**在每个练习中, skeleton 文件包含了做练习使用的一切数据及代码.**
 
 
 练习 1：语言识别
@@ -402,7 +402,7 @@
 
 - 请使用自定义的预处理器和 ``CharNGramAnalyzer``，并且使用维基百科中的文章作为训练集，来编写一个文本分类的 pipeline（管道）.
 
-- 评估某些测试套件的性能。
+- 评估某些测试套件的性能.
 
 ipython command line::
 
@@ -412,9 +412,9 @@ ipython command line::
 练习 2：电影评论上的情绪分析
 -----------------------------------------------
 
-- 编写一个文本分类 pipeline（管道）来将电影评论分类为正面的还是负面的。
+- 编写一个文本分类 pipeline（管道）来将电影评论分类为正面的还是负面的.
 
-- 使用网格搜索来找到最好的参数集。
+- 使用网格搜索来找到最好的参数集.
 
 - 使用测试集来测试分类性能.
 
@@ -441,10 +441,10 @@ ipython 命令行::
 
 * 如果你没有标签, 使用 :ref:`聚类 <sphx_glr_auto_examples_text_document_clustering.py>` 来解决你的问题.
 
-* 如果对每一篇文章有多个标签，请参考 :ref:`多类别和多标签部分 <multiclass>`
+* 如果对每一篇文章有多个标签，请参考 :ref:`多类别和多标签部分 <multiclass>` _.
 
 * 使用 :ref:`Truncated SVD <LSA>` 解决 `潜在语义分析 <https://en.wikipedia.org/wiki/Latent_semantic_analysis>`_.
 
-* 使用 :ref:`Out-of-core Classification <sphx_glr_auto_examples_applications_plot_out_of_core_classification.py>` 来在没有全部读入数据来进行机器学习。
+* 使用 :ref:`Out-of-core Classification <sphx_glr_auto_examples_applications_plot_out_of_core_classification.py>` 来在没有全部读入数据来进行机器学习.
 
-* 使用 :ref:`Hashing Vectorizer <hashing_vectorizer>` 另一种方案来节省内存 :class:`CountVectorizer` 。
+* 使用 :ref:`Hashing Vectorizer <hashing_vectorizer>` 另一种方案来节省内存 :class:`CountVectorizer` .
