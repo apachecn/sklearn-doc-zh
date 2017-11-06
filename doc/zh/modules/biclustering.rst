@@ -1,12 +1,12 @@
 .. _biclustering:
 
 =================
-双向聚类
+双聚类
 =================
 
 Biclustering 可以使用
-:mod:`sklearn.cluster.bicluster` 模块. Biclustering 算法对数据矩阵的行列同时进行聚类. 同时对行列进行聚类称之为
-biclusters. 每一次聚类都会通过原始数据矩阵的一些属性确定一个子矩阵.
+ :mod: `sklearn.cluster.bicluster` 模块. Biclustering 算法对数据矩阵的行列同时进行聚类。 同时对行列进行聚类称之为
+biclusters。 每一次聚类都会通过原始数据矩阵的一些属性确定一个子矩阵。
 
 例如, 一个矩阵 ``(10, 10)`` , 一个 bicluster 聚类，有三列二行，就是一个子矩阵 ``(3, 2)`` ::
 
@@ -19,7 +19,7 @@ biclusters. 每一次聚类都会通过原始数据矩阵的一些属性确定�
            [21, 22],
            [31, 32]])
 
-为了可视化， 一个 bicluster 聚类，数据矩阵的行列可以重新分配，使得 bi-cluster 是连续的.
+为了可视化， 一个 bicluster 聚类，数据矩阵的行列可以重新分配，使得 bi-cluster 是连续的。
 
 算法在如何定义 bicluster 方面有一些不同，常见类型包括：
 
