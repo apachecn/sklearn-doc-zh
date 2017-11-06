@@ -1,57 +1,38 @@
 .. _kernel_approximation:
 
-Kernel Approximation
+内核近似
 ====================
 
-This submodule contains functions that approximate the feature mappings that
-correspond to certain kernels, as they are used for example in support vector
-machines (see :ref:`svm`).
-The following feature functions perform non-linear transformations of the
-input, which can serve as a basis for linear classification or other
-algorithms.
+这个子模块包含与某些 kernel 对应的特征映射的函数，这个会用于例如支持向量机的算法当中(see :ref:`svm`)。
+下面这些特征函数对输入执行非线性转换，可以用于线性分类或者其他算法。
 
 .. currentmodule:: sklearn.linear_model
+与 `kernel trick <https://en.wikipedia.org/wiki/Kernel_trick>`_ 相比，近似的进行特征映射更适合在线学习，并能够有效
+减少学习大量数据的开销。标准化使用内核的 svm 不能有效的适用到海量数据，但是使用近似内核映射的方法，对于线性 SVM 来说效果可能更好。
+而且，使用 :class:`SGDClassifier` 进行近似的内核映射，使得对海量数据进行非线性学习也成为了可能。
 
-The advantage of using approximate explicit feature maps compared to the
-`kernel trick <https://en.wikipedia.org/wiki/Kernel_trick>`_,
-which makes use of feature maps implicitly, is that explicit mappings
-can be better suited for online learning and can significantly reduce the cost
-of learning with very large datasets.
-Standard kernelized SVMs do not scale well to large datasets, but using an
-approximate kernel map it is possible to use much more efficient linear SVMs.
-In particular, the combination of kernel map approximations with
-:class:`SGDClassifier` can make non-linear learning on large datasets possible.
-
-Since there has not been much empirical work using approximate embeddings, it
-is advisable to compare results against exact kernel methods when possible.
+由于近似嵌入的方法没有太多经验性的验证，所以建议将结果和使用精确的内核方法的结果进行比较。
 
 .. seealso::
 
-   :ref:`polynomial_regression` for an exact polynomial transformation.
+   :ref:`polynomial_regression` 用于精确的多项式变换。
 
 .. currentmodule:: sklearn.kernel_approximation
 
 .. _nystroem_kernel_approx:
 
-Nystroem Method for Kernel Approximation
+内核近似的 Nystroem 方法
 ----------------------------------------
-The Nystroem method, as implemented in :class:`Nystroem` is a general method
-for low-rank approximations of kernels. It achieves this by essentially subsampling
-the data on which the kernel is evaluated.
-By default :class:`Nystroem` uses the ``rbf`` kernel, but it can use any
-kernel function or a precomputed kernel matrix.
-The number of samples used - which is also the dimensionality of the features computed -
-is given by the parameter ``n_components``.
+:class:`Nystroem` 中实现了 Nystroem 方法用于低等级的近似核。它是通过采样 kernel 已经评估好的数据。默认情况下，
+:class:`Nystroem` 使用 ``rbf`` kernel，但它可以使用任何内核函数和预计算内核矩阵.
+使用的样本数量 - 计算的特征维数 - 由参数 ``n_components`` 给出.
 
 .. _rbf_kernel_approx:
 
-Radial Basis Function Kernel
+径向基函数内核
 ----------------------------
-
-The :class:`RBFSampler` constructs an approximate mapping for the radial basis
-function kernel, also known as *Random Kitchen Sinks* [RR2007]_. This
-transformation can be used to explicitly model a kernel map, prior to applying
-a linear algorithm, for example a linear SVM::
+:class:`RBFSampler` 为径向基函数核构造一个近似映射，又称为 Random Kitchen Sinks [RR2007].
+在应用线性算法（例如线性 SVM ）之前，可以使用此转换来明确建模内核映射::
 
     >>> from sklearn.kernel_approximation import RBFSampler
     >>> from sklearn.linear_model import SGDClassifier
@@ -69,128 +50,91 @@ a linear algorithm, for example a linear SVM::
     >>> clf.score(X_features, y)
     1.0
 
-The mapping relies on a Monte Carlo approximation to the
-kernel values. The ``fit`` function performs the Monte Carlo sampling, whereas
-the ``transform`` method performs the mapping of the data.  Because of the
-inherent randomness of the process, results may vary between different calls to
-the ``fit`` function.
+这个映射依赖于内核值的 Monte Carlo 近似.  ``fit`` 方法执行 Monte Carlo 采样，而该 ``transform`` 方法执行
+数据的映射.由于过程的固有随机性，结果可能会在不同的 ``fit`` 函数调用之间变化。
 
-The ``fit`` function takes two arguments:
-``n_components``, which is the target dimensionality of the feature transform,
-and ``gamma``, the parameter of the RBF-kernel.  A higher ``n_components`` will
-result in a better approximation of the kernel and will yield results more
-similar to those produced by a kernel SVM. Note that "fitting" the feature
-function does not actually depend on the data given to the ``fit`` function.
-Only the dimensionality of the data is used.
-Details on the method can be found in [RR2007]_.
+该 ``fit`` 函数有两个参数:
+``n_components`` 是特征变换的目标维数. ``gamma`` 是 RBF-kernel 的参数. ``n_components`` 越高，会导致更好的内核近似，
+并且将产生与内核 SVM 产生的结果更相似的结果。请注意，"拟合" 特征函数实际上不取决于 ``fit`` 函数传递的数据。只有数据的维数被使用。
+详情可以参考 [RR2007]_.
 
-For a given value of ``n_components`` :class:`RBFSampler` is often less accurate
-as :class:`Nystroem`. :class:`RBFSampler` is cheaper to compute, though, making
-use of larger feature spaces more efficient.
+对于给定的值 ``n_components`` :class:`RBFSampler` 在 :class:`Nystroem` 中使用通常不太准确，
+但是 :class:`RBFSampler` 使用更大的特征空间，更容易计算。
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_kernel_approximation_002.png
     :target: ../auto_examples/plot_kernel_approximation.html
     :scale: 50%
     :align: center
 
-    Comparing an exact RBF kernel (left) with the approximation (right)
+    将精确的 RBF kernel (左) 与 approximation (右) 进行比较。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
     * :ref:`sphx_glr_auto_examples_plot_kernel_approximation.py`
 
 .. _additive_chi_kernel_approx:
 
-Additive Chi Squared Kernel
----------------------------
 
-The additive chi squared kernel is a kernel on histograms, often used in computer vision.
+可添加的 Chi Squared Kernel
+-----------------------------------
 
-The additive chi squared kernel as used here is given by
+可添加的 Chi Squared Kernel 是直方图的核心，通常用于计算机视觉。
+
+这里使用的可添加的 Chi Squared Kernel 给出
 
 .. math::
 
         k(x, y) = \sum_i \frac{2x_iy_i}{x_i+y_i}
 
-This is not exactly the same as :func:`sklearn.metrics.additive_chi2_kernel`.
-The authors of [VZ2010]_ prefer the version above as it is always positive
-definite.
-Since the kernel is additive, it is possible to treat all components
-:math:`x_i` separately for embedding. This makes it possible to sample
-the Fourier transform in regular intervals, instead of approximating
-using Monte Carlo sampling.
+这个和 :func:`sklearn.metrics.additive_chi2_kernel` 不完全一样.[VZ2010]_ 的作者喜欢上面的版本，因为它总是积极的。
+由于这个 kernel 是可添加的，因此可以分别处理嵌入的 :math:`x_i`. 这使得在规则的间隔类对傅里叶变换进行性才赢，代替近似的 Monte Carlo 采样。
 
-The class :class:`AdditiveChi2Sampler` implements this component wise
-deterministic sampling. Each component is sampled :math:`n` times, yielding
-:math:`2n+1` dimensions per input dimension (the multiple of two stems
-from the real and complex part of the Fourier transform).
-In the literature, :math:`n` is usually chosen to be 1 or 2, transforming
-the dataset to size ``n_samples * 5 * n_features`` (in the case of :math:`n=2`).
+ :class:`AdditiveChi2Sampler` 类实现了这个组件采样方法. 每个组件都被采样 :math:`n` 次，每一个输入维数都会产生 `2n+1` 维（来自傅立叶变换的实部和复数部分的两个数据段的倍数）.
+ 在文献中，:math:`n` 经常取为 1 或者 2，将数据集转换为 ``n_samples * 5 * n_features`` 大小（在 :math:`n=2` 的情况下 ）.
 
-The approximate feature map provided by :class:`AdditiveChi2Sampler` can be combined
-with the approximate feature map provided by :class:`RBFSampler` to yield an approximate
-feature map for the exponentiated chi squared kernel.
-See the [VZ2010]_ for details and [VVZ2010]_ for combination with the :class:`RBFSampler`.
+:class:`AdditiveChi2Sampler` 提供的近似特征映射可以和 :class:`RBFSampler` 提供的近似特征映射合并，得到一个取幂的 chi squared kerne。可以查看 [VZ2010]_ 和 [VVZ2010]_ :class:`RBFSampler` 的合并.
 
 .. _skewed_chi_kernel_approx:
 
 Skewed Chi Squared Kernel
 -------------------------
 
-The skewed chi squared kernel is given by:
+skewed chi squared kernel 给出下面公式
 
 .. math::
 
         k(x,y) = \prod_i \frac{2\sqrt{x_i+c}\sqrt{y_i+c}}{x_i + y_i + 2c}
 
 
-It has properties that are similar to the exponentiated chi squared kernel
-often used in computer vision, but allows for a simple Monte Carlo
-approximation of the feature map.
+它有和幂次方 chi squared kernel 相似的属性，用于计算机视觉.但是允许进行简单的 Monte Carlo 近似 的特征映射。
 
-The usage of the :class:`SkewedChi2Sampler` is the same as the usage described
-above for the :class:`RBFSampler`. The only difference is in the free
-parameter, that is called :math:`c`.
-For a motivation for this mapping and the mathematical details see [LS2010]_.
+:class:`SkewedChi2Sampler` 的使用和之前描述的 :class:`RBFSampler` 一样.唯一的区别是自由参数，称之为 :math:`c`.
+这种映射和数学细节可以参考 [LS2010]_.
 
 
-Mathematical Details
+数学方面的细节
 --------------------
-
-Kernel methods like support vector machines or kernelized
-PCA rely on a property of reproducing kernel Hilbert spaces.
-For any positive definite kernel function :math:`k` (a so called Mercer kernel),
-it is guaranteed that there exists a mapping :math:`\phi`
-into a Hilbert space :math:`\mathcal{H}`, such that
+内核方法像支持向量机，或者标准化 PCA 依赖于重新生产 kernel Hilbert spaces.
+对于任何内核函数 :math:`k` （叫做 Mercer kernel），保证了 :math:`\phi` 进入 Hilbert space:math:`\mathcal{H}` 的映射,例如：
 
 .. math::
 
         k(x,y) = \langle \phi(x), \phi(y) \rangle
 
-Where :math:`\langle \cdot, \cdot \rangle` denotes the inner product in the
-Hilbert space.
+:math:`\langle \cdot, \cdot \rangle`  是在 Hilbert space 中做内积.
 
-If an algorithm, such as a linear support vector machine or PCA,
-relies only on the scalar product of data points :math:`x_i`, one may use
-the value of :math:`k(x_i, x_j)`, which corresponds to applying the algorithm
-to the mapped data points :math:`\phi(x_i)`.
-The advantage of using :math:`k` is that the mapping :math:`\phi` never has
-to be calculated explicitly, allowing for arbitrary large
-features (even infinite).
+如果一个算法，例如线性支持向量机或者 PCA，依赖于数据集的数量级 :math:`x_i` ，可能会使用 :math:`k(x_i, x_j)` ，
+符合孙发的映射 :math:`\phi(x_i)` . 使用 :math:`k` 的优点在于 :math:`\phi` 永远不会直接计算，允许大量的特征计算（甚至是无线的）.
 
-One drawback of kernel methods is, that it might be necessary
-to store many kernel values :math:`k(x_i, x_j)` during optimization.
-If a kernelized classifier is applied to new data :math:`y_j`,
-:math:`k(x_i, y_j)` needs to be computed to make predictions,
-possibly for many different :math:`x_i` in the training set.
+kernel 方法的一个缺点是，在优化过程中有可能存储大量的 kernel 值 :math:`k(x_i, x_j)`.
+如果内核化的分类器应用于新的数据 :math:`y_j` ， :math:`k(x_i, y_j)` 需要计算用来做预测，训练集中的 :math:`x_i` 有可能有很多不同的。
 
-The classes in this submodule allow to approximate the embedding
-:math:`\phi`, thereby working explicitly with the representations
-:math:`\phi(x_i)`, which obviates the need to apply the kernel
-or store training examples.
+这个子模块的这些类中允许嵌入 :math:`\phi`，从而明确的与 :math:`\phi(x_i)` 一起工作，
+这消除了使用 kernel 的需要和存储训练样本.
 
 
-.. topic:: References:
+
+.. topic:: 参考:
 
     .. [RR2007] `"Random features for large-scale kernel machines"
       <http://www.robots.ox.ac.uk/~vgg/rg/papers/randomfeatures.pdf>`_

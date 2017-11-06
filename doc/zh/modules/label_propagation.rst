@@ -28,7 +28,7 @@
   * Kernel methods to project data into alternate dimensional spaces
 
 `scikit-learn` 提供了两种标签传播模型:
-:class:`LabelPropagation` 和 :class:`LabelSpreading`。
+:class:`LabelPropagation` 和 :class:`LabelSpreading` 。
 两者都通过在输入的 dataset（数据集）中的所有 items（项）上构建 similarity graph （相似图）来进行工作。
 
 .. figure:: ../auto_examples/semi_supervised/images/sphx_glr_plot_label_propagation_structure_001.png
@@ -39,20 +39,18 @@
     **标签传播说明:** *未标签化的观察值结构与 class（类）结构一致, 因此可以将 class（类）标签传播到训练集的未标签化的观察值*
 
 
-:class:`LabelPropagation` 和 :class:`LabelSpreading`
-在对图形的相似性矩阵, 以及对标签分布的 clamping effect（夹持效应）的修改方面不太一样。
+:class:`LabelPropagation` 和 :class:`LabelSpreading` 在对图形的相似性矩阵, 以及对标签分布的 clamping effect（夹持效应）的修改方面不太一样。
 Clamping 允许算法在一定程度上改变真实标签化数据的权重。
-该 :class:`LabelPropagation` 算法执行输入标签的 hard
-clamping, 这意味着 :math:`\alpha=0`。
-这些夹持因素可以改变, 例如 :math:`\alpha=0.2`, 这意味着我们将始终保留原始标签分配的 80%, 但该算法可以将其分布的置信度改变在 20% 以内。
+该 :class:`LabelPropagation` 算法执行输入标签的 hard clamping, 这意味着 :math:`\alpha=0` 。
+这些 clamping factor 可以不是很严格的, 例如 :math:`\alpha=0.2` , 这意味着我们将始终保留原始标签分配的 80%, 但该算法可以将其分布的置信度改变在 20% 以内。
 
 :class:`LabelPropagation` 使用原始相似性矩阵从未修改的数据来构建。
 :class:`LabelSpreading` 最小化具有正则化属性的损耗函数, 因此它通常更适用于噪声数据。
-该算法在原始图形的修改版本上进行迭代, 并通过计算 normalized graph Laplacian matrix（归一化图拉普拉斯矩阵）来对边缘的权重进行归一化。
-此过程也用于 :ref:`spectral_clustering`。
+该算法在原始图形的修改版本上进行迭代, 并通过计算 normalized graph Laplacian matrix （归一化图拉普拉斯矩阵）来对边缘的权重进行归一化。
+此过程也用于 :ref:`spectral_clustering` 。
 
 标签传播模型有两种内置的 kernel methods（核函数）。
-kernel（核）的选择会影响算法的可扩展性和性能。
+kernel （核）的选择会影响算法的可扩展性和性能。
 以下是可用的:
 
   * rbf (:math:`\exp(-\gamma |x-y|^2), \gamma > 0`). :math:`\gamma` 通过关键字 gamma 来指定。

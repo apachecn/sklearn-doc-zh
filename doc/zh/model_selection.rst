@@ -2,7 +2,7 @@
 
 .. _model_selection:
 
-Model selection and evaluation
+模型选择和评估
 ------------------------------
 
 .. toctree::

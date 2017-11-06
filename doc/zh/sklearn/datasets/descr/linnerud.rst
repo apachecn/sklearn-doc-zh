@@ -1,21 +1,19 @@
-Linnerrud dataset
+Linnerrud 数据集
 =================
 
-Notes
+注释
 -----
-Data Set Characteristics:
-    :Number of Instances: 20
-    :Number of Attributes: 3
-    :Missing Attribute Values: None
+数据集特征:
+    :实例数量: 20
+    :属性数量: 3
+    :缺失属性值: 无
 
-The Linnerud dataset constains two small dataset:
+Linnerud 数据集包含两个小的数据集:
 
-- *exercise*: A list containing the following components: exercise data with
-  20 observations on 3 exercise variables: Weight, Waist and Pulse.
+- *运动* ： 一个包含以下内容的列表：运动数据，关于3个运动相关变量的20个观测值：体重，腰围和脉搏。
 
-- *physiological*: Data frame with 20 observations on 3 physiological variables:
-   Chins, Situps and Jumps.
+- *生理* ： 一个包含以下内容的数据表：生理数据，关于三个生理变量的20个观测值：下巴，仰卧起坐和跳跃。
 
-References
+参考资料
 ----------
   * Tenenhaus, M. (1998). La regression PLS: theorie et pratique. Paris: Editions Technic.

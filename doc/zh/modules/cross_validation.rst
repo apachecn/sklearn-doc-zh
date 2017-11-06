@@ -2,27 +2,21 @@
 .. _cross_validation:
 
 ===================================================
-Cross-validation: evaluating estimator performance
+交叉验证: 评估（衡量）机器学习模型的性能
 ===================================================
 
 .. currentmodule:: sklearn.model_selection
 
-Learning the parameters of a prediction function and testing it on the
-same data is a methodological mistake: a model that would just repeat
-the labels of the samples that it has just seen would have a perfect
-score but would fail to predict anything useful on yet-unseen data.
-This situation is called **overfitting**.
-To avoid it, it is common practice when performing
-a (supervised) machine learning experiment
-to hold out part of the available data as a **test set** ``X_test, y_test``.
-Note that the word "experiment" is not intended
-to denote academic use only,
-because even in commercial settings
-machine learning usually starts out experimentally.
+学习一个预测函数的参数，并在相同数据集上进行测试是一种错误的做法:  一个仅给出测试用例标签的模型将会获得极高的分数，但对于尚未出现过的数据
+它则无法预测出任何有用的信息。
+这种情况称为“过拟合”（overfitting）.
+为了避免这种情况，在进行（监督）机器学习实验时，通常取出部分可利用数据作为实验测试集（test set）：
+``X_test, y_test``。
 
-In scikit-learn a random split into training and test sets
-can be quickly computed with the :func:`train_test_split` helper function.
-Let's load the iris data set to fit a linear support vector machine on it::
+需要强调的是这里说的“实验（experiment）”并不仅限于学术（academic），因为即使是在商业场景下机器学习也往往是从实验开始的。
+
+利用scikit-learn包中的`train_test_split`辅助函数可以很快地将实验数据集划分为任何训练集（training sets）和测试集（test sets）。
+下面让我们载入 iris 数据集，并在此数据集上训练出线性支持向量机::
 
   >>> import numpy as np
   >>> from sklearn.model_selection import train_test_split
@@ -33,8 +27,7 @@ Let's load the iris data set to fit a linear support vector machine on it::
   >>> iris.data.shape, iris.target.shape
   ((150, 4), (150,))
 
-We can now quickly sample a training set while holding out 40% of the
-data for testing (evaluating) our classifier::
+我们能快速采样到原数据集的40%作为测试集，从而测试（评估）我们的分类器::
 
   >>> X_train, X_test, y_train, y_test = train_test_split(
   ...     iris.data, iris.target, test_size=0.4, random_state=0)
@@ -48,52 +41,36 @@ data for testing (evaluating) our classifier::
   >>> clf.score(X_test, y_test)                           # doctest: +ELLIPSIS
   0.96...
 
-When evaluating different settings ("hyperparameters") for estimators,
-such as the ``C`` setting that must be manually set for an SVM,
-there is still a risk of overfitting *on the test set*
-because the parameters can be tweaked until the estimator performs optimally.
-This way, knowledge about the test set can "leak" into the model
-and evaluation metrics no longer report on generalization performance.
-To solve this problem, yet another part of the dataset can be held out
-as a so-called "validation set": training proceeds on the training set,
-after which evaluation is done on the validation set,
-and when the experiment seems to be successful,
-final evaluation can be done on the test set.
+当评价估计器的不同设置（超参数）时，例如手动为SVM设置的“C”参数，
+由于在训练集上，通过调整参数设置使估计器的性能达到了最佳状态；但在测试集上可能会出现过拟合的情况。
+此时，测试集上的信息反馈足以颠覆训练好的模型，评估的指标不再有效反映出模型的泛化性能。
+为了解决此类问题，还应该准备另一部分被称为“验证集”的数据集，模型训练完成以后在验证集上对模型进行评估。
+当验证集上的评估实验比较成功时，在测试集上进行最后的评估。
 
-However, by partitioning the available data into three sets,
-we drastically reduce the number of samples
-which can be used for learning the model,
-and the results can depend on a particular random choice for the pair of
-(train, validation) sets.
+然而，通过将原始数据分为3个数据集合，我们就大大减少了可用于模型学习的样本数量，
+并且得到的结果依赖于集合对（训练，验证）的随机选择。
 
-A solution to this problem is a procedure called
-`cross-validation <https://en.wikipedia.org/wiki/Cross-validation_(statistics)>`_
-(CV for short).
-A test set should still be held out for final evaluation,
-but the validation set is no longer needed when doing CV.
-In the basic approach, called *k*-fold CV,
-the training set is split into *k* smaller sets
-(other approaches are described below,
-but generally follow the same principles).
-The following procedure is followed for each of the *k* "folds":
+这个问题可以通过
+`交叉验证（CV 缩写） <https://en.wikipedia.org/wiki/Cross-validation_(statistics)>`_
+来解决。
+交叉验证仍需要测试集做最后的模型评估，但不再需要验证集。
 
- * A model is trained using :math:`k-1` of the folds as training data;
- * the resulting model is validated on the remaining part of the data
-   (i.e., it is used as a test set to compute a performance measure
-   such as accuracy).
+最基本的方法被称之为，*k-折交叉验证*。
+k-折交叉验证将训练集划分为 k 个较小的集合（其他方法会在下面描述，主要原则基本相同）。
+每一个*k*折都会遵循下面的过程：
 
-The performance measure reported by *k*-fold cross-validation
-is then the average of the values computed in the loop.
-This approach can be computationally expensive,
-but does not waste too much data
-(as it is the case when fixing an arbitrary test set),
-which is a major advantage in problem such as inverse inference
-where the number of samples is very small.
+ * 将k-1份训练集子集作为训练集训练模型，
+ * 将剩余的1份训练集子集作为验证集用于模型验证（也就是利用该数据集计算模型的性能指标，例如准确率）。
+
+*k*-折交叉验证得出的性能指标是循环计算中每个值的平均值。
+该方法虽然计算代价很高，但是它不会浪费太多的数据（就像是固定了一个任意的测试集），
+在处理样本数据集较少的问题（例如，逆向推理）时比较有优势。
 
 
-Computing cross-validated metrics
+计算交叉验证的指标
 =================================
 
+最简单的方式
 The simplest way to use cross-validation is to call the
 :func:`cross_val_score` helper function on the estimator and the dataset.
 
@@ -176,7 +153,7 @@ validation iterator instead, for instance::
 .. _multimetric_cross_validation:
 
 The cross_validate function and multiple metric evaluation
-----------------------------------------------------------
+----------------------------------------------------------------------
 
 The ``cross_validate`` function differs from ``cross_val_score`` in two ways -
 
@@ -231,7 +208,7 @@ Here is an example of ``cross_validate`` using a single metric::
     ['fit_time', 'score_time', 'test_score', 'train_score']
 
 
-Obtaining predictions by cross-validation
+通过交叉验证获取预测
 -----------------------------------------
 
 The function :func:`cross_val_predict` has a similar interface to
@@ -263,8 +240,8 @@ section.
     * :ref:`sphx_glr_auto_examples_plot_cv_predict.py`,
     * :ref:`sphx_glr_auto_examples_model_selection_plot_nested_cross_validation_iris.py`.
 
-Cross validation iterators
-==========================
+交叉验证迭代器
+=====================
 
 The following sections list utilities to generate indices
 that can be used to generate dataset splits according to different cross
@@ -272,8 +249,8 @@ validation strategies.
 
 .. _iid_cv:
 
-Cross-validation iterators for i.i.d. data
-==========================================
+交叉验证迭代器--循环遍历数据
+========================================
 
 Assuming that some data is Independent and Identically Distributed (i.i.d.) is
 making the assumption that all samples stem from the same generative process
@@ -294,7 +271,7 @@ devices) it safer to use :ref:`group-wise cross-validation <group_cv>`.
 
 
 K-fold
-------
+------------------
 
 :class:`KFold` divides all the samples in :math:`k` groups of samples,
 called folds (if :math:`k = n`, this is equivalent to the *Leave One
@@ -322,8 +299,8 @@ Thus, one can create the training/test sets using numpy indexing::
   >>> X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 
 
-Repeated K-Fold
----------------
+重复 K-折交叉验证
+-----------------------
 
 :class:`RepeatedKFold` repeats K-Fold n times. It can be used when one
 requires to run :class:`KFold` n times, producing different splits in
@@ -349,8 +326,8 @@ Similarly, :class:`RepeatedStratifiedKFold` repeats Stratified K-Fold n times
 with different randomization in each repetition.
 
 
-Leave One Out (LOO)
--------------------
+留一交叉验证 (LOO)
+--------------------------
 
 :class:`LeaveOneOut` (or LOO) is a simple cross-validation. Each learning
 set is created by taking all the samples except one, the test set being
@@ -408,7 +385,7 @@ fold cross validation should be preferred to LOO.
 
 
 Leave P Out (LPO)
------------------
+-----------------------------
 
 :class:`LeavePOut` is very similar to :class:`LeaveOneOut` as it creates all
 the possible training/test sets by removing :math:`p` samples from the complete
@@ -464,8 +441,9 @@ Here is a usage example::
 validation that allows a finer control on the number of iterations and
 the proportion of samples on each side of the train / test split.
 
-Cross-validation iterators with stratification based on class labels.
-=====================================================================
+
+基于类标签、具有分层的交叉验证迭代器
+===================================================
 
 Some classification problems can exhibit a large imbalance in the distribution
 of the target classes: for instance there could be several times more negative
@@ -475,7 +453,7 @@ stratified sampling as implemented in :class:`StratifiedKFold` and
 approximately preserved in each train and validation fold.
 
 Stratified k-fold
------------------
+-----------------------------
 
 :class:`StratifiedKFold` is a variation of *k-fold* which returns *stratified*
 folds: each set contains approximately the same percentage of samples of each
@@ -508,7 +486,7 @@ percentage for each target class as in the complete set.
 
 .. _group_cv:
 
-Cross-validation iterators for grouped data.
+用于分组数据的交叉验证迭代器
 ============================================
 
 The i.i.d. assumption is broken if the underlying generative process yield
@@ -530,7 +508,7 @@ parameter.
 
 
 Group k-fold
-------------
+------------------------
 
 :class:`GroupKFold` is a variation of k-fold which ensures that the same group is
 not represented in both testing and training sets. For example if the data is
@@ -560,7 +538,7 @@ size due to the imbalance in the data.
 
 
 Leave One Group Out
--------------------
+-------------------------------
 
 :class:`LeaveOneGroupOut` is a cross-validation scheme which holds out
 the samples according to a third-party provided array of integer groups. This
@@ -591,7 +569,7 @@ groups could be the year of collection of the samples and thus allow
 for cross-validation against time-based splits.
 
 Leave P Groups Out
-------------------
+------------------------------
 
 :class:`LeavePGroupsOut` is similar as :class:`LeaveOneGroupOut`, but removes
 samples related to :math:`P` groups for each training/test set.
@@ -642,7 +620,7 @@ a random sample (with replacement) of the train / test splits
 generated by :class:`LeavePGroupsOut`.
 
 
-Predefined Fold-Splits / Validation-Sets
+预定义的折叠 / 验证集
 ========================================
 
 For some datasets, a pre-defined split of the data into training- and
@@ -655,7 +633,7 @@ samples that are part of the validation set, and to -1 for all other samples.
 
 .. _timeseries_cv:
 
-Cross validation of time series data
+交叉验证在时间序列数据中应用
 ====================================
 
 Time series data is characterised by the correlation between observations
@@ -671,7 +649,7 @@ solution is provided by :class:`TimeSeriesSplit`.
 
 
 Time Series Split
------------------
+----------------------------
 
 :class:`TimeSeriesSplit` is a variation of *k-fold* which
 returns first :math:`k` folds as train set and the :math:`(k+1)` th
@@ -700,7 +678,7 @@ Example of 3-split time series cross-validation on a dataset with 6 samples::
 
 
 A note on shuffling
-===================
+==============================
 
 If the data ordering is not arbitrary (e.g. samples with the same class label
 are contiguous), shuffling it first may be essential to get a meaningful cross-
@@ -725,7 +703,8 @@ to shuffle the data indices before splitting them. Note that:
   of parameters validated by a single call to its ``fit`` method.
 * To get identical results for each split, set ``random_state`` to an integer.
 
-Cross validation and model selection
+
+交叉验证和模型选择
 ====================================
 
 Cross validation iterators can also be used to directly perform model
