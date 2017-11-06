@@ -17,12 +17,11 @@ Pipeline: 链式评估器
 便捷性和封装性
     你只要对数据调用 ``fit``和 ``predict``一次来适配所有的一系列评估器。
 联合的参数选择
-    你可以一次 :ref:`grid search <grid_search>`
-    管道内评估器的所有参数。
+    你可以一次 :ref:`grid search <grid_search>`管道中所有评估器的参数。
 安全性
-    管道有助于防止交叉验证中从测试数据到训练后模型的统计信息泄露，通过确认训练转换器和预测器使用的是相同样本。
+    训练转换器和预测器使用的是相同样本，管道有助于防止来自测试数据的统计数据泄露到交叉验证的训练模型中。
 
-除了最后一个评估器，管道的所有评估器必须是转换器。
+管道中的所有评估器，除了最后一个评估器，管道的所有评估器必须是转换器。
 (例如，必须有 ``transform`` 方法).
 最后一个评估器的类型不限（转换器、分类器等等）
 
@@ -30,7 +29,7 @@ Pipeline: 链式评估器
 用法
 ----
 
- :class:`Pipeline` 使用一系列 ``(key, value)`` 对来构建,其中 ``key`` 是你给这个步骤起的名字， ``value`` 是一个评估器对象::
+ :class:`Pipeline` 使用一系列 ``(key, value)`` 键值对来构建,其中 ``key`` 是你给这个步骤起的名字， ``value`` 是一个评估器对象::
 
     >>> from sklearn.pipeline import Pipeline
     >>> from sklearn.svm import SVC
@@ -111,8 +110,8 @@ named_steps 的属性映射到多个值,在交互环境支持 tab 补全::
 注意点
 ------
 
-对管道调用 ``fit`` 效果跟轮流对每个评估器调用 ``fit`` 一样, ``transform`` 输入并传递给下个步骤。
-最后步骤有的方法，管道都有,例如，如果最后的评估器是一个分类器， :class:`Pipeline` 可以当做分类器来用。如果最后一个评估器是转换器，管道也一样可以。
+对管道调用 ``fit`` 方法的效果跟依次对每个评估器调用 ``fit`` 方法一样, 都是``transform`` 输入并传递给下个步骤。
+管道中最后一个评估器的所有方法，管道都有,例如，如果最后的评估器是一个分类器， :class:`Pipeline` 可以当做分类器来用。如果最后一个评估器是转换器，管道也一样可以。
 
 .. _pipeline_cache:
 
@@ -122,7 +121,7 @@ named_steps 的属性映射到多个值,在交互环境支持 tab 补全::
 .. currentmodule:: sklearn.pipeline
 
 适配转换器是很耗费计算资源的。设置了``memory`` 参数， :class:`Pipeline` 将会在调用``fit``方法后缓存每个转换器。
-这个特征用于避免在适配管道内的转换器且参数和输入数据一样时重复计算。典型的例子是网格搜索转换器，该转化器只要适配一次就可以多次使用。
+如果参数和输入数据相同，这个特征用于避免重复计算适配的转换器。典型的例子是网格搜索转换器，该转化器只要适配一次就可以多次使用。
 
  ``memory`` 参数用于缓存转换器。
 ``memory`` 可以是包含要缓存的转换器的目录的字符串或一个 `joblib.Memory <https://pythonhosted.org/joblib/memory.html>`_
@@ -191,8 +190,8 @@ FeatureUnion（特征联合）: 个特征层面
 
 .. currentmodule:: sklearn.pipeline
 
-:class:`FeatureUnion` 联合了多个转换器对象形成一个新的转换器，该转换器结合了他们的输出。一个 :class:`FeatureUnion` 接收多个转换器对象。在适配期间，他们独立与数据适配。
-对于转换数据，转换器可以并发使用，且输出的样本向量被头尾相接，串联成大的向量。
+:class:`FeatureUnion` 合并了多个转换器对象形成一个新的转换器，该转换器合并了他们的输出。一个 :class:`FeatureUnion` 可以接收多个转换器对象。在适配期间，每个转换器都单独的和数据适配。
+对于转换数据，转换器可以并发使用，且输出的样本向量被连接成更大的向量。
 
 :class:`FeatureUnion` 功能与 :class:`Pipeline` 一样-
 便捷性和联合参数的估计和验证。
@@ -205,7 +204,7 @@ FeatureUnion（特征联合）: 个特征层面
 用法
 ----
 
-一个 :class:`FeatureUnion` 是通过一系列 ``(key, value)`` 对来构建的,其中的 ``key`` 给转换器指定的名字
+一个 :class:`FeatureUnion` 是通过一系列 ``(key, value)`` 键值对来构建的,其中的 ``key`` 给转换器指定的名字
 (一个绝对的字符串; 他只是一个代号)， ``value`` 是一个评估器对象::
 
     >>> from sklearn.pipeline import FeatureUnion
