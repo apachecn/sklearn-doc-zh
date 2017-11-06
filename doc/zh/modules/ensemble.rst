@@ -453,113 +453,112 @@ GBRT 的缺点:
 也会损失一点训练误差作为代价.参数 ``max_leaf_nodes`` 对应于文章 [F2001]_ 中的梯度提升章节的变量 ``J``
 同时与R语言的gbm包的参数 ``interaction.depth`` 相关,两者间的关系是 ``max_leaf_nodes == interaction.depth + 1``.
 
-数学公式
+数学公式 (Mathematical formulation)
 -------------------------
 
-GBRT可以认为是下面形式的加法模型:
+GBRT 可以认为是以下形式的可加模型:
 
   .. math::
 
     F(x) = \sum_{m=1}^{M} \gamma_m h_m(x)
 
-其中 :math:`h_m(x)` 是基本函数,在提升算法中它通常被称作 *weak learners* .梯度树提升利用固定大小
-的 :ref:`decision trees <tree>` 作为弱学习器,决策树本身拥有的一些特性使它能够在提升中变得有价值.
-这种特性即:能够处理混合类型的数据和构建复杂的功能.
+其中 :math:`h_m(x)` 是基本函数,在提升算法场景中它通常被称作 *weak learners* . 梯度树提升算法（Gradient Tree Boosting）使用固定大小
+的 :ref:`decision trees <tree>` 作为弱分类器,决策树本身拥有的一些特性使它能够在提升过程中变得有价值,
+例如，处理混合类型数据以及构建具有复杂功能模型的能力.
 
-与其他提升算法类似,GBRT构建加法模型也是使用到了前向分步算法:
+与其他提升算法类似,GBRT 利用前向分步算法思想构建加法模型:
 
   .. math::
 
     F_m(x) = F_{m-1}(x) + \gamma_m h_m(x)
 
-在每一步给定当前模型 :math:`F_{m-1}` 和它的拟合函数 :math:`F_{m-1}(x_i)` 的前提下,
-:math:`h_m(x)` 的选择是根据最小化损失函数 :math:`L` 得到的.
+在每一个阶段中，在当前模型 :math:`F_{m-1}` 和拟合函数 :math:`F_{m-1}(x_i)` 给定的情况下，选择合适的决策树函数
+:math:`h_m(x)` ,从而最小化损失函数 :math:`L` .
 
   .. math::
 
     F_m(x) = F_{m-1}(x) + \arg\min_{h} \sum_{i=1}^{n} L(y_i,
     F_{m-1}(x_i) - h(x))
 
-初始化模型 :math:`F_{0}` 是一个具体的问题,对于最小二乘回归一个通常的选择是目标值的平均数.
+初始模型 :math:`F_{0}` 是问题的具体,对于最小二乘回归,通常选择目标值的平均值.
 
-.. note:: 初始化模型也能够通过参数 ``init`` 来指定.传过去的参数必须实现 ``fit`` 和 ``predict`` 方法.
+.. note:: 初始化模型也能够通过 ``init`` 参数来指定，但被传对象需要实现 ``fit`` 和 ``predict`` 函数.
 
-梯度提升尝试以数值的方式通过最速下降法解决这个最小化问题.最速下降的方向是当前模型 :math:`F_{m-1}` 的
-损失函数的梯度的负方向,对于任意的可微损失函数,这个梯度都是可以计算得到的:
+梯度提升（Gradient Boosting）尝试通过最速下降法以数字方式解决这个最小化问题.最速下降方向是在当前模型 :math:`F_{m-1}` 下评估的
+损失函数的负梯度,其中模型 :math:`F_{m-1}` 可以计算任何可微损失函数:
 
   .. math::
 
     F_m(x) = F_{m-1}(x) + \gamma_m \sum_{i=1}^{n} \nabla_F L(y_i,
     F_{m-1}(x_i))
 
-其中步长:math:`\gamma_m` 通过线性查找得到来选择:
+其中步长:math:`\gamma_m` 通过如下方式线性搜索获得:
 
   .. math::
 
     \gamma_m = \arg\min_{\gamma} \sum_{i=1}^{n} L(y_i, F_{m-1}(x_i)
     - \gamma \frac{\partial L(y_i, F_{m-1}(x_i))}{\partial F_{m-1}(x_i)})
 
-这个算法对于分类和回归问题的唯一不同点在于对于具体损失函数的使用.
+该算法处理分类和回归问题不同之处在于具体损失函数的使用.
 
 .. _gradient_boosting_loss:
 
-损失函数
+损失函数 (Loss Functions)
 ...............
 
-以下就是目前支持的损失函数,这些损失函数可以通过参数``loss``指定:
+以下是目前支持的损失函数,具体损失函数可以通过参数 ``loss`` 指定:
 
-  * Regression
+  * 回归 (Regression)
 
-    * Least squares (``'ls'``): 在回归问题中经常被用作损失函数是因为其优越的计算性能,
-      初始化模型通过目标值的均值来给出.
-    * Least absolute deviation (``'lad'``): 一个鲁棒性的损失函数,模型的初始化通过目
-      标值的中位数给出.
-    * Huber (``'huber'``): 另一个鲁棒性的损失函数,它是由最小二乘和最小绝对偏差结合得到.
+    * Least squares (``'ls'``): 由于其优越的计算性能,该损失函数成为回归算法中的自然选择。
+      初始模型通过目标值的均值给出.
+    * Least absolute deviation (``'lad'``): 回归中具有鲁棒性的损失函数,初始模型通过目
+      标值的中值给出.
+    * Huber (``'huber'``): 回归中另一个具有鲁棒性的损失函数,它是最小二乘和最小绝对偏差两者的结合.
       其利用 ``alpha`` 来控制模型对于异常点的敏感度(详细介绍请参考 [F2001]_).
-    * Quantile (``'quantile'``): 分位数损失函数.用 ``0 < alpha < 1`` 来指定分位数这个损
+    * Quantile (``'quantile'``): 分位数回归损失函数.用 ``0 < alpha < 1`` 来指定分位数这个损
       失函数可以用来产生预测间隔.(详见 :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_quantile.py` ).
 
-  * Classification
+  * 分类 (Classification)
 
     * Binomial deviance (``'deviance'``): 对于二分类问题(提供概率估计)即负的二项log似然
       损失函数.模型以log的比值比来初始化.
-    * Multinomial deviance (``'deviance'``): 对于多分类问题的负的多项log似然损失函数具有
-       ``n_classes`` 个互斥的类.其提供概率估计,初始模型以每个类的先验概率来给出.在每一次迭代中
-       ``n_classes`` 回归树被构建,这使得GBRT对于大量类的数据集而言十分低效.
-    * Exponential loss (``'exponential'``): 与 :class:`AdaBoostClassifier` 相同的损失
-      函数.相比如 ``'deviance'`` 对于有错误类别的样本的鲁棒性很差,只能用在二分类问题中.
+    * Multinomial deviance (``'deviance'``): 对于多分类问题的负的多项log似然损失函数具有 ``n_classes`` 个互斥的类.提供概率估计.
+      初始模型由每个类的先验概率给出.在每一次迭代中 ``n_classes`` 回归树被构建,这使得 GBRT 在处理多类别数据集时相当低效.
+    * Exponential loss (``'exponential'``): 与 :class:`AdaBoostClassifier` 具有相同的损失
+      函数.与 ``'deviance'`` 相比，对具有错误标记的样本的鲁棒性较差,仅用于在二分类问题.
 
-正则化
+正则化 (Regularization)
 ----------------
 
 .. _gradient_boosting_shrinkage:
 
-缩减（Shrinkage）
+收缩率 (Shrinkage)
 .................
 
-[F2001]_ 提出了一种简单的正则化策略,通过一个因素 :math:`\nu`来缩小每个弱学习器对于最终结果的贡献:
+[F2001]_ 提出一个简单的正则化策略,通过一个因子 :math:`\nu` 来衡量每个弱分类器对于最终结果的贡献:
 
 .. math::
 
     F_m(x) = F_{m-1}(x) + \nu \gamma_m h_m(x)
 
-参数 :math:`\nu` 也叫作 **learning rate** 因为它缩小了梯度下降的步长,它可以通过参数 ``learning_rate`` 来设置.
+参数 :math:`\nu` 由于它缩小了梯度下降的步长, 因此也叫作 **learning rate** ,它可以通过 ``learning_rate`` 参数来设置.
 
-在拟合一定数量的弱学习器时,参数 ``learning_rate`` 和参数 ``n_estimators`` 之间有很强的制约关系.
-较小的``learning_rate`` 需要大量的弱学习器才能保证训练误差的不变.经验表明较小值的 ``learning_rate``
+在拟合一定数量的弱分类器时,参数 ``learning_rate`` 和参数 ``n_estimators`` 之间有很强的制约关系.
+较小的``learning_rate`` 需要大量的弱分类器才能保证训练误差的不变.经验表明数值较小的 ``learning_rate``
 将会得到更好的测试误差. [HTF2009]_ 推荐把 ``learning_rate`` 设置为一个较小的常数
 (例如: ``learning_rate <= 0.1`` )同时通过提前停止策略来选择合适的 ``n_estimators`` .
 有关 ``learning_rate`` 和 ``n_estimators`` 更详细的讨论可以参考 [R2007]_.
 
-子采样（Subsampling）
+子采样 (Subsampling)
 .....................
 
-[F1999]_ 提出了随机梯度提升,这种方法将梯度提升和bootstrap averaging(bagging)结合.在每次迭代
-中,基本分类器通过抽取所有训练数据中一小部分的 ``subsample`` 来训练得到.子样本采用无放回的方式采
+[F1999]_ 提出了随机梯度提升,这种方法将梯度提升(gradient boosting)和bootstrap averaging(bagging)相结合.在每次迭代
+中,基分类器是通过抽取所有可利用训练集中一小部分的 ``subsample`` 训练得到的.子样本采用无放回的方式采
 样. ``subsample`` 参数的值一般设置为0.5.
 
-下图表明了缩减和子采样对于模型拟合好坏的影响.我们可以明显看到缩减比无缩减拥有更好的表现.而子采
-样和缩减的结合能更进一步的增加模型的准确率.相反,使用子采样而不使用缩减的结果十分糟糕.
+下图表明了收缩率和子采样对于模型拟合好坏的影响.我们可以明显看到收缩率在无收缩的情况下拥有更好的表现.而将子采
+样和收缩率相结合能进一步的提高模型的准确率.相反,使用子采样而不使用缩减的结果十分糟糕.
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_gradient_boosting_regularization_001.png
    :target: ../auto_examples/ensemble/plot_gradient_boosting_regularization.html
@@ -571,34 +570,34 @@ GBRT可以认为是下面形式的加法模型:
 
 .. note:: 采用一个较小的 ``max_features`` 值能大大缩减模型的训练时间.
 
-随机梯度提升允许通过计算那些不在自助采样之内的样本偏差的改进来计算测试偏差的包外估计.这个改进保存在属性
+随机梯度提升允许计算测试偏差的袋外估计(Out-of-bag),方法是通过计算那些不在自助采样之内的样本偏差的改进.这个改进保存在属性
 :attr:`~GradientBoostingRegressor.oob_improvement_` 中. ``oob_improvement_[i]`` 如果将
-第i步添加到当前预测中,则对OOB样本的损失进行改进.包外估计可以使用在模型选择中,例如决定最优迭代次
-数.OOB估计通常都很悲观,因此我们推荐使用交叉验证来代替它,只有当交叉验证需要的时间太长时才考虑用OOB.
+第i步添加到当前预测中,则可以改善OOB样本的损失.袋外估计可以使用在模型选择中,例如决定最优迭代次
+数.OOB估计通常都很悲观,因此我们推荐使用交叉验证来代替它,而当交叉验证太耗时时我们就只能使用OOB了.
 
-.. topic:: Examples:
+.. topic:: 示例 (Examples):
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regularization.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_oob.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`
 
-解释性
+解释性 (Interpretation)
 --------------
 
-单棵决策树可通过简单的可视化树结构来解释.然而对于梯度提升模型来说,一般拥有几百棵树,因此它们不可能简单的通
-过可视化单独的每一棵树来解释.幸运的是,有很多关于总结和解释梯度提升模型的技术被提出.
+通过简单地可视化树结构可以很容易地解释单个决策树,然而对于梯度提升模型来说,一般拥有数百棵/种回归树,因此通过目视检查每一棵树
+是很难解释的.幸运的是,有很多关于总结和解释梯度提升模型的技术已经被提出.
 
-特征重要性
+特征重要性 (Feature importance)
 ..................
 
-通常情况下每个特征对于预测膜表的贡献不是相同的.在很多情形下大多数特征实际上是无关的.当解释一个模型时,第一
-个问题通常是:这些重要的特征是什么?它们是如何有助于预测目标的响应?
+通常情况下每个特征对于预测目标的贡献是不同的.在很多情形下大多数特征实际上是无关的.当解释一个模型时,第一
+个问题通常是:这些重要的特征是什么?他们如何在预测目标方面做出积极的响应？
 
-单个决策树本质上是通过选择最佳切分点来进行特征选择.这个信息可以用来检测每个特征的重要性.一个基本的观点:
-一个特征被用作切分点的次数越多,则该特征就越重要.这个重要的概念可以通过简单的平均每棵树的特征的重要性被扩
-展到决策树的组合中.(详见 :ref:`random_forest_feature_importance` ).
+单个决策树本质上是通过选择最佳切分点来进行特征选择.这个信息可以用来检测每个特征的重要性.基本思想是：在树
+的分割点中使用的特征越频繁，特征越重要。 这个重要的概念可以通过简单地平均每棵树的特征重要性来扩展到
+决策树集合.(详见 :ref:`random_forest_feature_importance` ).
 
-一个梯度提升模型中特征的重要性分数可以通过属性 ``feature_importances_`` 获取::
+对于一个训练好的梯度提升模型，其特征重要性分数可以通过属性 ``feature_importances_`` 查看::
 
     >>> from sklearn.datasets import make_hastie_10_2
     >>> from sklearn.ensemble import GradientBoostingClassifier
@@ -609,7 +608,7 @@ GBRT可以认为是下面形式的加法模型:
     >>> clf.feature_importances_  # doctest: +ELLIPSIS
     array([ 0.11,  0.1 ,  0.11,  ...
 
-.. topic:: Examples:
+.. topic:: 示例 (Examples):
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
 
@@ -617,32 +616,32 @@ GBRT可以认为是下面形式的加法模型:
 
 .. _partial_dependence:
 
-部分依赖
+部分依赖 (Partial dependence)
 ..................
 
 部分依赖图(PDP)展示了目标响应和一系列目标特征的依赖关系,同时边缘化了其他所有特征值(候选特征).
-直觉上,我们可以解释为作为目标特征函数 [2]_ 的预期目标响应 [1]_ .
+直觉上,我们可以将部分依赖解释为作为目标特征函数 [2]_ 的预期目标响应 [1]_ .
 
 由于人类感知能力的限制,目标特征的设置必须小一点(通常是1到2),因此目标特征通常在最重要的特征中选择.
 
-下表展示了加尼福尼亚房价数据集的四个单向和一个双向的部分依赖图:
+下图展示了加州住房数据集的四个单向和一个双向部分依赖图:
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_partial_dependence_001.png
    :target: ../auto_examples/ensemble/plot_partial_dependence.html
    :align: center
    :scale: 70
 
-单向PDPs告诉我们目标响应和目标特征的相互影响(例如:线性或者非线性).上表中的左上图展示了一个地区中等收入对
+单向 PDPs 告诉我们目标响应和目标特征的相互影响(例如:线性或者非线性).上图中的左上图展示了一个地区中等收入对
 中等房价的影响.我们可以清楚的看到两者之间是线性相关的.
 
-两个目标特征的PDPs展示了这两个特征之间的相互影响.例如:上图中两个变量的PDP展示了房价中位数与房子年龄和
-每户平均入住人数之间的依赖关系.我们能清楚的看到这两个特征之间的影响:对于每户入住均值而言,当其值大于2时,
-房价与房屋年龄几乎是相对独立的,而其值小于2的时,房价对年龄的依赖性就会很强.
+具有两个目标特征的 PDPs 显示这两个特征之间的相互影响.例如:上图中两个变量的 PDP 展示了房价中位数与房屋年龄和
+每户平均入住人数之间的依赖关系.我们能清楚的看到这两个特征之间的影响:对于每户入住均值而言,当其值大于 2 时,
+房价与房屋年龄几乎是相对独立的,而其值小于2的时,房价对房屋年龄的依赖性就会很强.
 
 模型 :mod:`partial_dependence` 提供了一个便捷的函数
 :func:`~sklearn.ensemble.partial_dependence.plot_partial_dependence` 来产生单向或双向部分依
 赖图.在下图的例子中我们展示如何创建一个部分依赖的网格图:特征值介于 ``0`` 和 ``1`` 的两个单向依赖PDPs和一
-个在两个特征间的双向PDPs::
+个在两个特征间的双向 PDPs::
 
     >>> from sklearn.datasets import make_hastie_10_2
     >>> from sklearn.ensemble import GradientBoostingClassifier
@@ -654,7 +653,7 @@ GBRT可以认为是下面形式的加法模型:
     >>> features = [0, 1, (0, 1)]
     >>> fig, axs = plot_partial_dependence(clf, X, features) #doctest: +SKIP
 
-对于多类别的模型,你需要通过参数 ``label`` 设置类别标签来创建PDP标签::
+对于多类别的模型,你需要通过 ``label`` 参数设置类别标签来创建 PDPs::
 
     >>> from sklearn.datasets import load_iris
     >>> iris = load_iris()
@@ -663,7 +662,7 @@ GBRT可以认为是下面形式的加法模型:
     >>> features = [3, 2, (3, 2)]
     >>> fig, axs = plot_partial_dependence(mc_clf, X, features, label=0) #doctest: +SKIP
 
-如果你需要部分依赖函数的原始值而不是图,你可以利用
+如果你需要部分依赖函数的原始值而不是图,你可以调用
 :func:`~sklearn.ensemble.partial_dependence.partial_dependence` 函数::
 
     >>> from sklearn.ensemble.partial_dependence import partial_dependence
@@ -674,17 +673,15 @@ GBRT可以认为是下面形式的加法模型:
     >>> axes  # doctest: +ELLIPSIS
     [array([-1.62497054, -1.59201391, ...
 
-这个函数要求参数 ``grid`` ,这个参数的指定应该评估部分依赖函数的的目标特征值或参数
-``X`` ,这个参数对于训练数据自动产生 ``grid`` 来说是一个十分方便的模型.如果 ``X``
-给定, 函数 ``axes`` 的值将被返回通过给定目标特征的轴.
+该函数允许通过 ``grid`` 参数指定应该评估部分依赖函数的的目标特征值或通过 ``X`` 参数设置从训练数据中自动创建 ``grid`` 的便利模式.如果 ``X``
+被给出,函数返回的 ``axes`` 为每个目标特征提供轴.
 
-对于 ``grid`` 中的每一个'目标'特征的值,部分依赖函数需要边缘化一棵树中所有候选特征的可能值的
-预测.在决策树中,这个函数可以在不参考训练数据的情况下被高效的评估,对于每一网格点执行加权遍历:如果切
-分点包含'目标'特征,遍历其相关的左分支或相关的右分支,否则就遍历两个分支每一个分支的加权是通过进
-入该分支的训练样本的占比,最后,部分依赖通过所有访问的叶节点的权重的平均值给出.对于树组合的结果,
-需要对每棵树的结果再次平均得到.
+对于 ``grid`` 中的每一个'目标'特征值,部分依赖函数需要边缘化一棵树中所有候选特征的可能值的预测.
+在决策树中,这个函数可以在不参考训练数据的情况下被高效的评估,对于每一网格点执行加权遍历:
+如果切分点包含'目标'特征,遍历其相关的左分支或相关的右分支,否则就遍历两个分支.每一个分支将被通过进入该分支的训练样本的占比加权,
+最后,部分依赖通过所有访问的叶节点的权重的平均值给出.组合树(tree ensembles)的整体结果,需要对每棵树的结果再次平均得到.
 
-.. rubric:: 附录
+.. rubric:: 注解 (Footnotes)
 
 .. [1] For classification with ``loss='deviance'``  the target
    response is logit(p).
@@ -693,12 +690,12 @@ GBRT可以认为是下面形式的加法模型:
    accounting for the initial model; partial dependence plots
    do not include the ``init`` model.
 
-.. topic:: 示例:
+.. topic:: 示例 (Examples):
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_partial_dependence.py`
 
 
-.. topic:: 参考
+.. topic:: 参考 (References)
 
  .. [F2001] J. Friedman, "Greedy Function Approximation: A Gradient Boosting Machine",
    The Annals of Statistics, Vol. 29, No. 5, 2001.
@@ -712,37 +709,39 @@ GBRT可以认为是下面形式的加法模型:
 
  .. _voting_classifier:
 
-投票分类器
+投票分类器 (Voting Classifier)
 =============================
 
-:class:`VotingClassifier` （投票分类器）的原理是结合了多个不同的机器学习分类器，并且采用 majority vote （多数表决）的方式或者 soft vote （平均预测概率）的方式来预测类标签。这样的分类器（指 Voting Classifier）可以用于一组 equally well performing model （同样出色的模型），以平衡它们各自的弱点。
+:class:`VotingClassifier` （投票分类器）的原理是结合了多个不同的机器学习分类器,并且采用多数表决(majority vote)或者平均预测概率(软投票)的方式来预测分类标签.
+这样的分类器可以用于一组同样表现良好的模型,以便平衡它们各自的弱点.
 
 
-多数类标签（也叫 Majority/Hard Voting）
+多数类标签 (又称为,多数/硬投票)
 --------------------------------------------
 
-majority vote(采用多数投票)的时候，特定样本的预测类标签是每个分类器预测的类标签中占据多数的那个类标签。
 
-举个例子, 如果给定一个样本进行预测
+在多数投票中,特定样本的预测类别标签是表示单独分类器预测的类别标签中票数占据多数(模式)的类别标签。
 
-- 分类器 1 预测得到的结果是 类别 1
-- 分类器 2 预测得到的结果是 类别 1
-- 分类器 3 预测得到的结果是 类别 2
+例如, 如果给定样本的预测是
 
-类别 1 占据多数，所以 VotingClassifier (投票分类器)使用 ``voting='hard'`` ，即 majority vote (多数表决)的方式，会得到该样本的预测结果是类别 1。
+- classifier 1 -> class 1
+- classifier 2 -> class 1
+- classifier 3 -> class 2
 
-如果得到的票数最多的类标签不止一个，VotingClassifier(投票分类器)会按照类标签升序排序的结果，选择靠前的类标签。
-举个例子，在下边的场景中:
+类别 1 占据多数,通过 ``voting='hard'`` 参数设置投票分类器为多数表决方式,会得到该样本的预测结果是类别 1.
 
-- 分类器1 预测得到的结果是 类别2
-- 分类器2 预测得到的结果是 类别1
+在平局的情况下,投票分类器(VotingClassifier)将根据升序排序顺序选择类标签。
+例如,场景如下:
 
-这种情况下，该样本的预测结果会是类别1。
+- classifier 1 -> class 2
+- classifier 2 -> class 1
 
-用法
+这种情况下,class 1 将会被指定为该样本的类标签.
+
+用法 (Usage)
 .....
 
-下边这个示例程序说明了如何去 fit (拟合)、去构建一个采用 majority vote (多数表决)方法的分类器::
+以下示例显示如何拟合多数规则分类器：
 
    >>> from sklearn import datasets
    >>> from sklearn.model_selection import cross_val_score
@@ -769,18 +768,17 @@ majority vote(采用多数投票)的时候，特定样本的预测类标签是�
    Accuracy: 0.95 (+/- 0.05) [Ensemble]
 
 
-加权平均概率（也叫 Soft Voting）
+加权平均概率 (软投票)
 --------------------------------------------
 
-与多数表决 (majority voting / hard voting) 的方法相反，采用加权平均概率的方法得到的是预测概率值总和最大的那一个类标签。
+与大多数投票（硬投票）相比,软投票将类别标签返回为预测概率之和的 argmax.
 
-可以通过参数 ``weights`` 来给每个分类器分配一个特定的权重。
-当提供参数 ``weights`` 时，每个分类器的预测类概率需要乘以分类器权重并平均化。
-最后得到的类标签采用拥有最高平均概率的类标签。
+具体的权重可以通过权重参数 ``weights`` 分配给每个分类器.当提供权重参数 ``weights`` 时,收集每个分类器的预测分类概率,
+乘以分类器权重并取平均值.然后从具有最高平均概率的类别标签导出最终类别标签.
 
-用一个简单的例子来说明上述这个方法。假设现在有一个分类问题，可供选择的类标签有 3 个，我们有 3 个分类器，在这里我们给这三个分类器分配相同的权重：w1=1, w2=1, w3=1.
+为了用一个简单的例子来说明这一点,假设我们有3个分类器和一个3类分类问题,我们给所有分类器赋予相等的权重：w1 = 1,w2 = 1,w3 = 1.
 
-如下所示，针对一个特定的样本输入，来计算加权平均概率：
+样本的加权平均概率计算如下：
 
 ================  ==========    ==========      ==========
   分类器            类别 1         类别 2          类别 3
@@ -788,12 +786,12 @@ majority vote(采用多数投票)的时候，特定样本的预测类标签是�
   分类器 1          w1 * 0.2      w1 * 0.5        w1 * 0.3
   分类器 2          w2 * 0.6      w2 * 0.3        w2 * 0.1
   分类器 3          w3 * 0.3      w3 * 0.4        w3 * 0.3
- 加权平均的结果       0.37	   0.4             0.23
+ 加权平均的结果      0.37	        0.4             0.23
 ================  ==========    ==========      ==========
 
-这里可以看出，预测的类标签是类别 2，因为它有 highest average probability (最大的平均概率)。
+这里可以看出，预测的类标签是 2,因为它具有最大的平均概率.
 
-下边的示例程序说明了当加权平均概率(也叫 soft voting )是基于 linear SupportVector Machine (线性支持向量机)、Decision Tree(决策树)、K-nearest neighbor(K近邻)这三种分类器的时候，decision regions (决策域) 可能会变化:
+下边的示例程序说明了当软投票分类器(soft VotingClassifier)是基于线性支持向量机(linear SVM)、决策树(Decision Tree)、K近邻(K-nearest )分类器时,决策域可能如何变化:
 
    >>> from sklearn import datasets
    >>> from sklearn.tree import DecisionTreeClassifier
@@ -823,10 +821,10 @@ majority vote(采用多数投票)的时候，特定样本的预测类标签是�
     :align: center
     :scale: 75%
 
-Using the `VotingClassifier` with `GridSearch`（网格搜索下的投票分类器）
+投票分类器(VotingClassifier )在网格搜索(GridSearch)应用
 ------------------------------------------------------------------------
 
-为了调整每个 estimators 的 hyperparameters ，`VotingClassifier` 可以和 `GridSearch` 一起使用::
+为了调整每个估计器的超参数,`VotingClassifier` 也可以和 `GridSearch` 一起使用::
 
    >>> from sklearn.model_selection import GridSearchCV
    >>> clf1 = LogisticRegression(random_state=1)
@@ -839,10 +837,10 @@ Using the `VotingClassifier` with `GridSearch`（网格搜索下的投票分类�
    >>> grid = GridSearchCV(estimator=eclf, param_grid=params, cv=5)
    >>> grid = grid.fit(iris.data, iris.target)
 
-用法
+用法 (Usage)
 .....
 
-根据预测的类概率来预测类标签(在 VotingClassifier 中的 scikit-learn estimators 必须支持 ``predict_proba`` 函数方法)::
+为了基于预测的类别概率预测类别标签(投票分类器中的 scikit-learn estimators 必须支持 ``predict_proba`` 方法)::
 
    >>> eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3)], voting='soft')
 
