@@ -20,7 +20,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 [scikit-learn(sklearn) 0.19](http://scikit-learn.org/stable/documentation.html)
 
 ## 历史版本
-[scikit-learn(sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181): <http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181>
+* [scikit-learn(sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181): <http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181>
 
 ## 参与翻译 & 发现错误
     1. 在 github 上 fork 该 repository.
@@ -34,6 +34,9 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 我这里使用的是 `VSCode` 编辑器.  
 简易的使用指南请参阅: [VSCode Windows 平台入门使用指南](help/vscode-windows-usage.md), 介绍了 `VSCode` 与 `github` 一起搭配的简易使用的方法.  
 如果要将 VSCode 的 Markdown 预览风格切换为 github 的风格，请参阅: [VSCode 修改 markdown 的预览风格为 github 的风格](help/vscode-markdown-preview-github-style.md).
+
+**注意注意注意:**  
+为了尽量正规化各顶级项目的翻译，更便于以后的迭代更新，我们在 `scikit-learn` 文档翻译中使用了 `Git` 的分支，具体应用方法请参阅: [使用 Git 分支进行迭代翻译](help/git-branch-usage.md).
 
 ## 角色分配
 目前有如下可分配的角色: 
@@ -49,19 +52,77 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 
 ## 贡献者
 
-贡献者可自行编辑如下内容.
+贡献者可自行编辑如下内容（排名不分先后）.
 
 ### 0.19.0
+**翻译者(人人皆大佬~):**
 * [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
 * [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
 * [@chenyyx](https://github.com/chenyyx)（Joy yx）
+* [@survivingME](https://github.com/survivingME)（Trembleguy）
+* [@mtobeiyf](https://github.com/mtobeiyf)（Fing）
+* [@Leon-Jin](https://github.com/Leon-Jin)（Leon晋）
+* [@X1aoFang](https://github.com/X1aoFang)（X1aoFang）
+* [@loverollcat](https://github.com/loverollcat)（loverollcat）
+* [@helloheshee](https://github.com/helloheshee)（helloheshee）
+* [@SkyDreamStart](https://github.com/SkyDreamStart)（SkyDreamStart）
+* [@HazekiahWon](https://github.com/HazekiahWon)（Hazekiah Wang）
+* [@201419](https://github.com/201419)（tree）
+* [@busesese](https://github.com/busesese)（wenyi）
+* [@chrzc](https://github.com/chrzc)（changzhicheng）
+* [@Zoctan](https://github.com/Zoctan)（Zoctan）
+* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
+* [@charleschou520](https://github.com/charleschou520)（charleschou520）
+* [@zhangqiking](https://github.com/zhangqiking)（BigBird）
+* [@mikechengwei](https://github.com/mikechengwei)（Mike）
+* [@wodekwan](https://github.com/wodekwan)（wodekwan）
+* [@sehriff](https://github.com/sehriff)（sehriff）
+* [@Kdotm](https://github.com/Kdotm)（kngines）
+* [@patientman](https://github.com/patientman)（YuanMingLiu）
+* [@DamonDay](https://github.com/DamonDay)（DamonDay）
+* [@cszhangbo](https://github.com/cszhangbo)（cszhangbo）
+* [@XingxGit](https://github.com/XingxGit)（XingxGit）
+* [@KrokYin](https://github.com/KrokYin)（KrokYin）
+* [@yw10](https://github.com/yw10)（Andrew Yao）
+* [@GlassyWu](https://github.com/GlassyWu)（glassy）
+* [@PrivateRookie](https://github.com/PrivateRookie)（PrivateRookie）
+* [@linweijiang](https://github.com/linweijiang)（linweijiang）
+* [@jiaqiangbandongg](https://github.com/jiaqiangbandongg)（jiaqiangbandongg）
+* [@supportingvector](https://github.com/supportingvector)（supportingvector）
+* [@stealthsMrs](https://github.com/stealthsMrs)（stealthsMrs）
+* [@lhwlhw90](https://github.com/lhwlhw90)（lhwlhw90）
+* [@sheepmen](https://github.com/sheepmen)（羊三）
+* [@guohao916](https://github.com/guohao916)（guohao_dm）
+* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
+* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
+* [@夜神月](@qq760514101)（夜神月）
+* [@liyangbit](https://github.com/liyangbit)（Lemon）
+
+**校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
+* [@pan8664716](https://github.com/pan8664716)（pan8664716）
+* [@xrj](https://github.com/xrj)（xrj）
+* [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）
+* [@marsjhao](https://github.com/marsjhao)（Zhang Junhao）
+* [@tiantian1412](https://github.com/tiantian1412)（tiantian1412）
+* [@sheepmen](https://github.com/sheepmen)（羊三）
+* [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
+* [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
+* [@chenyyx](https://github.com/chenyyx)（Joy yx）
+* [@mikechengwei](https://github.com/mikechengwei)（Mike）
+* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
+* [@busesese](https://github.com/busesese)（wenyi）
+* [@GlassyWu](https://github.com/GlassyWu)（glassy）
+* [@wodekwan](https://github.com/wodekwan)（wodekwan）
+* [@charleschou520](https://github.com/charleschou520)（charleschou520）
+
+
 
 ### 0.18
 请参阅: [http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
 
 ## 联系方式
 有任何建议反馈, 或想参与文档翻译, 麻烦联系下面的企鹅:
-* 企鹅: 1042658081
+* 企鹅: 1042658081（那伊抹微笑）, 190442212（小瑶）, 529815144（片刻）
 
 ## 其它中文文档
 * [TensorFlow R1.2 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030122)
@@ -72,3 +133,4 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [Zeppelin 0.7.2 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030467)
 * [Elasticsearch 5.4 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=4260364)
 * [Kibana 5.2 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=8159377)
+* [Storm 1.1.0 中文文档](http://storm.apachecn.org/releases/cn/1.1.0/)

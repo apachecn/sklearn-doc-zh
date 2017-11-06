@@ -2,59 +2,52 @@
 .. _data_reduction:
 
 =====================================
-Unsupervised dimensionality reduction
+无监督降维
 =====================================
 
-If your number of features is high, it may be useful to reduce it with an
-unsupervised step prior to supervised steps. Many of the
-:ref:`unsupervised-learning` methods implement a ``transform`` method that
-can be used to reduce the dimensionality. Below we discuss two specific
-example of this pattern that are heavily used.
+如果你的特征数量很多, 在监督步骤之前, 可以通过无监督的步骤来减少特征.
+很多的 :ref:`unsupervised-learning` 方法实现了一个名为 ``transform`` 的方法, 它可以用来降低维度.
+下面我们将讨论大量使用这种模式的两个具体示例.
 
 .. topic:: **Pipelining**
-
-    The unsupervised data reduction and the supervised estimator can be
-    chained in one step. See :ref:`pipeline`.
+    无监督数据简化和监督的估计器可以链接在一个步骤中。 请参阅 :ref:`pipeline`.
 
 .. currentmodule:: sklearn
 
-PCA: principal component analysis
+PCA: 主成份分析
 ----------------------------------
 
-:class:`decomposition.PCA` looks for a combination of features that
-capture well the variance of the original features. See :ref:`decompositions`.
+:class:`decomposition.PCA` 寻找能够捕捉原始特征的差异的特征的组合.
+请参阅 :ref:`decompositions`.
 
-.. topic:: **Examples**
+.. topic:: **示例**
 
-   * :ref:`sphx_glr_auto_examples_applications_plot_face_recognition.py`
+   * :ref: 'sphx_glr_auto_examples_applications_plot_face_recognition.py'
 
-Random projections
+随机投影
 -------------------
 
-The module: :mod:`random_projection` provides several tools for data
-reduction by random projections. See the relevant section of the
-documentation: :ref:`random_projection`.
+模块: :mod:`random_projection` 提供了几种用于通过随机投影减少数据的工具.
+请参阅文档的相关部分: :ref:`random_projection`.
 
-.. topic:: **Examples**
+.. topic:: **示例**
 
    * :ref:`sphx_glr_auto_examples_plot_johnson_lindenstrauss_bound.py`
 
-Feature agglomeration
+特征聚集
 ------------------------
 
-:class:`cluster.FeatureAgglomeration` applies
-:ref:`hierarchical_clustering` to group together features that behave
-similarly.
+:class:`cluster.FeatureAgglomeration` 应用
+:ref:`hierarchical_clustering` 将行为类似的特征分组在一起.
 
-.. topic:: **Examples**
+.. topic:: **示例**
 
    * :ref:`sphx_glr_auto_examples_cluster_plot_feature_agglomeration_vs_univariate_selection.py`
    * :ref:`sphx_glr_auto_examples_cluster_plot_digits_agglomeration.py`
 
-.. topic:: **Feature scaling**
+.. topic:: **特征缩放**
 
-   Note that if features have very different scaling or statistical
-   properties, :class:`cluster.FeatureAgglomeration` may not be able to
-   capture the links between related features. Using a 
-   :class:`preprocessing.StandardScaler` can be useful in these settings.
+   请注意，如果功能具有明显不同的缩放或统计属性，则 :class:`cluster.FeatureAgglomeration`
+   可能无法捕获相关特征之间的关系.使用一个  :class:`preprocessing.StandardScaler` 可以在这些
+   设置中使用.
 

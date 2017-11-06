@@ -1,7 +1,7 @@
 .. _installation-instructions:
 
 =======================
-Installing scikit-learn
+安装 scikit-learn
 =======================
 
 .. note::
@@ -10,88 +10,68 @@ Installing scikit-learn
     :ref:`install the latest development version<install_bleeding_edge>`.
 
 
-Installing the latest release
+安装最新版本
 =============================
 
-Scikit-learn requires:
+Scikit-learn 要求:
 
 - Python (>= 2.7 or >= 3.3),
 - NumPy (>= 1.8.2),
 - SciPy (>= 0.13.3).
 
-If you already have a working installation of numpy and scipy,
-the easiest way to install scikit-learn is using ``pip`` ::
+如果你已经有一个安全的 numpy 和 scipy，安装 scikit-learn 的最简单的方法是使用 ``pip`` ::
 
     pip install -U scikit-learn
 
-or ``conda``::
+或者 ``conda``::
 
     conda install scikit-learn
 
-If you have not installed NumPy or SciPy yet, you can also install these using
-conda or pip. When using pip, please ensure that *binary wheels* are used,
-and NumPy and SciPy are not recompiled from source, which can happen when using
-particular configurations of operating system and hardware (such as Linux on
-a Raspberry Pi). 
-Building numpy and scipy from source can be complex (especially on Windows) and
-requires careful configuration to ensure that they link against an optimized
-implementation of linear algebra routines.
-Instead, use a third-party distribution as described below.
+如果您还没有安装 NumPy 或 SciPy，还可以使用 conda 或 pip 安装这些。
+当使用pip时，请确保使用 *binary wheels*，并且 NumPy 和 SciPy 不会从源重新编译，这可能在使用操作系统和硬件的特定配置（如 Raspberry Pi 上的 Linux）时发生。
+从源代码构建 numpy 和 scipy 可能是复杂的（特别是在 Windows 上），并且需要仔细配置，以确保它们与线性代数程序的优化实现链接。而是使用如下所述的第三方分发。
 
-If you must install scikit-learn and its dependencies with pip, you can install
-it as ``scikit-learn[alldeps]``. The most common use case for this is in a
-``requirements.txt`` file used as part of an automated build process for a PaaS
-application or a Docker image. This option is not intended for manual
-installation from the command line.
+如果您必须安装 scikit-learn 及其与 pip 的依赖关系，则可以将其安装为 ``scikit-learn[alldeps]``。
+最常见的用例是 ``requirements.txt`` 用作 PaaS 应用程序或 Docker 映像的自动构建过程的一部分的文件。此选项不适用于从命令行进行手动安装。
 
-Third-party Distributions
+第三方分发
 ==========================
-If you don't already have a python installation with numpy and scipy, we
-recommend to install either via your package manager or via a python bundle.
-These come with numpy, scipy, scikit-learn, matplotlib and many other helpful
-scientific and data processing libraries.
+如果您尚未安装具有 numpy 和 scipy 的 python 安装，建议您通过软件包管理器或通过 python 软件包进行安装。
+这些与 numpy, scipy, scikit-learn, matplotlib 和许多其他有用的科学和数据处理库。
 
-Available options are:
+可用选项有:
 
-Canopy and Anaconda for all supported platforms
+Canopy and Anaconda 适用于所有支持的平台
 -----------------------------------------------
 
 `Canopy
-<https://www.enthought.com/products/canopy>`_ and `Anaconda
-<https://www.continuum.io/downloads>`_ both ship a recent
-version of scikit-learn, in addition to a large set of scientific python
-library for Windows, Mac OSX and Linux.
+<https://www.enthought.com/products/canopy>`_ 和 `Anaconda
+<https://www.continuum.io/downloads>`_ 都运送了最新版本的 scikit-learn，另外还有一大批适用于 Windows，Mac OSX 和 Linux 的科学 python 库。
 
-Anaconda offers scikit-learn as part of its free distribution.
+Anaconda 提供 scikit-learn 作为其免费分发的一部分.
 
 
 .. warning::
 
-    To upgrade or uninstall scikit-learn installed with Anaconda
-    or ``conda`` you **should not use the pip command**. Instead:
+    升级或卸载使用 Anaconda 安装的 scikit-learn，或者 ``conda`` **不应该使用 pip 命令**。代替:
 
-    To upgrade ``scikit-learn``::
+    升级 ``scikit-learn``::
 
         conda update scikit-learn
 
-    To uninstall ``scikit-learn``::
+    卸载 ``scikit-learn``::
 
         conda remove scikit-learn
 
-    Upgrading with ``pip install -U scikit-learn`` or uninstalling
-    ``pip uninstall scikit-learn`` is likely fail to properly remove files
-    installed by the ``conda`` command.
+    使用 ``pip install -U scikit-learn`` 升级 or ``pip uninstall scikit-learn`` 卸载 可能无法正确删除 ``conda`` 命令安装的文件.
 
-    pip upgrade and uninstall operations only work on packages installed
-    via ``pip install``.
+    pip 升级和卸载操作仅适用于通过 ``pip install`` 安装的软件包.
 
 
-WinPython for Windows
------------------------
+WinPython 适用于 Windows
+------------------------
 
-The `WinPython <https://winpython.github.io/>`_ project distributes
-scikit-learn as an additional plugin.
+该 `WinPython <https://winpython.github.io/>`_ 项目分布 scikit-learn 作为额外的插件。
 
 
-For installation instructions for particular operating systems or for compiling
-the bleeding edge version, see the :ref:`advanced-installation`.
+有关特定操作系统的安装说明或汇编出血边缘版本，请参阅 :ref:`advanced-installation`.

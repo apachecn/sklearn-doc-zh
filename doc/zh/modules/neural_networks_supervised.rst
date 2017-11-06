@@ -1,7 +1,7 @@
 .. _neural_networks_supervised:
 
 ==================================
-Neural network models (supervised)
+神经网络模块（监督的）
 ==================================
 
 .. currentmodule:: sklearn.neural_network
@@ -9,79 +9,49 @@ Neural network models (supervised)
 
 .. warning::
 
-    This implementation is not intended for large-scale applications. In particular,
-    scikit-learn offers no GPU support. For much faster, GPU-based implementations,
-    as well as frameworks offering much more flexibility to build deep learning
-    architectures, see  :ref:`related_projects`.
+    此实现不适用于大规模应用程序。 特别是 scikit-learn 不支持 GPU。如果想要提高运行速度并使用基于 GPU 的实现以及为构建深度学习架构提供更多灵活性的框架，请参阅 :ref:`related_projects`。
 
 .. _multilayer_perceptron:
 
-Multi-layer Perceptron
+多层感知器
 ======================
 
-**Multi-layer Perceptron (MLP)** is a supervised learning algorithm that learns
-a function :math:`f(\cdot): R^m \rightarrow R^o` by training on a dataset,
-where :math:`m` is the number of dimensions for input and :math:`o` is the
-number of dimensions for output. Given a set of features :math:`X = {x_1, x_2, ..., x_m}`
-and a target :math:`y`, it can learn a non-linear function approximator for either
-classification or regression. It is different from logistic regression, in that
-between the input and the output layer, there can be one or more non-linear
-layers, called hidden layers. Figure 1 shows a one hidden layer MLP with scalar
-output.
+**多层感知器（MLP）**是一种监督学习算法，通过在数据集上训练来学习函数 :math:`f(\cdot): R^m \rightarrow R^o`，其中 :math:`m` 是输入的维数，:math:`o` 是输出的维数。 给定一组特征 :math:`X = {x_1, x_2, ..., x_m}` 和标签 :math:`y` ，它可以学习用于分类或回归的非线性函数。 与逻辑回归不同的是，在输入层和输出层之间，可以有一个或多个非线性层，称为隐藏层。 图1 展示了一个具有标量输出的单隐藏层 MLP。
 
 .. figure:: ../images/multilayerperceptron_network.png
    :align: center
    :scale: 60%
 
-   **Figure 1 : One hidden layer MLP.**
+   **图1：单隐藏层MLP.**
 
-The leftmost layer, known as the input layer, consists of a set of neurons
-:math:`\{x_i | x_1, x_2, ..., x_m\}` representing the input features. Each
-neuron in the hidden layer transforms the values from the previous layer with
-a weighted linear summation :math:`w_1x_1 + w_2x_2 + ... + w_mx_m`, followed
-by a non-linear activation function :math:`g(\cdot):R \rightarrow R` - like
-the hyperbolic tan function. The output layer receives the values from the
-last hidden layer and transforms them into output values.
+最左层的输入层由一组代表输入特征的神经元 :math:`\{x_i | x_1, x_2, ..., x_m\}` 组成。 每个隐藏层中的神经元将前一层的值进行加权线性求和转换 :math:`w_1x_1 + w_2x_2 + ... + w_mx_m` ，再通过非线性激活函数 :math:`g(\cdot):R \rightarrow R` - 比如双曲正切函数 tanh 。 输出层接收到的值是最后一个隐藏层的输出经过变换而来的。
 
-The module contains the public attributes ``coefs_`` and ``intercepts_``.
-``coefs_`` is a list of weight matrices, where weight matrix at index
-:math:`i` represents the weights between layer :math:`i` and layer
-:math:`i+1`. ``intercepts_`` is a list of bias vectors, where the vector
-at index :math:`i` represents the bias values added to layer :math:`i+1`.
+该模块包含公共属性 ``coefs_`` 和 ``intercepts_``。``coefs_`` 是一系列权重矩阵，其中下标为 :math:`i` 的权重矩阵表示第 :math:`i` 层和第 :math:`i+1` 层之间的权重。 ``intercepts_`` 是一系列偏置向量，其中的下标为 :math:`i` 的向量表示添加到第 :math:`i+1` 等的偏置值。
 
-The advantages of Multi-layer Perceptron are:
+多层感知器的优点:
 
-    + Capability to learn non-linear models.
+    + 可以学习得到非线性模型。
 
-    + Capability to learn models in real-time (on-line learning)
-      using ``partial_fit``.
+    + 使用``partial_fit`` 可以学习得到实时模型(在线学习)。
 
 
-The disadvantages of Multi-layer Perceptron (MLP) include:
+多层感知器(MLP)的缺点:
 
-    + MLP with hidden layers have a non-convex loss function where there exists
-      more than one local minimum. Therefore different random weight
-      initializations can lead to different validation accuracy.
+    + 具有隐藏层的 MLP 具有非凸的损失函数，它有不止一个的局部最小值。 因此不同的随机权重初始化会导致不同的验证集准确率。
 
-    + MLP requires tuning a number of hyperparameters such as the number of
-      hidden neurons, layers, and iterations.
+    + MLP 需要调试一些超参数，例如隐藏层神经元的数量、层数和迭代轮数。
 
-    + MLP is sensitive to feature scaling.
+    + MLP 对特征归一化很敏感.
 
-Please see :ref:`Tips on Practical Use <mlp_tips>` section that addresses
-some of these disadvantages.
+解决这些缺点的方法请参阅 :ref:`实用使用技巧 <mlp_tips>` 部分。
 
 
-Classification
+分类
 ==============
 
-Class :class:`MLPClassifier` implements a multi-layer perceptron (MLP) algorithm
-that trains using `Backpropagation <http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm>`_.
+ :class:`MLPClassifier` 类实现了通过 `Backpropagation <http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm>`_ 进行训练的多层感知器（MLP）算法。
 
-MLP trains on two arrays: array X of size (n_samples, n_features), which holds
-the training samples represented as floating point feature vectors; and array
-y of size (n_samples,), which holds the target values (class labels) for the
-training samples::
+MLP 在两个 array 上进行训练:尺寸为 (n_samples, n_features) 的 array X 储存表示训练样本的浮点型特征向量; 尺寸为(n_samples,) 的 array y 储存训练样本的目标值（类别标签）::
 
     >>> from sklearn.neural_network import MLPClassifier
     >>> X = [[0., 0.], [1., 1.]]
@@ -98,39 +68,27 @@ training samples::
            solver='lbfgs', tol=0.0001, validation_fraction=0.1, verbose=False,
            warm_start=False)
 
-After fitting (training), the model can predict labels for new samples::
+拟合（训练）后，该模型可以预测新样本的标签::
 
     >>> clf.predict([[2., 2.], [-1., -2.]])
     array([1, 0])
 
-MLP can fit a non-linear model to the training data. ``clf.coefs_``
-contains the weight matrices that constitute the model parameters::
+MLP 可以为训练数据拟合一个非线性模型。``clf.coefs_`` 包含了构建模型的权值矩阵::
 
     >>> [coef.shape for coef in clf.coefs_]
     [(2, 5), (5, 2), (2, 1)]
 
-Currently, :class:`MLPClassifier` supports only the
-Cross-Entropy loss function, which allows probability estimates by running the
-``predict_proba`` method.
+目前， :class:`MLPClassifier` 只支持交叉熵损失函数，通过运行 ``predict_proba`` 方法进行概率估计。
 
-MLP trains using Backpropagation. More precisely, it trains using some form of
-gradient descent and the gradients are calculated using Backpropagation. For
-classification, it minimizes the Cross-Entropy loss function, giving a vector
-of probability estimates :math:`P(y|x)` per sample :math:`x`::
+MLP 算法使用的是反向传播的方式。 更准确地说，它使用了通过反向传播计算得到的梯度和某种形式的梯度下降来进行训练。 对于分类来说，它最小化交叉熵损失函数，为每个样本 :math:`x` 给出一个向量形式的概率估计 :math:`P(y|x)` ::
 
     >>> clf.predict_proba([[2., 2.], [1., 2.]])  # doctest: +ELLIPSIS
     array([[  1.967...e-04,   9.998...-01],
            [  1.967...e-04,   9.998...-01]])
 
-:class:`MLPClassifier` supports multi-class classification by
-applying `Softmax <https://en.wikipedia.org/wiki/Softmax_activation_function>`_
-as the output function.
+:class:`MLPClassifier` 通过应用 `Softmax <https://en.wikipedia.org/wiki/Softmax_activation_function>`_ 作为输出函数来支持多分类。
 
-Further, the model supports :ref:`multi-label classification <multiclass>`
-in which a sample can belong to more than one class. For each class, the raw
-output passes through the logistic function. Values larger or equal to `0.5`
-are rounded to `1`, otherwise to `0`. For a predicted output of a sample, the
-indices where the value is `1` represents the assigned classes of that sample::
+此外，该模型支持 :ref:`多标签分类 <multiclass>`，样本可能有多个类别可能。 对于每个类，原始输出经过 logistic 函数变换后，大于或等于 0.5 的值将进为 1，否则为 0。 对于样本的预测输出，值为 1 的索引位置表示该样本的分类类别::
 
     >>> X = [[0., 0.], [1., 1.]]
     >>> y = [[0, 1], [1, 1]]
@@ -150,182 +108,120 @@ indices where the value is `1` represents the assigned classes of that sample::
     >>> clf.predict([[0., 0.]])
     array([[0, 1]])
 
-See the examples below and the doc string of
-:meth:`MLPClassifier.fit` for further information.
+了解更多，请参阅下面的示例和文档 :meth:`MLPClassifier.fit`。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mlp_training_curves.py`
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mnist_filters.py`
 
-Regression
+回归
 ==========
 
-Class :class:`MLPRegressor` implements a multi-layer perceptron (MLP) that
-trains using backpropagation with no activation function in the output layer,
-which can also be seen as using the identity function as activation function.
-Therefore, it uses the square error as the loss function, and the output is a
-set of continuous values.
+:class:`MLPRegressor` 类实现了一个多层感知器（MLP），它在使用反向传播进行训练时的输出层没有使用激活函数，也可以看作是使用身份函数作为激活函数。 因此，它使用平方误差作为损失函数，输出是一组连续值。
 
-:class:`MLPRegressor` also supports multi-output regression, in
-which a sample can have more than one target.
+:class:`MLPRegressor` 还支持多输出回归，其中样本可以有多个目标。
 
-Regularization
+正则化
 ==============
 
-Both :class:`MLPRegressor` and :class:`MLPClassifier` use parameter ``alpha``
-for regularization (L2 regularization) term which helps in avoiding overfitting
-by penalizing weights with large magnitudes. Following plot displays varying
-decision function with value of alpha.
+:class:`MLPRegressor` 类和 :class:`MLPClassifier` 类都使用参数 ``alpha`` 作为正则化( L2 正则化)系数，正则化通过惩罚大数量级的权重值以避免过拟合问题。 下面的图表展示了不同的 alpha 值情况下的变化。
 
 .. figure:: ../auto_examples/neural_networks/images/sphx_glr_plot_mlp_alpha_001.png
    :target: ../auto_examples/neural_networks/plot_mlp_alpha.html
    :align: center
    :scale: 75
 
-See the examples below for further information.
+详细信息，请参阅下面的示例。
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_neural_networks_plot_mlp_alpha.py`
 
-Algorithms
+算法
 ==========
 
-MLP trains using `Stochastic Gradient Descent
+MLP 使用 `Stochastic Gradient Descent（随机梯度下降）(SGD)
 <https://en.wikipedia.org/wiki/Stochastic_gradient_descent>`_,
-`Adam <http://arxiv.org/abs/1412.6980>`_, or
-`L-BFGS <https://en.wikipedia.org/wiki/Limited-memory_BFGS>`__.
-Stochastic Gradient Descent (SGD) updates parameters using the gradient of the
-loss function with respect to a parameter that needs adaptation, i.e.
+`Adam <http://arxiv.org/abs/1412.6980>`_, 或者 `L-BFGS <https://en.wikipedia.org/wiki/Limited-memory_BFGS>`__ 进行训练。
+Stochastic Gradient Descent （随机梯度下降）(SGD) 使用带有自适应参数的损失函数梯度来更新参数，即
 
 .. math::
 
     w \leftarrow w - \eta (\alpha \frac{\partial R(w)}{\partial w}
     + \frac{\partial Loss}{\partial w})
 
-where :math:`\eta` is the learning rate which controls the step-size in
-the parameter space search.  :math:`Loss` is the loss function used
-for the network.
+其中 :math:`\eta` 是控制训练过程参数更新步长的学习率( learning rate )。 :math:`Loss` 是损失函数( loss function )。
 
-More details can be found in the documentation of
-`SGD <http://scikit-learn.org/stable/modules/sgd.html>`_
+更多细节可以在这个文档中找到 `SGD <http://scikit-learn.org/stable/modules/sgd.html>`_ 。
 
-Adam is similar to SGD in a sense that it is a stochastic optimizer, but it can
-automatically adjust the amount to update parameters based on adaptive estimates
-of lower-order moments.
+Adam 类似于 SGD，因为它是 stochastic optimizer （随机优化器），但它可以根据低阶矩的自适应估计自动调整参数更新的量。
 
-With SGD or Adam, training supports online and mini-batch learning.
+使用 SGD 或 Adam ，训练过程支持在线模式和小批量学习模式。
 
-L-BFGS is a solver that approximates the Hessian matrix which represents the
-second-order partial derivative of a function. Further it approximates the
-inverse of the Hessian matrix to perform parameter updates. The implementation
-uses the Scipy version of `L-BFGS
-<http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html>`_.
+L-BFGS 是利用 Hessian 矩阵的近似表示的方法，矩阵中是函数的二阶偏导数。 它近似用 Hessian 矩阵的逆来进行参数更新。 该实现使用 Scipy 版本的 `L-BFGS
+<http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html>`_。
 
-If the selected solver is 'L-BFGS', training does not support online nor
-mini-batch learning.
+如果所选择的方法是 'L-BFGS'，训练过程不支持在线模式和小批量学习模式。
 
-
-Complexity
+复杂性
 ==========
 
-Suppose there are :math:`n` training samples, :math:`m` features, :math:`k`
-hidden layers, each containing :math:`h` neurons - for simplicity, and :math:`o`
-output neurons.  The time complexity of backpropagation is
-:math:`O(n\cdot m \cdot h^k \cdot o \cdot i)`, where :math:`i` is the number
-of iterations. Since backpropagation has a high time complexity, it is advisable
-to start with smaller number of hidden neurons and few hidden layers for
-training.
+假设有 :math:`n` 个训练样本， :math:`m` 个特征， :math:`k` 个隐藏层，每个包含 :math:`h` 个神经元 - 为简单起见， :math:`o` 个输出神经元。 反向传播的时间复杂度是 :math:`O(n\cdot m \cdot h^k \cdot o \cdot i)` ，其中 :math:`i` 是迭代次数。 由于反向传播具有高时间复杂性，最好以较少数量的隐藏层神经元和较少的隐藏层个数开始训练。
 
-
-Mathematical formulation
+数学公式
 ========================
 
-Given a set of training examples :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)`
-where :math:`x_i \in \mathbf{R}^n` and :math:`y_i \in \{0, 1\}`, a one hidden
-layer one hidden neuron MLP learns the function :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2`
-where :math:`W_1 \in \mathbf{R}^m` and :math:`W_2, b_1, b_2 \in \mathbf{R}` are
-model parameters. :math:`W_1, W_2` represent the weights of the input layer and
-hidden layer, resepctively; and :math:`b_1, b_2` represent the bias added to
-the hidden layer and the output layer, respectively.
-:math:`g(\cdot) : R \rightarrow R` is the activation function, set by default as
-the hyperbolic tan. It is given as,
+给出一组训练样本 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n`  :math:`y_i \in \{0, 1\}`，一个单隐藏层单神经元 MLP 学习到的函数是 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` ，其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}` 是模型参数.
+:math:`W_1, W_2` 分别是输入层与隐藏层之间和隐藏层与输出层之间的权重， :math:`b_1, b_2` 分别是隐藏层和输出层的偏置值.
+:math:`g(\cdot) : R \rightarrow R` 是激活函数，默认为双曲正切函数。 具体形式如下，
 
 .. math::
       g(z)= \frac{e^z-e^{-z}}{e^z+e^{-z}}
 
-For binary classification, :math:`f(x)` passes through the logistic function
-:math:`g(z)=1/(1+e^{-z})` to obtain output values between zero and one. A
-threshold, set to 0.5, would assign samples of outputs larger or equal 0.5
-to the positive class, and the rest to the negative class.
+对于二分类， :math:`f(x)` 经过 logistic 函数 :math:`g(z)=1/(1+e^{-z})` 得到 0 到 1 之间的输出值。 0.5 的阈值将输出大于等于 0.5 的样本分到 positive class （正类），其他的分为 negative class （负类）。
 
-If there are more than two classes, :math:`f(x)` itself would be a vector of
-size (n_classes,). Instead of passing through logistic function, it passes
-through the softmax function, which is written as,
+如果多于两类，则 :math:`f(x)` 本身将是一个尺寸为(n_classes,)的向量。 它需要经过 softmax 函数而不是 logistic 函数进行变换，具体形式如下，
 
 .. math::
       \text{softmax}(z)_i = \frac{\exp(z_i)}{\sum_{l=1}^k\exp(z_l)}
 
-where :math:`z_i` represents the :math:`i` th element of the input to softmax,
-which corresponds to class :math:`i`, and :math:`K` is the number of classes.
-The result is a vector containing the probabilities that sample :math:`x`
-belong to each class. The output is the class with the highest probability.
+其中 :math:`z_i` 表示 softmax 函数的第 :math:`i` 个输入的元素，它对应于第 :math:`i` 类， :math:`K` 是类别的数量。 计算结果是样本 :math:`x` 属于每个类别的概率的向量。 最终输出的分类结果是具有最高概率的类别。
 
-In regression, the output remains as :math:`f(x)`; therefore, output activation
-function is just the identity function.
+在回归问题中，输出依然是 :math:`f(x)` ;因此，输出激活函数就是身份函数。
 
-MLP uses different loss functions depending on the problem type. The loss
-function for classification is Cross-Entropy, which in binary case is given as,
+MLP 根据特定问题使用不同的损失函数。 二分类问题的损失函数的是交叉熵，具体形式如下，
 
 .. math::
 
     Loss(\hat{y},y,W) = -y \ln {\hat{y}} - (1-y) \ln{(1-\hat{y})} + \alpha ||W||_2^2
 
-where :math:`\alpha ||W||_2^2` is an L2-regularization term (aka penalty)
-that penalizes complex models; and :math:`\alpha > 0` is a non-negative
-hyperparameter that controls the magnitude of the penalty.
+其中 :math:`\alpha ||W||_2^2` 是 L2 正则化的模型复杂度惩罚项;  :math:`\alpha > 0` 这个非负的超参数控制惩罚的程度。
 
-For regression, MLP uses the Square Error loss function; written as,
+对于回归问题，MLP 使用平方误差损失函数，具体形式如下，
 
 .. math::
 
     Loss(\hat{y},y,W) = \frac{1}{2}||\hat{y} - y ||_2^2 + \frac{\alpha}{2} ||W||_2^2
 
+从随机初始化权重开始，多层感知器（MLP）不断更新这些权重值来最小化损失函数。计算完损失之后，从输出层到前面各层进行反向传递，为旨在减小损失函数值的参数提供更新值。
 
-Starting from initial random weights, multi-layer perceptron (MLP) minimizes
-the loss function by repeatedly updating these weights. After computing the
-loss, a backward pass propagates it from the output layer to the previous
-layers, providing each weight parameter with an update value meant to decrease
-the loss.
-
-In gradient descent, the gradient :math:`\nabla Loss_{W}` of the loss with respect
-to the weights is computed and deducted from :math:`W`.
-More formally, this is expressed as,
+在梯度下降中，计算得到损失函数关于每个权重的梯度 :math:`\nabla Loss_{W}` 并从权重 :math:`W` 中减掉。用公式表示为，
 
 .. math::
     W^{i+1} = W^i - \epsilon \nabla {Loss}_{W}^{i}
 
 
-where :math:`i` is the iteration step, and :math:`\epsilon` is the learning rate
-with a value larger than 0.
+其中 :math:`i` 是当前迭代步数， :math:`\epsilon` 是大于 0 学习率。
 
-The algorithm stops when it reaches a preset maximum number of iterations; or
-when the improvement in loss is below a certain, small number.
-
-
+算法停止的条件或者是达到预设的最大迭代次数，或者是损失函数低于某个特定值。
 
 .. _mlp_tips:
 
-Tips on Practical Use
+实用技巧
 =====================
 
-  * Multi-layer Perceptron is sensitive to feature scaling, so it
-    is highly recommended to scale your data. For example, scale each
-    attribute on the input vector X to [0, 1] or [-1, +1], or standardize
-    it to have mean 0 and variance 1. Note that you must apply the *same*
-    scaling to the test set for meaningful results.
-    You can use :class:`StandardScaler` for standardization.
+  * 多层感知器对特征的缩放是敏感的，所以它强烈建议您归一化你的数据。 例如，将输入向量 X 的每个属性放缩到到 [0, 1] 或 [-1，+1] ，或者将其标准化使它具有 0 均值和方差 1。 注意，为了得到有意义的结果，您必须对测试集也应用 *相同的* 缩放尺度。 您可以使用 :class:`StandardScaler` 进行标准化。
 
       >>> from sklearn.preprocessing import StandardScaler  # doctest: +SKIP
       >>> scaler = StandardScaler()  # doctest: +SKIP
@@ -335,25 +231,16 @@ Tips on Practical Use
       >>> # apply same transformation to test data
       >>> X_test = scaler.transform(X_test)  # doctest: +SKIP
 
-    An alternative and recommended approach is to use :class:`StandardScaler`
-    in a :class:`Pipeline`
+    一个推荐的可替代的方案是在 :class:`Pipeline` 中使用的 :class:`StandardScaler` 。
 
-  * Finding a reasonable regularization parameter :math:`\alpha` is
-    best done using :class:`GridSearchCV`, usually in the
-    range ``10.0 ** -np.arange(1, 7)``.
+  * 最好使用 :class:`GridSearchCV` 找到一个合理的正则化参数 :math:`\alpha` ，通常范围是在 ``10.0 ** -np.arange(1, 7)`` 。
 
-  * Empirically, we observed that `L-BFGS` converges faster and
-    with better solutions on small datasets. For relatively large
-    datasets, however, `Adam` is very robust. It usually converges
-    quickly and gives pretty good performance. `SGD` with momentum or
-    nesterov's momentum, on the other hand, can perform better than
-    those two algorithms if learning rate is correctly tuned.
+  * 据经验可知，我们观察到 `L-BFGS` 收敛速度是更快的并且是小数据集上更好的解决方案。对于规模相对比较大的数据集，`Adam` 是非常鲁棒的。 它通常会迅速收敛，并得到相当不错的表现。 另一方面，如果学习率调整地正确， 使用 momentum 或 nesterov's momentum 的 `SGD` 可以比这两种算法更好。
 
-More control with warm_start
+使用 warm_start 的更多控制
 ============================
-If you want more control over stopping criteria or learning rate in SGD,
-or want to do additional monitoring, using ``warm_start=True`` and
-``max_iter=1`` and iterating yourself can be helpful::
+
+如果您希望更多地控制 SGD 中的停止标准或学习率，或者想要进行额外的监视，使用 ``warm_start=True`` 和 ``max_iter=1`` 并且自身迭代可能会有所帮助::
 
     >>> X = [[0., 0.], [1., 1.]]
     >>> y = [0, 1]
@@ -363,7 +250,7 @@ or want to do additional monitoring, using ``warm_start=True`` and
     ...     # additional monitoring / inspection # doctest: +ELLIPSIS
     MLPClassifier(...
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     * `"Learning representations by back-propagating errors."
       <http://www.iro.umontreal.ca/~pift6266/A06/refs/backprop_old.pdf>`_

@@ -3,22 +3,18 @@
 
 .. include:: ../../includes/big_toc_css.rst
 
-Choosing the right estimator
+选择正确的评估器(estimator)
 =======================================================
 
 
-Often the hardest part of solving a machine learning problem can
-be finding the right estimator for the job.
+通常，解决机器学习问题的最困难的部分可能是找到恰当的的评估器(estimator)。
 
-Different estimators are better suited for different types of data
-and different problems.
 
-The flowchart below is designed to give users a bit of
-a rough guide on how to approach problems with regard to
-which estimators to try on your data.
+不同的评估器更适合不同类型的数据和不同的问题。
 
-Click on any estimator in the chart below to see its documentation.
+下面的流程图是一些粗略的指导，可以让用户根据自己的数据来选择应该尝试哪些评估器。
 
+点击下图的任何评估器，查看其文档。
 
 
 .. raw:: html

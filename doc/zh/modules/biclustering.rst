@@ -1,17 +1,14 @@
 .. _biclustering:
 
-============
-Biclustering
-============
+=================
+双向聚类
+=================
 
-Biclustering can be performed with the module
-:mod:`sklearn.cluster.bicluster`. Biclustering algorithms simultaneously
-cluster rows and columns of a data matrix. These clusters of rows and
-columns are known as biclusters. Each determines a submatrix of the
-original data matrix with some desired properties.
+Biclustering 可以使用
+:mod:`sklearn.cluster.bicluster` 模块. Biclustering 算法对数据矩阵的行列同时进行聚类. 同时对行列进行聚类称之为
+biclusters. 每一次聚类都会通过原始数据矩阵的一些属性确定一个子矩阵.
 
-For instance, given a matrix of shape ``(10, 10)``, one possible bicluster
-with three rows and two columns induces a submatrix of shape ``(3, 2)``::
+例如, 一个矩阵 ``(10, 10)`` , 一个 bicluster 聚类，有三列二行，就是一个子矩阵 ``(3, 2)`` ::
 
     >>> import numpy as np
     >>> data = np.arange(100).reshape(10, 10)
@@ -22,64 +19,47 @@ with three rows and two columns induces a submatrix of shape ``(3, 2)``::
            [21, 22],
            [31, 32]])
 
-For visualization purposes, given a bicluster, the rows and columns of
-the data matrix may be rearranged to make the bicluster contiguous.
+为了可视化， 一个 bicluster 聚类，数据矩阵的行列可以重新分配，使得 bi-cluster 是连续的.
 
-Algorithms differ in how they define biclusters. Some of the
-common types include:
+算法在如何定义 bicluster 方面有一些不同，常见类型包括：
 
-* constant values, constant rows, or constant columns
-* unusually high or low values
-* submatrices with low variance
-* correlated rows or columns
+* 不变的 values , 不变的 rows, 或者不变的 columns
+* 异常高的或者低的值。
+* 低方差的子矩阵。
+* 相关的 rows 或者 columns。
 
-Algorithms also differ in how rows and columns may be assigned to
-biclusters, which leads to different bicluster structures. Block
-diagonal or checkerboard structures occur when rows and columns are
-divided into partitions.
+算法在分配给 bicluster 行列的方式不同, 会导致不同的 bicluster 结构. 当行和列分成分区时，会发生对角线或者棋盘结构.
 
-If each row and each column belongs to exactly one bicluster, then
-rearranging the rows and columns of the data matrix reveals the
-biclusters on the diagonal. Here is an example of this structure
-where biclusters have higher average values than the other rows and
-columns:
+如果每一种行列都只属于一种 bicluster ,然后重新排列数据矩阵的行和列会, bicluster 呈现对角线. 下面是一个例子，biclusters 具有比其他行列更高的平均值:
 
 .. figure:: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_coclustering_003.png
    :target: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_coclustering_003.png
    :align: center
    :scale: 50
 
-   An example of biclusters formed by partitioning rows and columns.
+   通过划分行和列形成 bicluster 的一个例子.
 
-In the checkerboard case, each row belongs to all column clusters, and
-each column belongs to all row clusters. Here is an example of this
-structure where the variance of the values within each bicluster is
-small:
+在棋盘结构的例子中, 每一行 属于所有列类别, 每一列属于所有的行类别. 下面是一个这种结构的例子，每个 bicluster 中的值差异较小:
 
 .. figure:: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_biclustering_003.png
    :target: ../auto_examples/bicluster/images/sphx_glr_plot_spectral_biclustering_003.png
    :align: center
    :scale: 50
 
-   An example of checkerboard biclusters.
+   一个棋盘结构的 biclusters.
 
-After fitting a model, row and column cluster membership can be found
-in the ``rows_`` and ``columns_`` attributes. ``rows_[i]`` is a binary vector
-with nonzero entries corresponding to rows that belong to bicluster
-``i``. Similarly, ``columns_[i]`` indicates which columns belong to
-bicluster ``i``.
+在拟合模型之后， 可以在 ``rows_`` 和 ``columns_`` 属性中找到行列 cluster membership 。
+``rows_[i]`` 是一个二进制的向量，
+就是属于 bicluster ``i`` 的一行。
+. 同样的, ``columns_[i]`` 就表示属于 bicluster ``i`` 的列.
 
-Some models also have ``row_labels_`` and ``column_labels_`` attributes.
-These models partition the rows and columns, such as in the block
-diagonal and checkerboard bicluster structures.
+一些模块也有 ``row_labels_`` 何 ``column_labels_`` 属性.
+这些模块对行列进行分区, 例如对角线或者棋盘 bicluster 结构.
 
 .. note::
 
-    Biclustering has many other names in different fields including
-    co-clustering, two-mode clustering, two-way clustering, block
-    clustering, coupled two-way clustering, etc. The names of some
-    algorithms, such as the Spectral Co-Clustering algorithm, reflect
-    these alternate names.
+    Biclustering 在不同的领域有很多其他名称，包括 co-clustering, two-mode clustering, two-way clustering, block
+    clustering, coupled two-way clustering 等.有一些算法的名称，比如 Spectral Co-Clustering algorithm, 反应了这些备用名称.
 
 
 .. currentmodule:: sklearn.cluster.bicluster
@@ -90,75 +70,51 @@ diagonal and checkerboard bicluster structures.
 Spectral Co-Clustering
 ======================
 
-The :class:`SpectralCoclustering` algorithm finds biclusters with
-values higher than those in the corresponding other rows and columns.
-Each row and each column belongs to exactly one bicluster, so
-rearranging the rows and columns to make partitions contiguous reveals
-these high values along the diagonal:
+ :class:`SpectralCoclustering` 算法找到的 bicluster 的值比相应的其他行和列更高.
+每一个行和列都只属于一个 bicluster, 所以重新分配行和列，使得分区连续显示对角线上的 high value:
 
 .. note::
 
-    The algorithm treats the input data matrix as a bipartite graph: the
-    rows and columns of the matrix correspond to the two sets of vertices,
-    and each entry corresponds to an edge between a row and a column. The
-    algorithm approximates the normalized cut of this graph to find heavy
-    subgraphs.
+    算法将输入的数据矩阵看做成二分图：该矩阵的行和列对应于两组顶点，每个条目对应于行和列之间的边，该算法近似的进行归一化，对图进行切割，找到更重的子图.
 
-
-Mathematical formulation
+数学公式
 ------------------------
 
-An approximate solution to the optimal normalized cut may be found via
-the generalized eigenvalue decomposition of the Laplacian of the
-graph. Usually this would mean working directly with the Laplacian
-matrix. If the original data matrix :math:`A` has shape :math:`m
-\times n`, the Laplacian matrix for the corresponding bipartite graph
-has shape :math:`(m + n) \times (m + n)`. However, in this case it is
-possible to work directly with :math:`A`, which is smaller and more
-efficient.
+找到最优归一化剪切的近似解，可以通过图形的 Laplacian 的广义特征值分解。
+通常这意味着直接使用 Laplacian 矩阵. 如果原始数据矩阵 :math:`A` 有形状 :math:`m
+\times n`, 则对应的 bipartite 图的 Laplacian 矩阵具有形状 :math:`(m + n) \times (m + n)`. 
+但是, 在这种情况直接使用 :math:`A` , 因为它更小，更有作用.
 
-The input matrix :math:`A` is preprocessed as follows:
+输入矩阵 :math:`A` 被预处理如下:
 
 .. math::
     A_n = R^{-1/2} A C^{-1/2}
 
-Where :math:`R` is the diagonal matrix with entry :math:`i` equal to
-:math:`\sum_{j} A_{ij}` and :math:`C` is the diagonal matrix with
-entry :math:`j` equal to :math:`\sum_{i} A_{ij}`.
+:math:`R` 是 :math:`i` 对角线矩阵，和 :math:`\sum_{j} A_{ij}` 相同，  :math:`C` 是 :math:`j` 的对角吸纳矩阵，等同于 :math:`\sum_{i} A_{ij}`.
 
-The singular value decomposition, :math:`A_n = U \Sigma V^\top`,
-provides the partitions of the rows and columns of :math:`A`. A subset
-of the left singular vectors gives the row partitions, and a subset
-of the right singular vectors gives the column partitions.
+奇异值分解, :math:`A_n = U \Sigma V^\top` , 提供了 :math:`A` 行列的分区. 左边的奇异值向量给予行分区，右边的奇异值向量给予列分区.
 
-The :math:`\ell = \lceil \log_2 k \rceil` singular vectors, starting
-from the second, provide the desired partitioning information. They
-are used to form the matrix :math:`Z`:
+:math:`\ell = \lceil \log_2 k \rceil` 奇异值向量从第二个开始, 提供所需的分区信息. 这些用于形成矩阵 :`Z`:
 
 .. math::
     Z = \begin{bmatrix} R^{-1/2} U \\\\
                         C^{-1/2} V
           \end{bmatrix}
 
-where the columns of :math:`U` are :math:`u_2, \dots, u_{\ell +
-1}`, and similarly for :math:`V`.
+:math:`U` 的列是 :math:`u_2, \dots, u_{\ell +1}`, 和 :math:`V` 相似 .
 
-Then the rows of :math:`Z` are clustered using :ref:`k-means
-<k_means>`. The first ``n_rows`` labels provide the row partitioning,
-and the remaining ``n_columns`` labels provide the column partitioning.
+然后 :math:`Z` 的 rows 通过使用 :ref:`k-means <k_means>` 进行聚类. ``n_rows`` 标签提供行分区,
+剩下的 ``n_columns`` 标签 提供 列分区.
 
 
-.. topic:: Examples:
+.. topic:: 例子:
 
- * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_coclustering.py`: A simple example
-   showing how to generate a data matrix with biclusters and apply
-   this method to it.
+ * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_coclustering.py`: 如何用 bicluster 数据矩阵并应用.
 
- * :ref:`sphx_glr_auto_examples_bicluster_plot_bicluster_newsgroups.py`: An example of finding
-   biclusters in the twenty newsgroup dataset.
+ * :ref:`sphx_glr_auto_examples_bicluster_plot_bicluster_newsgroups.py`:一个在 20 个新闻组数据集中发现 biclusters 的例子
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
  * Dhillon, Inderjit S, 2001. `Co-clustering documents and words using
    bipartite spectral graph partitioning
@@ -167,81 +123,67 @@ and the remaining ``n_columns`` labels provide the column partitioning.
 
 .. _spectral_biclustering:
 
-Spectral Biclustering
-=====================
+Spectral Biclustering 
+================================================
 
-The :class:`SpectralBiclustering` algorithm assumes that the input
-data matrix has a hidden checkerboard structure. The rows and columns
-of a matrix with this structure may be partitioned so that the entries
-of any bicluster in the Cartesian product of row clusters and column
-clusters are approximately constant. For instance, if there are two
-row partitions and three column partitions, each row will belong to
-three biclusters, and each column will belong to two biclusters.
+ :class:`SpectralBiclustering` 算法假设输入的数据矩阵具有隐藏的棋盘结构。 具有这种结构的矩阵的行列
+ 可能被分区，使得在笛卡尔积中的 大部分 biclusters 的 row clusters 和 column cluster 是近似恒定的。
+例如，如果有两个row 分区和三个列分区，每一行属于三个 bicluster ，每一列属于两个 bicluster。 
 
-The algorithm partitions the rows and columns of a matrix so that a
-corresponding blockwise-constant checkerboard matrix provides a good
-approximation to the original matrix.
+这个算法划分矩阵的行和列，以至于提供一个相应的块状不变的棋盘矩阵，近似于原始矩阵。
 
 
-Mathematical formulation
+数学表示
 ------------------------
 
-The input matrix :math:`A` is first normalized to make the
-checkerboard pattern more obvious. There are three possible methods:
+输入矩阵 :math:`A` 先归一化，使得棋盘模式更明显。有三种方法: 
 
-1. *Independent row and column normalization*, as in Spectral
-   Co-Clustering. This method makes the rows sum to a constant and the
-   columns sum to a different constant.
+1. *独立的行和列归一化*, as in Spectral
+   Co-Clustering. 这个方法使得行和一个常数相加，列和变量相加.
 
-2. **Bistochastization**: repeated row and column normalization until
-   convergence. This method makes both rows and columns sum to the
-   same constant.
+2. **Bistochastization**: 重复行和列归一化直到收敛。该方法使得行和列都相加
+   相同的常数。
 
-3. **Log normalization**: the log of the data matrix is computed: :math:`L =
-   \log A`. Then the column mean :math:`\overline{L_{i \cdot}}`, row mean
-   :math:`\overline{L_{\cdot j}}`, and overall mean :math:`\overline{L_{\cdot
-   \cdot}}` of :math:`L` are computed. The final matrix is computed
-   according to the formula
+3. **Log 归一化**: 计算数据矩阵的对数 :math:`L =
+   \log A`. 列就是 :math:`\overline{L_{i \cdot}}`, 行就是
+   :math:`\overline{L_{\cdot j}}`, 总体上来看 :math:`\overline{L_{\cdot
+   \cdot}}` of :math:`L` 被计算的. 最后矩阵通过下面的公式计算
 
 .. math::
     K_{ij} = L_{ij} - \overline{L_{i \cdot}} - \overline{L_{\cdot
     j}} + \overline{L_{\cdot \cdot}}
 
-After normalizing, the first few singular vectors are computed, just
-as in the Spectral Co-Clustering algorithm.
-
-If log normalization was used, all the singular vectors are
-meaningful. However, if independent normalization or bistochastization
-were used, the first singular vectors, :math:`u_1` and :math:`v_1`.
-are discarded. From now on, the "first" singular vectors refers to
-:math:`u_2 \dots u_{p+1}` and :math:`v_2 \dots v_{p+1}` except in the
-case of log normalization.
-
-Given these singular vectors, they are ranked according to which can
-be best approximated by a piecewise-constant vector. The
-approximations for each vector are found using one-dimensional k-means
-and scored using the Euclidean distance. Some subset of the best left
-and right singular vector are selected. Next, the data is projected to
-this best subset of singular vectors and clustered.
-
-For instance, if :math:`p` singular vectors were calculated, the
-:math:`q` best are found as described, where :math:`q<p`. Let
-:math:`U` be the matrix with columns the :math:`q` best left singular
-vectors, and similarly :math:`V` for the right. To partition the rows,
-the rows of :math:`A` are projected to a :math:`q` dimensional space:
-:math:`A * V`. Treating the :math:`m` rows of this :math:`m \times q`
-matrix as samples and clustering using k-means yields the row labels.
-Similarly, projecting the columns to :math:`A^{\top} * U` and
-clustering this :math:`n \times q` matrix yields the column labels.
+归一化后，首先少量的奇异值向量被计算，只是在 Spectral Co-Clustering 算法中。
 
 
-.. topic:: Examples:
+如果使用 log 归一化，则所有的奇异向量都是有意义的。但是, 如果是独立的归一化或双曲线化
+被使用，第一个奇异矢量, :math:`u_1` 和 :math:`v_1`.
+会被丢弃。 从现在开始,  "first" 奇异值向量与
+:math:`u_2 \dots u_{p+1}` 和 :math:`v_2 \dots v_{p+1}` 相关，除了日志归一化的情况。
 
- * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_biclustering.py`: a simple example
-   showing how to generate a checkerboard matrix and bicluster it.
+给定这些奇异值向量， 将他们排序，通过分段常数向量保证最佳近似. 使用一维 k-means 找到每个向量的近似值
+并使用欧几里得距离得分. Some subset of 最好的左右奇异值向量的子集被选择。 下一步,
+数据预计到这个最佳子集的奇异向量和聚类.
+
+例如，如果 :math:`p`  奇异值向量被计算，最好按照描述找到
+:math:`q` ， 其中 :math:`q<p`. 
+:math:`U` 列为，the :math:`q` 最佳左奇异向量的矩阵, 
+并且 :math:`V` 对于右边是类似的. 要划分行,
+将 :math:`A`  的 投影到 :math:`q` 维空间:
+:math:`A * V`.  :math:`m` 行 :math:`m \times q`
+矩阵的行作为采样和使用 k-means 的聚类处理产生行标签. 
+类似地，将列投影到 :math:`A^{\top} * U` ，并且对
+:math:`n \times q` 矩阵进行聚类得到列标签.
 
 
-.. topic:: References:
+.. topic:: 示例:
+
+ * :ref:`sphx_glr_auto_examples_bicluster_plot_spectral_biclustering.py`: 一个简单的例子
+   显示如何生成棋盘矩阵和 bicluster
+.
+
+
+.. topic:: 参考文献:
 
  * Kluger, Yuval, et. al., 2003. `Spectral biclustering of microarray
    data: coclustering genes and conditions
@@ -252,54 +194,39 @@ clustering this :math:`n \times q` matrix yields the column labels.
 
 .. currentmodule:: sklearn.metrics
 
-Biclustering evaluation
-=======================
+Biclustering 评测
+========================================================
+有两种评估双组分结果的方法：内部和外部。
+诸如群集稳定性等内部措施只依赖于数据和结果本身。
+目前在scikit-learn中没有内部的二集群措施。外部措施是指外部信息来源，例如真正的解决方案。
+当使用真实数据时，真正的解决方案通常是未知的，但是，由于真正的解决方案是已知的，因此人造数据的双重分析可能对于评估算法非常有用。
 
-There are two ways of evaluating a biclustering result: internal and
-external. Internal measures, such as cluster stability, rely only on
-the data and the result themselves. Currently there are no internal
-bicluster measures in scikit-learn. External measures refer to an
-external source of information, such as the true solution. When
-working with real data the true solution is usually unknown, but
-biclustering artificial data may be useful for evaluating algorithms
-precisely because the true solution is known.
+为了将一组已发现的双组分与一组真正的双组分进行比较，
+需要两个相似性度量：单个双色团体的相似性度量，以及将这些个体相似度结合到总分中的方法。
 
-To compare a set of found biclusters to the set of true biclusters,
-two similarity measures are needed: a similarity measure for
-individual biclusters, and a way to combine these individual
-similarities into an overall score.
-
-To compare individual biclusters, several measures have been used. For
-now, only the Jaccard index is implemented:
+为了比较单个双核，已经采用了几种措施。现在，只有Jaccard索引被实现：
 
 .. math::
     J(A, B) = \frac{|A \cap B|}{|A| + |B| - |A \cap B|}
 
-where :math:`A` and :math:`B` are biclusters, :math:`|A \cap B|` is
-the number of elements in their intersection. The Jaccard index
-achieves its minimum of 0 when the biclusters to not overlap at all
-and its maximum of 1 when they are identical.
+:math:`A` 和 :math:`B` 是 biclusters, :math:`|A \cap B|` 是交叉点的元素的数量. 
+ Jaccard 索引 达到最小值0，当 biclusters 不重叠的时候，并且当他们相同干的时候，最大值为1.
 
-Several methods have been developed to compare two sets of biclusters.
-For now, only :func:`consensus_score` (Hochreiter et. al., 2010) is
-available:
+有些方法已经开发出来，用来比较两个 biclusters 的数据集。
+从现在开始 之后 :func:`consensus_score` (Hochreiter et. al., 2010) 是可以用:
 
-1. Compute bicluster similarities for pairs of biclusters, one in each
-   set, using the Jaccard index or a similar measure.
+1. 使用 Jaccard 索引或类似措施，计算 biclusters 的 bicluster 相似性。
 
-2. Assign biclusters from one set to another in a one-to-one fashion
-   to maximize the sum of their similarities. This step is performed
-   using the Hungarian algorithm.
+2. 以一对一的方式将 bicluster 分从一组分配给另一组，以最大化其相似性的总和。该步骤使用匈牙利算法执行。
+  
 
-3. The final sum of similarities is divided by the size of the larger
-   set.
+3. 相似性的最终总和除以较大集合的大小。
 
-The minimum consensus score, 0, occurs when all pairs of biclusters
-are totally dissimilar. The maximum score, 1, occurs when both sets
-are identical.
+最小共识得分为0，发生在所有 biclusters 完全不相似时。当两组 biclusters 相同时，最大分数为1。
 
 
-.. topic:: References:
+
+.. topic:: 参考文献:
 
  * Hochreiter, Bodenhofer, et. al., 2010. `FABIA: factor analysis
    for bicluster acquisition

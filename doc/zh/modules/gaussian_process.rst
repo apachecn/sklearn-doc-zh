@@ -2,205 +2,157 @@
 
 .. _gaussian_process:
 
-==================
-Gaussian Processes
-==================
+============
+1.7.高斯过程
+============
 
 .. currentmodule:: sklearn.gaussian_process
 
-**Gaussian Processes (GP)** are a generic supervised learning method designed
-to solve *regression* and *probabilistic classification* problems.
+**高斯过程 (GP)** 是一种常用的监督学习方法，旨在解决*回归问题*和*概率分类问题*。
 
-The advantages of Gaussian processes are:
+高斯过程模型的优点如下：
 
-    - The prediction interpolates the observations (at least for regular
-      kernels).
+    - 预测内插了观察结果（至少对于正则核）。
 
-    - The prediction is probabilistic (Gaussian) so that one can compute
-      empirical confidence intervals and decide based on those if one should
-      refit (online fitting, adaptive fitting) the prediction in some
-      region of interest.
+    - 预测结果是概率形式的（高斯形式的）。这样的话，
+	  人们可以计算得到经验置信区间并且据此来判断是否需要修改（在线拟合，自适应）
+      在一些区域的预测值。
+	
+    - 通用性: 可以指定不同的:ref:`内核(kernels)<gp_kernels>`。
+	  虽然该函数提供了常用的内核，但是也可以指定自定义内核。
 
-    - Versatile: different :ref:`kernels
-      <gp_kernels>` can be specified. Common kernels are provided, but
-      it is also possible to specify custom kernels.
+高斯过程模型的缺点包括：
 
-The disadvantages of Gaussian processes include:
+    - 它们不稀疏，例如，模型通常使用整个样本/特征信息来进行预测。
 
-    - They are not sparse, i.e., they use the whole samples/features information to
-      perform the prediction.
-
-    - They lose efficiency in high dimensional spaces -- namely when the number
-      of features exceeds a few dozens.
-
-
+    - 高维空间模型会失效，高维也就是指特征的数量超过几十个。
+	
 .. _gpr:
 
-Gaussian Process Regression (GPR)
+1.7.1.高斯过程回归（GPR）
 =================================
 
 .. currentmodule:: sklearn.gaussian_process
 
-The :class:`GaussianProcessRegressor` implements Gaussian processes (GP) for
-regression purposes. For this, the prior of the GP needs to be specified. The
-prior mean is assumed to be constant and zero (for ``normalize_y=False``) or the
-training data's mean (for ``normalize_y=True``). The prior's
-covariance is specified by a passing a :ref:`kernel <gp_kernels>` object. The
-hyperparameters of the kernel are optimized during fitting of
-GaussianProcessRegressor by maximizing the log-marginal-likelihood (LML) based
-on the passed ``optimizer``. As the LML may have multiple local optima, the
-optimizer can be started repeatedly by specifying ``n_restarts_optimizer``. The
-first run is always conducted starting from the initial hyperparameter values
-of the kernel; subsequent runs are conducted from hyperparameter values
-that have been chosen randomly from the range of allowed values.
-If the initial hyperparameters should be kept fixed, `None` can be passed as
-optimizer.
+:class:`GaussianProcessRegressor` 类实现了回归情况下的高斯过程(GP)模型。
+为此，需要实现指定GP的先验。当参数 ``normalize_y=False`` 时，先验的均值
+通常假定为常数或者零; 当 ``normalize_y=True`` 时，先验均值通常为训练数
+据的均值。而先验的方差通过传递 :ref:`内核(kernel) <gp_kernels>` 对象来指定。通过
+最大化基于传递 ``optimizer`` 的对数边缘似然估计(LML)，内核的超参可以在
+GaussianProcessRegressor 类执行拟合过程中被优化。由于 LML 可能会存在多个
+局部最优解，因此优化过程可以通过指定 ``n_restarts_optimizer`` 参数进行
+多次重复。通过设置内核的超参初始值来进行第一次优化的运行。后续的运行
+过程中超参值都是从合理范围值中随机选取的。如果需要保持初始化超参值，
+那么需要把优化器设置为 `None` 。
 
-The noise level in the targets can be specified by passing it via the
-parameter ``alpha``, either globally as a scalar or per datapoint.
-Note that a moderate noise level can also be helpful for dealing with numeric
-issues during fitting as it is effectively implemented as Tikhonov
-regularization, i.e., by adding it to the diagonal of the kernel matrix. An
-alternative to specifying the noise level explicitly is to include a
-WhiteKernel component into the kernel, which can estimate the global noise
-level from the data (see example below).
+目标变量中的噪声级别通过参数 ``alpha`` 来传递并指定，要么全局是常数要么是一个数据点。
+请注意，适度的噪声水平也可以有助于处理拟合期间的数字问题，因为它被有效地实现为吉洪诺夫正则化(Tikhonov regularization)，
+即通过将其添加到核心矩阵的对角线。明确指定噪声水平的替代方法是将 WhiteKernel 组件包含在内核中，
+这可以从数据中估计全局噪声水平（见下面的示例）。
 
-The implementation is based on Algorithm 2.1 of [RW2006]_. In addition to
-the API of standard scikit-learn estimators, GaussianProcessRegressor:
+算法实现是基于 [RW2006]_ 中的算法 2.1 。除了标准 scikit learn 估计器的 API 之外，
+GaussianProcessRegressor 的作用还包括：
 
-* allows prediction without prior fitting (based on the GP prior)
+* 允许预测，无需事先拟合（基于GP先验）
 
-* provides an additional method ``sample_y(X)``, which evaluates samples
-  drawn from the GPR (prior or posterior) at given inputs
+* 提供了一种额外的方法 ``sample_y(X)`` , 其评估
+  在给定输入处从 GPR （先验或后验）绘制的样本
 
-* exposes a method ``log_marginal_likelihood(theta)``, which can be used
-  externally for other ways of selecting hyperparameters, e.g., via
-  Markov chain Monte Carlo.
+* 公开了一种方法 ``log_marginal_likelihood(theta)`` , 
+  可以在外部使用其他方式选择超参数，例如通过马尔科夫链蒙特卡罗链(Markov chain Monte Carlo)。
+ 
 
 
-GPR examples
-============
+1.7.2.GPR 示例
+=============
 
-GPR with noise-level estimation
--------------------------------
-This example illustrates that GPR with a sum-kernel including a WhiteKernel can
-estimate the noise level of data. An illustration of the
-log-marginal-likelihood (LML) landscape shows that there exist two local
-maxima of LML.
+1.7.2.1.具有噪声级的 GPR 估计
+-------------------------
+
+该示例说明具有包含 WhiteKernel 的和核(sum-kernel)的 GPR 可以估计数据的噪声水平。
+对数边缘似然（LML）景观的图示表明存在 LML 的两个局部最大值。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_noisy_000.png
    :target: ../auto_examples/gaussian_process/plot_gpr_noisy.html
    :align: center
 
-The first corresponds to a model with a high noise level and a
-large length scale, which explains all variations in the data by noise.
+第一个对应于具有高噪声电平和大长度尺度的模型，其解释数据中噪声的所有变化。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_noisy_001.png
    :target: ../auto_examples/gaussian_process/plot_gpr_noisy.html
    :align: center
 
-The second one has a smaller noise level and shorter length scale, which explains
-most of the variation by the noise-free functional relationship. The second
-model has a higher likelihood; however, depending on the initial value for the
-hyperparameters, the gradient-based optimization might also converge to the
-high-noise solution. It is thus important to repeat the optimization several
-times for different initializations.
+第二个具有较小的噪声水平和较短的长度尺度，这解释了无噪声功能关系的大部分变化。
+第二种模式有较高的可能性; 然而，根据超参数的初始值，基于梯度的优化也可能会收敛到高噪声解。
+因此，对于不同的初始化，重复优化多次是很重要的。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_noisy_002.png
    :target: ../auto_examples/gaussian_process/plot_gpr_noisy.html
    :align: center
 
 
-Comparison of GPR and Kernel Ridge Regression
+1.7.2.2.GPR 和内核岭回归(Kernel Ridge Regression)的比较
 ---------------------------------------------
 
-Both kernel ridge regression (KRR) and GPR learn
-a target function by employing internally the "kernel trick". KRR learns a
-linear function in the space induced by the respective kernel which corresponds
-to a non-linear function in the original space. The linear function in the
-kernel space is chosen based on the mean-squared error loss with
-ridge regularization. GPR uses the kernel to define the covariance of
-a prior distribution over the target functions and uses the observed training
-data to define a likelihood function. Based on Bayes theorem, a (Gaussian)
-posterior distribution over target functions is defined, whose mean is used
-for prediction.
+内核脊回归（KRR）和 GPR 通过内部使用 "kernel trick(内核技巧)" 来学习目标函数。
+KRR学习由相应内核引起的空间中的线性函数，该空间对应于原始空间中的非线性函数。
+基于平均误差损失与脊正弦化，选择内核空间中的线性函数。
+GPR使用内核来定义先验分布在目标函数上的协方差，并使用观察到的训练数据来定义似然函数。
+基于贝叶斯定理，定义了目标函数上的（高斯）后验分布，其平均值用于预测。
 
-A major difference is that GPR can choose the kernel's hyperparameters based
-on gradient-ascent on the marginal likelihood function while KRR needs to
-perform a grid search on a cross-validated loss function (mean-squared error
-loss). A further difference is that GPR learns a generative, probabilistic
-model of the target function and can thus provide meaningful confidence
-intervals and posterior samples along with the predictions while KRR only
-provides predictions.
+一个主要区别是，GPR 可以基于边际似然函数上的梯度上升选择内核的超参数，
+而KRR需要在交叉验证的损失函数（均方误差损失）上执行网格搜索。
+另一个区别是，GPR 学习目标函数的生成概率模型，因此可以提供有意义的置信区间和后验样本以及预测值，
+而KRR仅提供预测。
 
-The following figure illustrates both methods on an artificial dataset, which
-consists of a sinusoidal target function and strong noise. The figure compares
-the learned model of KRR and GPR based on a ExpSineSquared kernel, which is
-suited for learning periodic functions. The kernel's hyperparameters control
-the smoothness (length_scale) and periodicity of the kernel (periodicity).
-Moreover, the noise level
-of the data is learned explicitly by GPR by an additional WhiteKernel component
-in the kernel and by the regularization parameter alpha of KRR.
+下图说明了人造数据集上的两种方法，其中包括正弦目标函数和强噪声。
+该图比较了基于 ExpSineSquared 内核的 KRR 和 GPR 的学习模型，适用于学习周期函数。
+内核的超参数控制内核的平滑度（length_scale）和周期性（周期性）。
+此外，数据的噪声水平由 GPR 通过内核中的另外的 WhiteKernel 组件和 KRR 的正则化参数 α 明确地学习。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_compare_gpr_krr_001.png
    :target: ../auto_examples/gaussian_process/plot_compare_gpr_krr.html
    :align: center
 
-The figure shows that both methods learn reasonable models of the target
-function. GPR correctly identifies the periodicity of the function to be
-roughly :math:`2*\pi` (6.28), while KRR chooses the doubled periodicity
-:math:`4*\pi` . Besides
-that, GPR provides reasonable confidence bounds on the prediction which are not
-available for KRR. A major difference between the two methods is the time
-required for fitting and predicting: while fitting KRR is fast in principle,
-the grid-search for hyperparameter optimization scales exponentially with the
-number of hyperparameters ("curse of dimensionality"). The gradient-based
-optimization of the parameters in GPR does not suffer from this exponential
-scaling and is thus considerable faster on this example with 3-dimensional
-hyperparameter space. The time for predicting is similar; however, generating
-the variance of the predictive distribution of GPR takes considerable longer
-than just predicting the mean.
+该图显示，两种方法都可以学习合理的目标函数模型。
+GPR将函数的周期正确地识别为 :math:`2*\pi` （6.28），而 KRR 选择倍增的周期为 :math:`4*\pi` 。
+此外，GPR 为 KRR 不可用的预测提供了合理的置信区间。
+两种方法之间的主要区别是拟合和预测所需的时间：
+原则上KRR的拟合速度较快，超参数优化的网格搜索与超参数（ "curse of dimensionality(维度诅咒)" ）呈指数级关系。
+GPR中的参数的基于梯度的优化不受此指数缩放的影响，因此在具有三维超参数空间的该示例上相当快。
+预测的时间是相似的; 然而，生成 GPR 预测分布的方差需要的时间比生成平均值要长。
 
-GPR on Mauna Loa CO2 data
--------------------------
 
-This example is based on Section 5.4.3 of [RW2006]_.
-It illustrates an example of complex kernel engineering and
-hyperparameter optimization using gradient ascent on the
-log-marginal-likelihood. The data consists of the monthly average atmospheric
-CO2 concentrations (in parts per million by volume (ppmv)) collected at the
-Mauna Loa Observatory in Hawaii, between 1958 and 1997. The objective is to
-model the CO2 concentration as a function of the time t.
+1.7.2.3.Mauna Loa CO2 数据中的 GRR
+-------------------------------
 
-The kernel is composed of several terms that are responsible for explaining
-different properties of the signal:
+该示例基于 [RW2006] 的第 5.4.3 节。
+它演示了使用梯度上升的对数边缘似然性的复杂内核工程和超参数优化的示例。
+数据包括在 1958 年至 1997 年间夏威夷 Mauna Loa 天文台收集的每月平均大气二氧
+化碳浓度（以百万分之几（ppmv）计）。目的是将二氧化碳浓度建模为时间t的函数。   
 
-- a long term, smooth rising trend is to be explained by an RBF kernel. The
-  RBF kernel with a large length-scale enforces this component to be smooth;
-  it is not enforced that the trend is rising which leaves this choice to the
-  GP. The specific length-scale and the amplitude are free hyperparameters.
+内核由几个术语组成，负责说明信号的不同属性：
 
-- a seasonal component, which is to be explained by the periodic
-  ExpSineSquared kernel with a fixed periodicity of 1 year. The length-scale
-  of this periodic component, controlling its smoothness, is a free parameter.
-  In order to allow decaying away from exact periodicity, the product with an
-  RBF kernel is taken. The length-scale of this RBF component controls the
-  decay time and is a further free parameter.
+- 一个长期的，顺利的上升趋势是由一个 RBF 内核来解释的。
+  具有较大长度尺寸的RBF内核将使该分量平滑; 
+  没有强制这种趋势正在上升，这给 GP 带来了这个选择。
+  具体的长度尺度和振幅是自由的超参数。
 
-- smaller, medium term irregularities are to be explained by a
-  RationalQuadratic kernel component, whose length-scale and alpha parameter,
-  which determines the diffuseness of the length-scales, are to be determined.
-  According to [RW2006]_, these irregularities can better be explained by
-  a RationalQuadratic than an RBF kernel component, probably because it can
-  accommodate several length-scales.
+- 季节性因素，由定期的 ExpSineSquared 内核解释，固定周期为1年。
+  该周期分量的长度尺度控制其平滑度是一个自由参数。
+  为了使准确周期性的衰减，采用带有RBF内核的产品。
+  该RBF组件的长度尺寸控制衰减时间，并且是另一个自由参数。
 
-- a "noise" term, consisting of an RBF kernel contribution, which shall
-  explain the correlated noise components such as local weather phenomena,
-  and a WhiteKernel contribution for the white noise. The relative amplitudes
-  and the RBF's length scale are further free parameters.
+- 较小的中期不规则性将由 RationalQuadratic 内核组件来解释，
+  RationalQuadratic 内核组件的长度尺度和 alpha 参数决定长度尺度的扩散性。
+  根据 [RW2006] ，这些不规则性可以更好地由 RationalQuadratic 来解释，
+  而不是 RBF 内核组件，这可能是因为它可以容纳几个长度尺度。
 
-Maximizing the log-marginal-likelihood after subtracting the target's mean
-yields the following kernel with an LML of -83.214:
+-  "noise(噪声)" 一词，由一个 RBF 内核贡献组成，它将解释相关的噪声分量，
+  如局部天气现象以及 WhiteKernel 对白噪声的贡献。
+  相对幅度和RBF的长度尺度是进一步的自由参数。
+
+在减去目标平均值后最大化对数边际似然率产生下列内核，其中LML为-83.214:
 
 ::
 
@@ -210,15 +162,12 @@ yields the following kernel with an LML of -83.214:
    + 0.446**2 * RationalQuadratic(alpha=17.7, length_scale=0.957)
    + 0.197**2 * RBF(length_scale=0.138) + WhiteKernel(noise_level=0.0336)
 
-Thus, most of the target signal (34.4ppm) is explained by a long-term rising
-trend (length-scale 41.8 years). The periodic component has an amplitude of
-3.27ppm, a decay time of 180 years and a length-scale of 1.44. The long decay
-time indicates that we have a locally very close to periodic seasonal
-component. The correlated noise has an amplitude of 0.197ppm with a length
-scale of 0.138 years and a white-noise contribution of 0.197ppm. Thus, the
-overall noise level is very small, indicating that the data can be very well
-explained by the model. The figure shows also that the model makes very
-confident predictions until around 2015
+因此，大多数目标信号（34.4ppm）由长期上升趋势（长度为41.8年）解释。
+周期分量的振幅为3.27ppm，衰减时间为180年，长度为1.44。
+长时间的衰变时间表明我们在当地非常接近周期性的季节性成分。
+相关噪声的幅度为0.197ppm，长度为0.138年，白噪声贡献为0.197ppm。
+因此，整体噪声水平非常小，表明该模型可以很好地解释数据。
+该图还显示，该模型直到2015年左右才能做出置信度比较高的预测
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_co2_001.png
    :target: ../auto_examples/gaussian_process/plot_gpr_co2.html
@@ -226,85 +175,60 @@ confident predictions until around 2015
 
 .. _gpc:
 
-Gaussian Process Classification (GPC)
-=====================================
+1.7.3.高斯过程分类（GPC）  
+======================
 
 .. currentmodule:: sklearn.gaussian_process
 
-The :class:`GaussianProcessClassifier` implements Gaussian processes (GP) for
-classification purposes, more specifically for probabilistic classification,
-where test predictions take the form of class probabilities.
-GaussianProcessClassifier places a GP prior on a latent function :math:`f`,
-which is then squashed through a link function to obtain the probabilistic
-classification. The latent function :math:`f` is a so-called nuisance function,
-whose values are not observed and are not relevant by themselves.
-Its purpose is to allow a convenient formulation of the model, and :math:`f`
-is removed (integrated out) during prediction. GaussianProcessClassifier
-implements the logistic link function, for which the integral cannot be
-computed analytically but is easily approximated in the binary case.
+所述 :class:`GaussianProcessClassifier` 器实现了用于分类目的的高斯过程（GP），当测试的预测采用类概率的形式，更能够用于概率分类。
+GaussianProcessClassifier 在隐函数 :math:`f` 之前设置GP先验，然后通过链接函数进行压缩以获得概率分类。
+隐函数 :math:`f` 因此就是所谓的干扰函数(nuisance function)，其值不能被观测到，并且自身不具有相关性。
+其目的是允许模型的表达形式更加简便，并且 :math:`f` 在预测过程中被去除（整合）。
+GaussianProcessClassifier 实现了逻辑链接函数，
+对于该逻辑，积分不能在分析上计算，但在二进制情况下很容易近似。
 
-In contrast to the regression setting, the posterior of the latent function
-:math:`f` is not Gaussian even for a GP prior since a Gaussian likelihood is
-inappropriate for discrete class labels. Rather, a non-Gaussian likelihood
-corresponding to the logistic link function (logit) is used.
-GaussianProcessClassifier approximates the non-Gaussian posterior with a
-Gaussian based on the Laplace approximation. More details can be found in
-Chapter 3 of [RW2006]_.
+与回归设置相反，即使设置了高斯过程先验，隐函数 :math:`f` 的后验也不符合高斯分布，
+因为高斯似然不适用于离散类标签。相反，使用的是与逻辑链接函数（logit）对应的非高斯似然。
+GaussianProcessClassifier 通过拉普拉斯近似(Laplace approximation)来估计非高斯后验分布。
+更多详细信息，请参见 [RW2006] 的第 3 章。
 
-The GP prior mean is assumed to be zero. The prior's
-covariance is specified by a passing a :ref:`kernel <gp_kernels>` object. The
-hyperparameters of the kernel are optimized during fitting of
-GaussianProcessRegressor by maximizing the log-marginal-likelihood (LML) based
-on the passed ``optimizer``. As the LML may have multiple local optima, the
-optimizer can be started repeatedly by specifying ``n_restarts_optimizer``. The
-first run is always conducted starting from the initial hyperparameter values
-of the kernel; subsequent runs are conducted from hyperparameter values
-that have been chosen randomly from the range of allowed values.
-If the initial hyperparameters should be kept fixed, `None` can be passed as
-optimizer.
+GP先验平均值假定为零。先验的协方差是通过传递 :ref:`内核(kernel) <gp_kernels>` 对象来指定的。
+在通过最大化基于传递的对数边缘似然（LML）的 GaussianProcessRegressor 拟合期间，
+优化内核的超参数 ``optimizer`` 。由于LML可能具有多个局部最优值，
+所以优化器可以通过指定重复启动 ``n_restarts_optimizer`` 。
+第一次运行始终从内核的初始超参数值开始执行; 
+从已经从允许值的范围中随机选择超参数值来进行后续运行。
+如果初始超参数需要保持固定，`None` 可以传递作为优化器。
 
-:class:`GaussianProcessClassifier` supports multi-class classification
-by performing either one-versus-rest or one-versus-one based training and
-prediction.  In one-versus-rest, one binary Gaussian process classifier is
-fitted for each class, which is trained to separate this class from the rest.
-In "one_vs_one", one binary Gaussian process classifier is fitted for each pair
-of classes, which is trained to separate these two classes. The predictions of
-these binary predictors are combined into multi-class predictions. See the
-section on :ref:`multi-class classification <multiclass>` for more details.
+:class:`GaussianProcessClassifier` 通过执行基于OvR(one-versus-rest)或
+OvO(one-versus-one )策略的训练和预测来支持多类分类。
+在OvR(one-versus-rest)策略中，每个类都配有一个二进制高斯过程分类器，该类别被训练为将该类与其余类分开。
+在 "one_vs_one" 中，对于每对类拟合一个二进制高斯过程分类器，这被训练为分离这两个类。
+这些二进制预测因子的预测被组合成多类预测。更多详细信息，请参阅 :ref:`多类别分类 <multiclass>` 。
 
-In the case of Gaussian process classification, "one_vs_one" might be
-computationally  cheaper since it has to solve many problems involving only a
-subset of the whole training set rather than fewer problems on the whole
-dataset. Since Gaussian process classification scales cubically with the size
-of the dataset, this might be considerably faster. However, note that
-"one_vs_one" does not support predicting probability estimates but only plain
-predictions. Moreover, note that :class:`GaussianProcessClassifier` does not
-(yet) implement a true multi-class Laplace approximation internally, but
-as discussed aboved is based on solving several binary classification tasks
-internally, which are combined using one-versus-rest or one-versus-one.
+在高斯过程分类的情况下，"one_vs_one" 策略可能在计算上更廉价，
+因为它必须解决涉及整个训练集的每一个子集的许多问题，
+而不是整个数据集的较少的问题。由于高斯过程分类与数据集的大小相互立方，这可能要快得多。
+但是，请注意，"one_vs_one" 不支持预测概率估计，而只是简单的预测。
+此外，请注意， :class:`GaussianProcessClassifier` 在内部还没有实现真正的多类 Laplace 近似，
+但如上所述，在解决内部二进制分类任务的基础上，它们使用OvR或OvO的组合方法。
 
-GPC examples
+
+1.7.4.GPC 示例
 ============
 
-Probabilistic predictions with GPC
+GPC 概率预测
 ----------------------------------
 
-This example illustrates the predicted probability of GPC for an RBF kernel
-with different choices of the hyperparameters. The first figure shows the
-predicted probability of GPC with arbitrarily chosen hyperparameters and with
-the hyperparameters corresponding to the maximum log-marginal-likelihood (LML).
 
-While the hyperparameters chosen by optimizing LML have a considerable larger
-LML, they perform slightly worse according to the log-loss on test data. The
-figure shows that this is because they exhibit a steep change of the class
-probabilities at the class boundaries (which is good) but have predicted
-probabilities close to 0.5 far away from the class boundaries (which is bad)
-This undesirable effect is caused by the Laplace approximation used
-internally by GPC.
+该示例说明了对于具有不同选项的超参数的RBF内核的GPC预测概率。
+第一幅图显示GPC具有任意选择的超参数的预测概率，以及对应于最大LML（对数边缘似然）对应的超参数。
 
-The second figure shows the log-marginal-likelihood for different choices of
-the kernel's hyperparameters, highlighting the two choices of the
-hyperparameters used in the first figure by black dots.
+虽然通过优化LML选择的超参数具有相当大的LML，但是根据测试数据的对数损失，它们的表现更差。
+该图显示，这是因为它们在阶级边界（这是好的）表现出类概率的急剧变化，
+但预测概率接近0.5远离类边界（这是坏的）这种不良影响是由于GPC内部使用了拉普拉斯逼近。
+
+第二幅图显示了内核超参数的不同选择的LML（对数边缘似然），突出了在第一幅图中使用的通过黑点（训练集）选择的两个超参数。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_000.png
    :target: ../auto_examples/gaussian_process/plot_gpc.html
@@ -315,16 +239,15 @@ hyperparameters used in the first figure by black dots.
    :align: center
 
 
-Illustration of GPC on the XOR dataset
+GPC 在 XOR 数据集上的举例说明
 --------------------------------------
 
 .. currentmodule:: sklearn.gaussian_process.kernels
 
-This example illustrates GPC on XOR data. Compared are a stationary, isotropic
-kernel (:class:`RBF`) and a non-stationary kernel (:class:`DotProduct`). On this particular
-dataset, the `DotProduct` kernel obtains considerably better results because the
-class-boundaries are linear and coincide with the coordinate axes. In practice,
-however, stationary kernels such as :class:`RBF` often obtain better results.
+
+此示例说明了在XOR数据上的GPC。各向同性的核（ :class:`RBF` ）和非固定的核（ :class:`DotProduct` ）对比固定性。
+在这个特定的数据集上， `DotProduct` 内核获得了更好的结果，因为类边界是线性的，与坐标轴重合。
+然而，实际上，诸如 :class:`RBF` 这样的固定内核经常获得更好结果。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_xor_001.png
    :target: ../auto_examples/gaussian_process/plot_gpc_xor.html
@@ -333,14 +256,12 @@ however, stationary kernels such as :class:`RBF` often obtain better results.
 .. currentmodule:: sklearn.gaussian_process
 
 
-Gaussian process classification (GPC) on iris dataset
+iris 数据集上的高斯过程分类（GPC）
 -----------------------------------------------------
 
-This example illustrates the predicted probability of GPC for an isotropic
-and anisotropic RBF kernel on a two-dimensional version for the iris-dataset.
-This illustrates the applicability of GPC to non-binary classification.
-The anisotropic RBF kernel obtains slightly higher log-marginal-likelihood by
-assigning different length-scales to the two feature dimensions.
+该示例说明了用于虹膜数据集的二维版本上各向同性和各向异性RBF核的GPC的预测概率。
+这说明了GPC对多类分类的适用性。
+各向异性RBF内核通过为两个特征维度分配不同的长度尺度来获得稍高的LML（对数边缘似然）。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_iris_001.png
    :target: ../auto_examples/gaussian_process/plot_gpc_iris.html
@@ -349,66 +270,59 @@ assigning different length-scales to the two feature dimensions.
 
 .. _gp_kernels:
 
-Kernels for Gaussian Processes
-==============================
+高斯过程内核
+================
 .. currentmodule:: sklearn.gaussian_process.kernels
 
-Kernels (also called "covariance functions" in the context of GPs) are a crucial
-ingredient of GPs which determine the shape of prior and posterior of the GP.
-They encode the assumptions on the function being learned by defining the "similarity"
-of two datapoints combined with the assumption that similar datapoints should
-have similar target values. Two categories of kernels can be distinguished:
-stationary kernels depend only on the distance of two datapoints and not on their
-absolute values :math:`k(x_i, x_j)= k(d(x_i, x_j))` and are thus invariant to
-translations in the input space, while non-stationary kernels
-depend also on the specific values of the datapoints. Stationary kernels can further
-be subdivided into isotropic and anisotropic kernels, where isotropic kernels are
-also invariant to rotations in the input space. For more details, we refer to
-Chapter 4 of [RW2006]_.
+内核（也可以叫做GPs上下文中的"协方差函数"）
+是决定高斯过程（GP）先验和后验形状的关键组成部分。
+它们通过定义两个数据点的“相似性”，并结合相似的
+数据点应该具有相似的目标值的假设，对所学习的函数进行编码。
+内核可以分为两类：固定内核，只取决于两个数据点的距离，
+不依赖于它们的绝对值 :math:`k(x_i, x_j)= k(d(x_i, x_j))` 
+，因此它们对于输入空间中的转换是不变的；非固定的内核，取
+决于数据点的具体值。固定内核可以进一步细分为各向同性和各向
+异性内核，其中各向同性内核不会在输入空间中旋转。想要了解
+更多细节，请参看 [RW2006]_ 的第四章。
 
-Gaussian Process Kernel API
+
+高斯过程内核 API
 ---------------------------
-The main usage of a :class:`Kernel` is to compute the GP's covariance between
-datapoints. For this, the method ``__call__`` of the kernel can be called. This
-method can either be used to compute the "auto-covariance" of all pairs of
-datapoints in a 2d array X, or the "cross-covariance" of all combinations
-of datapoints of a 2d array X with datapoints in a 2d array Y. The following
-identity holds true for all kernels k (except for the :class:`WhiteKernel`):
-``k(X) == K(X, Y=X)``
 
-If only the diagonal of the auto-covariance is being used, the method ``diag()``
-of a kernel can be called, which is more computationally efficient than the
-equivalent call to ``__call__``: ``np.diag(k(X, X)) == k.diag(X)``
+:class:`Kernel` 主要是用来计算数据点之间的高斯过程协方差。
+为此，内核中 ``__call__`` 方法会被调用。该方法可以用于计算
+2d阵列X中所有数据点对的“自动协方差”，或二维阵列X的数据点
+与二维阵列Y中的数据点的所有组合的“互协方差”。以下论断对于
+所有内核k（除了 :class:`WhiteKernel`）都是成立的：``k(X) == K(X, Y=X)``。
+如果仅仅是自协方差的对角线元素被使用，那么内核的方法 ``diag()`` 将会被调用，
+该方法比等价的调用 ``__call__``: ``np.diag(k(X, X)) == k.diag(X)``
+具有更高的计算效率。
+ 
+内核通过超参数向量 :math:`\theta` 进行参数化。这些超参数可以
+控制例如内核的长度或周期性（见下文）。通过设置 ``__call__`` 
+方法的参数 ``eval_gradient=True`` ，所有的内核支持计算解析
+内核自协方差对于 :math:`\theta` 的解析梯度。该梯度被用来在
+高斯过程中（不论是回归型还是分类型的）计算LML（对数边缘似然）函数
+的梯度，进而被用来通过梯度下降的方法极大化LML（对数边缘似然）函数
+从而确定 :math:`\theta` 的值。对于每个超参数，当对内核的实例
+进行赋值时，初始值和边界值需要被指定。通过内核对象属性 ``theta`` ，
+:math:`\theta` 的当前值可以被获取或者设置。更重要的是，
+超参的边界值可以被内核属性 ``bounds`` 获取。需要注意的是，
+以上两种属性值(theta和bounds)都会返回内部使用值的日志转换值，
+这是因为这两种属性值通常更适合基于梯度的优化。每个超参数的
+规范 :class:`Hyperparameter` 以实例形式被存储在相应内核中。
+请注意使用了以"x"命名的超参的内核必然具有self.x和self.x_bounds这两种属性。
 
-Kernels are parameterized by a vector :math:`\theta` of hyperparameters. These
-hyperparameters can for instance control length-scales or periodicity of a
-kernel (see below). All kernels support computing analytic gradients of
-of the kernel's auto-covariance with respect to :math:`\theta` via setting
-``eval_gradient=True`` in the ``__call__`` method. This gradient is used by the
-Gaussian process (both regressor and classifier) in computing the gradient
-of the log-marginal-likelihood, which in turn is used to determine the
-value of :math:`\theta`, which maximizes the log-marginal-likelihood,  via
-gradient ascent. For each hyperparameter, the initial value and the
-bounds need to be specified when creating an instance of the kernel. The
-current value of :math:`\theta` can be get and set via the property
-``theta`` of the kernel object. Moreover, the bounds of the hyperparameters can be
-accessed by the property ``bounds`` of the kernel. Note that both properties
-(theta and bounds) return log-transformed values of the internally used values
-since those are typically more amenable to gradient-based optimization.
-The specification of each hyperparameter is stored in the form of an instance of
-:class:`Hyperparameter` in the respective kernel. Note that a kernel using a
-hyperparameter with name "x" must have the attributes self.x and self.x_bounds.
-
-The abstract base class for all kernels is :class:`Kernel`. Kernel implements a
-similar interface as :class:`Estimator`, providing the methods ``get_params()``,
-``set_params()``, and ``clone()``. This allows setting kernel values also via
-meta-estimators such as :class:`Pipeline` or :class:`GridSearch`. Note that due to the nested
-structure of kernels (by applying kernel operators, see below), the names of
-kernel parameters might become relatively complicated. In general, for a
-binary kernel operator, parameters of the left operand are prefixed with ``k1__``
-and parameters of the right operand with ``k2__``. An additional convenience
-method is ``clone_with_theta(theta)``, which returns a cloned version of the
-kernel but with the hyperparameters set to ``theta``. An illustrative example:
+所有内核的抽象基类为 :class:`Kernel` 。Kernel 基类实现了
+一个相似的接口 :class:`Estimator` ，提供了方法 ``get_params()`` ,
+``set_params()`` 以及 ``clone()`` 。这也允许通过诸如
+:class:`Pipeline` 或者 :class:`GridSearch` 之类的元估计来设置内核值。
+需要注意的是，由于内核的嵌套结构（通过内核操作符，如下所见），
+内核参数的名称可能会变得相对复杂些。通常来说，对于二元内核操作，
+参数的左运算元以 ``k1__`` 为前缀，而右运算元以 ``k2__`` 为前缀。
+一个额外的便利方法是 ``clone_with_theta(theta)``，
+该方法返回克隆版本的内核，但是设置超参数为 ``theta``。
+示例如下：
 
     >>> from sklearn.gaussian_process.kernels import ConstantKernel, RBF
     >>> kernel = ConstantKernel(constant_value=1.0, constant_value_bounds=(0.0, 10.0)) * RBF(length_scale=0.5, length_scale_bounds=(0.0, 10.0)) + RBF(length_scale=2.0, length_scale_bounds=(0.0, 10.0))
@@ -436,170 +350,146 @@ kernel but with the hyperparameters set to ``theta``. An illustrative example:
      [       -inf  2.30258509]]
 
 
-All Gaussian process kernels are interoperable with :mod:`sklearn.metrics.pairwise`
-and vice versa: instances of subclasses of :class:`Kernel` can be passed as
-``metric`` to pairwise_kernels`` from :mod:`sklearn.metrics.pairwise`. Moreover,
-kernel functions from pairwise can be used as GP kernels by using the wrapper
-class :class:`PairwiseKernel`. The only caveat is that the gradient of
-the hyperparameters is not analytic but numeric and all those kernels support
-only isotropic distances. The parameter ``gamma`` is considered to be a
-hyperparameter and may be optimized. The other kernel parameters are set
-directly at initialization and are kept fixed.
+所有的高斯过程内核操作都可以通过 :mod:`sklearn.metrics.pairwise` 来进行互操作，反之亦然。
+:class:`Kernel` 的子类实例可以通过 ``metric`` 参数传给 :mod:`sklearn.metrics.pairwise` 中的
+ ``pairwise_kernels`` 。更重要的是，超参数的梯度不是分析的，而是数字，所有这些内核只支持
+各向同性距离。该参数 ``gamma`` 被认为是一个超参数，可以进行优化。其他内核参数在初始化时直接设置，
+并保持固定。
 
 
-Basic kernels
--------------
-The :class:`ConstantKernel` kernel can be used as part of a :class:`Product`
-kernel where it scales the magnitude of the other factor (kernel) or as part
-of a :class:`Sum` kernel, where it modifies the mean of the Gaussian process.
-It depends on a parameter :math:`constant\_value`. It is defined as:
+基础内核
+------------
+:class:`ConstantKernel` 内核类可以被用作 :class:`Product` 内核类的一部分，
+在它可以对其他因子（内核）进行度量的场景下或者作为更改高斯过程均值的
+ :class:`Sum` 类的一部分。这取决于参数 :math:`constant\_value` 的设置。该方法定义为：
 
 .. math::
    k(x_i, x_j) = constant\_value \;\forall\; x_1, x_2
 
-The main use-case of the :class:`WhiteKernel` kernel is as part of a
-sum-kernel where it explains the noise-component of the signal. Tuning its
-parameter :math:`noise\_level` corresponds to estimating the noise-level.
-It is defined as:e
+:class:`WhiteKernel` 内核类的主要应用实例在于当解释信号的噪声部分时
+可以作为内核集合的一部分。通过调节参数 :math:`noise\_level`，
+该类可以用来估计噪声级别。具体如下所示：
 
 .. math::
     k(x_i, x_j) = noise\_level \text{ if } x_i == x_j \text{ else } 0
 
 
-Kernel operators
-----------------
-Kernel operators take one or two base kernels and combine them into a new
-kernel. The :class:`Sum` kernel takes two kernels :math:`k1` and :math:`k2`
-and combines them via :math:`k_{sum}(X, Y) = k1(X, Y) + k2(X, Y)`.
-The  :class:`Product` kernel takes two kernels :math:`k1` and :math:`k2`
-and combines them via :math:`k_{product}(X, Y) = k1(X, Y) * k2(X, Y)`.
-The :class:`Exponentiation` kernel takes one base kernel and a scalar parameter
-:math:`exponent` and combines them via
-:math:`k_{exp}(X, Y) = k(X, Y)^\text{exponent}`.
+内核操作
+------------
+内核操作是把1~2个基内核与新内核进行合并。内核类 :class:`Sum` 通过
+:math:`k_{sum}(X, Y) = k1(X, Y) + k2(X, Y)` 相加来合并 :math:`k1`
+和 :math:`k2` 内核。内核类 :class:`Product` 通过
+:math:`k_{product}(X, Y) = k1(X, Y) * k2(X, Y)` 把 :math:`k1` 
+和 :math:`k2` 内核进行合并。内核类 :class:`Exponentiation` 通过
+:math:`k_{exp}(X, Y) = k(X, Y)^\text{exponent}` 把基内核与
+常量参数 :math:`exponent` 进行合并。
 
-Radial-basis function (RBF) kernel
-----------------------------------
-The :class:`RBF` kernel is a stationary kernel. It is also known as the "squared
-exponential" kernel. It is parameterized by a length-scale parameter :math:`l>0`, which
-can either be a scalar (isotropic variant of the kernel) or a vector with the same
-number of dimensions as the inputs :math:`x` (anisotropic variant of the kernel).
-The kernel is given by:
+径向基函数内核
+------------------
+:class:`RBF` 内核是一个固定内核，它也被称为“平方指数”内核。它通过定长的参数 :math:`l>0` 
+来对内核进行参数化。该参数既可以是标量（内核的各向同性变体）或者与输入 :math:`x` （内核的各向异性变体）
+具有相同数量的维度的向量。该内核可以被定义为：
 
 .. math::
    k(x_i, x_j) = \text{exp}\left(-\frac{1}{2} d(x_i / l, x_j / l)^2\right)
 
-This kernel is infinitely differentiable, which implies that GPs with this
-kernel as covariance function have mean square derivatives of all orders, and are thus
-very smooth. The prior and posterior of a GP resulting from an RBF kernel are shown in
-the following figure:
+这个内核是无限可微的，这意味着这个内核作为协方差函数的 GP 具有所有阶数的均方差导数，
+因此非常平滑。由RBF内核产生的GP的先验和后验示意图如下所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_000.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
 
-Matérn kernel
--------------
-The :class:`Matern` kernel is a stationary kernel and a generalization of the
-:class:`RBF` kernel. It has an additional parameter :math:`\nu` which controls
-the smoothness of the resulting function. It is parameterized by a length-scale parameter :math:`l>0`, which can either be a scalar (isotropic variant of the kernel) or a vector with the same number of dimensions as the inputs :math:`x` (anisotropic variant of the kernel). The kernel is given by:
+Matérn 内核
+----------------
+:class:`Matern` 内核是一个固定内核，是 :class:`RBF` 内核的泛化。它有一个额外的参数 :math:`\nu`，
+该参数控制结果函数的平滑程度。它由定长参数 :math:`l>0` 来实现参数化。该参数既可以是标量
+（内核的各向同性变体）或者与输入 :math:`x` （内核的各向异性变体）具有相同数量的维度的向量。
+该内核可以被定义为：
 
 .. math::
 
     k(x_i, x_j) = \sigma^2\frac{1}{\Gamma(\nu)2^{\nu-1}}\Bigg(\gamma\sqrt{2\nu} d(x_i / l, x_j / l)\Bigg)^\nu K_\nu\Bigg(\gamma\sqrt{2\nu} d(x_i / l, x_j / l)\Bigg),
 
-As :math:`\nu\rightarrow\infty`, the Matérn kernel converges to the RBF kernel.
-When :math:`\nu = 1/2`, the Matérn kernel becomes identical to the absolute
-exponential kernel, i.e.,
+因为 :math:`\nu\rightarrow\infty` ，Matérn 内核收敛到 RBF 内核。
+当 :math:`\nu = 1/2` 时，Matérn 内核变得与绝对指数内核相同时，即
 
 .. math::
     k(x_i, x_j) = \sigma^2 \exp \Bigg(-\gamma d(x_i / l, x_j / l) \Bigg) \quad \quad \nu= \tfrac{1}{2}
 
-In particular, :math:`\nu = 3/2`:
+特别的，当 :math:`\nu = 3/2` 时：
 
 .. math::
     k(x_i, x_j) = \sigma^2 \Bigg(1 + \gamma \sqrt{3} d(x_i / l, x_j / l)\Bigg) \exp \Bigg(-\gamma \sqrt{3}d(x_i / l, x_j / l) \Bigg) \quad \quad \nu= \tfrac{3}{2}
 
-and :math:`\nu = 5/2`:
+和 :math:`\nu = 5/2` :
 
 .. math::
     k(x_i, x_j) = \sigma^2 \Bigg(1 + \gamma \sqrt{5}d(x_i / l, x_j / l) +\frac{5}{3} \gamma^2d(x_i / l, x_j / l)^2 \Bigg) \exp \Bigg(-\gamma \sqrt{5}d(x_i / l, x_j / l) \Bigg) \quad \quad \nu= \tfrac{5}{2}
 
-are popular choices for learning functions that are not infinitely
-differentiable (as assumed by the RBF kernel) but at least once (:math:`\nu =
-3/2`) or twice differentiable (:math:`\nu = 5/2`).
+是学习函数的常用选择，并且不是无限可微的（由 RBF 内核假定）
+但是至少具有一阶( :math:`\nu = 3/2` )或者二阶( :math:`\nu = 5/2` )可微性。
 
-The flexibility of controlling the smoothness of the learned function via :math:`\nu`
-allows adapting to the properties of the true underlying functional relation.
-The prior and posterior of a GP resulting from a Matérn kernel are shown in
-the following figure:
+通过 :math:`\nu` 灵活控制学习函数的平滑性可以更加适应真正的底层函数关联属性。
+通过 Matérn 内核产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_004.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
-See [RW2006]_, pp84 for further details regarding the
-different variants of the Matérn kernel.
+想要更进一步地了解不同类型的Matérn内核请参阅 [RW2006]_ , pp84。
 
-Rational quadratic kernel
--------------------------
+有理二次内核
+----------------
 
-The :class:`RationalQuadratic` kernel can be seen as a scale mixture (an infinite sum)
-of :class:`RBF` kernels with different characteristic length-scales. It is parameterized
-by a length-scale parameter :math:`l>0` and a scale mixture parameter  :math:`\alpha>0`
-Only the isotropic variant where :math:`l` is a scalar is supported at the moment.
-The kernel is given by:
+:class:`RationalQuadratic` 内核可以被看做不同特征尺度下的 :class:`RBF` 内核的规模混合（一个无穷和）
+它通过长度尺度参数 :math:`l>0` 和比例混合参数 :math:`\alpha>0` 进行参数化。
+此时仅支持 :math:`l` 标量的各向同性变量。内核公式如下：
 
 .. math::
    k(x_i, x_j) = \left(1 + \frac{d(x_i, x_j)^2}{2\alpha l^2}\right)^{-\alpha}
 
-The prior and posterior of a GP resulting from an RBF kernel are shown in
-the following figure:
+从 RBF 内核中产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_001.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
-Exp-Sine-Squared kernel
------------------------
+正弦平方内核
+----------------
 
-The :class:`ExpSineSquared` kernel allows modeling periodic functions.
-It is parameterized by a length-scale parameter :math:`l>0` and a periodicity parameter
-:math:`p>0`. Only the isotropic variant where :math:`l` is a scalar is supported at the moment.
-The kernel is given by:
+:class:`ExpSineSquared` 内核可以对周期性函数进行建模。它由定长参数 :math:`l>0` 
+以及周期参数 :math:`p>0` 来实现参数化。此时仅支持 :math:`l` 标量的各向同性变量。内核公式如下：
 
 .. math::
    k(x_i, x_j) = \text{exp}\left(-2 \left(\text{sin}(\pi / p * d(x_i, x_j)) / l\right)^2\right)
 
-The prior and posterior of a GP resulting from an ExpSineSquared kernel are shown in
-the following figure:
+从ExpSineSquared内核中产生的高斯过程的先验和后验如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_002.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
-Dot-Product kernel
-------------------
+点乘内核
+------------
 
-The :class:`DotProduct` kernel is non-stationary and can be obtained from linear regression
-by putting :math:`N(0, 1)` priors on the coefficients of :math:`x_d (d = 1, . . . , D)` and
-a prior of :math:`N(0, \sigma_0^2)` on the bias. The :class:`DotProduct` kernel is invariant to a rotation
-of the coordinates about the origin, but not translations.
-It is parameterized by a parameter :math:`\sigma_0^2`. For :math:`\sigma_0^2 = 0`, the kernel
-is called the homogeneous linear kernel, otherwise it is inhomogeneous. The kernel is given by
+:class:`DotProduct` 内核是非固定内核，它可以通过在线性回归的 :math:`x_d (d = 1, . . . , D)` 的相关系数上加上
+服从于 :math:`N(0, 1)` 的先验以及在线性回归的偏置上加上服从于 :math:`N(0, \sigma_0^2)` 的先验来获得。
+该 :class:`DotProduct` 内核对于原点坐标的旋转是不变的，因此不是转换。它通过设置参数 :math:`\sigma_0^2` 来进行参数化。
+当 :math:`\sigma_0^2 = 0` 时，该内核叫做同质线性内核；否则该内核是非同质的。内核公式如下：
 
 .. math::
    k(x_i, x_j) = \sigma_0 ^ 2 + x_i \cdot x_j
 
-The :class:`DotProduct` kernel is commonly combined with exponentiation. An example with exponent 2 is
-shown in the following figure:
+:class:`DotProduct` 内核通常和指数分布相结合。实例如下图所示：
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpr_prior_posterior_003.png
    :target: ../auto_examples/gaussian_process/plot_gpr_prior_posterior.html
    :align: center
 
-References
-----------
+参考文献
+------------
 
 .. [RW2006] Carl Eduard Rasmussen and Christopher K.I. Williams, "Gaussian Processes for Machine Learning", MIT Press 2006, Link to an official complete PDF version of the book `here <http://www.gaussianprocess.org/gpml/chapters/RW.pdf>`_ .
 
@@ -607,25 +497,20 @@ References
 
 
 
+传统高斯过程
+=================
 
-Legacy Gaussian Processes
-=========================
+在本节中，描述了版本 0.16.1 及之前 scikit 中高斯过程的实现，
+请注意，此实现已被弃用，将在版本 0.18 中删除。
 
-In this section, the implementation of Gaussian processes used in scikit-learn
-until release 0.16.1 is described. Note that this implementation is deprecated
-and will be removed in version 0.18.
+回归实例介绍
+----------------
 
-An introductory regression example
-----------------------------------
-
-Say we want to surrogate the function :math:`g(x) = x \sin(x)`. To do so,
-the function is evaluated onto a design of experiments. Then, we define a
-GaussianProcess model whose regression and correlation models might be
-specified using additional kwargs, and ask for the model to be fitted to the
-data. Depending on the number of parameters provided at instantiation, the
-fitting procedure may recourse to maximum likelihood estimation for the
-parameters or alternatively it uses the given parameters.
-
+假定我们要替代这个函数：:math:`g(x) = x \sin(x)` 。
+为了做到这一点，该功能被评估到一个实验设计上。然后，
+我们定义一个回归和相关模型可能被其他参数指定的高斯模型，
+并且要求模型能够拟合数据。拟合过程由于受到实例化过程中
+参数数目的影响可能依赖于参数的最大似然估计或者直接使用给定的参数。
 
 ::
 
@@ -647,125 +532,110 @@ parameters or alternatively it uses the given parameters.
     >>> y_pred, sigma2_pred = gp.predict(x, eval_MSE=True)
 
 
-Fitting Noisy Data
-------------------
+噪声数据拟合
+----------------
 
-When the data to be fit includes noise, the Gaussian process model can be
-used by specifying the variance of the noise for each point.
-:class:`GaussianProcess` takes a parameter ``nugget`` which
-is added to the diagonal of the correlation matrix between training points:
-in general this is a type of Tikhonov regularization.  In the special case
-of a squared-exponential correlation function, this normalization is
-equivalent to specifying a fractional variance in the input.  That is
+当含噪声的数据被用来做拟合时，对于每个数据点，高斯过程模型可以指定噪声的方差。
+:class:`GaussianProcess` 包含一个被添加到训练数据得到的自相关矩阵对角线中的
+参数 ``nugget`` 。通常来说这是一种类型的吉洪诺夫正则化方法。
+在平方指数相关函数的特殊情况下，该归一化等效于指定输入中的小数方差。也就是：
 
 .. math::
    \mathrm{nugget}_i = \left[\frac{\sigma_i}{y_i}\right]^2
 
-With ``nugget`` and ``corr`` properly set, Gaussian Processes can be
-used to robustly recover an underlying function from noisy data.
+使用 ``nugget`` 以及 ``corr`` 正确设置，高斯过程可以更好地用于从噪声数据恢复给定的向量函数。
 
 
+数学形式
+------------
 
-Mathematical formulation
-------------------------
 
+初始假设
+^^^^^^^^^^^^
 
-The initial assumption
-^^^^^^^^^^^^^^^^^^^^^^
-
-Suppose one wants to model the output of a computer experiment, say a
-mathematical function:
+假设需要对电脑实验的结果进行建模，例如使用一个数学函数：
 
 .. math::
 
         g: & \mathbb{R}^{n_{\rm features}} \rightarrow \mathbb{R} \\
            & X \mapsto y = g(X)
 
-GPML starts with the assumption that this function is *a* conditional sample
-path of *a* Gaussian process :math:`G` which is additionally assumed to read as
-follows:
+
+同时假设这个函数是 *一个* 有关于 *一个* 高斯过程 :math:`G` 的条件采用方法，
+那么从这个假设出发，GPML 通常可以表示为如下形式：
 
 .. math::
 
         G(X) = f(X)^T \beta + Z(X)
 
-where :math:`f(X)^T \beta` is a linear regression model and :math:`Z(X)` is a
-zero-mean Gaussian process with a fully stationary covariance function:
+其中， :math:`f(X)^T \beta` 是一个线性回归模型，并且 :math:`Z(X)` 是一个
+以零为均值，协方差函数完全平稳的高斯过程：
 
 .. math::
 
         C(X, X') = \sigma^2 R(|X - X'|)
 
-:math:`\sigma^2` being its variance and :math:`R` being the correlation
-function which solely depends on the absolute relative distance between each
-sample, possibly featurewise (this is the stationarity assumption).
+:math:`\sigma^2` 表示其方差， :math:`R` 表示仅仅基于样本之间的绝对相关距离的相关函数，可能是特征（这是平稳性假设）
 
-From this basic formulation, note that GPML is nothing but an extension of a
-basic least squares linear regression problem:
+从这些基本的公式中可以注意到GPML仅仅是基本的线性二乘回归问题的扩展。
 
 .. math::
 
         g(X) \approx f(X)^T \beta
 
-Except we additionally assume some spatial coherence (correlation) between the
-samples dictated by the correlation function. Indeed, ordinary least squares
-assumes the correlation model :math:`R(|X - X'|)` is one when :math:`X = X'`
-and zero otherwise : a *dirac* correlation model -- sometimes referred to as a
-*nugget* correlation model in the kriging literature.
+除此之外，我们另外假定由相关函数指定的样本之间的一些空间相干性（相关性）。
+事实上，普通最小二乘法假设当 :math:`X = X'` 时，相关性模型 :math:`R(|X - X'|)` 
+是 1；否则为 0 ，相关性模型为 *狄拉克* 相关模型--有时在克里金文献中被称为 *熔核* 相关模型
 
 
-The best linear unbiased prediction (BLUP)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-We now derive the *best linear unbiased prediction* of the sample path
-:math:`g` conditioned on the observations:
+最佳线性无偏预测（BLUP）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+我们现在推导出基于观测结果的 *最佳线性无偏预测* :math:`g`
 
 .. math::
 
     \hat{G}(X) = G(X | y_1 = g(X_1), ...,
                                 y_{n_{\rm samples}} = g(X_{n_{\rm samples}}))
 
-It is derived from its *given properties*:
+它可以由 *给定的属性* 加以派生：
 
-- It is linear (a linear combination of the observations)
+- 它是线性的(观测结果的线性组合)
 
 .. math::
 
     \hat{G}(X) \equiv a(X)^T y
 
-- It is unbiased
+- 它是无偏的
 
 .. math::
 
     \mathbb{E}[G(X) - \hat{G}(X)] = 0
 
-- It is the best (in the Mean Squared Error sense)
+- 它是最好的（在均方误差的意义上）
 
 .. math::
 
     \hat{G}(X)^* = \arg \min\limits_{\hat{G}(X)} \;
                                             \mathbb{E}[(G(X) - \hat{G}(X))^2]
 
-So that the optimal weight vector :math:`a(X)` is solution of the following
-equality constrained optimization problem:
+因此最优的带权向量 :math:`a(X)` 是以下等式约束优化问题的解
 
 .. math::
 
     a(X)^* = \arg \min\limits_{a(X)} & \; \mathbb{E}[(G(X) - a(X)^T y)^2] \\
                        {\rm s. t.} & \; \mathbb{E}[G(X) - a(X)^T y] = 0
 
-Rewriting this constrained optimization problem in the form of a Lagrangian and
-looking further for the first order optimality conditions to be satisfied, one
-ends up with a closed form expression for the sought predictor -- see
-references for the complete proof.
+					
+以拉格朗日形式重写这个受约束的优化问题，并进一步寻求要满足的一阶最优条件，
+从而得到一个以闭合形式表达式为终止形式的预测器 - 参见参考文献中完整的证明。
 
-In the end, the BLUP is shown to be a Gaussian random variate with mean:
-
+最后，BLUP 为高斯随机变量，其中均值为：
+					
 .. math::
 
     \mu_{\hat{Y}}(X) = f(X)^T\,\hat{\beta} + r(X)^T\,\gamma
 
-and variance:
+方差为:
 
 .. math::
 
@@ -775,111 +645,88 @@ and variance:
     + u(X)^T\,(F^T\,R^{-1}\,F)^{-1}\,u(X)
     )
 
-where we have introduced:
+其中:
 
-* the correlation matrix whose terms are defined wrt the autocorrelation
-  function and its built-in parameters :math:`\theta`:
+* 根据自相关函数以及内置参数 :math:`\theta` 所定义的相关性矩阵为：
 
 .. math::
 
     R_{i\,j} = R(|X_i - X_j|, \theta), \; i,\,j = 1, ..., m
 
-* the vector of cross-correlations between the point where the prediction is
-  made and the points in the DOE:
+* 在进行预测的点与 DOE 中的点之间的互相关的向量:
 
 .. math::
 
     r_i = R(|X - X_i|, \theta), \; i = 1, ..., m
 
-* the regression matrix (eg the Vandermonde matrix if :math:`f` is a polynomial
-  basis):
+* 回归矩阵 (例如范德蒙矩阵 如果 :math:`f` 以多项式为基):
 
 .. math::
 
     F_{i\,j} = f_i(X_j), \; i = 1, ..., p, \, j = 1, ..., m
 
-* the generalized least square regression weights:
+* 广义最小二乘回归权重:
 
 .. math::
 
     \hat{\beta} =(F^T\,R^{-1}\,F)^{-1}\,F^T\,R^{-1}\,Y
 
-* and the vectors:
+* 和向量:
 
 .. math::
 
     \gamma & = R^{-1}(Y - F\,\hat{\beta}) \\
     u(X) & = F^T\,R^{-1}\,r(X) - f(X)
 
-It is important to notice that the probabilistic response of a Gaussian Process
-predictor is fully analytic and mostly relies on basic linear algebra
-operations. More precisely the mean prediction is the sum of two simple linear
-combinations (dot products), and the variance requires two matrix inversions,
-but the correlation matrix can be decomposed only once using a Cholesky
-decomposition algorithm.
+需要重点注意的是，高斯过程预测器的概率输出是完全可分析的并且依赖于基本的线性代数操作。
+更准确地说，预测结果的均值是两个简单线性组合（点积）的和，方差需要两个矩阵反转操作，但关联
+矩阵只能使用 Cholesky 分解算法分解一次。
 
+经验最佳线性无偏估计（EBLUP）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The empirical best linear unbiased predictor (EBLUP)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+到现在为止，自相关和回归模型都已假定给出。然而，在实践中，它们从来都是未知的
+因此需要为这些模型 :ref:`correlation_models` 做出（积极的）经验选择。
 
-Until now, both the autocorrelation and regression models were assumed given.
-In practice however they are never known in advance so that one has to make
-(motivated) empirical choices for these models :ref:`correlation_models`.
-
-Provided these choices are made, one should estimate the remaining unknown
-parameters involved in the BLUP. To do so, one uses the set of provided
-observations in conjunction with some inference technique. The present
-implementation, which is based on the DACE's Matlab toolbox uses the *maximum
-likelihood estimation* technique -- see DACE manual in references for the
-complete equations. This maximum likelihood estimation problem is turned into
-a global optimization problem onto the autocorrelation parameters. In the
-present implementation, this global optimization is solved by means of the
-fmin_cobyla optimization function from scipy.optimize. In the case of
-anisotropy however, we provide an implementation of Welch's componentwise
-optimization algorithm -- see references.
+根据这些选择，可以来估计 BLUP 中涉及到的遗留未知参数。为此，需要使用一系列
+被提供的观测值同时结合一系列推断技术。目前使用的方法是基于 DACE's Matlab 工
+具包的*最大似然估计* - 参见 DACE 手册中的完全推导公式。最大似然估计的问题在
+自相关参数中是一个全局优化的问题。这种全局优化通过 scipy.optimize 中的
+fmin_cobyla 优化函数加以实现。然而，在各向异性的情况下，我们提供了
+Welch 的分量优化算法的实现 - 参见参考。
 
 .. _correlation_models:
 
-Correlation Models
-------------------
+关联模型
+------------
 
-Common correlation models matches some famous SVM's kernels because they are
-mostly built on equivalent assumptions. They must fulfill Mercer's conditions
-and should additionally remain stationary. Note however, that the choice of the
-correlation model should be made in agreement with the known properties of the
-original experiment from which the observations come. For instance:
+由于几乎相等的假设，常用的关联模型和一些有名的SVM内核相匹配。它们必须要满足 Mercer 条件
+并且需要保持固定形式。然而，请注意，相关模型的选择应该与观察到来的原始实验的已知特性一致。
+例如：
 
-* If the original experiment is known to be infinitely differentiable (smooth),
-  then one should use the *squared-exponential correlation model*.
-* If it's not, then one should rather use the *exponential correlation model*.
-* Note also that there exists a correlation model that takes the degree of
-  derivability as input: this is the Matern correlation model, but it's not
-  implemented here (TODO).
+* 如果原始实验被认为是无限可微（平滑），则应使用 *平方指数关联模型* 。
+* 如果不是无限可微的, 那么需要使用 *指数关联模型*.
+* 还要注意，存在一个将衍生度作为输入的相关模型：这是 Matern 相关模型，但这里并没有实现（ TODO ）.
 
-For a more detailed discussion on the selection of appropriate correlation
-models, see the book by Rasmussen & Williams in references.
+关于选择合适的关联模型更详细的讨论，请参阅 Rasmussen＆Williams 的文献。
 
 .. _regression_models:
 
 
-Regression Models
------------------
+回归模型
+------------
 
-Common linear regression models involve zero- (constant), first- and
-second-order polynomials. But one may specify its own in the form of a Python
-function that takes the features X as input and that returns a vector
-containing the values of the functional set. The only constraint is that the
-number of functions must not exceed the number of available observations so
-that the underlying regression problem is not *underdetermined*.
+常用的线性回归模型包括零阶（常数）、一阶和二阶多项式。
+但是可以以 Python 函数的形式指定它自己的特性，它将特征X
+作为输入，并返回一个包含函数集值的向量。唯一加以限制地是，
+函数的个数不能超过有效观测值的数目，因此基本的回归问题不被*确定*。
 
+实现细节
+------------
 
-Implementation details
-----------------------
+模型通过 DACE 的 Matlab 工具包来实现。
 
-The implementation is based on a translation of the DACE Matlab
-toolbox.
-
-.. topic:: References:
+.. topic:: 参考文献:
 
     * `DACE, A Matlab Kriging Toolbox
       <http://imedea.uib-csic.es/master/cambioglobal/Modulo_V_cod101615/Lab/lab_maps/krigging/DACE-krigingsoft/dace/dace.pdf>`_ S Lophaven, HB Nielsen, J

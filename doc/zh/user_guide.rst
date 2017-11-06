@@ -1,9 +1,9 @@
-.. title:: User guide: contents
+.. title:: 用户指南: contents
 
 .. _user_guide:
 
 ==========
-User Guide
+用户指南
 ==========
 
 .. include:: includes/big_toc_css.rst
