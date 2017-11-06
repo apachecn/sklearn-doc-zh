@@ -349,14 +349,14 @@ Principal component analysis（主成分分析） (:class:`PCA`) 的缺点在于
 
 .. _MiniBatchDictionaryLearning:
 
-Mini-batch 字典学习
+小批量字典学习
 ----------------------
 
 :class:`MiniBatchDictionaryLearning` 实现了更快、更适合大型数据集的字典学习算法，其运行速度更快，但准确度有所降低。
 
 默认情况下，:class:`MiniBatchDictionaryLearning` 将数据分成小批量，并通过在指定次数的迭代中循环使用小批量，以在线方式进行优化。但是，目前它没有实现停止条件。
 
-估计器还实现了  ``partial_fit``, 它通过在一个迷你批处理中仅迭代一次来更新字典。 当数据从一开始就不容易获得，或者当数据不适合内存时，这可以用于在线学习。
+估计器还实现了  ``partial_fit``, 它通过在一个小批处理中仅迭代一次来更新字典。 当在线学习的数据从一开始就不容易获得，或者数据超出内存时，可以使用这种迭代方法。
 
 .. currentmodule:: sklearn.cluster
 
@@ -367,8 +367,8 @@ Mini-batch 字典学习
 
 .. topic:: **字典学习聚类**
 
-   注意，当使用字典学习来提取表示（例如，用于稀疏编码）时，聚类可以是学习字典的良好代理。 
-   例如，:class:`MiniBatchKMeans` 估计器在计算上是有效的，并使用 ``partial_fit`` 方法实现在线学习。
+   注意，当使用字典学习来提取表示（例如，用于稀疏编码）时，聚类可以是学习字典的良好中间方法。 
+   例如，:class:`MiniBatchKMeans` 估计器能高效计算并使用 ``partial_fit`` 方法实现在线学习。
 
    示例: 在线学习面部部分的字典 :ref:`sphx_glr_auto_examples_cluster_plot_dict_face_patches.py`
 
@@ -380,13 +380,13 @@ Mini-batch 字典学习
 ===============
 
 在无监督的学习中，我们只有一个数据集 :math:`X = \{x_1, x_2, \dots, x_n\}`. 
-这个数据集如何在数学上描述？ :math:`X` 的一个非常简单的连续潜变量模型
+这个数据集如何在数学上描述？ :math:`X` 的一个非常简单的连续隐变量模型
 
 .. math:: x_i = W h_i + \mu + \epsilon
 
-矢量 :math:`h_i` 被称为 "潜在"，因为它是不可观察的。 
-:math:`\epsilon` 被认为是根据高斯分布的噪声项，平均值为 0，协方差为 :math:`\Psi` （即 :math:`\epsilon \sim \mathcal{N}(0, \Psi)`）， 
-:math:`\mu` 是一些任意的偏移向量。 这样一个模型被称为 "生成"，因为它描述了如何从 :math:`h_i` 生成 :math:`x_i` 。
+矢量 :math:`h_i` 被称为 "隐性的"，因为它是不可观察的。 
+:math:`\epsilon` 被认为是符合高斯分布的噪声项，平均值为 0，协方差为 :math:`\Psi` （即 :math:`\epsilon \sim \mathcal{N}(0, \Psi)`）， 
+:math:`\mu` 是偏移向量。 这样一个模型被称为 "生成的"，因为它描述了如何从 :math:`h_i` 生成 :math:`x_i` 。
 如果我们使用所有的 :math:`x_i` 作为列来形成一个矩阵 :math:`\mathbf{X}` ，并将所有的 :math:`h_i` 作为矩阵 :math:`\mathbf{H}` 的列，
 那么我们可以写（适当定义的 :math:`\mathbf{M}` 和 :math:`\mathbf{E}` ）:
 
@@ -398,24 +398,24 @@ Mini-batch 字典学习
 
 .. math:: p(x_i|h_i) = \mathcal{N}(Wh_i + \mu, \Psi)
 
-对于一个完整的概率模型，我们还需要一个隐变量 :math:`h` 的先验分布。 
-最直接的假设（基于高斯分布的不同属性）是:math:`h \sim \mathcal{N}(0, \mathbf{I})`. 这产生一个高斯作为 :math:`x` 的边际分布:
+对于一个完整的概率模型，我们还需要隐变量 :math:`h` 的先验分布。 
+最直接的假设（基于高斯分布的良好性质）是 :math:`h \sim \mathcal{N}(0, \mathbf{I})`. 这产生一个高斯分布作为 :math:`x` 的边际分布:
 
 .. math:: p(x) = \mathcal{N}(\mu, WW^T + \Psi)
 
-现在，没有任何进一步的假设，具有隐变量 :math:`h` 的想法将是多余的 -- :math:`x` 可以用均值和协方差来完全建模。 
-我们需要对这两个参数之一施加一些更具体的结构。 一个简单的附加假设是误差协方差的结构 :math:`\Psi`:
+现在，在没有任何进一步假设的前提下，隐变量 :math:`h` 是多余的 -- :math:`x` 完全可以用均值和协方差来建模。 
+我们需要对这两个参数之一进行更具体的构造。 一个简单的附加假设是将误差协方差 :math:`\Psi` 构造成如下:
 
-* :math:`\Psi = \sigma^2 \mathbf{I}`: 这个假设导致 :class:`PCA` 的概率模型。
+* :math:`\Psi = \sigma^2 \mathbf{I}`: 这个假设能推导出 :class:`PCA` 的概率模型。
 
 * :math:`\Psi = \mathrm{diag}(\psi_1, \psi_2, \dots, \psi_n)`: 这个模型称为 :class:`FactorAnalysis`, 一个经典的统计模型。 矩阵W有时称为 "因子加载矩阵"。
 
-两个模型基本上估计出具有低阶协方差矩阵的高斯。 
+两个模型基都基于高斯分布是低阶协方差矩阵的假设。 
 因为这两个模型都是概率性的，所以它们可以集成到更复杂的模型中，
-例如 因子分析仪的混合物 如果假设潜在变量上的非高斯先验，则获得非常不同的模型（例如， :class:`FastICA` ）。
+例如因子分析器的混合。如果隐变量基于非高斯分布，则得到完全不同的模型（例如， :class:`FastICA` ）。
 
-因子分析 *可以* 产生类似的组件（其加载矩阵的列）到 :class:`PCA`。 
-然而，不能对这些组件做出任何一般性的陈述（例如它们是否是正交的）:
+因子分析 *可以* 产生与 :class:`PCA`类似的成分（例如其加载矩阵的列）。 
+然而，这些成分没有通用的性质（例如它们是否是正交的）:
 
 .. |pca_img3| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_002.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -427,14 +427,14 @@ Mini-batch 字典学习
 
 .. centered:: |pca_img3| |fa_img3|
 
-因子分析(:class:`PCA`) 的主要优点是可以独立地对输入空间的每个方向（异方差噪声）建模方差:
+因子分析( :class:`PCA` ) 的主要优点是可以独立地对输入空间的每个方向（异方差噪声）的方差建模:
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_008.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
     :align: center
     :scale: 75%
 
-在异方差噪声存在的情况下，这可以比概率 PCA 更好的模型选择:
+在异方差噪声存在的情况下，这可以比概率 PCA 作出更好的模型选择:
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_pca_vs_fa_model_selection_002.png
     :target: ../auto_examples/decomposition/plot_pca_vs_fa_model_selection.html
@@ -451,13 +451,13 @@ Mini-batch 字典学习
 独立成分分析（ICA）
 =========================
 
-独立分量分析将多变量信号分解为最大独立的加性子组件。 
-它使用 :class:`Fast ICA <FastICA>` 算法在 scikit-learn 中实现。 
-通常，ICA 不用于降低维度，而是用于分离叠加信号。 
-由于 ICA 模型不包括噪声项，因此要使模型正确，必须应用美白。 
-这可以在内部使用 whiten 参数或手动使用其中一种 PCA 变体进行。
+独立分量分析将多变量信号分解为独立性最强的加性子组件。 
+它通过 :class:`Fast ICA <FastICA>` 算法在 scikit-learn 中实现。 
+ICA 通常不用于降低维度，而是用于分离叠加信号。 
+由于 ICA 模型不包括噪声项，因此要使模型正确，必须使用白化。 
+这可以在内部调节白化参数或手动使用 PCA 的一种变体。
 
-通常用于分离混合信号（称为 *盲源分离* 的问题），如下例所示:
+ICA 通常用于分离混合信号（称为 *盲源分离* 的问题），如下例所示:
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_ica_blind_source_separation_001.png
     :target: ../auto_examples/decomposition/plot_ica_blind_source_separation.html
@@ -465,7 +465,7 @@ Mini-batch 字典学习
     :scale: 60%
 
 
-ICA 也可以被用作发现具有一些稀疏性的组件的另一个非线性分解:
+ICA 也可以用于具有稀疏子成分的非线性分解:
 
 .. |pca_img4| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_002.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -489,21 +489,21 @@ ICA 也可以被用作发现具有一些稀疏性的组件的另一个非线性�
 非负矩阵分解(NMF 或 NNMF)
 ===================================
 
-NMF 与 Frobenius 规范
+NMF 与 Frobenius 范数
 ---------------------------
 
-:class:`NMF` [1]_ 是一种替代的分解方法，假设数据和分量是非负数的。 
+:class:`NMF` [1]_ 是在数据和分量是非负情况下的另一种降维方法。 
 在数据矩阵不包含负值的情况下，可以插入 :class:`NMF` 而不是 :class:`PCA` 或其变体。 
-通过优化 :math:`X` 与矩阵乘积 :math:`WH` 之间的距离 :math:`d` ，可以将样本 :math:`X` 分解为非负元素的两个矩阵 :math:`W` 和 :math:`H`。 
-最广泛使用的距离函数是 Frobenius 方程的平方，这是欧几里德范数到矩阵的广泛的扩展:
+通过优化 :math:`X` 与矩阵乘积 :math:`WH` 之间的距离 :math:`d` ，可以将样本 :math:`X` 分解为两个非负矩阵 :math:`W` 和 :math:`H`。 
+最广泛使用的距离函数是 Frobenius 平方范数，它是欧几里德范数到矩阵的推广:
 
 .. math::
     d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{\mathrm{Fro}}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2
 
-与 :class:`PCA` 不同，通过叠加分量而不减去，以加法方式获得向量的表示。这种添加剂模型对于表示图像和文本是有效的。
+与 :class:`PCA` 不同，通过叠加分量而不减去，以加法方式获得向量的表示。这种加性模型对于表示图像和文本是有效的。
 
-在 [Hoyer, 2004] [2]_ 中已经观察到，当精心约束时，:class:`NMF` 可以产生数据集的基于零件的表示，导致可解释的模型。 
-以下示例显示了与 PCA 特征面相比， :class:`NMF` 从 Olivetti 面数据集中的图像中发现的16个稀疏组件。
+ [Hoyer, 2004] [2]_ 研究表明，当处于一定约束时，:class:`NMF` 可以产生数据集基于某子部分的表示，从而获得可解释的模型。 
+以下示例展示了与 PCA 特征面相比， :class:`NMF` 从 Olivetti 面部数据集中的图像中发现的16个稀疏组件。
 
 Unlike :class:`PCA`, the representation of a vector is obtained in an additive
 fashion, by superimposing the components, without subtracting. Such additive
@@ -519,11 +519,11 @@ models are efficient for representing images and text.
 
 .. centered:: |pca_img5| |nmf_img5|
 
-:attr:`init` 属性确定应用的初始化方法，这对方法的性能有很大的影响。 
+:attr:`init` 属性确定了应用的初始化方法，这对方法的性能有很大的影响。 
 :class:`NMF` 实现了非负双奇异值分解方法。NNDSVD [4]_ 基于两个 SVD 过程，一个近似数据矩阵，
 使用单位秩矩阵的代数性质，得到的部分SVD因子的其他近似正部分。
-基本的 NNDSVD 算法更适合稀疏分解。其变体 NNDSVDa（其中全部零设置为等于数据的所有元素的平均值）和 
-NNDSVDar（其中零被设置为小于数据平均值的随机扰动除以100）在密集案件。
+基本的 NNDSVD 算法更适合稀疏分解。其变体 NNDSVDa（全部零值替换为所有元素的平均值）和 
+NNDSVDar（零值替换为比数据平均值除以100小的随机扰动）在稠密情况时推荐使用。
 
 请注意，乘法更新 ('mu') 求解器无法更新初始化中存在的零，因此当与引入大量零的基本 NNDSVD 算法联合使用时，
 会导致较差的结果; 在这种情况下，应优先使用 NNDSVDa 或 NNDSVDar。
@@ -532,8 +532,8 @@ NNDSVDar（其中零被设置为小于数据平均值的随机扰动除以100）
 整数种子或 ``RandomState`` 也可以传递给 :attr:`random_state` 以控制重现性。
 
 在 :class:`NMF` 中，L1 和 L2 先验可以被添加到损失函数中以使模型正规化。 
-L2 之前使用 Frobenius 范数，而L1 先验使用元素 L1 范数。与 :class:`ElasticNet` 一样，
-我们使用 :attr:`l1_ratio` (:math:`\rho`) 参数和 :attr:`alpha` (:math:`\alpha`) 参数的正则化强度来控制 L1 和 L2 的组合。那么先修课程是:
+L2 先验使用 Frobenius 范数，而L1 先验使用 L1 范数。与 :class:`ElasticNet` 一样，
+我们通过 :attr:`l1_ratio` (:math:`\rho`) 参数和正则化强度参数 :attr:`alpha` (:math:`\alpha`) 来控制 L1 和 L2 的组合。那么先验项是:
 
 .. math::
     \alpha \rho ||W||_1 + \alpha \rho ||H||_1
@@ -548,27 +548,27 @@ L2 之前使用 Frobenius 范数，而L1 先验使用元素 L1 范数。与 :cla
     + \frac{\alpha(1-\rho)}{2} ||W||_{\mathrm{Fro}} ^ 2
     + \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2
 
-:class:`NMF` 正规化 W 和 H . 公共函数 :func:`non_negative_factorization` 允许通过 :attr:`regularization` 属性进行更精细的控制，并且可以仅将 W ，仅 H 或两者正规化。
+:class:`NMF` 正则化 W 和 H . 公共函数 :func:`non_negative_factorization` 允许通过 :attr:`regularization` 属性进行更精细的控制，将 仅W ，仅H 或两者正规化。
 
-NMF 具有 beta-divergence
-------------------------------
+具有 beta-divergence 的 NMF
+----------------------------------
 
-如前所述，最广泛使用的距离函数是平方 Frobenius 范数，这是欧几里得范数到矩阵的明显延伸:
+如前所述，最广泛使用的距离函数是平方 Frobenius 范数，这是欧几里得范数到矩阵的推广:
 
 .. math::
     d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{Fro}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2
 
-其他距离函数可用于 NMF，例如（广义） Kullback-Leibler(KL) 发散，也称为 I-divergence:
+其他距离函数可用于 NMF，例如（广义） Kullback-Leibler(KL) 散度，也称为 I-divergence:
 
 .. math::
     d_{KL}(X, Y) = \sum_{i,j} (X_{ij} \log(\frac{X_{ij}}{Y_{ij}}) - X_{ij} + Y_{ij})
 
-或者， Itakura-Saito(IS) 分歧:
+或者， Itakura-Saito(IS) divergence:
 
 .. math::
     d_{IS}(X, Y) = \sum_{i,j} (\frac{X_{ij}}{Y_{ij}} - \log(\frac{X_{ij}}{Y_{ij}}) - 1)
 
-这三个距离函数是 beta-divergence 家族的特殊情况，其参数分别为 :math:`\beta = 2, 1, 0` [6]_ 。 beta-divergence 定义如下:
+这三个距离函数是 beta-divergence 函数族的特殊情况，其参数分别为 :math:`\beta = 2, 1, 0` [6]_ 。 beta-divergence 定义如下:
 
 .. math::
     d_{\beta}(X, Y) = \sum_{i,j} \frac{1}{\beta(\beta - 1)}(X_{ij}^\beta + (\beta-1)Y_{ij}^\beta - \beta X_{ij} Y_{ij}^{\beta - 1})
@@ -578,20 +578,20 @@ NMF 具有 beta-divergence
     :align: center
     :scale: 75%
 
-请注意，如果在 :math:`\beta \in (0; 1)` ，但是它可以分别连续扩展到 :math:`d_{KL}` 
-和 :math:`d_{IS}` 的定义，则此定义无效。
+请注意，在 :math:`\beta \in (0; 1)` 上定义无效，仅仅在 :math:`d_{KL}` 
+和 :math:`d_{IS}` 的上可以分别连续扩展。
 
 :class:`NMF` 使用 Coordinate Descent ('cd') [5]_ 和乘法更新 ('mu') [6]_ 来实现两个求解器。 
 'mu' 求解器可以优化每个 beta-divergence，包括 Frobenius 范数 (:math:`\beta=2`) ，
-（广义） Kullback-Leibler 分歧 (:math:`\beta=1`) 和Itakura-Saito分歧（\ beta = 0） ）。
+（广义） Kullback-Leibler divergence (:math:`\beta=1`) 和Itakura-Saito divergence（\ beta = 0） ）。
 请注意，对于 :math:`\beta \in (1; 2)`，'mu' 求解器明显快于 :math:`\beta` 的其他值。
 还要注意，使用负数（或0，即 'itakura-saito' ） :math:`\beta`，输入矩阵不能包含零值。
 
-'cd' 求解器只能优化 Frobenius 规范。由于 NMF 的潜在非凸性，即使优化相同的距离函数，
+'cd' 求解器只能优化 Frobenius 范数。由于 NMF 的潜在非凸性，即使优化相同的距离函数，
 不同的求解器也可能会收敛到不同的最小值。
 
-NMF最适用于 ``fit_transform`` 方法，该方法返回矩阵W.矩阵 H 在 ``components_`` 属性中存储到拟合模型中;
-方法 ``变换`` 将基于这些存储的组件分解新的矩阵 X_new::
+NMF最适用于 ``fit_transform`` 方法，该方法返回矩阵W.矩阵 H 被 ``components_`` 属性中存储到拟合模型中;
+方法 ``transform`` 将基于这些存储的组件分解新的矩阵 X_new::
 
     >>> import numpy as np
     >>> X = np.array([[1, 1], [2, 1], [3, 1.2], [4, 1], [5, 0.8], [6, 1]])
@@ -635,13 +635,13 @@ NMF最适用于 ``fit_transform`` 方法，该方法返回矩阵W.矩阵 H 在 `
 
 .. _LatentDirichletAllocation:
 
-潜在 Dirichlet 分配（LDA）
+隐 Dirichlet 分配（LDA）
 =================================
 
-潜在 Dirichlet 分配是离散数据集（如文本语料库）的集合的生成概率模型。 
+隐 Dirichlet 分配是离散数据集（如文本语料库）的集合的生成概率模型。 
 它也是一个主题模型，用于从文档集合中发现抽象主题。
 
-LDA 的图形模型是一个 three-level 贝叶斯模型:
+LDA 的图形模型是一个三层贝叶斯模型:
 
 .. image:: ../images/lda_model_graph.png
    :align: center
@@ -663,25 +663,25 @@ LDA 的图形模型是一个 three-level 贝叶斯模型:
   p(z, \theta, \beta |w, \alpha, \eta) =
     \frac{p(z, \theta, \beta|\alpha, \eta)}{p(w|\alpha, \eta)}
 
-由于后验分布难以处理，变分贝叶斯方法使用更简单的分布 :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)` 近似，
-并且优化了这些变分参数  :math:`\lambda`, :math:`\phi`, :math:`\gamma` 最大化证据下限 (ELBO):
+由于后验分布难以处理，变体贝叶斯方法使用更简单的分布 :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)` 近似，
+并且优化了这些变体参数  :math:`\lambda`, :math:`\phi`, :math:`\gamma` 最大化Evidence Lower Bound (ELBO):
 
 .. math::
   \log\: P(w | \alpha, \eta) \geq L(w,\phi,\gamma,\lambda) \overset{\triangle}{=}
     E_{q}[\log\:p(w,z,\theta,\beta|\alpha,\eta)] - E_{q}[\log\:q(z, \theta, \beta)]
 
-最大化 ELBO 相当于最小化 :math:`q(z,\theta,\beta)` 和真实后 :math:`p(z, \theta, \beta |w, \alpha, \eta)` 之间的 Kullback-Leibler(KL) 发散。
+最大化 ELBO 相当于最小化 :math:`q(z,\theta,\beta)` 和后验 :math:`p(z, \theta, \beta |w, \alpha, \eta)` 之间的 Kullback-Leibler(KL) 散度。
 
-:class:`LatentDirichletAllocation` 实现在线变分贝叶斯算法，支持在线和批量更新方法。
-批处理方法在每次完全传递数据后更新变分变量，联机方法从小批量数据点更新变分变量。
+:class:`LatentDirichletAllocation` 实现在线变体贝叶斯算法，支持在线和批量更新方法。
+批处理方法在每次完全传递数据后更新变分变量，在线方法从小批量数据点中更新变体变量。
 
 .. note::
-  虽然在线方法保证收敛到局部最优点，最优点的质量和收敛速度可能取决于小批量大小和学习率设置相关的属性。
+  虽然在线方法保证收敛到局部最优点，最优点的质量和收敛速度可能取决于与小批量大小和学习率相关的属性。
 
 当 :class:`LatentDirichletAllocation` 应用于 "document-term" 矩阵时，矩阵将被分解为 "topic-term" 矩阵和 "document-topic" 矩阵。
-虽然 "topic-term" 矩阵在模型中被存储为 :attr:`components_` ，但是可以通过变换方法计算 "document-topic" 矩阵。
+虽然 "topic-term" 矩阵在模型中被存储为 :attr:`components_` ，但是可以通过 ``transform`` 方法计算 "document-topic" 矩阵。
 
-:class:`LatentDirichletAllocation` 还实现了  ``partial_fit`` 方法。当数据可以顺序提取时使用.
+:class:`LatentDirichletAllocation` 还实现了  ``partial_fit`` 方法。这可用于当数据被顺序提取时.
 
 .. topic:: 示例:
 
