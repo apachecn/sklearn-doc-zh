@@ -120,6 +120,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@linxiamen](https://github.com/linxiamen)（YUNCHUAN LIN）
 * [@llcing](https://github.com/llcing)（Mayouji）
 * [@KyrieHee](https://github.com/KyrieHee)（HeYun）
+* [@ziepenn](https://github.com/ziepenn)（ziepenn）
 
 
 ### 0.18
