@@ -115,6 +115,11 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@wodekwan](https://github.com/wodekwan)（wodekwan）
 * [@gbyy422990](https://github.com/gbyy422990)（Bin GAO）
 * [@charleschou520](https://github.com/charleschou520)（charleschou520）
+* [@DataMonk2017](https://github.com/DataMonk2017)（Jeremy Zheng）
+* [@Lixu518](https://github.com/Lixu518)（Mysry）
+* [@linxiamen](https://github.com/linxiamen)（YUNCHUAN LIN）
+* [@llcing](https://github.com/llcing)（Mayouji）
+* [@KyrieHee](https://github.com/KyrieHee)（HeYun）
 
 
 ### 0.18
