@@ -10,7 +10,7 @@
 下面我们将讨论大量使用这种模式的两个具体示例.
 
 .. topic:: **Pipelining**
-    无监督数据简化和监督的估计器可以一步链接. 请参阅 :ref:`pipeline`.
+    无监督数据简化和监督的估计器可以链接在一个步骤中。 请参阅 :ref:`pipeline`.
 
 .. currentmodule:: sklearn
 
@@ -47,7 +47,7 @@ PCA: 主成份分析
 
 .. topic:: **特征缩放**
 
-   请注意，如果功能具有非常不同的缩放或统计属性，则 :class:`cluster.FeatureAgglomeration`
-   可能无法捕获相关功能之间的链接.使用一个  :class:`preprocessing.StandardScaler` 可以在这些
+   请注意，如果功能具有明显不同的缩放或统计属性，则 :class:`cluster.FeatureAgglomeration`
+   可能无法捕获相关特征之间的关系.使用一个  :class:`preprocessing.StandardScaler` 可以在这些
    设置中使用.
 

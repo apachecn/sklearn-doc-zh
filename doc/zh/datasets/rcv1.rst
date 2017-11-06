@@ -4,7 +4,7 @@
 RCV1 数据集
 ==========================
 
-路透社语料库第一卷( RCV1 )是路透社为了研究目的提供的一个拥有超过 800,000 份手动分类的新闻报导的文档库。该数据集在 [1]_ 被描述。
+路透社语料库第一卷( RCV1 )是路透社为了研究目的提供的一个拥有超过 800,000 份手动分类的新闻报导的文档库。该数据集在 [1]_ 中有详细描述。
 
 :func:`sklearn.datasets.fetch_rcv1` 将加载以下版本: RCV1-v2, vectors, full sets, topics multilabels::
 
@@ -24,7 +24,7 @@ RCV1 数据集
 
 ``target``:
 目标值是存储在 scipy CSR 的稀疏矩阵，有 804414 个样本和 103 个类别。
-每个样本在其属于的类别中的值为 1，在其他不属于的类别中值为 0。数组有 3.15% 个非零值::
+每个样本在其所属的类别中的值为 1，在其他类别中值为 0。数组有 3.15% 个非零值::
 
     >>> rcv1.target.shape
     (804414, 103)
@@ -36,14 +36,14 @@ RCV1 数据集
     array([2286, 2287, 2288], dtype=uint32)
 
 ``target_names``:
-目标值是每个样本的的 topic (主题)。每个样本至少属于一个 topic (主题)，最多 17 个 topic 。
+目标值是每个样本的 topic (主题)。每个样本至少属于一个 topic (主题)最多 17 个 topic 。
 总共有 103 个 topics ，每个 topic 用一个字符串表示。
-从 `GMIL` 出现 5 次到 `CCAT` 出现 381327 次，他们的语料库频率跨越五个数量级::
+从 `GMIL` 出现 5 次到 `CCAT` 出现 381327 次，该语料库频率跨越五个数量级::
 
     >>> rcv1.target_names[:3].tolist()  # doctest: +SKIP
     ['E11', 'ECAT', 'M11']
 
-如果有需要的话，可以从 `rcv1 homepage`_ 上下载数据集。
+如果有需要的话，可以从 `rcv1 homepage`_ 上下载该数据集。
 数据集压缩后的大小大约是 656 MB。
 
 .. _rcv1 homepage: http://jmlr.csail.mit.edu/papers/volume5/lewis04a/

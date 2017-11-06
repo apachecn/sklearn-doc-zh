@@ -1,104 +1,96 @@
+# -*- coding:UTF-8 -*-
+
 """
-==================================================
-Plot different SVM classifiers in the iris dataset
-==================================================
+===========================================================
+在鸢尾花卉数据集上绘制不同的 SVM 分类器
+===========================================================
 
-Comparison of different linear SVM classifiers on a 2D projection of the iris
-dataset. We only consider the first 2 features of this dataset:
+在鸢尾花卉数据集的 2D 投影上的不同线性 SVM 分类器的比较。我们只考虑这个数据集的前 2 个特征: 
 
-- Sepal length
-- Sepal width
+- 萼片长度
+- 萼片宽度
 
-This example shows how to plot the decision surface for four SVM classifiers
-with different kernels.
+此示例显示如何绘制具有不同 kernel 的四个 SVM 分类器的决策表面。
 
-The linear models ``LinearSVC()`` and ``SVC(kernel='linear')`` yield slightly
-different decision boundaries. This can be a consequence of the following
-differences:
+线性模型 ``LinearSVC()`` 和 ``SVC(kernel='linear')`` 产生稍微不同的决策边界。这可能是以下差异的结果:
 
-- ``LinearSVC`` minimizes the squared hinge loss while ``SVC`` minimizes the
-  regular hinge loss.
+- ``LinearSVC`` 可以最大限度地减少 squared hinge loss 而 ``SVC`` 最大限度地减少 regular hinge loss.
 
-- ``LinearSVC`` uses the One-vs-All (also known as One-vs-Rest) multiclass
-  reduction while ``SVC`` uses the One-vs-One multiclass reduction.
+- ``LinearSVC`` 使用 One-vs-All (也被称作 One-vs-Rest) multiclass reduction ，而 ``SVC`` 则使用 One-vs-One multiclass reduction 。
 
-Both linear models have linear decision boundaries (intersecting hyperplanes)
-while the non-linear kernel models (polynomial or Gaussian RBF) have more
-flexible non-linear decision boundaries with shapes that depend on the kind of
-kernel and its parameters.
+两个线性模型具有线性决策边界（相交超平面），而非线性内核模型（多项式或 高斯 RBF）具有更灵活的非线性决策边界，其形状取决于内核的种类及其参数。
 
-.. NOTE:: while plotting the decision function of classifiers for toy 2D
-   datasets can help get an intuitive understanding of their respective
-   expressive power, be aware that those intuitions don't always generalize to
-   more realistic high-dimensional problems.
+.. NOTE:: 在绘制玩具 2D 数据集分类器的决策函数的时候可以帮助您直观了解其各自的表现力，请注意，这些直觉并不总是推广到更加接近于现实的高维度的问题。
 
 """
 print(__doc__)
 
+# 加载 numpy, matplotlib, sklearn 等模块
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 
 
 def make_meshgrid(x, y, h=.02):
-    """Create a mesh of points to plot in
+    """创建一个要绘制的点的网格
 
-    Parameters
+    参数
     ----------
-    x: data to base x-axis meshgrid on
-    y: data to base y-axis meshgrid on
-    h: stepsize for meshgrid, optional
+    x: 基于 x 轴的网格数据
+    y: 基于 y 轴的网格数据
+    h: meshgrid 的步长参数, 是可选的
 
-    Returns
+    返回
     -------
     xx, yy : ndarray
     """
     x_min, x_max = x.min() - 1, x.max() + 1
     y_min, y_max = y.min() - 1, y.max() + 1
+    # meshgrid() 函数用两个坐标轴上的点在平面上画格。具体参阅：https://docs.scipy.org/doc/numpy/reference/generated/numpy.meshgrid.html
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
     return xx, yy
 
 
 def plot_contours(ax, clf, xx, yy, **params):
-    """Plot the decision boundaries for a classifier.
+    """绘制分类器的决策边界.
 
-    Parameters
+    参数
     ----------
-    ax: matplotlib axes object
-    clf: a classifier
+    ax: matplotlib 轴对象
+    clf: 一个分类器
     xx: meshgrid ndarray
     yy: meshgrid ndarray
-    params: dictionary of params to pass to contourf, optional
+    params: params 的字典传递给 contourf, 可选
     """
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
+    # contourf() 函数 具体用法参见：http://www.labri.fr/perso/nrougier/teaching/matplotlib/   和 http://matplotlib.org/examples/pylab_examples/contourf_demo.html
     out = ax.contourf(xx, yy, Z, **params)
     return out
 
 
-# import some data to play with
+# 加载一些需要玩的数据
 iris = datasets.load_iris()
-# Take the first two features. We could avoid this by using a two-dim dataset
+# 只取前两个特征数据，我们可以通过 2 维数据集来避免这种情况
 X = iris.data[:, :2]
 y = iris.target
 
-# we create an instance of SVM and fit out data. We do not scale our
-# data since we want to plot the support vectors
-C = 1.0  # SVM regularization parameter
+# 我们创建了一个 SVM 的实例并填充了数据。我们不扩展我们的数据，因为我们想绘制支持向量。
+C = 1.0  # SVM 正则化参数
 models = (svm.SVC(kernel='linear', C=C),
           svm.LinearSVC(C=C),
           svm.SVC(kernel='rbf', gamma=0.7, C=C),
           svm.SVC(kernel='poly', degree=3, C=C))
 models = (clf.fit(X, y) for clf in models)
 
-# title for the plots
+# 绘图区域的标题
 titles = ('SVC with linear kernel',
           'LinearSVC (linear kernel)',
           'SVC with RBF kernel',
           'SVC with polynomial (degree 3) kernel')
 
-# Set-up 2x2 grid for plotting.
+# 设置 2x2 的网格进行绘制.
 fig, sub = plt.subplots(2, 2)
 plt.subplots_adjust(wspace=0.4, hspace=0.4)
 

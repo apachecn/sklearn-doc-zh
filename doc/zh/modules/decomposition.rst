@@ -11,27 +11,21 @@
 .. _PCA:
 
 
-Principal component analysis (PCA)
+主成分分析（PCA）
 ==================================
 
-Exact PCA and probabilistic interpretation
+准确的PCA和概率解释（Exact PCA and probabilistic interpretation）
 ------------------------------------------
 
-PCA is used to decompose a multivariate dataset in a set of successive
-orthogonal components that explain a maximum amount of the variance. In
-scikit-learn, :class:`PCA` is implemented as a *transformer* object
-that learns :math:`n` components in its ``fit`` method, and can be used on new
-data to project it on these components.
 
-The optional parameter ``whiten=True`` makes it possible to
-project the data onto the singular space while scaling each component
-to unit variance. This is often useful if the models down-stream make
-strong assumptions on the isotropy of the signal: this is for example
-the case for Support Vector Machines with the RBF kernel and the K-Means
-clustering algorithm.
+PCA 用于对一组连续正交分量中的多变量数据集进行方差最大方向的分解。
+在 scikit-learn 中， :class:`PCA` 被实现为一个变换对象， 通过 ``fit`` 方法可以降维成 `n` 个成分，
+并且可以将新的数据投影(project, 亦可理解为分解)到这些成分中。
 
-Below is an example of the iris dataset, which is comprised of 4
-features, projected on the 2 dimensions that explain most variance:
+可选参数 ``whiten=True`` 使得可以将数据投影到奇异（singular）空间上，同时将每个成分缩放到单位方差。
+如果下游模型对信号的各向同性作出强烈的假设，这通常是有用的，例如，使用RBF内核的 SVM 算法和 K-Means 聚类算法。
+
+以下是iris数据集的一个示例，该数据集包含4个特征， 通过PCA降维后投影到方差最大的二维空间上：
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_pca_vs_lda_001.png
     :target: ../auto_examples/decomposition/plot_pca_vs_lda.html
@@ -39,10 +33,8 @@ features, projected on the 2 dimensions that explain most variance:
     :scale: 75%
 
 
-The :class:`PCA` object also provides a
-probabilistic interpretation of the PCA that can give a likelihood of
-data based on the amount of variance it explains. As such it implements a
-`score` method that can be used in cross-validation:
+ :class:`PCA` 对象还提供了 PCA 的概率解释， 其可以基于其解释的方差量给出数据的可能性。
+可以通过在交叉验证（cross-validation）中使用 `score` 方法来实现：
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_pca_vs_fa_model_selection_001.png
     :target: ../auto_examples/decomposition/plot_pca_vs_fa_model_selection.html
@@ -50,7 +42,7 @@ data based on the amount of variance it explains. As such it implements a
     :scale: 75%
 
 
-.. topic:: Examples:
+.. topic:: 例子:
 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_lda.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_fa_model_selection.py`
@@ -58,27 +50,21 @@ data based on the amount of variance it explains. As such it implements a
 
 .. _IncrementalPCA:
 
-Incremental PCA
+增量PCA (Incremental PCA)
 ---------------
 
-The :class:`PCA` object is very useful, but has certain limitations for
-large datasets. The biggest limitation is that :class:`PCA` only supports
-batch processing, which means all of the data to be processed must fit in main
-memory. The :class:`IncrementalPCA` object uses a different form of
-processing and allows for partial computations which almost
-exactly match the results of :class:`PCA` while processing the data in a
-minibatch fashion. :class:`IncrementalPCA` makes it possible to implement
-out-of-core Principal Component Analysis either by:
+:class:`PCA` 对象非常有用, 但对大型数据集有一定的限制。
+最大的限制是 :class:`PCA` 仅支持批处理，这意味着所有要处理的数据必须适合主内存。
+:class:`IncrementalPCA` 对象使用不同的处理形式使之允许部分计算，
+这一形式几乎和 :class:`PCA` 以小型批处理方式处理数据的方法完全匹配。
+:class:`IncrementalPCA` 可以通过以下方式实现核外（out-of-core）主成分分析：
 
- * Using its ``partial_fit`` method on chunks of data fetched sequentially
-   from the local hard drive or a network database.
+ * 使用 ``partial_fit`` 方法从本地硬盘或网络数据库中以此获取数据块。
 
- * Calling its fit method on a memory mapped file using ``numpy.memmap``.
+ * 通过 ``numpy.memmap`` 在一个 memory mapped file 上使用 fit 方法。
 
-:class:`IncrementalPCA` only stores estimates of component and noise variances,
-in order update ``explained_variance_ratio_`` incrementally. This is why
-memory usage depends on the number of samples per batch, rather than the
-number of samples to be processed in the dataset.
+ :class:`IncrementalPCA` 仅存储成分和噪声方差的估计值，并按顺序递增地更新解释方差比（explained_variance_ratio_）。
+这就是为什么内存使用取决于每个批次的样本数，而不是数据集中要处理的样本数。
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_incremental_pca_001.png
     :target: ../auto_examples/decomposition/plot_incremental_pca.html
@@ -98,36 +84,23 @@ number of samples to be processed in the dataset.
 
 .. _RandomizedPCA:
 
-PCA using randomized SVD
+
+PCA 使用随机SVD
 ------------------------
 
-It is often interesting to project data to a lower-dimensional
-space that preserves most of the variance, by dropping the singular vector
-of components associated with lower singular values.
+通过丢弃具有较低奇异值的奇异向量成分，将数据降维到低维空间并保留大部分方差是非常有意义的。
 
-For instance, if we work with 64x64 pixel gray-level pictures
-for face recognition,
-the dimensionality of the data is 4096 and it is slow to train an
-RBF support vector machine on such wide data. Furthermore we know that
-the intrinsic dimensionality of the data is much lower than 4096 since all
-pictures of human faces look somewhat alike.
-The samples lie on a manifold of much lower
-dimension (say around 200 for instance). The PCA algorithm can be used
-to linearly transform the data while both reducing the dimensionality
-and preserve most of the explained variance at the same time.
+例如，如果我们使用64x64像素的灰度级图像进行人脸识别，数据的维数为4096，
+在这样大的数据上训练含RBF内核的支持向量机是很慢的。
+此外我们知道数据本质上的维度远低于4096，因为人脸的所有照片都看起来有点相似。
+样本位于许多的很低维度（例如约200维）。PCA算法可以用于线性变换数据，同时降低维数并同时保留大部分方差。
 
-The class :class:`PCA` used with the optional parameter
-``svd_solver='randomized'`` is very useful in that case: since we are going
-to drop most of the singular vectors it is much more efficient to limit the
-computation to an approximated estimate of the singular vectors we will keep
-to actually perform the transform.
+在这种情况下，使用可选参数 ``svd_solver='randomized'`` 的 :class:`PCA` 是非常有用的。
+因为我们将要丢弃大部分奇异值，所以对我们将保留并实际执行变换的奇异向量进行近似估计的有限的计算更有效。
 
-For instance, the following shows 16 sample portraits (centered around
-0.0) from the Olivetti dataset. On the right hand side are the first 16
-singular vectors reshaped as portraits. Since we only require the top
-16 singular vectors of a dataset with size :math:`n_{samples} = 400`
-and :math:`n_{features} = 64 \times 64 = 4096`, the computation time is
-less than 1s:
+例如：以下显示了来自 Olivetti 数据集的 16 个样本肖像（以 0.0 为中心）。
+右侧是前 16 个奇异向量重画为肖像。因为我们只需要使用大小为 :math:`n_{samples} = 400`
+和 :math:`n_{features} = 64 \times 64 = 4096` 的数据集的前 16 个奇异向量, 使得计算时间小于 1 秒。
 
 .. |orig_img| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_001.png
    :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -139,31 +112,25 @@ less than 1s:
 
 .. centered:: |orig_img| |pca_img|
 
-Note: with the optional parameter ``svd_solver='randomized'``, we also
-need to give :class:`PCA` the size of the lower-dimensional space
-``n_components`` as a mandatory input parameter.
+注意：使用可选参数 ``svd_solver='randomized'`` ，在 :class:`PCA` 中我们还需要给出输入低维空间大小 ``n_components`` 。
 
-If we note :math:`n_{\max} = \max(n_{\mathrm{samples}}, n_{\mathrm{features}})` and
-:math:`n_{\min} = \min(n_{\mathrm{samples}}, n_{\mathrm{features}})`, the time complexity
-of the randomized :class:`PCA` is :math:`O(n_{\max}^2 \cdot n_{\mathrm{components}})`
-instead of :math:`O(n_{\max}^2 \cdot n_{\min})` for the exact method
-implemented in :class:`PCA`.
+如果我们注意到： :math:`n_{\max} = \max(n_{\mathrm{samples}}, n_{\mathrm{features}})` 且
+:math:`n_{\min} = \min(n_{\mathrm{samples}}, n_{\mathrm{features}})`,
+对于PCA中实施的确切方式，随机 :class:`PCA` 的时间复杂度是：:math:`O(n_{\max}^2 \cdot n_{\mathrm{components}})` ，
+而不是 :math:`O(n_{\max}^2 \cdot n_{\min})` 。
 
-The memory footprint of randomized :class:`PCA` is also proportional to
-:math:`2 \cdot n_{\max} \cdot n_{\mathrm{components}}` instead of :math:`n_{\max}
-\cdot n_{\min}` for the exact method.
+对于确切的方式，随机 :class:`PCA` 的内存占用量正比于 :math:`2 \cdot n_{\max} \cdot n_{\mathrm{components}}` ，
+而不是 :math:`n_{\max}\cdot n_{\min}`
 
-Note: the implementation of ``inverse_transform`` in :class:`PCA` with
-``svd_solver='randomized'`` is not the exact inverse transform of
-``transform`` even when ``whiten=False`` (default).
+注意：选择参数 ``svd_solver='randomized'`` 的 :class:`PCA`，在执行 ``inverse_transform`` 时，
+并不是 ``transform`` 的确切的逆变换操作（即使 参数设置为默认的 ``whiten=False``）
 
-
-.. topic:: Examples:
+.. topic:: 例子:
 
     * :ref:`sphx_glr_auto_examples_applications_plot_face_recognition.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_faces_decomposition.py`
 
-.. topic:: References:
+.. topic:: 参考文献:
 
     * `"Finding structure with randomness: Stochastic algorithms for
       constructing approximate matrix decompositions"
@@ -173,10 +140,12 @@ Note: the implementation of ``inverse_transform`` in :class:`PCA` with
 
 .. _kernel_PCA:
 
-内核 PCA
+核 PCA
 ----------------
 
-:class:`KernelPCA` 是 PCA 的扩展，通过使用内核实现非线性 dimensionality reduction（降维） (参阅 :ref:`metrics`)。它具有许多应用，包括 denoising（去噪）, compression（压缩） 和 structured prediction（结构预测） (kernel dependency estimation（内核依赖估计）)。 :class:`KernelPCA` 支持 ``transform`` 和 ``inverse_transform`` 。
+:class:`KernelPCA` 是 PCA 的扩展，通过使用核方法实现非线性降维（dimensionality reduction） (参阅 :ref:`metrics`)。
+它具有许多应用，包括去噪, 压缩和结构化预测（ structured prediction ） (kernel dependency estimation（内核依赖估计）)。
+ :class:`KernelPCA` 支持 ``transform`` 和 ``inverse_transform`` 。
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_kernel_pca_001.png
     :target: ../auto_examples/decomposition/plot_kernel_pca.html
@@ -190,20 +159,21 @@ Note: the implementation of ``inverse_transform`` in :class:`PCA` with
 
 .. _SparsePCA:
 
-稀疏主成分分析 (SparsePCA 和 MiniBatchSparsePCA)
-------------------------------------------------------------
+稀疏主成分分析 ( SparsePCA 和 MiniBatchSparsePCA )
+--------------------------------------------------------------------
 
-:class:`SparsePCA` 是 PCA 的一个变体，目的是提取能重建数据的 sparse components （稀疏组件）集合。
+:class:`SparsePCA` 是 PCA 的一个变体，目的是提取能最好地重建数据的稀疏组分集合。
 
-Mini-batch sparse PCA（小批量稀疏 PCA） (:class:`MiniBatchSparsePCA`) 是一个 :class:`SparsePCA` 的变种，速度更快，但不太准确。通过迭代一组特征的 small chunks （小块）来达到增加的速度，对于给定的迭代次数。
+小批量稀疏 PCA ( :class:`MiniBatchSparsePCA` ) 是一个 :class:`SparsePCA` 的变种，它速度更快但准确度有所降低。对于给定的迭代次数，通过迭代该组特征的小块来达到速度的增加。
 
+Principal component analysis（主成分分析） (:class:`PCA`) 的缺点在于，通过该方法提取的成分具有唯一的密度表达式，即当表示为原始变量的线性组合时，它们具有非零系数，使之难以解释。在许多情况下，真正的基础组件可以更自然地想象为稀疏向量; 例如在面部识别中，每个组件可能自然地映射到面部的某个部分。
 
-Principal component analysis（主成分分析） (:class:`PCA`) 的缺点在于，通过该方法提取的成分具有唯一的密集表达式，即当表示为原始变量的线性组合时，它们具有非零系数。这可以使解释变得困难。在许多情况下，真正的基础组件可以更自然地想象为稀疏向量; 例如在面部识别中，组件可能自然地映射到面部的部分。
+稀疏的主成分产生更简洁、可解释的表达式，明确强调了样本之间的差异性来自哪些原始特征。
 
-Sparse principal components（稀疏的主成分）产生更简洁，可解释的表示，明确强调哪些 original features （原始特征）有助于样本之间的差异。
-
-以下示例说明了使用 Olivetti faces dataset 中的稀疏 PCA 提取的 16 个 components （组件）。可以看出 regularization term （正则化术语）如何引发许多零。此外，数据的 natural structure （自然结构）导致非零系数 vertically adjacent （垂直相邻）。该模型不会在数学上强制执行: 每个 component （组件）都是一个向量  :math:`h \in \mathbf{R}^{4096}`, 没有 vertical adjacency （垂直相邻性）的概念，除了人类友好的可视化视图为 64x64 像素图像。下面显示的组件出现局部的事实是数据的固有结构的影响，这使得这种局部模式使重建误差最小化。存在考虑到邻接和不同类型结构的稀疏诱导规范; 参见 [Jen09]_ 对这种方法进行审查。
+以下示例说明了使用稀疏 PCA 提取 Olivetti 人脸数据集中的 16 个组分。可以看出正则化项产生了许多零。此外，数据的自然结构导致了非零系数垂直相邻 （vertically adjacent）。该模型不会在数学上强制执行: 每个组分都是一个向量  :math:`h \in \mathbf{R}^{4096}`,除非人性化地的可视化为 64x64 像素的图像，否则没有垂直相邻性的概念。
+下面显示的组分看起来局部化（appear local)是数据的内在结构的影响，这种局部模式使重建误差最小化。有一种考虑到邻接性和不同结构类型的导致稀疏的规范（sparsity-inducing norms）,参见 [Jen09]_ 对这种方法进行了解。
 有关如何使用稀疏 PCA 的更多详细信息，请参阅下面的示例部分。
+更多关于 Sparse PCA 使用的内容，参见示例部分，如下：
 
 
 .. |spca_img| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_005.png
@@ -212,7 +182,7 @@ Sparse principal components（稀疏的主成分）产生更简洁，可解释�
 
 .. centered:: |pca_img| |spca_img|
 
-请注意，稀疏 PCA 问题有许多不同的配方。这里实行的是基于 [Mrl09]_ 。解决的优化问题是一个 PCA 问题（dictionary learning（字典学习）），具有 :math:`\ell_1` 对 components （组件）的 penalty （惩罚）:
+请注意，有多种不同的计算稀疏PCA 问题的公式。 这里使用的方法基于 [Mrl09]_ 。优化问题的解决是一个带有惩罚项（L1范数的） :math:`\ell_1` 的一个 PCA 问题（dictionary learning（字典学习））:
 
 .. math::
    (U^*, V^*) = \underset{U, V}{\operatorname{arg\,min\,}} & \frac{1}{2}
@@ -221,11 +191,11 @@ Sparse principal components（稀疏的主成分）产生更简洁，可解释�
                 0 \leq k < n_{components}
 
 
-sparsity-inducing（稀疏性诱导） :math:`\ell_1` 规范也可以避免学习成分的噪音降低，而 training samples （训练样本）很少。可以通过超参数 ``alpha`` 来调整惩罚程度（从而减少稀疏度）。小值导致了温和的正则化因式分解，而较大的值将许多系数缩小到零。
+导致稀疏（sparsity-inducing）的 :math:`\ell_1` 规范也可以避免当训练样本很少时从噪声中学习成分。可以通过超参数 ``alpha`` 来调整惩罚程度（从而减少稀疏度）。值较小会导致温和的正则化因式分解，而较大的值将许多系数缩小到零。
 
 .. note::
 
-  虽然本着在线算法的精神， :class:`MiniBatchSparsePCA` 类不实现 ``partial_fit`` , 因为算法沿特征方向在线，而不是样本方向。
+  虽然本着在线算法的精神， :class:`MiniBatchSparsePCA` 类不实现 ``partial_fit`` , 因为在线算法沿特征方向，而不是样本方向。
 
 .. topic:: 示例:
 
@@ -243,18 +213,19 @@ sparsity-inducing（稀疏性诱导） :math:`\ell_1` 规范也可以避免学�
 
 .. _LSA:
 
-截断奇异值分解和潜在语义分析
-========================================
 
-:class:`TruncatedSVD` 实现了一个奇异值分解（SVD）的变体，它只能计算 :math:`k` 最大的奇异值，其中 :math:`k` 是用户指定的参数。
+截断奇异值分解和隐语义分析
+=========================================================
 
-当 truncated SVD （截断的 SVD） 被应用于术语文档矩阵（由 ``CountVectorizer`` 或 ``TfidfVectorizer`` 返回）时，这种转换被称为 `latent semantic analysis <http://nlp.stanford.edu/IR-book/pdf/18lsi.pdf>`_ (LSA), 因为它将这样的矩阵转换为低纬度的 "semantic（语义）" 空间。
-特别地， LSA 已知能够抵抗同义词和多义词的影响（两者大致意味着每个单词有多重含义），这导致术语文档矩阵过度稀疏，并且在诸如余弦相似性的度量下表现出差的相似性。
+:class:`TruncatedSVD` 实现了一个奇异值分解（SVD）的变体，它只计算 :math:`k` 个最大的奇异值，其中 :math:`k` 是用户指定的参数。
+
+当截断的 SVD被应用于 term-document矩阵（由 ``CountVectorizer`` 或 ``TfidfVectorizer`` 返回）时，这种转换被称为 `latent semantic analysis <http://nlp.stanford.edu/IR-book/pdf/18lsi.pdf>`_ (LSA), 因为它将这样的矩阵转换为低纬度的 "semantic（语义）" 空间。
+特别地是 LSA 能够抵抗同义词和多义词的影响（两者大致意味着每个单词有多重含义），这导致 term-document 矩阵过度稀疏，并且在诸如余弦相似性的度量下表现出差的相似性。
 
 .. note::
-    LSA 也被称为潜在语义索引 LSI，尽管严格地说它是指在 persistent indexes （持久索引）中用于 information retrieval （信息检索）的目的。
+    LSA 也被称为隐语义索引 LSI，尽管严格地说它是指在持久索引（persistent indexes）中用于信息检索的目的。
 
-数学表示中， truncated SVD 应用于训练样本 :math:`X` 产生一个 low-rank approximation （低阶逼近于） :math:`X`:
+数学表示中， 训练样本 :math:`X` 用截断的SVD产生一个低秩的（ low-rank）近似值 :math:`X` :
 
 .. math::
     X \approx X_k = U_k \Sigma_k V_k^\top
@@ -267,15 +238,16 @@ sparsity-inducing（稀疏性诱导） :math:`\ell_1` 规范也可以避免学�
     X' = X V_k
 
 .. note::
-    自然语言处理(NLP) 和信息检索(IR) 文献中的 LSA 的大多数处理方式交换 axes of the :math:`X` matrix （:math:`X` 矩阵的轴）,使其具有形状 ``n_features`` × ``n_samples`` 。
+    
+    自然语言处理(NLP) 和信息检索(IR) 文献中的 LSA 的大多数处理方式是交换矩阵 :math:`X` 的坐标轴,使其具有 ``n_features`` × ``n_samples`` 的形状。
     我们以 scikit-learn API 相匹配的不同方式呈现 LSA, 但是找到的奇异值是相同的。
 
-:class:`TruncatedSVD` 非常类似于 :class:`PCA`, 但不同之处在于它适用于示例矩阵 :math:`X` 而不是它们的协方差矩阵。
-当从特征值中减去 :math:`X` 的列（每个特征）手段时，得到的矩阵上的 truncated SVD 相当于 PCA 。
-实际上，这意味着 :class:`TruncatedSVD` transformer（转换器）接受 ``scipy.sparse`` 矩阵，而不需要对它们进行加密，因为即使对于中型文档集合，densifying （密集）也可能填满内存。
+:class:`TruncatedSVD` 非常类似于 :class:`PCA`, 但不同之处在于它工作在样本矩阵 :math:`X` 而不是它们的协方差矩阵。
+当从特征值中减去 :math:`X` 的每列（每个特征per-feature）的均值时，在得到的矩阵上应用 truncated SVD 相当于 PCA 。
+实际上，这意味着 :class:`TruncatedSVD` 转换器（transformer）接受 ``scipy.sparse`` 矩阵，而不需要对它们进行密集（density），因为即使对于中型大小文档的集合，密集化 （densifying）也可能填满内存。
 
-虽然 :class:`TruncatedSVD` transformer（转换器）与任何（sparse（稀疏））特征矩阵一起工作，建议在 LSA/document 处理设置中使用它在 tf–idf 矩阵上的原始频率计数。
-特别地，应该打开 sublinear scaling （子线性缩放）和 inverse document frequency （逆文档频率） (``sublinear_tf=True, use_idf=True``) 以使特征值更接近于高斯分布，补偿 LSA 对文本数据的错误假设。
+虽然 :class:`TruncatedSVD` 转换器（transformer）可以在任何（稀疏的）特征矩阵上工作，但还是建议在 LSA/document 处理设置中，在 tf–idf 矩阵上的原始频率计数使用它。
+特别地，应该打开子线性缩放（sublinear scaling）和逆文档频率（inverse document frequency） (``sublinear_tf=True, use_idf=True``) 以使特征值更接近于高斯分布，补偿 LSA 对文本数据的错误假设。
 
 .. topic:: 示例:
 
@@ -291,32 +263,34 @@ sparsity-inducing（稀疏性诱导） :math:`\ell_1` 规范也可以避免学�
 
 .. _DictionaryLearning:
 
-字典学习
+词典学习
 ==================
 
 .. _SparseCoder:
 
-稀疏编码与预先计算的字典
+带有预计算词典的稀疏编码
 ---------------------------------
 
-:class:`SparseCoder` 对象是一个 estimator（估计器），可以用来将信号转换成固定的预先计算的字典的 sparse linear combination （稀疏线性组合），如 discrete wavelet basis 。因此，该对象不实现 ``fit`` 方法。该转换相当于 sparse coding problem （稀疏编码问题）: 将数据的表示尽可能少的 dictionary atoms （字典原子）的线性组合。字典学习的所有变体实现以下变换方法，可以通过 ``transform_method`` 初始化参数进行控制: 
+:class:`SparseCoder` 对象是一个估计器 （estimator），可以用来将信号转换成一个固定的预计算的词典内原子（atoms）的稀疏线性组合（sparse linear combination），如离散小波基（ discrete wavelet basis ） 。
+因此，该对象不实现 ``fit`` 方法。该转换相当于一个稀疏编码问题: 将数据的表示为尽可能少的词典原子的线性组合。
+词典学习的所有变体实现以下变换方法，可以通过 ``transform_method`` 初始化参数进行控制: 
 
-* Orthogonal matching pursuit(正交匹配 pursuit ) (:ref:`omp`)
+* Orthogonal matching pursuit(追求正交匹配) (:ref:`omp`)
 
 * Least-angle regression (最小角度回归)(:ref:`least_angle_regression`)
 
-* Lasso computed by least-angle regression(Lasso 通过最小角度回归计算)
+* Lasso computed by least-angle regression(最小角度回归的Lasso 计算)
 
-* Lasso using coordinate descent (Lasso 使用梯度下降)(:ref:`lasso`)
+* Lasso using coordinate descent ( 使用坐标下降的Lasso)(:ref:`lasso`)
 
 * Thresholding(阈值)
 
-Thresholding （阈值）非常快，但是不能产生精确的 reconstructions（重构）。
-它们在分类任务的文献中已被证明是有用的。对于 image reconstruction tasks （图像重构任务）， orthogonal matching pursuit 产生最精确，unbiased（无偏）的重构。 
+阈值方法速度非常快，但是不能产生精确的重建。
+它们在分类任务的文献中已被证明是有用的。对于图像重建任务，追求正交匹配可以产生最精确、无偏的重建。 
 
-dictionary learning（字典学习）对象通过 ``split_code`` 参数提供分类稀疏编码结果中的正值和负值的可能性。当使用 dictionary learning （字典学习）来提取将用于监督学习的特征时，这是有用的，因为它允许学习算法将不同的权重分配给 particular atom （特定原子）的 negative loadings （负的负荷），从相应的 positive loading （正加载）。
+词典学习对象通过 ``split_code`` 参数提供稀疏编码结果中的正值和负值分离的可能性。当使用词典学习来提取将用于监督学习的特征时，这是有用的，因为它允许学习算法将不同的权重从正加载（loading）分配给相应的负加载的特定原子。
 
-split code for a single sample（单个样本的分割代码）具有长度 ``2 * n_components`` ，并使用以下规则构造: 首先，计算长度为 ``n_components`` 的常规代码。然后， ``split_code`` 的第一个 ``n_components`` 条目将用正常代码向量的正部分填充。分割代码的下半部分填充有代码矢量的负部分，只有一个正号。因此， split_code 是非负的。 
+单个样本的分割编码具有长度 ``2 * n_components`` ，并使用以下规则构造: 首先，计算长度为 ``n_components`` 的常规编码。然后， ``split_code`` 的第一个 ``n_components`` 条目将用正常编码向量的正部分填充。分割编码的第二部分用编码向量的负部分填充，只有一个正号。因此， split_code 是非负的。 
 
 
 .. topic:: 示例:
@@ -324,15 +298,15 @@ split code for a single sample（单个样本的分割代码）具有长度 ``2 
     * :ref:`sphx_glr_auto_examples_decomposition_plot_sparse_coding.py`
 
 
-通用字典学习
+通用词典学习
 --------------------
 
-Dictionary learning（字典学习） (:class:`DictionaryLearning`) 是一个矩阵因式分解问题，相当于找到一个（通常是不完整的）字典，它将在拟合数据的稀疏编码中表现良好。
+词典学习( :class:`DictionaryLearning` ) 是一个矩阵因式分解问题，相当于找到一个在拟合数据的稀疏编码中表现良好的（通常是过完备的（overcomplete））词典。
 
-将数据表示为来自 overcomplete dictionary（过度完整字典）的稀疏组合的原子被认为是  mammal primary visual cortex works（哺乳动物初级视觉皮层的工作方式）. 
-因此，应用于 image patches （图像补丁）的 dictionary learning （字典学习）已被证明在诸如 image completion ，inpainting（修复） and denoising（去噪）以及监督识别的图像处理任务中给出良好的结果。
+将数据表示为来自过完备词典的原子的稀疏组合被认为是哺乳动物初级视觉皮层的工作方式。
+因此，应用于图像补丁的词典学习已被证明在诸如图像完成、修复和去噪，以及有监督的识别图像处理任务中表现良好的结果。
 
-Dictionary learning（字典学习）是通过交替更新稀疏代码来解决的优化问题，作为解决多个 Lasso 问题的一个解决方案，考虑到 dictionary fixed （字典固定），然后更新字典以最适合 sparse code （稀疏代码）。
+词典学习是通过交替更新稀疏编码来解决的优化问题，作为解决多个 Lasso 问题的一个解决方案，考虑到字典固定，然后更新字典以最好地适合稀疏编码。
 
 .. math::
    (U^*, V^*) = \underset{U, V}{\operatorname{arg\,min\,}} & \frac{1}{2}
@@ -352,10 +326,9 @@ Dictionary learning（字典学习）是通过交替更新稀疏代码来解决�
 .. centered:: |pca_img2| |dict_img2|
 
 
-在使用这样一个过程来 fit the dictionary （拟合字典）之后，变换只是一个稀疏的编码步骤，与所有的字典学习对象共享相同的实现。(参见 :ref:`SparseCoder`)。
+在使用这样一个过程来拟合词典之后，变换只是一个稀疏的编码步骤，与所有的词典学习对象共享相同的实现。(参见 :ref:`SparseCoder`)。
 
-以下图像显示从 raccoon face （浣熊脸部）图像中提取的 4x4 像素图像补丁中学习的字典如何。
-
+以下图像显示了字典学习是如何从浣熊脸部的部分图像中提取的4x4像素图像补丁中进行词典学习的。
 
 .. figure:: ../auto_examples/decomposition/images/sphx_glr_plot_image_denoising_001.png
     :target: ../auto_examples/decomposition/plot_image_denoising.html
@@ -376,10 +349,10 @@ Dictionary learning（字典学习）是通过交替更新稀疏代码来解决�
 
 .. _MiniBatchDictionaryLearning:
 
-小批量字典学习
+Mini-batch 字典学习
 ----------------------
 
-:class:`MiniBatchDictionaryLearning` 实现了更快、更适合大型数据集的字典学习算法，但该版本不太准确。
+:class:`MiniBatchDictionaryLearning` 实现了更快、更适合大型数据集的字典学习算法，其运行速度更快，但准确度有所降低。
 
 默认情况下，:class:`MiniBatchDictionaryLearning` 将数据分成小批量，并通过在指定次数的迭代中循环使用小批量，以在线方式进行优化。但是，目前它没有实现停止条件。
 
@@ -412,9 +385,9 @@ Dictionary learning（字典学习）是通过交替更新稀疏代码来解决�
 .. math:: x_i = W h_i + \mu + \epsilon
 
 矢量 :math:`h_i` 被称为 "潜在"，因为它是不可观察的。 
-:math:`\epsilon` 被认为是根据高斯分布的噪声项，平均值为0，协方差为 :math:`\Psi` （即 :math:`\epsilon \sim \mathcal{N}(0, \Psi)`）， 
+:math:`\epsilon` 被认为是根据高斯分布的噪声项，平均值为 0，协方差为 :math:`\Psi` （即 :math:`\epsilon \sim \mathcal{N}(0, \Psi)`）， 
 :math:`\mu` 是一些任意的偏移向量。 这样一个模型被称为 "生成"，因为它描述了如何从 :math:`h_i` 生成 :math:`x_i` 。
-如果我们使用所有的 :math:`x_i` 作为列来形成一个矩阵 :math:`\mathbf{X}`，并将所有的 :math:`h_i` 作为矩阵 :math:`\mathbf{H}` 的列，
+如果我们使用所有的 :math:`x_i` 作为列来形成一个矩阵 :math:`\mathbf{X}` ，并将所有的 :math:`h_i` 作为矩阵 :math:`\mathbf{H}` 的列，
 那么我们可以写（适当定义的 :math:`\mathbf{M}` 和 :math:`\mathbf{E}` ）:
 
 .. math::
@@ -481,8 +454,8 @@ Dictionary learning（字典学习）是通过交替更新稀疏代码来解决�
 独立分量分析将多变量信号分解为最大独立的加性子组件。 
 它使用 :class:`Fast ICA <FastICA>` 算法在 scikit-learn 中实现。 
 通常，ICA 不用于降低维度，而是用于分离叠加信号。 
-由于ICA模型不包括噪声项，因此要使模型正确，必须应用美白。 
-这可以在内部使用 whiten 参数或手动使用其中一种PCA变体进行。
+由于 ICA 模型不包括噪声项，因此要使模型正确，必须应用美白。 
+这可以在内部使用 whiten 参数或手动使用其中一种 PCA 变体进行。
 
 通常用于分离混合信号（称为 *盲源分离* 的问题），如下例所示:
 
@@ -492,7 +465,7 @@ Dictionary learning（字典学习）是通过交替更新稀疏代码来解决�
     :scale: 60%
 
 
-ICA也可以被用作发现具有一些稀疏性的组件的另一个非线性分解:
+ICA 也可以被用作发现具有一些稀疏性的组件的另一个非线性分解:
 
 .. |pca_img4| image:: ../auto_examples/decomposition/images/sphx_glr_plot_faces_decomposition_002.png
     :target: ../auto_examples/decomposition/plot_faces_decomposition.html
@@ -522,7 +495,7 @@ NMF 与 Frobenius 规范
 :class:`NMF` [1]_ 是一种替代的分解方法，假设数据和分量是非负数的。 
 在数据矩阵不包含负值的情况下，可以插入 :class:`NMF` 而不是 :class:`PCA` 或其变体。 
 通过优化 :math:`X` 与矩阵乘积 :math:`WH` 之间的距离 :math:`d` ，可以将样本 :math:`X` 分解为非负元素的两个矩阵 :math:`W` 和 :math:`H`。 
-最广泛使用的距离函数是 Frobenius 方程的平方，这是欧几里德范数到矩阵的明显延伸:
+最广泛使用的距离函数是 Frobenius 方程的平方，这是欧几里德范数到矩阵的广泛的扩展:
 
 .. math::
     d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{\mathrm{Fro}}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2
@@ -575,7 +548,7 @@ L2 之前使用 Frobenius 范数，而L1 先验使用元素 L1 范数。与 :cla
     + \frac{\alpha(1-\rho)}{2} ||W||_{\mathrm{Fro}} ^ 2
     + \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2
 
-:class:`NMF` 正规化 W 和 H . 公共函数 :func:`non_negative_factorization` 允许通过 :attr:`regularization` 属性进行更精细的控制，并且可以仅将 W，仅 H 或两者正规化。
+:class:`NMF` 正规化 W 和 H . 公共函数 :func:`non_negative_factorization` 允许通过 :attr:`regularization` 属性进行更精细的控制，并且可以仅将 W ，仅 H 或两者正规化。
 
 NMF 具有 beta-divergence
 ------------------------------
@@ -595,7 +568,7 @@ NMF 具有 beta-divergence
 .. math::
     d_{IS}(X, Y) = \sum_{i,j} (\frac{X_{ij}}{Y_{ij}} - \log(\frac{X_{ij}}{Y_{ij}}) - 1)
 
-这三个距离是 beta-divergence 家族的特殊情况，分别为 :math:`\beta = 2, 1, 0` [6]_ 。 beta-divergence 定义如下:
+这三个距离函数是 beta-divergence 家族的特殊情况，其参数分别为 :math:`\beta = 2, 1, 0` [6]_ 。 beta-divergence 定义如下:
 
 .. math::
     d_{\beta}(X, Y) = \sum_{i,j} \frac{1}{\beta(\beta - 1)}(X_{ij}^\beta + (\beta-1)Y_{ij}^\beta - \beta X_{ij} Y_{ij}^{\beta - 1})
@@ -635,7 +608,7 @@ NMF最适用于 ``fit_transform`` 方法，该方法返回矩阵W.矩阵 H 在 `
     * :ref:`sphx_glr_auto_examples_applications_plot_topics_extraction_with_nmf_lda.py`
     * :ref:`sphx_glr_auto_examples_decomposition_plot_beta_divergence.py`
 
-.. topic:: 参考:
+.. topic:: 参考文献:
 
     .. [1] `"Learning the parts of objects by non-negative matrix factorization"
       <http://www.columbia.edu/~jwp2128/Teaching/W4721/papers/nmf_nature.pdf>`_
@@ -668,7 +641,7 @@ NMF最适用于 ``fit_transform`` 方法，该方法返回矩阵W.矩阵 H 在 `
 潜在 Dirichlet 分配是离散数据集（如文本语料库）的集合的生成概率模型。 
 它也是一个主题模型，用于从文档集合中发现抽象主题。
 
-LDA的图形模型是一个 three-level 贝叶斯模型:
+LDA 的图形模型是一个 three-level 贝叶斯模型:
 
 .. image:: ../images/lda_model_graph.png
    :align: center
@@ -690,7 +663,7 @@ LDA的图形模型是一个 three-level 贝叶斯模型:
   p(z, \theta, \beta |w, \alpha, \eta) =
     \frac{p(z, \theta, \beta|\alpha, \eta)}{p(w|\alpha, \eta)}
 
-由于后验是棘手的，变分贝叶斯方法使用更简单的分布 :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)` 近似，
+由于后验分布难以处理，变分贝叶斯方法使用更简单的分布 :math:`q(z,\theta,\beta | \lambda, \phi, \gamma)` 近似，
 并且优化了这些变分参数  :math:`\lambda`, :math:`\phi`, :math:`\gamma` 最大化证据下限 (ELBO):
 
 .. math::
@@ -705,8 +678,8 @@ LDA的图形模型是一个 three-level 贝叶斯模型:
 .. note::
   虽然在线方法保证收敛到局部最优点，最优点的质量和收敛速度可能取决于小批量大小和学习率设置相关的属性。
 
-当 :class:`LatentDirichletAllocation` 应用于 "文档术语" 矩阵时，矩阵将被分解为 "主题术语" 矩阵和 "文档主题" 矩阵。
-虽然 "主题术语" 矩阵在模型中被存储为 :attr:`components_` ，但是可以通过变换方法计算 "文档主题" 矩阵。
+当 :class:`LatentDirichletAllocation` 应用于 "document-term" 矩阵时，矩阵将被分解为 "topic-term" 矩阵和 "document-topic" 矩阵。
+虽然 "topic-term" 矩阵在模型中被存储为 :attr:`components_` ，但是可以通过变换方法计算 "document-topic" 矩阵。
 
 :class:`LatentDirichletAllocation` 还实现了  ``partial_fit`` 方法。当数据可以顺序提取时使用.
 

@@ -55,6 +55,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 贡献者可自行编辑如下内容（排名不分先后）.
 
 ### 0.19.0
+**翻译者(人人皆大佬~):**
 * [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
 * [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
 * [@chenyyx](https://github.com/chenyyx)（Joy yx）
@@ -95,6 +96,24 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
 * [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
 * [@夜神月](@qq760514101)（夜神月）
+* [@liyangbit](https://github.com/liyangbit)（Lemon）
+
+**校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
+* [@pan8664716](https://github.com/pan8664716)（pan8664716）
+* [@xrj](https://github.com/xrj)（xrj）
+* [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）
+* [@marsjhao](https://github.com/marsjhao)（Zhang Junhao）
+* [@tiantian1412](https://github.com/tiantian1412)（tiantian1412）
+* [@sheepmen](https://github.com/sheepmen)（羊三）
+* [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
+* [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
+* [@chenyyx](https://github.com/chenyyx)（Joy yx）
+* [@mikechengwei](https://github.com/mikechengwei)（Mike）
+* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
+* [@busesese](https://github.com/busesese)（wenyi）
+* [@GlassyWu](https://github.com/GlassyWu)（glassy）
+* [@wodekwan](https://github.com/wodekwan)（wodekwan）
+* [@charleschou520](https://github.com/charleschou520)（charleschou520）
 
 
 
@@ -103,7 +122,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 
 ## 联系方式
 有任何建议反馈, 或想参与文档翻译, 麻烦联系下面的企鹅:
-* 企鹅: 1042658081
+* 企鹅: 1042658081（那伊抹微笑）, 190442212（小瑶）, 529815144（片刻）
 
 ## 其它中文文档
 * [TensorFlow R1.2 中文文档](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030122)
