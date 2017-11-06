@@ -114,6 +114,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@GlassyWu](https://github.com/GlassyWu)（glassy）
 * [@wodekwan](https://github.com/wodekwan)（wodekwan）
 * [@gbyy422990](https://github.com/gbyy422990)（Bin GAO）
+* [@charleschou520](https://github.com/charleschou520)（charleschou520）
 
 
 ### 0.18
