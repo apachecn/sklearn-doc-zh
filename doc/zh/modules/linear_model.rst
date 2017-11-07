@@ -51,8 +51,7 @@
 普通最小二乘法复杂度
 ---------------------------------
 
-该方法使用X的奇异值分解来计算最小二乘解。如果X是 size 为 (n, p) 的矩阵，则假设 :math:`n \geq p`
-则该方法的成本为 :math:`O(n p^2)`.
+该方法使用 X 的奇异值分解来计算最小二乘解。如果 X 是一个 size 为 (n, p) 的矩阵，假设 :math:`n \geq p` ，则该方法的花费的时间为 :math:`O(n p^2)` （参考《算法导论》和《数据结构与算法分析—C语言描述》）。
 
 .. _ridge_regression:
 
@@ -68,7 +67,7 @@
    \underset{w}{min\,} {{|| X w - y||_2}^2 + \alpha {||w||_2}^2}
 
 
-这里， :math:`\alpha \geq 0` 是控制收缩量的复杂性参数： :math:`\alpha`, 的值越大，收缩量越大，因此系数变得对共线性变得更加鲁棒。
+其中， :math:`\alpha \geq 0` 是控制收缩量的复杂性参数： :math:`\alpha`, 的值越大，收缩量越大，因此系数变得对共线性变得更加鲁棒。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ridge_path_001.png
    :target: ../auto_examples/linear_model/plot_ridge_path.html
@@ -76,7 +75,7 @@
    :scale: 50%
 
 
-与其他线性模型一样， :class:`Ridge` 将采用其 ``fit`` 将采用其 :math:`w` 存储在其 ``coef_`` 成员中::
+和其他线性模型一样， :class:`Ridge` 将采用 ``fit`` 方法排列 X，y，并且将线性模型的系数 :math:`w` 存储在 ``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.Ridge (alpha = .5)
@@ -108,7 +107,7 @@
 设置正则化参数：广义交叉验证
 ------------------------------------------------------------------
 
-:class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象的工作方式与 GridSearchCV 相同，只是它默认为 Generalized Cross-Validation(通用交叉验证 GCV)，这是一种有效的留一交叉验证法::
+:class:`RidgeCV` 通过内置的 Alpha 参数的交叉验证来实现岭回归。  该对象与 GridSearchCV 的使用方法相同，除了它默认为 Generalized Cross-Validation(通用交叉验证 GCV)，后者是留一验证方法（LOO-CV）的一种有效形式::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.RidgeCV(alphas=[0.1, 1.0, 10.0])
@@ -133,7 +132,7 @@ Lasso
 
 The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下是有用的，因为它倾向于使用具有较少参数值的解决方案，有效地减少给定解决方案所依赖的变量的数量。 为此，Lasso及其变体是压缩感测领域的基础。 在某些条件下，它可以恢复精确的非零权重集 (见 :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`).
 
-在数学上，它由一个线性模型组成，以 :math:`\ell_1` 为准。 目标函数最小化是:
+数学上，它由 :math:`\ell_1` 规范的 prior （贝叶斯中的 prior ）作为正则项所训练的一系列线性模型组成。目标函数最小化是:
 
 .. math::  \underset{w}{min\,} { \frac{1}{2n_{samples}} ||X w - y||_2 ^ 2 + \alpha ||w||_1}
 
