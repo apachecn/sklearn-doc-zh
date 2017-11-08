@@ -5,16 +5,16 @@
 
 .. topic:: 内容提要
 
-    在本节中，我们介绍一些我们在使用 scikit-learn 过程中的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。  词汇，并给出了一个简单的学习示例。
+    在本节中，我们介绍一些我们在使用 scikit-learn 过程中的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。
 
 
 机器学习：问题设置
 -------------------------------------
 
-一般来说，一个学习问题通常考查一个数据 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ ，然后尝试预测未知数据的属性。
-如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性特征 。
+一般来说，一个学习问题通常会考虑一系列 n 个 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ 数据，然后尝试预测未知数据的属性。
+如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性或 **features(特征)** 。
 
-我们可以在几个大类上分解学习问题:
+我们可以将学习问题分为几大类:
 
  * `监督学习 <https://en.wikipedia.org/wiki/Supervised_learning>`_ ,
    其中数据带有我们想要预测的附加属性（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
@@ -74,7 +74,7 @@
 
 .. topic:: 数据数组的形状
 
-    数据总是2D数组，形状 ``(n_samples, n_features)``，尽管原始数据可能具有不同的形状。 
+    数据总是 2D 数组，形状 ``(n_samples, n_features)``，尽管原始数据可能具有不同的形状。 
     在数字的情况下，每个原始样本是形状 ``(8, 8)`` 的图像，可以使用以下方式访问::
 
       >>> digits.images[0]
@@ -87,7 +87,7 @@
              [  0.,   2.,  14.,   5.,  10.,  12.,   0.,   0.],
              [  0.,   0.,   6.,  13.,  10.,   0.,   0.,   0.]])
     
-    该  :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始数据开始调整，形成可以在 scikit-learn 中形成消费数据。
+    该  :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始数据开始调整，形成可以在 scikit-learn 中使用的消费数据。
     
 .. topic:: 从外部数据集加载
 
@@ -97,7 +97,7 @@
 ------------------------
 
 在数字数据集的情况下，任务是给出图像来预测其表示的数字。 
-我们给出了10个可能类（数字0到9）中的每一个的样本，我们在这些类上给出了一个 `估计器 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够*预测*看不见的样本所属的类。
+我们给出了10个可能类（数字0到9）中的每一个的样本，我们在这些类上 *拟合*一个 `估计器 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够 *预测* 看不见的样本所属的类。
 
 在 scikit-learn 中，分类的估计器是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 的方法。
 
