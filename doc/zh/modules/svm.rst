@@ -6,7 +6,7 @@
 
 .. currentmodule:: sklearn.svm
 
-**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`classification（分类） <svm_classification>`, :ref:`regression（回归） <svm_regression>` and  :ref:`outliers detection（异常检测） <svm_outlier_detection>`.
+**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`分类 <svm_classification>`, :ref:`回归 <svm_regression>` and  :ref:`异常检测 <svm_outlier_detection>`.
 
 支持向量机的优势在于:
 
@@ -16,7 +16,7 @@
 
     - 在决策函数（称为支持向量）中使用训练集的子集,因此它也是高效利用内存的.
 
-    - 通用性: 不同的核函数 :ref:`svm_kernels` 与特定的决策函数一一对应.常见的内核已
+    - 通用性: 不同的核函数 :ref:`svm_kernels` 与特定的决策函数一一对应.常见的 kernel 已
     经提供,也可以指定定制的内核.
 
 支持向量机的缺点包括:
@@ -119,7 +119,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 
 至于 one-vs-one :class:`SVC`, 属性特征的布局(layout)有少多些复杂. 考虑到有一种线性核函数, ``coef_`` 和 ``intercept_`` 的布局(layout)与上文描述成 :class:`LinearSVC` 相似, 除了 ``coef_`` 的形状 ``[n_class * (n_class - 1) / 2, n_features]``, 与许多二元的分类器相似. 0到n的类别顺序是 "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", "1 vs 3", "1 vs n", . . . "n-1 vs n".
 
-``dual_coef_`` 的形状是 ``[n_class-1, n_SV]``, 这个结构有些难以理解.
+``dual_coef_`` 的 shape 是 ``[n_class-1, n_SV]``, 这个结构有些难以理解.
 对应于支持向量的列与 ``n_class * (n_class - 1) / 2`` "one-vs-one" 分类器相关.
 每一个支持向量用于 ``n_class - 1`` 分类器中.对于这些分类器,每一行的 ``n_class - 1`` 
 条目对应于对偶系数(dual coefficients).
@@ -243,7 +243,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 但类别的 SVM 用于异常检测, 即给予一个样例集, 它会检测这个样例集的 soft boundary 以便给新的数据点分类,
 看它是否属于这个样例集. 生成的类称作 :class:`OneClassSVM`.
 
-这种情况下, 因为它属于非监督学习的一类, 没有类标签, fit方法只会考虑输入数组X,.
+这种情况下, 因为它属于非监督学习的一类, 没有类标签, fit 方法只会考虑输入数组X.
 
 在章节 :ref:`outlier_detection` 查看这个应用的更多细节.
 
@@ -253,7 +253,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
    :scale: 75
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_svm_plot_oneclass.py`
  * :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
@@ -265,7 +265,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 支持向量机是个强大的工具，不过它的计算和存储空间要求也会随着要训练向量的数目增加而快速增加。
 SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支持向量和训练数据的其余部分分离开来。
 在实践中(数据集相关)，会根据 `libsvm`_ 的缓存有多效，在 :math:`O(n_{features} \times n_{samples}^2)` 和 
-:math:`O(n_{features} \times n_{samples}^3)` 之间基于 `libsvm`_ 的缩放操作才会调用这个 QP解析器。
+:math:`O(n_{features} \times n_{samples}^3)` 之间基于 `libsvm`_ 的缩放操作才会调用这个 QP 解析器。
 如果数据是非常稀疏，那 :math:`n_{features}`  就用样本向量中非零特征的平均数量去替换。 
 
 另外请注意，在线性情况下，由 `liblinear`_ 操作的 :class:`LinearSVC` 算法要比由它的 `libsvm`_ 对应的 
@@ -277,26 +277,26 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 
   * **避免数据复制**: 对于 :class:`SVC`， :class:`SVR`， :class:`NuSVC` 和
-    :class:`NuSVR`， 如果数据是通过某些方法而不是用C有序的连续双精度，那它先会调用底层的C命令再复制。
-    您可以通过检查它的 ``flags`` 属性，来确定给定的numpy数组是不是C连续的。
+    :class:`NuSVR`， 如果数据是通过某些方法而不是用 C 有序的连续双精度，那它先会调用底层的 C 命令再复制。
+    您可以通过检查它的 ``flags`` 属性，来确定给定的 numpy 数组是不是 C 连续的。
 
     对于 :class:`LinearSVC` (和 :class:`LogisticRegression
-    <sklearn.linear_model.LogisticRegression>`) 的任何输入，都会以numpy数组形式，被复制和转换为
-    用liblinear内部稀疏数据去表达（双精度浮点型float和非零部分的int32索引）。 
-    如果您想要一个适合大规模的线性分类器，又不打算复制一个密集的C-contiguous双精度numpy数组作为输入，
+    <sklearn.linear_model.LogisticRegression>`) 的任何输入，都会以 numpy 数组形式，被复制和转换为
+    用 liblinear 内部稀疏数据去表达（双精度浮点型 float 和非零部分的 int32 索引）。 
+    如果您想要一个适合大规模的线性分类器，又不打算复制一个密集的 C-contiguous 双精度 numpy 数组作为输入，
     那我们建议您去使用 :class:`SGDClassifier
     <sklearn.linear_model.SGDClassifier>` 类作为替代。目标函数可以配置为和 :class:`LinearSVC`
     模型差不多相同的。
 
   * **内核的缓存大小**: 在大规模问题上，对于 :class:`SVC`, :class:`SVR`, :class:`nuSVC` 和
-    :class:`NuSVR`, 内核缓存的大小会特别影响到运行时间。如果您有足够可用的RAM，不妨把它的 ``缓存大小`` 
-    设得比默认的200(MB)要高，例如为 500(MB) 或者 1000(MB)。
+    :class:`NuSVR`, 内核缓存的大小会特别影响到运行时间。如果您有足够可用的 RAM，不妨把它的 ``缓存大小`` 
+    设得比默认的 200(MB) 要高，例如为 500(MB) 或者 1000(MB)。
 
   * **惩罚系数C的设置**:在合理的情况下， ``C`` 的默认选择为 ``1`` 。如果您有很多混杂的观察数据，
     您应该要去调小它。 ``C`` 越小，就能更好地去正规化估计。
 
-  * 支持向量机算法本身不是用来扩大不变性，所以 **我们强烈建议您去扩大数据量**. 举个例子，对于输入向量X，
-    规整它的每个数值范围为[0, 1]或[-1, +1]，或者标准化它的为均值为0方差为1的数据分布。请注意，
+  * 支持向量机算法本身不是用来扩大不变性，所以 **我们强烈建议您去扩大数据量**. 举个例子，对于输入向量 X，
+    规整它的每个数值范围为 [0, 1] 或 [-1, +1] ，或者标准化它的为均值为0方差为1的数据分布。请注意，
     相同的缩放标准必须要应用到所有的测试向量，从而获得有意义的结果。 请参考章节
     :ref:`preprocessing` ，那里会提供到更多关于缩放和规整。
 
@@ -308,10 +308,10 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
   * 在拟合模型时，底层 :class:`LinearSVC` 操作使用了随机数生成器去选择特征。
     所以不要感到意外，对于相同的数据输入，也会略有不同的输出结果。如果这个发生了，
-    尝试用更小的tol 参数。
+    尝试用更小的 tol 参数。
 
   * 使用由 ``LinearSVC(loss='l2', penalty='l1',
-    dual=False)`` 提供的L1惩罚去产生稀疏解，也就是说，特征权重的子集不同于零，这样做有助于决策函数。
+    dual=False)`` 提供的 L1 惩罚去产生稀疏解，也就是说，特征权重的子集不同于零，这样做有助于决策函数。
     随着增加 ``C`` 会产生一个更复杂的模型（要做更多的特征选择）。可以使用 :func:`l1_min_c` 去计算 ``C`` 的数值，去产生一个"null" 模型（所有的权重等于零）。
 
 
@@ -327,7 +327,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
   * 多项式: :math:`(\gamma \langle x, x'\rangle + r)^d`.
     :math:`d` 是关键词 ``degree``, :math:`r` 指定 ``coef0``。
 
-  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键词 ``gamma``, 必须大于0。
+  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键词 ``gamma``, 必须大于 0。
 
   * sigmoid (:math:`\tanh(\gamma \langle x,x'\rangle + r)`),
     其中 :math:`r` 指定 ``coef0``。
@@ -345,7 +345,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 自定义核
 --------------
 
-您可以自定义自己的核，通过使用python函数作为内核或者通过预计算Gram矩阵。
+您可以自定义自己的核，通过使用python函数作为内核或者通过预计算 Gram 矩阵。
 
 自定义内核的分类器和别的分类器一样，除了下面这几点:
 
@@ -362,7 +362,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 您的内核必须要以两个矩阵作为参数，大小分别是
 ``(n_samples_1, n_features)``, ``(n_samples_2, n_features)``
-和返回一个内核矩阵，大小是 ``(n_samples_1, n_samples_2)``.
+和返回一个内核矩阵，shape 是 ``(n_samples_1, n_samples_2)``.
 
 以下代码定义一个线性核，和构造一个使用该内核的分类器例子::
 
@@ -380,7 +380,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 使用 Gram 矩阵
 ~~~~~~~~~~~~~~~~~~~~~
 
-在适应算法中，设置 ``kernel='precomputed'`` 和把X替换为Gram矩阵。
+在适应算法中，设置 ``kernel='precomputed'`` 和把 X 替换为 Gram 矩阵。
 此时，必须要提供在 *所有* 训练矢量和测试矢量中的内核值。 
 
     >>> import numpy as np
@@ -399,11 +399,11 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
     >>> clf.predict(gram)
     array([0, 1])
 
-RBF内核参数
+RBF 内核参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-当用 *径向基* (RBF)内核去训练SVM，有两个参数必须要去考虑： ``C`` 惩罚系数和 ``gamma`` 。参数 ``C`` ，
-通用在所有SVM内核，与决策表面的简单性相抗衡，可以对训练样本的误分类进行有价转换。
+当用 *径向基* (RBF) 内核去训练 SVM，有两个参数必须要去考虑： ``C`` 惩罚系数和 ``gamma`` 。参数 ``C`` ，
+通用在所有 SVM 内核，与决策表面的简单性相抗衡，可以对训练样本的误分类进行有价转换。
 较小的 ``C`` 会使决策表面更平滑，同时较高的 ``C`` 旨在正确地分类所有训练样本。 ``Gamma`` 定义了单一
 训练样本能起到多大的影响。较大的 ``gamma`` 会更让其他样本受到影响。
 
