@@ -15,7 +15,7 @@
 
 * **Metric functions（指标函数）**: :mod:`metrics` 模块实现了针对特定目的评估预测误差的函数。这些指标在以下部分部分详细介绍 :ref:`classification_metrics`, :ref:`multilabel_ranking_metrics`, :ref:`regression_metrics` 和 :ref:`clustering_metrics` 。
 
-最后， :ref:`dummy_estimators` 用于获取 baseline value of those metrics for random predictions （随机预测的这些指标的基准值）。
+最后， :ref:`dummy_estimators` 用于获取随机预测的这些指标的基准值。
 
 .. seealso::
 
