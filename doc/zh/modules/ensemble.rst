@@ -6,7 +6,7 @@
 
 .. currentmodule:: sklearn.ensemble
 
-``注意，在本文中bagging和boosting为了更好的保留原文意图，不进行翻译``
+``注意，在本文中 bagging 和 boosting 为了更好的保留原文意图，不进行翻译``
 ``estimator->估计器  base estimator->基估计器``
 
 **集成方法** 的目标是把使用给定学习算法构建的几个基估计器的预测结果结合起来，从而获得比单个估计器更好的泛化能力/鲁棒性。
@@ -24,29 +24,29 @@
 
 .. _bagging:
 
-Bagging meta-estimator（Bagging 元估计）
+Bagging meta-estimator（Bagging 元估计器）
 ========================================
 
-在集成算法中，bagging方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
+在集成算法中，bagging 方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
 该方法通过在构建模型的过程中引入随机性，以此来减少基估计器的方差(例如，决策树)。
-在多数情况下，bagging方法提供了一种非常简单的方式来对单一模型进行改进，同时无需适应底层算法。
-因为bagging方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下boosting方法在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
+在多数情况下，bagging 方法提供了一种非常简单的方式来对单一模型进行改进，同时无需适应底层算法。
+因为 bagging 方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下 boosting 方法在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
 
 
 bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
-  * 如果抽取的数据集是样本的的子集，我们叫做粘贴(Pasting) [B1999]_ 。
+  * 如果抽取的数据集是样本的的子集，我们叫做粘贴 (Pasting) [B1999]_ 。
 
-  * 如果样本抽取是放回的，我们称为Bagging [B1996]_ 。
+  * 如果样本抽取是放回的，我们称为 Bagging [B1996]_ 。
 
-  * 如果抽取的数据集的随机子集是特征的随机子集，我们叫做随机子空间(Random Subspaces) [H1998]_ 。
+  * 如果抽取的数据集的随机子集是特征的随机子集，我们叫做随机子空间 (Random Subspaces) [H1998]_ 。
 
-  * 最后，如果估计器构建在样本和特征的子集之上时，我们叫做随机补丁(Random Patches) [LG2012]_ 。
+  * 最后，如果估计器构建在样本和特征的子集之上时，我们叫做随机补丁 (Random Patches) [LG2012]_ 。
 
 
 
-在sklearn中，bagging方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor` ），输入的参数和策略由用户指定。``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
-当使用样本子集时，通过设置 ``oob_score=True`` ，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何实构造一个 :class:`KNeighborsClassifier` 估计器的bagging集成，每一个基估计器都建立在50%的样本随机子集和特征随机子集上。
+在 scikit-learn 中，bagging 方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor` ），输入的参数和策略由用户指定。``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
+当使用样本子集时，通过设置 ``oob_score=True`` ，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何实构造一个 :class:`KNeighborsClassifier` 估计器的 bagging 集成，每一个基估计器都建立在 50% 的样本随机子集和特征随机子集上。
 
     >>> from sklearn.ensemble import BaggingClassifier
     >>> from sklearn.neighbors import KNeighborsClassifier
@@ -77,14 +77,14 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 由随机树组成的森林
 ===========================
 
-:mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees算法。
+:mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees 算法。
 这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques） [B1998]_ 。
 这意味着通过在分类器构造过程中引入随机性来创建一组不同的分类器。集成分类器的预测是单个分类器预测结果的平均值。 
 
 
 与其他分类器一样，森林分类器必须拟合（fitted）两个数组：
 保存训练样本的数组（可能稀疏或稠密）X，大小为 ``[n_samples, n_features]``。
-保存训练样本目标值（类标签）的数组Y，大小为 ``[n_samples]``::
+保存训练样本目标值（类标签）的数组 Y，大小为 ``[n_samples]``::
 
     >>> from sklearn.ensemble import RandomForestClassifier
     >>> X = [[0, 0], [1, 1]]
@@ -104,7 +104,7 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于平均，其方差也会减小，通常能够补偿偏差的增加，从而产生更好的模型。
 
 
-与原始版本的实现 [B2001]_ 相反，scikit-learn的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对类别进行投票。 
+与原始版本的实现 [B2001]_ 相反，scikit-learn 的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对类别进行投票。 
 
 
 极限随机树
@@ -216,9 +216,9 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
    :scale: 75
 
 实际上，在拟合模型时这些估计值存储在 ``feature_importances_`` 属性中。
-这是一个大小为``(n_features,)``的数组，其值为正，并且总和为1.0。值越高，匹配特征对预测函数的贡献越大。 
+这是一个大小为 ``(n_features,)`` 的数组，其值为正，并且总和为 1.0。值越高，匹配特征对预测函数的贡献越大。 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_importances_faces.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_forest_importances.py`
@@ -256,9 +256,9 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 AdaBoost
 ========
 
-模型 :mod:`sklearn.ensemble` 包含最流行的提升算法AdaBoost, 这个算法是由 Freund and Schapire 在1995提出来的 [FS1995]_.
+模型 :mod:`sklearn.ensemble` 包含最流行的提升算法 AdaBoost, 这个算法是由 Freund and Schapire 在 1995 年提出来的 [FS1995]_.
 
-AdaBoost的核心思想是用训练数据来反复修正数据来学习一系列的弱学习器(例如:一个弱学习器模型仅仅比随机猜测好一点,
+AdaBoost 的核心思想是用训练数据来反复修正数据来学习一系列的弱学习器(例如:一个弱学习器模型仅仅比随机猜测好一点,
 比如一个简单的决策树),由这些弱学习器学到的结果然后通过加权投票(或加权求和)的方式组合起来,
 从而得到我们最终的预测结果.在每一次提升迭代中修改的数据由应用于每一个训练样本所生成的弱学习器
 的权重 :math:`w_1`, :math:`w_2`, ..., :math:`w_N` 组成.初始化时,将所有弱学习器的权重都
@@ -273,7 +273,7 @@ AdaBoost的核心思想是用训练数据来反复修正数据来学习一系列
    :align: center
    :scale: 75
 
-AdaBoost既可以用在分类问题也可以用在回归问题中:
+AdaBoost 既可以用在分类问题也可以用在回归问题中:
 
   - For multi-class classification, :class:`AdaBoostClassifier` implements
     AdaBoost-SAMME and AdaBoost-SAMME.R [ZZRH2009]_.
@@ -283,7 +283,7 @@ AdaBoost既可以用在分类问题也可以用在回归问题中:
 用法
 -----
 
-下面的例子展示了如何用100个弱学习器来拟合一个AdaBoost分类器::
+下面的例子展示了如何用100个弱学习器来拟合一个 AdaBoost 分类器::
 
     >>> from sklearn.model_selection import cross_val_score
     >>> from sklearn.datasets import load_iris
@@ -301,7 +301,7 @@ AdaBoost既可以用在分类问题也可以用在回归问题中:
 (例如:对于弱学习器为决策树的情况,树的深度 ``max_depth`` 或叶节点的最小样本数 ``min_samples_leaf``
 等都是控制树的复杂度的参数)
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_adaboost_hastie_10_2.py` compares the
    classification error of a decision stump, decision tree, and a boosted
@@ -337,7 +337,7 @@ AdaBoost既可以用在分类问题也可以用在回归问题中:
 ====================================
 
 `Gradient Tree Boosting <https://en.wikipedia.org/wiki/Gradient_boosting>`_
-或梯度提升回归树(GBRT)是提升算法推广到任意可微的损失函数的泛化.GBRT是一个准确高效的现有程序,
+或梯度提升回归树(GBRT)是提升算法推广到任意可微的损失函数的泛化. GBRT 是一个准确高效的现有程序,
 它既能用于分类问题也可以用于回归问题.梯度树提升模型被应用到各种领域包括网页搜索排名和生态领域.
 
 GBRT 的优点:
@@ -373,7 +373,7 @@ GBRT 的缺点:
 
 弱学习器(例如:回归树)的数量由参数 ``n_estimators`` 来控制;每个树的大小可以被控制通过参数 ``max_depth``
 设置树的深度通或者通过参数 ``max_leaf_nodes`` 设置叶节点数目. ``learning_rate``
-是一个在(0,1]之间的超参数,这个参数通过shrinkage(缩减步长)来控制过拟合.
+是一个在 (0,1] 之间的超参数,这个参数通过 shrinkage(缩减步长) 来控制过拟合.
 
 .. note::
 
@@ -402,7 +402,7 @@ GBRT 的缺点:
     >>> mean_squared_error(y_test, est.predict(X_test))    # doctest: +ELLIPSIS
     5.00...
 
-下图展示了应用GradientBoostingRegressor算法,设置其损失函数为最小二乘损失,基本学习器个数为500来处理
+下图展示了应用 GradientBoostingRegressor 算法,设置其损失函数为最小二乘损失,基本学习器个数为500来处理
 :func:`sklearn.datasets.load_boston` 数据集的结果.左图表示每一次迭代的训练误差和测试误差.每一次迭
 代的训练误差保存在提升树模型的 :attr:`~GradientBoostingRegressor.train_score_` 属性中,每一次迭代的测试误差能够通过
 :meth:`~GradientBoostingRegressor.staged_predict` 方法获取,该方法返回一个生成器,用来产生每一
@@ -414,7 +414,7 @@ GBRT 的缺点:
    :align: center
    :scale: 75
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
  * :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_oob.py`
