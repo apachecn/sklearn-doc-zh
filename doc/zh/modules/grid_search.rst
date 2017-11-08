@@ -7,7 +7,7 @@ sklearn.model_selection
 调整估计器的超参数
 ===========================================
 
-超参数，即不在估计器内学习的参数。在 scikit-learn 包中，它们作为估计器类中构造函数的参数进行传递。典型的例子有：用于支持向量分类器的 ``C`` 、``kernel`` 和 ``gamma`` ，用于Lasso的 ``alpha`` 等。
+超参数，即不直接在估计器内学习的参数。在 scikit-learn 包中，它们作为估计器类中构造函数的参数进行传递。典型的例子有：用于支持向量分类器的 ``C`` 、``kernel`` 和 ``gamma`` ，用于Lasso的 ``alpha`` 等。
 
 搜索超参数空间以便获得最好 `交叉验证 <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/cross_validation.html#cross-validation>`_ 分数的方法是可能的而且是值得提倡的。
 
