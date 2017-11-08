@@ -8,9 +8,9 @@
 .. currentmodule:: sklearn.covariance
 
 
-许多统计问题需要在某个时候估计总体的协方差矩阵，这可以被看作是数据集散布情况的估计。
+许多统计问题在某一时刻需要估计一个总体的协方差矩阵，这可以看作是对数据集散点图形状的估计。
 大多数情况下，基于样本的估计（基于其属性，如尺寸，结构，均匀性），
-对估计质量有很大影响。`sklearn.covariance` 方法的目的是
+对估计质量有很大影响。 `sklearn.covariance` 方法的目的是
 提供一个能在各种设置下准确估计总体协方差矩阵的工具。
 
 我们假设观察是独立的，相同分布的 (i.i.d.)。
@@ -19,7 +19,7 @@
 经验协方差 
 ================================
 
-已知数据集的协方差矩阵与经典最大似然估计（或“经验协方差”）
+已知数据集的协方差矩阵与经典 *maximum likelihood estimator(最大似然估计)* （或 "经验协方差"）
 很好地近似，条件是与特征数量（描述观测值的变量）相比，观测数量足够大。
 更准确地说，样本的最大似然估计是相应的总体协方差矩阵的无偏估计。
 
@@ -67,7 +67,7 @@ Tr}\hat{\Sigma}}{p}\rm Id`.
 
 选择收缩量， :math:`\alpha` 相当于设置偏差/方差权衡，下面将讨论。
 
-.. topic:: 例子:
+.. topic:: 示例:
 
    * See :ref:`sphx_glr_auto_examples_covariance_plot_covariance_estimation.py` for
      an example on how to fit a :class:`ShrunkCovariance` object
@@ -77,7 +77,7 @@ Tr}\hat{\Sigma}}{p}\rm Id`.
 Ledoit-Wolf 收敛
 ---------------------------------
 
-在他们的2004年的文章 [1]_ 中， O.Ledoit 和 M.Wolf 提出了一个公式，
+在他们的 2004 年的论文 [1]_ 中， O.Ledoit 和 M.Wolf 提出了一个公式，
 用来计算优化的收敛系数 :math:`\alpha` ，
 它使得估计协方差和实际协方差矩阵之间的均方差进行最小化。
 
@@ -104,10 +104,9 @@ Oracle 近似收缩
 
 在数据为高斯分布的假设下，Chen et al. 等 [2]_  推导出了一个公式，旨在
 产生比 Ledoit 和 Wolf 公式具有更小均方差的收敛系数。
-所得到的估计器被称为协方差的Oracle收缩近似估计器。
+所得到的估计器被称为协方差的 Oracle 收缩近似估计器。
 
-在 `sklearn.covariance` 包中， OAS 估计的协方差可以使用函数 :meth:`oas`
-对样本进行计算，或者可以通过将 :class:`OAS` 对象拟合到相同的样本来获得。
+在 `sklearn.covariance` 包中， OAS 估计的协方差可以使用函数 :meth:`oas` 对样本进行计算，或者可以通过将 :class:`OAS` 对象拟合到相同的样本来获得。
 
 
 .. figure:: ../auto_examples/covariance/images/sphx_glr_plot_covariance_estimation_001.png
@@ -122,7 +121,7 @@ Oracle 近似收缩
     .. [2] Chen et al., "Shrinkage Algorithms for MMSE Covariance Estimation",
            IEEE Trans. on Sign. Proc., Volume 58, Issue 10, October 2010.
 
-.. topic:: 例子:
+.. topic:: 示例:
 
    * See :ref:`sphx_glr_auto_examples_covariance_plot_covariance_estimation.py` for
      an example on how to fit an :class:`OAS` object
@@ -144,8 +143,7 @@ Oracle 近似收缩
 稀疏逆协方差
 ======================================
 
-协方差矩阵的逆矩阵，通常称为精度矩阵（precision
-matrix），它与部分相关矩阵（partial correlation matrix）成正比。
+协方差矩阵的逆矩阵，通常称为精度矩阵（precision matrix），它与部分相关矩阵（partial correlation matrix）成正比。
 它给出部分独立性关系。换句话说，如果两个特征在其他特征上有条件地独立，
 则精度矩阵中的对应系数将为零。这就是为什么估计一个稀疏精度矩阵是有道理的：
 通过从数据中学习独立关系，协方差矩阵的估计能更好处理。这被称为协方差选择。
@@ -190,8 +188,8 @@ matrix），它与部分相关矩阵（partial correlation matrix）成正比。
 
 其中：:math:`K` 是要估计的精度矩阵（precision matrix）， :math:`S` 是样本的协方差矩阵。
 :math:`\|K\|_1` 是非对角系数 :math:`K` （off-diagonal coefficients）的绝对值之和。
-用于解决这个问题的算法是来自 Friedman 2008 Biostatistics 论文的 GLasso算法。
-它与 R语言 ``glasso`` 包中的算法相同。
+用于解决这个问题的算法是来自 Friedman 2008 Biostatistics 论文的 GLasso 算法。
+它与 R 语言 ``glasso`` 包中的算法相同。
 
 
 .. topic:: 例子:
@@ -221,8 +219,7 @@ Robust 协方差估计
 并根据数据的进一步处理，丢弃/降低某些观察值。
 
 
-``sklearn.covariance`` 包实现了 robust estimator of covariance， 即
- Minimum Covariance Determinant [3]_ 。
+``sklearn.covariance`` 包实现了 robust estimator of covariance， 即 Minimum Covariance Determinant [3]_ 。
 
 
 最小协方差决定
@@ -230,14 +227,14 @@ Robust 协方差估计
 
 最小协方差决定（Minimum Covariance Determinant）估计器是
 由 P.J. Rousseeuw 在 [3]_ 中引入的数据集协方差的鲁棒估计 (robust estimator)。
-这个想法是找出一个给定比例（h）的“好”观察值，它们不是离群值，
+这个想法是找出一个给定比例（h）的 "好" 观察值，它们不是离群值，
 且可以计算其经验协方差矩阵。
-然后将该经验协方差矩阵重新缩放以补偿所执行的观察选择（“一致性步骤”）。
+然后将该经验协方差矩阵重新缩放以补偿所执行的观察选择（"consistency step(一致性步骤)"）。
 计算最小协方差决定估计器后，可以根据其马氏距离（Mahalanobis distance）给出观测值的权重，
-这导致数据集的协方差矩阵的重新加权估计（“重新加权步骤”，reweighting step）。
+这导致数据集的协方差矩阵的重新加权估计（"reweighting step(重新加权步骤)"）。
 
 Rousseeuw 和 Van Driessen  [4]_ 开发了 FastMCD 算法，以计算最小协方差决定因子（Minimum Covariance Determinant）。
-在scikit-learn中，该算法在将 MCD 对象拟合到数据时应用。FastMCD 算法同时计算数据集位置的鲁棒估计。
+在 scikit-learn 中，该算法在将 MCD 对象拟合到数据时应用。FastMCD 算法同时计算数据集位置的鲁棒估计。
 
 Raw估计可通过 :class:`MinCovDet` 对象的 ``raw_location_`` 和 ``raw_covariance_`` 属性获得。
 
@@ -255,7 +252,7 @@ Raw估计可通过 :class:`MinCovDet` 对象的 ``raw_location_`` 和 ``raw_cova
      关于如何将对象 :class:`MinCovDet` 与数据拟合的示例， 尽管存在异常值，但估计结果仍然比较准确。
 
    * See :ref:`sphx_glr_auto_examples_covariance_plot_mahalanobis_distances.py` 
-     就马氏距离（Mahalanobis distance），针对协方差估计器 :class:`EmpiricalCovariance` 和
+     马氏距离（Mahalanobis distance），针对协方差估计器 :class:`EmpiricalCovariance` 和
      :class:`MinCovDet` 之间的差异进行可视化。（所以我们得到了精度矩阵的更好估计）
 
 .. |robust_vs_emp| image:: ../auto_examples/covariance/images/sphx_glr_plot_robust_vs_empirical_covariance_001.png
