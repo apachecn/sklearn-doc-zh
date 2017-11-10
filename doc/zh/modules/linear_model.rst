@@ -11,7 +11,7 @@ value.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
-在整个模块中，我们定义向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 定义 :math:`w_0` 作git为 ``intercept_``.
+在整个模块中，我们定义向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 定义 :math:`w_0` 作为 ``intercept_``.
 
 如果需要使用广义线性模型进行分类，请参阅 :ref:`Logistic_regression` .
 :ref:`Logistic_regression`.
