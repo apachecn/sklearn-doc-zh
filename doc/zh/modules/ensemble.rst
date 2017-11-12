@@ -9,15 +9,15 @@
 ``注意，在本文中 bagging 和 boosting 为了更好的保留原文意图，不进行翻译``
 ``estimator->估计器  base estimator->基估计器``
 
-**集成方法** 的目标是把使用给定学习算法构建的几个基估计器的预测结果结合起来，从而获得比单个估计器更好的泛化能力/鲁棒性。
+**集成方法** 的目标是把使用给定学习算法构建的多个基估计器的预测结果结合起来，从而获得比单个估计器更好的泛化能力/鲁棒性。
 
 集成方法通常分为两种:
 
-- **平均方法**，该方法的驱动原则是构建几个独立的估计器，然后平均化它们的预测结果。一般来说组合之后的估计器是会要比单个估计器要好的，因为它的方差减小了。
+- **平均方法**，该方法的原理是构建多个独立的估计器，然后取它们的预测结果的平均。一般来说组合之后的估计器是会比单个估计器要好的，因为它的方差减小了。
 
   **示例:** :ref:`Bagging 方法 <bagging>`, :ref:`随机森林 <forest>`, ...
 
-- 相比之下，在 **boosting 方法** 中，基估计器是依次构建的并且每一个都尝试去减少组合估计器的偏差。主要目的是为了把多个弱模型相结合变得更加强大。
+- 相比之下，在 **boosting 方法** 中，基估计器是依次构建的，并且每一个基估计器都尝试去减少组合估计器的偏差。这种方法主要目的是为了结合多个弱模型，使集成的模型更加强大。
 
   **示例:** :ref:`AdaBoost <adaboost>`, :ref:`梯度提升树 <gradient_boosting>`, ...
 
@@ -27,26 +27,26 @@
 Bagging meta-estimator（Bagging 元估计器）
 ========================================
 
-在集成算法中，bagging 方法会在原始训练集的随机子集上构建几个黑盒估计器，然后把这几个估计器的预测结果结合起来形成最终的预测。
-该方法通过在构建模型的过程中引入随机性，以此来减少基估计器的方差(例如，决策树)。
-在多数情况下，bagging 方法提供了一种非常简单的方式来对单一模型进行改进，同时无需适应底层算法。
-因为 bagging 方法可以减小过拟合，所以很适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下 boosting 方法在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
+在集成算法中，bagging 方法会在原始训练集的随机子集上构建一类黑盒估计器的多个实例，然后把这多个估计器的预测结果结合起来形成最终的预测结果。
+该方法通过在构建模型的过程中引入随机性，来减少基估计器的方差(例如，决策树)。
+在多数情况下，bagging 方法提供了一种非常简单的方式来对单一模型进行改进，而无需修改背后的算法。
+因为 bagging 方法可以减小过拟合，所以通常最适合在强分类器和复杂模型上使用（例如，完全决策树，fully developed decision trees），相比之下 boosting 方法则在弱模型上表现更好（例如，浅层决策树，shallow decision trees）。
 
 
 bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
-  * 如果抽取的数据集是样本的的子集，我们叫做粘贴 (Pasting) [B1999]_ 。
+  * 如果抽取的数据集是对于样例抽取的子集，我们叫做粘贴 (Pasting) [B1999]_ 。
 
-  * 如果样本抽取是放回的，我们称为 Bagging [B1996]_ 。
+  * 如果样例抽取是有放回的，我们称为 Bagging [B1996]_ 。
 
-  * 如果抽取的数据集的随机子集是特征的随机子集，我们叫做随机子空间 (Random Subspaces) [H1998]_ 。
+  * 如果抽取的数据集的随机子集是对于特征抽取的随机子集，我们叫做随机子空间 (Random Subspaces) [H1998]_ 。
 
-  * 最后，如果估计器构建在样本和特征的子集之上时，我们叫做随机补丁 (Random Patches) [LG2012]_ 。
+  * 最后，如果估计器构建在对于样本和特征抽取的子集之上时，我们叫做随机补丁 (Random Patches) [LG2012]_ 。
 
 
 
-在 scikit-learn 中，bagging 方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor` ），输入的参数和策略由用户指定。``max_samples`` 和 ``max_features`` 控制着子集的大小， ``bootstrap`` 和 ``bootstrap_features`` 控制着样本和特征是放回抽样还是不放回抽样。
-当使用样本子集时，通过设置 ``oob_score=True`` ，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何实构造一个 :class:`KNeighborsClassifier` 估计器的 bagging 集成，每一个基估计器都建立在 50% 的样本随机子集和特征随机子集上。
+在 scikit-learn 中，bagging 方法使用统一的 :class:`BaggingClassifier` 元估计器（或者 :class:`BaggingRegressor` ），输入的参数和随机子集抽取策略由用户指定。``max_samples`` 和 ``max_features`` 控制着子集的大小（对于样例和特征）， ``bootstrap`` 和 ``bootstrap_features`` 控制着样例和特征的抽取是有放回还是无放回的。
+当使用样本子集时，通过设置 ``oob_score=True`` ，可以使用袋外(out-of-bag)样本来评估泛化精度。下面的代码片段说明了如何构造一个 :class:`KNeighborsClassifier` 估计器的 bagging 集成实例，每一个基估计器都建立在 50% 的样本随机子集和 50% 的特征随机子集上。
 
     >>> from sklearn.ensemble import BaggingClassifier
     >>> from sklearn.neighbors import KNeighborsClassifier
@@ -79,11 +79,11 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
 :mod:`sklearn.ensemble` 模块包含两个基于 :ref:`随机决策树 <tree>` 的平均算法： RandomForest 算法和 Extra-Trees 算法。
 这两种算法都是专门为树而设计的扰动和组合技术（perturb-and-combine techniques） [B1998]_ 。
-这意味着通过在分类器构造过程中引入随机性来创建一组不同的分类器。集成分类器的预测是单个分类器预测结果的平均值。 
+这意味着通过在分类器构造过程中引入随机性来创建一组不同的分类器。集成分类器的预测结果是单个分类器预测结果的平均值。 
 
 
 与其他分类器一样，森林分类器必须拟合（fitted）两个数组：
-保存训练样本的数组（可能稀疏或稠密）X，大小为 ``[n_samples, n_features]``。
+保存训练样本的数组（或稀疏或稠密的）X，大小为 ``[n_samples, n_features]``，和  
 保存训练样本目标值（类标签）的数组 Y，大小为 ``[n_samples]``::
 
     >>> from sklearn.ensemble import RandomForestClassifier
@@ -99,12 +99,12 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 --------------
 
 在随机森林中（参见 :class:`ExtraTreesClassifier` 和 :class:`ExtraTreesRegressor` 类），
-集成模型中的每棵树构建时的样本都是由训练集经过替换得来的（例如，自助采样法-bootstrap sample，这里采用西瓜书中的译法）。
-另外，在构建树的过程中进行结点分割时，选择的分割点不再是所有特征中最佳分割点，而是特征的随机子集中的最佳分割点。
-由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于平均，其方差也会减小，通常能够补偿偏差的增加，从而产生更好的模型。
+集成模型中的每棵树构建时的样本都是由训练集经过有放回抽样得来的（例如，自助采样法-bootstrap sample，这里采用西瓜书中的译法）。
+另外，在构建树的过程中进行结点分割时，选择的分割点不再是所有特征中最佳分割点，而是特征的一个随机子集中的最佳分割点。
+由于这种随机性，森林的偏差通常会有略微的增大（相对于单个非随机树的偏差），但是由于取了平均，其方差也会减小，通常能够补偿偏差的增加，从而产生一个总体上更好的模型。
 
 
-与原始版本的实现 [B2001]_ 相反，scikit-learn 的实现是把每个分类器的预测概率进行平均化，而不是让每个分类器对类别进行投票。 
+与原始文献 [B2001]_ 不同的是，scikit-learn 的实现是取每个分类器预测概率的平均，而不是让每个分类器对类别进行投票。 
 
 
 极限随机树
@@ -112,9 +112,9 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 
 在极限随机树中（参见 :class:`ExtraTreesClassifier` 和 :class:`ExtraTreesRegressor` 类)，
 计算分割点方法中的随机性进一步增强。 
-在随机森林中，使用的是候选特征的随机子集，而不是寻找最具有区分度的阈值，
-这里的阈值是针对每个候选特征而随机生成的，并且会把这些随机生成的阈值中的最佳值作为分割规则。
-这种做法通常能够更多地减少模型的方差，代价则是轻微地增大偏差：
+在随机森林中，使用的特征是候选特征的随机子集；不同于寻找最具有区分度的阈值，
+这里的阈值是针对每个候选特征随机生成的，并且选择这些随机生成的阈值中的最佳者作为分割规则。
+这种做法通常能够减少一点模型的方差，代价则是略微地增大偏差：
 
     >>> from sklearn.model_selection import cross_val_score
     >>> from sklearn.datasets import make_blobs
@@ -152,34 +152,34 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 ----------
 
 使用这些方法时要调整的参数主要是 ``n_estimators`` 和 ``max_features``。
-前者（n_estimators）是森林里的树木数量，越大越好，但是计算时间会增加。
-此外要注意树的数量超过临界值之后算法的效果并不会很显著的变好。
-后者（max_features）是分割节点时要考虑的特征的随机子集的大小。
-方差减小得越多，偏差增大得越多。
-根据经验回归问题最好使用默认值 max_features = n_features，
-分类问题最好使用 ``max_features = sqrt（n_features``
-（其中 ``n_features`` 是特征的个数）。
-``max_depth = None 和 min_samples_split = 1`` 结合通常会有不错的效果。
+前者（n_estimators）是森林里树的数量，通常数量越大，效果越好，但是计算时间也会随之增加。
+此外要注意，当树的数量超过一个临界值之后，算法的效果并不会很显著地变好。
+后者（max_features）是分割节点时考虑的特征的随机子集的大小。
+这个值越低，方差减小得越多，但是偏差的增大也越多。
+根据经验，回归问题中使用 max_features = n_features，
+分类问题使用 ``max_features = sqrt（n_features``
+（其中 ``n_features`` 是特征的个数）是比较好的默认值。
+``max_depth = None 和 min_samples_split = 2`` 结合通常会有不错的效果（即生成完全的树）。
 请记住，这些（默认）值通常不是最佳的，同时还可能消耗大量的内存，最佳参数值应由交叉验证获得。
 另外，请注意，在随机林中，默认使用自助采样法（``bootstrap = True``），
-然而extra-trees的默认策略是使用整个数据集（``bootstrap = False``）。
-当使用自助采样法方法抽样时，泛化精度是可以通过剩余的或者袋子外的样本来估算的，设置 ``oob_score = True`` 即可。 
+然而 extra-trees 的默认策略是使用整个数据集（``bootstrap = False``）。
+当使用自助采样法方法抽样时，泛化精度是可以通过剩余的或者袋外的样本来估算的，设置 ``oob_score = True`` 即可实现。 
 
 .. topic:: 提示:
 
     默认参数下模型复杂度是：``O(M*N*log(N))``， 
-    其中M是树的数目，``N`` 是样本数。 
-    可以通过设置以下参数来降低模型复杂度：``min_samples_split``, ``min_samples_leaf``, ``max_leaf_nodes`` and ``max_depth``. 
+    其中 M 是树的数目，``N`` 是样本数。 
+    可以通过设置以下参数来降低模型复杂度：``min_samples_split``, ``min_samples_leaf``, ``max_leaf_nodes`` 和 ``max_depth``. 
 
 
 并行化 
 ---------------
 
-最后，这个模块还支持树的并行构建，可以通过 ``n_jobs`` 参数来规划并行计算。
-如果 ``n_jobs = k``，则计算被划分为 ``k`` 个作业，并运行在机器的 ``k`` 个核上。 
-如果 ``n_jobs = -1``，则可以使用机器的所有核。 
-注意由于进程间通信具有开销，这里的提速并不是线性的（即，使用 ``k`` 个作业不会快k倍）。 
-当然，在建立大量的树，或者构建单个树需要相当长的时间（例如，在大型数据集上）时，（通过并行化）仍然可以实现显著的加速。 
+最后，这个模块还支持树的并行构建和预测结果的并行计算，这可以通过 ``n_jobs`` 参数实现。
+如果设置 ``n_jobs = k``，则计算被划分为 ``k`` 个作业，并运行在机器的 ``k`` 个核上。 
+如果设置 ``n_jobs = -1``，则使用机器的所有核。 
+注意由于进程间通信具有一定的开销，这里的提速并不是线性的（即，使用 ``k`` 个作业不会快k倍）。 
+当然，在建立大量的树，或者构建单个树需要相当长的时间（例如，在大数据集上）时，（通过并行化）仍然可以实现显著的加速。 
 
 .. topic:: 示例:
 
@@ -201,14 +201,14 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 特征重要性评估
 -----------------------------
 
-特征对目标变量预测的重要性可以通过（树中的决策节点的）特征使用的顺序（即深度）来进行评估。
-决策树顶部使用的特征对最终预测结果的贡献度更大，因此，可以使用该特征对最后结果的贡献度来评估该 **特征相对重要性** 。 
+特征对目标变量预测的相对重要性可以通过（树中的决策节点的）特征使用的相对顺序（即深度）来进行评估。
+决策树顶部使用的特征对更大一部分输入样本的最终预测决策做出贡献；因此，可以使用接受每个特征对最终预测的贡献的样本比例来评估该 **特征的相对重要性** 。 
 
 
-通过 **平均** 多个随机树中的 **预期贡献率** （expected activity rates），可以减少这种估计的 **方差** ，并将其用于特征选择。 
+通过对多个随机树中的 **预期贡献率** （expected activity rates）**取平均**，可以减少这种估计的 **方差** ，并将其用于特征选择。 
 
 
-下面的例子展示了在面部识别中用颜色编码表示每个像素的相对重要性，使用的模型是ExtraTreesClassifier。 
+下面的例子展示了一个面部识别任务中每个像素的相对重要性，其中重要性由颜色（的深浅）来表示，使用的模型是ExtraTreesClassifier。 
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_forest_importances_faces_001.png
    :target: ../auto_examples/ensemble/plot_forest_importances_faces.html
@@ -216,7 +216,7 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
    :scale: 75
 
 实际上，在拟合模型时这些估计值存储在 ``feature_importances_`` 属性中。
-这是一个大小为 ``(n_features,)`` 的数组，其值为正，并且总和为 1.0。值越高，匹配特征对预测函数的贡献越大。 
+这是一个大小为 ``(n_features,)`` 的数组，其每个元素值为正，并且总和为 1.0。一个元素的值越高，其对应的特征对预测函数的贡献越大。 
 
 .. topic:: 示例:
 
@@ -228,27 +228,27 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 完全随机树嵌入
 ------------------------------
 
-:class:`RandomTreesEmbedding` 实现了无监督的数据转换。
-通过由完全随机树构成的森林，:class:`RandomTreesEmbedding` 使用数据尾部的叶子节点的索引对数据进行编码。
-该索引以one-of-K方式编码，能够形成一个高维的稀疏二进制编码。 这种编码的方式非常高效，可以作为其他学习任务的基础。
-编码的大小和稀疏度可以通过选择树的数量和每棵树的最大深度来影响。对于集成中的每棵树，编码包含一个实体。 
-编码的大小最多为 ``n_estimators * 2 ** max_depth``，即森林中的叶子节点的最大数。 
+:class:`RandomTreesEmbedding` 实现了一个无监督的数据转换。
+通过由完全随机树构成的森林，:class:`RandomTreesEmbedding` 使用数据最终归属的叶子节点的索引值（编号）对数据进行编码。
+该索引以 one-of-K 方式编码，最终形成一个高维的稀疏二进制编码。 这种编码可以被非常高效地计算出来，并且可以作为其他学习任务的基础。
+编码的大小和稀疏度可以通过选择树的数量和每棵树的最大深度来影响。对于集成中的每棵树，编码包含一个实体（校对者注：这里真的没搞懂）。 
+编码的大小（维度）最多为 ``n_estimators * 2 ** max_depth``，即森林中的叶子节点的最大数。 
 
 
-由于相邻数据点更可能位于树的同一叶子中，此时该变换表现为隐式非参数密度估计。 
+由于相邻数据点更可能位于树的同一叶子中，该变换可以作为一种隐式地非参数密度估计。 
 
 
 .. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_ensemble_plot_random_forest_embedding.py`
 
- * :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` 比较手写体数字的非线性降维技术。
+ * :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` 比较了手写体数字的非线性降维技术。
 
- * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` 比较了基于特征变换的有监督和无监督的树.
+ * :ref:`sphx_glr_auto_examples_ensemble_plot_feature_transformation.py` 比较了基于树的有监督和无监督特征变换.
 
 .. seealso::
 
-   :ref:`manifold` 也可以用于特征空间的非线性表示, 这些方法的关注点同样在降维.
+   :ref:`manifold` 方法也可以用于特征空间的非线性表示, 以及降维.
 
 
 .. _adaboost:
@@ -256,17 +256,17 @@ bagging 方法有很多种，区别大多数在于抽取训练子集的方法：
 AdaBoost
 ========
 
-模型 :mod:`sklearn.ensemble` 包含最流行的提升算法 AdaBoost, 这个算法是由 Freund and Schapire 在 1995 年提出来的 [FS1995]_.
+模型 :mod:`sklearn.ensemble` 包含了流行的提升算法 AdaBoost, 这个算法是由 Freund and Schapire 在 1995 年提出来的 [FS1995]_.
 
-AdaBoost 的核心思想是用训练数据来反复修正数据来学习一系列的弱学习器(例如:一个弱学习器模型仅仅比随机猜测好一点,
-比如一个简单的决策树),由这些弱学习器学到的结果然后通过加权投票(或加权求和)的方式组合起来,
-从而得到我们最终的预测结果.在每一次提升迭代中修改的数据由应用于每一个训练样本所生成的弱学习器
-的权重 :math:`w_1`, :math:`w_2`, ..., :math:`w_N` 组成.初始化时,将所有弱学习器的权重都
-设置为 :math:`w_i = 1/N` ,因此第一次迭代仅仅是通过原始数据训练出一个弱学习器.在接下来的
-连续迭代中,样本的权重逐个的被修改,学习算法也因此要重新应用这些已经修改的权重.在给定的步骤,
-那些在之前预测出错误结果的弱学习器的权重将会被加强,而那些在之前预测出正确结果的弱学习器的权
-重将会被减弱.随着迭代次数的增加,那些难以预测的样本的影响将会越来越大,每一个随后的弱学习器都将
-会更加关注那些在序列中之前错误的例子 [HTF]_.
+AdaBoost 的核心思想是用反复修改的数据（校对者注：主要是修正数据的权重）来学习一系列的弱学习器(一个弱学习器模型仅仅比随机猜测好一点,
+比如一个简单的决策树),由这些弱学习器的预测结果通过加权投票(或加权求和)的方式组合,
+得到我们最终的预测结果。在每一次所谓的提升（boosting）迭代中，数据的修改由应用于每一个训练样本的（新）
+的权重 :math:`w_1`, :math:`w_2`, ..., :math:`w_N` 组成（校对者注：即修改每一个训练样本应用于新一轮学习器的权重）。
+初始化时,将所有弱学习器的权重都设置为 :math:`w_i = 1/N` ,因此第一次迭代仅仅是通过原始数据训练出一个弱学习器。在接下来的
+连续迭代中,样本的权重逐个地被修改,学习算法也因此要重新应用这些已经修改的权重。在给定的一个迭代中,
+那些在上一轮迭代中被预测为错误结果的样本的权重将会被增加，而那些被预测为正确结果的样本的权
+重将会被降低。随着迭代次数的增加，那些难以预测的样例的影响将会越来越大，每一个随后的弱学习器都将
+会被强迫更加关注那些在之前被错误预测的样例 [HTF]_.
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_adaboost_hastie_10_2_001.png
    :target: ../auto_examples/ensemble/plot_adaboost_hastie_10_2.html
@@ -280,10 +280,10 @@ AdaBoost 既可以用在分类问题也可以用在回归问题中:
 
   - For regression, :class:`AdaBoostRegressor` implements AdaBoost.R2 [D1997]_.
 
-用法
+使用方法
 -----
 
-下面的例子展示了如何用100个弱学习器来拟合一个 AdaBoost 分类器::
+下面的例子展示了如何拟合一个包含 100 个弱学习器的 AdaBoost 分类器::
 
     >>> from sklearn.model_selection import cross_val_score
     >>> from sklearn.datasets import load_iris
@@ -295,10 +295,11 @@ AdaBoost 既可以用在分类问题也可以用在回归问题中:
     >>> scores.mean()                             # doctest: +ELLIPSIS
     0.9...
 
-弱学习器的数量是由参数 ``n_estimators`` 来控制. ``learning_rate`` 参数用来控制每个弱学习器对
-最终的结果的贡献程度.弱学习器默认为决策树桩.不同的弱学习器可以通过参数 ``base_estimator``
-来指定.获取一个好的预测结果主要调整的参数是 ``n_estimators`` 和 ``base_estimator`` 的复杂度
-(例如:对于弱学习器为决策树的情况,树的深度 ``max_depth`` 或叶节点的最小样本数 ``min_samples_leaf``
+弱学习器的数量由参数 ``n_estimators`` 来控制。 ``learning_rate`` 参数用来控制每个弱学习器对
+最终的结果的贡献程度（校对者注：其实应该就是控制权重修改的速率，这里不太记得了，不确定）。
+弱学习器默认使用决策树。不同的弱学习器可以通过参数 ``base_estimator``来指定。
+获取一个好的预测结果主要需要调整的参数是 ``n_estimators`` 和 ``base_estimator`` 的复杂度
+(例如:对于弱学习器为决策树的情况，树的深度 ``max_depth`` 或叶子节点的最小样本数 ``min_samples_leaf``
 等都是控制树的复杂度的参数)
 
 .. topic:: 示例:
@@ -337,28 +338,28 @@ AdaBoost 既可以用在分类问题也可以用在回归问题中:
 ====================================
 
 `Gradient Tree Boosting <https://en.wikipedia.org/wiki/Gradient_boosting>`_
-或梯度提升回归树(GBRT)是提升算法推广到任意可微的损失函数的泛化. GBRT 是一个准确高效的现有程序,
-它既能用于分类问题也可以用于回归问题.梯度树提升模型被应用到各种领域包括网页搜索排名和生态领域.
+或梯度提升回归树(GBRT)是对于任意的可微损失函数的提升算法的泛化。 GBRT 是一个准确高效的现有程序,
+它既能用于分类问题也可以用于回归问题。梯度树提升模型被应用到各种领域，包括网页搜索排名和生态领域.
 
 GBRT 的优点:
 
-  + 对混合型数据的自然处理(异构特性)
+  + 对混合型数据的自然处理（异构特征）
 
   + 强大的预测能力
 
-  + 在输出空间中对异常点的鲁棒性(通过鲁棒损失函数实现)
+  + 在输出空间中对异常点的鲁棒性(通过具有鲁棒性的损失函数实现)
 
 GBRT 的缺点:
 
-  + 可扩展性差.由于提升算法的有序性(也就是说下一步的结果依赖于上一步),因此很难做并行.
+  + 可扩展性差（校对者注：此处的可扩展性特指在更大规模的数据集/复杂度更高的模型上使用的能力，而非我们通常说的功能的扩展性；GBRT 支持自定义的损失函数，从这个角度看它的扩展性还是很强的！）。由于提升算法的有序性(也就是说下一步的结果依赖于上一步)，因此很难做并行.
 
-模型 :mod:`sklearn.ensemble` 通过梯度提升树提供了分类和回归的方法.
+模块 :mod:`sklearn.ensemble` 通过梯度提升树提供了分类和回归的方法.
 
 分类
 ---------------
 
 :class:`GradientBoostingClassifier` 既支持二分类又支持多分类问题.
-下面的例子展示了如何用100个弱学习器来拟合一个梯度提升分类器::
+下面的例子展示了如何拟合一个包含 100 个决策树弱学习器的梯度提升分类器::
     >>> from sklearn.datasets import make_hastie_10_2
     >>> from sklearn.ensemble import GradientBoostingClassifier
 
@@ -371,21 +372,21 @@ GBRT 的缺点:
     >>> clf.score(X_test, y_test)                 # doctest: +ELLIPSIS
     0.913...
 
-弱学习器(例如:回归树)的数量由参数 ``n_estimators`` 来控制;每个树的大小可以被控制通过参数 ``max_depth``
-设置树的深度通或者通过参数 ``max_leaf_nodes`` 设置叶节点数目. ``learning_rate``
-是一个在 (0,1] 之间的超参数,这个参数通过 shrinkage(缩减步长) 来控制过拟合.
+弱学习器(例如:回归树)的数量由参数 ``n_estimators`` 来控制；每个树的大小可以通过由参数 ``max_depth``
+设置树的深度，或者由参数 ``max_leaf_nodes`` 设置叶子节点数目来控制。 ``learning_rate``
+是一个在 (0,1] 之间的超参数，这个参数通过 shrinkage(缩减步长) 来控制过拟合。
 
 .. note::
 
-   超过两类的分类问题需要在每一次迭代时诱导 ``n_classes`` 个回归树.因此,所有的诱导树数量等
-   于 ``n_classes * n_estimators`` .对于拥有大量类别的数据集我们强烈推荐使用
+   超过两类的分类问题需要在每一次迭代时推导 ``n_classes`` 个回归树。因此，所有的需要推导的树数量等
+   于 ``n_classes * n_estimators`` 。对于拥有大量类别的数据集我们强烈推荐使用
    :class:`RandomForestClassifier` 来代替 :class:`GradientBoostingClassifier` .
 
 回归
 ----------
 
-对于回归问题 :class:`GradientBoostingRegressor` 支持 :ref:`different loss functions <gradient_boosting_loss>` ,
-这些损失函数可以通过参数 ``loss`` 来指定;对于回归问题默认的损失函数是最小二乘损失函数( ``'ls'`` ).
+对于回归问题 :class:`GradientBoostingRegressor` 支持一系列 :ref:`different loss functions <gradient_boosting_loss>` ,
+这些损失函数可以通过参数 ``loss`` 来指定；对于回归问题默认的损失函数是最小二乘损失函数( ``'ls'`` ).
 
 ::
 
@@ -402,11 +403,11 @@ GBRT 的缺点:
     >>> mean_squared_error(y_test, est.predict(X_test))    # doctest: +ELLIPSIS
     5.00...
 
-下图展示了应用 GradientBoostingRegressor 算法,设置其损失函数为最小二乘损失,基本学习器个数为500来处理
-:func:`sklearn.datasets.load_boston` 数据集的结果.左图表示每一次迭代的训练误差和测试误差.每一次迭
-代的训练误差保存在提升树模型的 :attr:`~GradientBoostingRegressor.train_score_` 属性中,每一次迭代的测试误差能够通过
-:meth:`~GradientBoostingRegressor.staged_predict` 方法获取,该方法返回一个生成器,用来产生每一
-步的预测结果.像下面这种方式画图,可以通过提前停止的方法来决定最优的树的数量.右图表示每个特征的重要性,它
+下图展示了应用损失函数为最小二乘损失，基学习器个数为 500 的 GradientBoostingRegressor 来处理
+:func:`sklearn.datasets.load_boston` 数据集的结果。左图表示每一次迭代的训练误差和测试误差。每一次迭
+代的训练误差保存在提升树模型的 :attr:`~GradientBoostingRegressor.train_score_` 属性中，每一次迭代的测试误差能够通过
+:meth:`~GradientBoostingRegressor.staged_predict` 方法获取，该方法返回一个生成器，用来产生每一
+个迭代的预测结果。类似下面这样的图表，可以用于决定最优的树的数量，从而进行提前停止。右图表示每个特征的重要性，它
 可以通过 ``feature_importances_`` 属性来获取.
 
 .. figure:: ../auto_examples/ensemble/images/sphx_glr_plot_gradient_boosting_regression_001.png
@@ -425,7 +426,7 @@ GBRT 的缺点:
 --------------------------------
 
  :class:`GradientBoostingRegressor` 和 :class:`GradientBoostingClassifier`都支持设置参数
-``warm_start=True``,这样设置允许我们在已经拟合的模型上面添加更多的estimators.
+``warm_start=True``，这样设置允许我们在已经拟合的模型上面添加更多的估计器.
 
 ::
 
@@ -439,19 +440,19 @@ GBRT 的缺点:
 控制树的大小
 -------------------------
 
-回归树基本学习器的大小定义了变量影响的级别,这个变量影响可以被梯度提升模型捕获到.通常一棵树的深度
-``h`` 能捕获秩为  ``h`` 的影响.这里有两种控制单棵回归树大小的方法.
+回归树基学习器的大小定义了可以被梯度提升模型捕捉到的变量（即特征）相互作用（即多个特征共同对预测产生影响）的程度。
+通常一棵深度为 ``h`` 的树能捕获到秩为  ``h`` 的相互作用。这里有两种控制单棵回归树大小的方法。
 
-如果你指定 ``max_depth=h`` 然后深度为 ``h`` 的完全二叉树将会生成.这棵树将会有 ``2**h`` 个
-叶节点 和 ``2**h - 1`` 个切分节点.
+如果你指定 ``max_depth=h`` ，那么将会一个深度为 ``h`` 的完全二叉树。这棵树将会有（至多） ``2**h`` 个
+叶子节点和 ``2**h - 1`` 个切分节点。
 
-另外,你能通过参数 ``max_leaf_nodes`` 指定叶节点的数量来控制树的大小.在这种情况下,树将会
-使用最优搜索来生成,这种搜索方式是通过选取纯度提升最大的节点来最先被扩大.一棵树的 ``max_leaf_nodes=k``
-拥有 ``k - 1`` 切分节点,因此可以模拟高达 ``max_leaf_nodes - 1`` 的相互影响.
+另外，你能通过参数 ``max_leaf_nodes`` 指定叶子节点的数量来控制树的大小。在这种情况下，树将会
+使用最优优先搜索来生成，这种搜索方式是通过每次选取对不纯度提升最大的节点来展开。一棵树的 ``max_leaf_nodes=k``
+拥有 ``k - 1`` 个切分节点，因此可以模拟秩最高达到 ``max_leaf_nodes - 1`` 的相互作用（即 ``max_leaf_nodes - 1`` 个特征共同决定预测值）。
 
-我们发现 ``max_leaf_nodes=k`` 给出与 ``max_depth=k-1`` 相当的结果,但是其训练速度更快,同时
-也会损失一点训练误差作为代价.参数 ``max_leaf_nodes`` 对应于文章 [F2001]_ 中的梯度提升章节的变量 ``J``
-同时与R语言的gbm包的参数 ``interaction.depth`` 相关,两者间的关系是 ``max_leaf_nodes == interaction.depth + 1``.
+我们发现 ``max_leaf_nodes=k`` 可以给出与 ``max_depth=k-1`` 品质相当的结果，但是其训练速度明显更快，同时
+也会多一点训练误差作为代价。参数 ``max_leaf_nodes`` 对应于文章 [F2001]_ 中梯度提升章节中的变量 ``J``，
+同时与 R 语言的 gbm 包的参数 ``interaction.depth`` 相关，两者间的关系是 ``max_leaf_nodes == interaction.depth + 1``。
 
 数学公式 (Mathematical formulation)
 -------------------------
