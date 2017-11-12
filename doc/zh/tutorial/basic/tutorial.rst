@@ -5,24 +5,24 @@
 
 .. topic:: 内容提要
 
-    在本节中，我们介绍一些我们在使用 scikit-learn 过程中的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。
+    在本节中，我们介绍一些在使用 scikit-learn 过程中用到的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。
 
 
 机器学习：问题设置
 -------------------------------------
 
 一般来说，一个学习问题通常会考虑一系列 n 个 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ 数据，然后尝试预测未知数据的属性。
-如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性或 **features(特征)** 。
+如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），就说它有许多“属性”，或称 **features(特征)** 。
 
 我们可以将学习问题分为几大类:
 
  * `监督学习 <https://en.wikipedia.org/wiki/Supervised_learning>`_ ,
-   其中数据带有我们想要预测的附加属性（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
+   其中数据带有一个附加属性，即我们想要预测的结果值（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
 
     * `分类 <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_ :
       样本属于两个或更多个类，我们想从已经标记的数据中学习如何预测未标记数据的类别。
-      分类问题的一个例子是手写数字识别示例，其目的是将每个输入向量分配给有限数目的离散类别之一。
-      我们通常把分类视作监督学习的一个离散形式，从有限的类别中，给每个样本贴上正确的标签。
+      分类问题的一个例子是手写数字识别，其目的是将每个输入向量分配给有限数目的离散类别之一。
+      我们通常把分类视作监督学习的一个离散形式（区别于连续形式），从有限的类别中，给每个样本贴上正确的标签。
 
     * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_: 
       如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归*.
