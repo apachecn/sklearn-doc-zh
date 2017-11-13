@@ -5,32 +5,32 @@
 
 .. topic:: 内容提要
 
-    在本节中，我们介绍一些我们在使用 scikit-learn 过程中的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。
+    在本节中，我们介绍一些在使用 scikit-learn 过程中用到的 `机器学习<https://en.wikipedia.org/wiki/Machine_learning>`_ 词汇，并且给出一些例子阐释它们。
 
 
 机器学习：问题设置
 -------------------------------------
 
 一般来说，一个学习问题通常会考虑一系列 n 个 `样本 <https://en.wikipedia.org/wiki/Sample_(statistics)>`_ 数据，然后尝试预测未知数据的属性。
-如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），那么就是说有许多属性或 **features(特征)** 。
+如果每个样本是 `多个属性的数据<https://en.wikipedia.org/wiki/Multivariate_random_variable>`_（比如说是一个多维记录），就说它有许多“属性”，或称 **features(特征)** 。
 
 我们可以将学习问题分为几大类:
 
  * `监督学习 <https://en.wikipedia.org/wiki/Supervised_learning>`_ ,
-   其中数据带有我们想要预测的附加属性（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
+   其中数据带有一个附加属性，即我们想要预测的结果值（:ref:`点击此处 <supervised-learning>` 转到 scikit-learn 监督学习页面）。这个问题可以是:
 
     * `分类 <https://en.wikipedia.org/wiki/Classification_in_machine_learning>`_ :
       样本属于两个或更多个类，我们想从已经标记的数据中学习如何预测未标记数据的类别。
-      分类问题的一个例子是手写数字识别示例，其目的是将每个输入向量分配给有限数目的离散类别之一。
-      我们通常把分类视作监督学习的一个离散形式，从有限的类别中，给每个样本贴上正确的标签。
+      分类问题的一个例子是手写数字识别，其目的是将每个输入向量分配给有限数目的离散类别之一。
+      我们通常把分类视作监督学习的一个离散形式（区别于连续形式），从有限的类别中，给每个样本贴上正确的标签。
 
     * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_: 
       如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归*.
-      回归问题的一个示例是预测鲑鱼的长度是其年龄和体重的函数。
+      回归问题的一个例子是预测鲑鱼的长度是其年龄和体重的函数。
 
  * `无监督学习 <https://en.wikipedia.org/wiki/Unsupervised_learning>`_,
-   其中训练数据由没有任何相应目标值的一组输入向量x组成。这种问题的目标可能是在数据中发现类似示例的组，称为 `聚类 <https://en.wikipedia.org/wiki/Cluster_analysis>`_ ,
-   或者确定输入空间内的数据分布，称为 `密度估计 <https://en.wikipedia.org/wiki/Density_estimation>`_ ，或从高维数据投影数据空间缩小到二维或三维以进行 *可视化* （:ref:`点击此处 <unsupervised-learning>` 转到 scikit-learn 无监督学习页面）。
+   其中训练数据由没有任何相应目标值的一组输入向量x组成。这种问题的目标可能是在数据中发现彼此类似的示例所聚成的组，这种问题称为 `聚类 <https://en.wikipedia.org/wiki/Cluster_analysis>`_ ,
+   或者，确定输入空间内的数据分布，称为 `密度估计 <https://en.wikipedia.org/wiki/Density_estimation>`_ ，又或从高维数据投影数据空间缩小到二维或三维以进行 *可视化* （:ref:`点击此处 <unsupervised-learning>` 转到 scikit-learn 无监督学习页面）。
 
 .. topic:: 训练集和测试集
 
@@ -87,7 +87,7 @@
              [  0.,   2.,  14.,   5.,  10.,  12.,   0.,   0.],
              [  0.,   0.,   6.,  13.,  10.,   0.,   0.,   0.]])
     
-    该  :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始数据开始调整，形成可以在 scikit-learn 中使用的消费数据。
+    该  :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始数据开始调整，形成可以在 scikit-learn 中使用的数据。
     
 .. topic:: 从外部数据集加载
 
@@ -97,22 +97,22 @@
 ------------------------
 
 在数字数据集的情况下，任务是给出图像来预测其表示的数字。 
-我们给出了10个可能类（数字0到9）中的每一个的样本，我们在这些类上 *拟合*一个 `估计器 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够 *预测* 看不见的样本所属的类。
+我们给出了10个可能类（数字0到9）中的每一个的样本，我们在这些类上 *拟合*一个 `估计器 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够 *预测* 未知的样本所属的类。
 
-在 scikit-learn 中，分类的估计器是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 的方法。
+在 scikit-learn 中，分类的估计器是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 等方法。
 
-估计器的一个例子是实现 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 的类 ``sklearn.svm.SVC``. 估计器的构造函数以模型的参数为参数，但目前我们将把估计器视为黑盒子::
+估计器的一个例子类 ``sklearn.svm.SVC``，实现了 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 。 估计器的构造函数以相应模型的参数为参数，但目前我们将把估计器视为即可::
 
   >>> from sklearn import svm
   >>> clf = svm.SVC(gamma=0.001, C=100.)
 
 .. topic:: 选择模型的参数
 
-  在这个例子中，我们手动设置 ``gamma`` 值。通过使用 :ref:`网格搜索  <grid_search>` 和 :ref:`交叉验证 <cross_validation>` 等工具，可以自动找到参数的良好值。
+  在这个例子中，我们手动设置 ``gamma`` 值。不过，通过使用 :ref:`网格搜索  <grid_search>` 及 :ref:`交叉验证 <cross_validation>` 等工具，可以自动找到参数的良好值。
 
-我们称之为我们的估计器实例 ``clf``，因为它是一个分类器。它现在必须适应模型，也就是说，它必须从模型中*学习*。
-这是通过将我们的训练集传递给该 ``fit`` 方法来完成的。作为一个训练集，让我们使用除最后一个实例的数据集的所有图像。
-我们用 ``[:-1]`` Python 语法选择这个训练集，它产生一个包含除最后一个条目之外的所有数组的新数组 ``digits.data``::
+我们把我们的估计器实例命名为 ``clf``，因为它是一个分类器(classifier)。我们需要它适应模型，也就是说，要它从模型中*学习*。
+这是通过将我们的训练集传递给 ``fit`` 方法来完成的。作为一个训练集，让我们使用数据集中除最后一张以外的所有图像。
+我们用 ``[:-1]`` Python 语法选择这个训练集，它产生一个包含``digits.data``中除最后一个条目(entry)之外的所有条目的新数组 ::
 
   >>> clf.fit(digits.data[:-1], digits.target[:-1])  # doctest: +NORMALIZE_WHITESPACE
   SVC(C=100.0, cache_size=200, class_weight=None, coef0=0.0,
@@ -141,7 +141,7 @@
 模型持久化
 -----------------
 
-可以通过使用 Python 的内置持久性模块（即 `pickle <https://docs.python.org/2/library/pickle.html>`_ ）将模型保存在文件系统::
+可以通过使用 Python 的内置持久化模块（即 `pickle <https://docs.python.org/2/library/pickle.html>`_ ）将模型保存::
 
   >>> from sklearn import svm
   >>> from sklearn import datasets
@@ -162,32 +162,32 @@
   >>> y[0]
   0
 
-在scikit的具体情况下，使用 joblib 替换 pickle（``joblib.dump`` & ``joblib.load``）可能会更有趣，这对大数据更有效，但只能 序列化到磁盘而不是字符串::
+在scikit的具体情况下，使用 joblib 替换 pickle（``joblib.dump`` & ``joblib.load``）可能会更有趣，这对大数据更有效，但只能序列化 (pickle) 到磁盘而不是字符串::
 
   >>> from sklearn.externals import joblib
   >>> joblib.dump(clf, 'filename.pkl') # doctest: +SKIP
 
-之后，您可以加载 pickle 模型（可能在另一个 Python 进程中）::
+之后，您可以加载已保存的模型（可能在另一个 Python 进程中）::
 
   >>> clf = joblib.load('filename.pkl') # doctest:+SKIP
 
 .. warning::
 
-    ``joblib.dump`` 并且 ``joblib.load`` 函数也接受 file-like（类似文件） 对象而不是文件名。有关 Joblib 的数据持久性的更多信息，请 `点击此处 <https://pythonhosted.org/joblib/persistence.html>`_。
+    ``joblib.dump`` 以及 ``joblib.load`` 函数也接受 file-like（类文件） 对象而不是文件名。有关 Joblib 的数据持久化的更多信息，请 `点击此处 <https://pythonhosted.org/joblib/persistence.html>`_。
 
-请注意，pickle 有一些安全性和可维护性问题。有关使用 scikit-learn 的模型持久性的更多详细信息，请参阅 :ref:`model_persistence` 部分。
+请注意，pickle 有一些安全性和维护性问题。有关使用 scikit-learn 的模型持久化的更多详细信息，请参阅 :ref:`model_persistence` 部分。
 
 
 规定
 -----------
 
-scikit-learn 估计器遵循某些规则，使其行为更具预测性。
+scikit-learn 估计器遵循某些规则，使其行为更可预测。
 
 
 类型转换
 ~~~~~~~~~~~~
 
-除非另有规定，输入将被转换为 ``float64``::
+除非特别指定，输入将被转换为 ``float64``::
 
   >>> import numpy as np
   >>> from sklearn import random_projection
@@ -203,8 +203,9 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
   >>> X_new.dtype
   dtype('float64')
 
-在这个例子中，``X`` 是 ``float32``，通过``fit_transform(X)``被转换 ``float64``。
-回归目标被转换为 ``float64``，分类目标维持不变::
+在这个例子中，``X`` 原本是 ``float32``，被``fit_transform(X)``被转换成 ``float64``。
+
+回归目标被转换为 ``float64``，但分类目标维持不变::
 
     >>> from sklearn import datasets
     >>> from sklearn.svm import SVC
@@ -229,13 +230,13 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
     ['setosa', 'setosa', 'setosa']
 
 这里，第一个 ``predict()`` 返回一个整数数组，因为在 ``fit`` 中使用了 ``iris.target`` （一个整数数组）。 
-第二个 ``predict()`` 返回一个字符串数组，因为 ``iris.target_names`` 是字符串数组的。
+第二个 ``predict()`` 返回一个字符串数组，因为 ``iris.target_names`` 是一个字符串数组。
 
 再次训练和更新参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-估计器的超参数可以在通过 :func:`sklearn.pipeline.Pipeline.set_params` 方法构建之后才可以进行更新。 
-调用 ``fit()`` 多次将覆盖以前的 ``fit()`` 中学到的参数::
+估计器的超参数可以通过 :func:`sklearn.pipeline.Pipeline.set_params` 方法在实例化之后进行更新。 
+调用 ``fit()`` 多次将覆盖以前的 ``fit()`` 所学到的参数::
 
   >>> import numpy as np
   >>> from sklearn.svm import SVC
@@ -262,7 +263,7 @@ scikit-learn 估计器遵循某些规则，使其行为更具预测性。
   >>> clf.predict(X_test)
   array([0, 0, 0, 1, 0])
 
-在这里，估计器被构造之后 ``SVC()``，默认内核 ``rbf`` 首先被改变到 ``linear`` ，然后改回到 ``rbf`` 重新训练估计器并进行第二预测。
+在这里，估计器被 ``SVC()``构造之后，默认内核 ``rbf`` 首先被改变到 ``linear`` ，然后改回到 ``rbf`` 重新训练估计器并进行第二次预测。
 
 多分类与多标签拟合
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
