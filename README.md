@@ -121,6 +121,16 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@llcing](https://github.com/llcing)（Mayouji）
 * [@KyrieHee](https://github.com/KyrieHee)（HeYun）
 * [@ziepenn](https://github.com/ziepenn)（ziepenn）
+* [@FAN0521](https://github.com/FAN0521)（FAN0521）
+* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
+* [@shaoyy147](https://github.com/shaoyy147)（Y.Shao）
+* [@Kdotm](https://github.com/Kdotm)（kngines）
+* [@chrzc](https://github.com/chrzc)（changzhicheng）
+* [@ywujudy](https://github.com/ywujudy)（ywujudy）
+* [@污剑客](https://github.com/apachecn)（污剑客）
+* [@爱吹牛逼的小明](https://github.com/apachecn)（爱吹牛逼的小明）
+* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
+* [@Ecauchy](https://github.com/Ecauchy)（Ecauchy）
 
 
 ### 0.18
