@@ -874,7 +874,7 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
  * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: 分析数据集大小对随机分配聚类度量值的影响。 此示例还包括 Adjusted Rand Index。
 
 
-数学表达
+数学公式
 ~~~~~~~~~~~~~~~
 
 假设两个标签分配（相同的 N 个对象），:math:`U` 和 :math:`V`。

@@ -22,7 +22,7 @@ body {
 
 div.header-wrapper {
     background-color: #ffffff;
-    max-width: 1024px;
+    max-width: 1234px;
     min-height: 50px;
     margin-left: auto;
     margin-right: auto;
@@ -262,6 +262,7 @@ div.content-wrapper {
     border-radius: 15px;
     -moz-border-radius: 15px;
     position: relative;
+    padding-right: 210px;
 }
 
 div.content {
@@ -1335,6 +1336,17 @@ li#other-versions {
   z-index: 100;
 }
 
+.apachecn_doc_right {
+    height: 100%;
+    width: 200px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #cde8ef;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+}
 
 @media all and (max-width: 780px) {
   .fork-me {
@@ -1343,6 +1355,15 @@ li#other-versions {
 
   .search_form {
     display: none;
+  }
+
+  .apachecn_doc_right {
+     display:none;
+  }
+
+  .content-wrapper {
+     padding-right:0 !important;
+     position: static;     
   }
 
 

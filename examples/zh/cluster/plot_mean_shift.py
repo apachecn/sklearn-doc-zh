@@ -1,13 +1,15 @@
+# -*- coding:UTF-8 -*-
 """
 =============================================
-A demo of the mean-shift clustering algorithm
+mean-shift（均值漂移）聚类算法示例
 =============================================
 
-Reference:
+参考:
 
 Dorin Comaniciu and Peter Meer, "Mean Shift: A robust approach toward
 feature space analysis". IEEE Transactions on Pattern Analysis and
 Machine Intelligence. 2002. pp. 603-619.
+http://blog.csdn.net/google19890102/article/details/51030884
 
 """
 print(__doc__)
@@ -17,14 +19,15 @@ from sklearn.cluster import MeanShift, estimate_bandwidth
 from sklearn.datasets.samples_generator import make_blobs
 
 # #############################################################################
-# Generate sample data
+# 生成样本数据
 centers = [[1, 1], [-1, -1], [1, -1]]
 X, _ = make_blobs(n_samples=10000, centers=centers, cluster_std=0.6)
 
 # #############################################################################
-# Compute clustering with MeanShift
+# 使用 MeanShift 算法来计算聚类
 
 # The following bandwidth can be automatically detected using
+# 可以使用以下带宽进行自动检测
 bandwidth = estimate_bandwidth(X, quantile=0.2, n_samples=500)
 
 ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
@@ -38,7 +41,7 @@ n_clusters_ = len(labels_unique)
 print("number of estimated clusters : %d" % n_clusters_)
 
 # #############################################################################
-# Plot result
+# 绘制结果图像
 import matplotlib.pyplot as plt
 from itertools import cycle
 
