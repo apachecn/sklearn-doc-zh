@@ -72,29 +72,50 @@
           <ul>
               <li><a href="{{pathto('index')}}">首页</a></li>
               <li><a href="{{pathto('install')}}">安装</a></li>
-              <li class="btn-li"><div class="btn-group">
-            <a href="{{pathto('documentation')}}">文档</a>
-            <a class="btn dropdown-toggle" data-toggle="dropdown">
-               <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-          <li class="link-title">Scikit-learn 0.19</li>
-          <li><a href="{{ pathto('tutorial/index') }}">教程</a></li>
-          <li><a href="{{ pathto('user_guide') }}">用户指南</a></li>
-          <li><a href="{{ pathto('modules/classes') }}">API</a></li>
-          <li><a href="{{ pathto('faq') }}">FAQ</a></li>
-          <li><a href="{{ pathto('developers/contributing') }}">贡献</a></li>
-          <li class="divider"></li>
-              <li><a href="http://scikit-learn.org/stable/documentation.html">Scikit-learn 0.19 (stable)</a></li>
-              <li><a href="http://scikit-learn.org/0.18/documentation.html">Scikit-learn 0.18</a></li>
-              <li><a href="http://scikit-learn.org/0.17/documentation.html">Scikit-learn 0.17</a></li>
-              <li><a href="{{ pathto('_downloads/scikit-learn-docs.pdf', 1) }}">PDF 文档</a></li>
-            </ul>
-          </div>
-      </li>
-          <li><a href="{{pathto('auto_examples/index')}}">示例</a></li>
-          <li><a href="{{pathto('translate-progress')}}">翻译进度</a></li>
-          <li><a href="//github.com/apachecn/scikit-learn-doc-zh#%E8%B4%A1%E7%8C%AE%E8%80%85" target="_blank">贡献者</a></li>
+              <li class="btn-li">
+                <div class="btn-group">
+                    <a href="{{pathto('documentation')}}">文档</a>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li class="link-title">Scikit-learn 0.19</li>
+                      <li><a href="{{ pathto('tutorial/index') }}">教程</a></li>
+                      <li><a href="{{ pathto('user_guide') }}">用户指南</a></li>
+                      <li><a href="{{ pathto('modules/classes') }}">API</a></li>
+                      <li><a href="{{ pathto('faq') }}">FAQ</a></li>
+                      <li><a href="{{ pathto('developers/contributing') }}">贡献</a></li>
+                      <li class="divider"></li>
+                      <li><a href="http://scikit-learn.org/stable/documentation.html">Scikit-learn 0.19 (stable)</a></li>
+                      <li><a href="http://scikit-learn.org/0.18/documentation.html">Scikit-learn 0.18</a></li>
+                      <li><a href="http://scikit-learn.org/0.17/documentation.html">Scikit-learn 0.17</a></li>
+                      <li><a href="{{ pathto('_downloads/scikit-learn-docs.pdf', 1) }}">PDF 文档</a></li>
+                    </ul>
+                </div>
+              </li>
+              <li><a href="{{pathto('auto_examples/index')}}">示例</a></li>
+              <li class="btn-li">
+                <div class="btn-group">
+                    <a href="javascript:void(0)">项目相关</a>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="{{pathto('project-role')}}">项目角色</a></li>
+                      <li><a href="javascript:void(0)">项目进度</a></li>
+                      <li><a href="//github.com/apachecn/scikit-learn-doc-zh#%E8%B4%A1%E7%8C%AE%E8%80%85" target="_blank">贡献者</a></li>
+                      <li class="divider"></li>
+                      <li><a href="{{pathto('project-award')}}">项目奖励</a></li>
+                      <li class="divider"></li>
+                      <li><a href="http://www.apachecn.org/organization/244.html" target="_blank">积分物品</a></li>
+                      <li><a href="http://www.apachecn.org/organization/269.html" target="_blank">兑换记录</a></li>
+                      <li class="divider"></li>
+                      <li><a href="{{pathto('project-feedback')}}">建议反馈</a></li>
+                    </ul>
+                </div>
+              </li>
+              <li><a href="//github.com/apachecn/scikit-learn-doc-zh#%E8%B4%A1%E7%8C%AE%E8%80%85" target="_blank">贡献者</a></li>
+              <li><a href="//github.com/apachecn/scikit-learn-doc-zh" target="_blank"><font color="#FF0000">GitHub</font></a></li>
           </ul>
           <a href="javascript:void(0);" onclick="showMenu()">
               <div class="nav-icon">
