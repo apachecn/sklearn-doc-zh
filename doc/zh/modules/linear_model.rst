@@ -467,10 +467,9 @@ Alpha 在这里也是作为一个变量，通过数据中估计得到.
 .. math:: p(w|\lambda) =
     \mathcal{N}(w|0,\lambda^{-1}\bold{I_{p}})
 
-先验参数 :math:`\alpha` 和 :math:`\lambda`一般是服从 `gamma
-分布 <https://en.wikipedia.org/wiki/Gamma_distribution>` , 这个分布与高斯成共轭先验关系。
+先验参数 :math:`\alpha` 和 :math:`\lambda` 一般是服从 `gamma 分布 <https://en.wikipedia.org/wiki/Gamma_distribution>` , 这个分布与高斯成共轭先验关系。
 
-得到的模型一般称为 *贝叶斯岭回归*， 并且这个与传统的 :class:`Ridge` 非常相似。参数 :math:`w`, :math:`\alpha` 和 :math:`\lambda` 是在模型拟合的时候一起被估算出来的。 剩下的超参数就是 gamma 分布的先验了。
+得到的模型一般称为 *贝叶斯岭回归*, 并且这个与传统的 :class:`Ridge` 非常相似。参数 :math:`w`, :math:`\alpha` 和 :math:`\lambda` 是在模型拟合的时候一起被估算出来的。 剩下的超参数就是 gamma 分布的先验了。
 :math:`\alpha` 和 :math:`\lambda` 。  它们通常被选择为 *没有信息量* 。模型参数的估计一般利用 *最大似然对数估计法* 。
 
 默认 :math:`\alpha_1 = \alpha_2 =  \lambda_1 = \lambda_2 = 10^{-6}`.
