@@ -3,7 +3,7 @@
 .. _gaussian_process:
 
 ============
-1.7.高斯过程
+高斯过程
 ============
 
 .. currentmodule:: sklearn.gaussian_process
@@ -29,7 +29,7 @@
 	
 .. _gpr:
 
-1.7.1.高斯过程回归（GPR）
+高斯过程回归（GPR）
 =================================
 
 .. currentmodule:: sklearn.gaussian_process
@@ -63,10 +63,10 @@ GaussianProcessRegressor 的作用还包括：
  
 
 
-1.7.2.GPR 示例
+GPR 示例
 =============
 
-1.7.2.1.具有噪声级的 GPR 估计
+具有噪声级的 GPR 估计
 -------------------------
 
 该示例说明具有包含 WhiteKernel 的和核(sum-kernel)的 GPR 可以估计数据的噪声水平。
@@ -91,7 +91,7 @@ GaussianProcessRegressor 的作用还包括：
    :align: center
 
 
-1.7.2.2.GPR 和内核岭回归(Kernel Ridge Regression)的比较
+GPR 和内核岭回归(Kernel Ridge Regression)的比较
 ---------------------------------------------
 
 内核脊回归（KRR）和 GPR 通过内部使用 "kernel trick(内核技巧)" 来学习目标函数。
@@ -123,7 +123,7 @@ GPR中的参数的基于梯度的优化不受此指数缩放的影响，因此�
 预测的时间是相似的; 然而，生成 GPR 预测分布的方差需要的时间比生成平均值要长。
 
 
-1.7.2.3.Mauna Loa CO2 数据中的 GRR
+Mauna Loa CO2 数据中的 GRR
 -------------------------------
 
 该示例基于 [RW2006] 的第 5.4.3 节。
@@ -175,7 +175,7 @@ GPR中的参数的基于梯度的优化不受此指数缩放的影响，因此�
 
 .. _gpc:
 
-1.7.3.高斯过程分类（GPC）  
+高斯过程分类（GPC）  
 ======================
 
 .. currentmodule:: sklearn.gaussian_process
@@ -214,7 +214,7 @@ OvO(one-versus-one )策略的训练和预测来支持多类分类。
 但如上所述，在解决内部二进制分类任务的基础上，它们使用OvR或OvO的组合方法。
 
 
-1.7.4.GPC 示例
+GPC 示例
 ============
 
 GPC 概率预测
