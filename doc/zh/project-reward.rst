@@ -4,7 +4,7 @@
 项目奖励
 =========================
 
-该页面展示了参与本 scikit-learn 中文文档项目的一些角色结构，更多信息请看以下内容。
+该页面展示了参与本 scikit-learn 中文文档项目的具体人员和相应奖励，更多信息请看以下内容。
 
 .. _principal:
 
@@ -33,7 +33,7 @@
                 <div class="tablesorter-header-inner">总积分</div>
             </th>
             <th colspan="1" class="confluenceTh sortableHeader" data-column="4" tabindex="0" unselectable="on" style="user-select: none; min-width: 8px; max-width: none;">
-                <div class="tablesorter-header-inner">剩余积分</div>
+                <div class="tablesorter-header-inner">奖励积分</div>
             </th>
             <th colspan="1" class="confluenceTh sortableHeader" data-column="5" tabindex="0" unselectable="on" style="user-select: none; min-width: 8px; max-width: none;">
                 <div class="tablesorter-header-inner">创建时间</div>
@@ -58,7 +58,7 @@
                 <div class="tablesorter-header-inner">总积分</div>
             </th>
             <th colspan="1" class="confluenceTh sortableHeader" data-column="4" tabindex="0" unselectable="on" style="user-select: none;">
-                <div class="tablesorter-header-inner">剩余积分</div>
+                <div class="tablesorter-header-inner">奖励积分</div>
             </th>
             <th colspan="1" class="confluenceTh sortableHeader" data-column="5" tabindex="0" unselectable="on" style="user-select: none;">
                 <div class="tablesorter-header-inner">创建时间</div>
@@ -317,7 +317,7 @@
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">夜神月</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">760514101</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">100</span></td>
-            <td colspan="1" class="confluenceTd">0</td>
+            <td colspan="1" class="confluenceTd">100</td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
         </tr>
@@ -425,7 +425,7 @@
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">X</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">815928754</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">100</span></td>
-            <td colspan="1" class="confluenceTd">0</td>
+            <td colspan="1" class="confluenceTd">100</td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
         </tr>
@@ -434,7 +434,7 @@
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">Lielei</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">1249756978</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">100</span></td>
-            <td colspan="1" class="confluenceTd">0</td>
+            <td colspan="1" class="confluenceTd">100</td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
         </tr>
@@ -551,7 +551,7 @@
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">Kyrie</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">525429239</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">120</span></td>
-            <td colspan="1" class="confluenceTd">20</td>
+            <td colspan="1" class="confluenceTd">120</td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
         </tr>
@@ -614,7 +614,7 @@
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">糖分°</span></td>
             <td colspan="1" class="confluenceTd"><span style="color: rgb(36,41,46);">870811589</span></td>
             <td colspan="1" class="confluenceTd">100</td>
-            <td colspan="1" class="confluenceTd">0</td>
+            <td colspan="1" class="confluenceTd">100</td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
             <td colspan="1" class="confluenceTd"><span>2017-11-14</span></td>
         </tr>
