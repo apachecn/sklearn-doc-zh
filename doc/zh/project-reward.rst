@@ -4,9 +4,16 @@
 项目奖励
 =========================
 
-该页面展示了参与本 scikit-learn 中文文档项目的具体人员和相应奖励，更多信息请看以下内容。
+该页面展示了参与本 scikit-learn 中文文档项目的贡献者和奖励的积分, 负责的内容越多, 积分越高, 更多详情请看以下内容.
 
-.. _principal:
+.. _integral_item:
+
+积分物品
+=======================
+
+如果想使用积分兑换自己喜欢的物品, 有关更多物品的详情请参阅: `物品列表 <http://www.apachecn.org/organization/244.html>`_.
+
+.. _reward_detail:
 
 奖励详情
 =======================
@@ -17,7 +24,9 @@
 
 .. raw:: html
 
-  <table class="confluenceTable tablesorter tablesorter-default stickyTableHeaders" style="padding: 0px;">
+  <link href="http://storm.apachecn.org/releases/cn/1.1.0/css/apachecn-extend.css" rel="stylesheet"/>
+
+  <table class="apachecn-bordered" style="padding: 0px;">
     <thead class="tableFloatingHeaderOriginal" style="position: static; margin-top: 0px; left: 414px; z-index: 3; width: 603px; top: 92px;">
         <tr class="tablesorter-headerRow">
             <th class="numberingColumn confluenceTh sortableHeader tablesorter-headerAsc" data-column="0" tabindex="0" unselectable="on" style="user-select: none; min-width: 8px; max-width: none;">
@@ -728,10 +737,3 @@
         </tr>
     </tbody>
   </table>
-
-.. _initiator:
-
-积分物品
-=======================
-
-如果想使用积分兑换自己喜欢的物品, 更多物品详情请参阅: `物品列表 <http://www.apachecn.org/organization/244.html>`_.
