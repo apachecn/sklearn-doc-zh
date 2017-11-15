@@ -7,7 +7,7 @@
 =================
 
  
-在:mod:`sklearn.feature_selection` 模块中的类可以用来对样本集进行特征选择（feature selection）和降维（dimensionality reduction ），这将会提高估计的准确度或者增加他们在高维数据上的性能。
+在 :mod:`sklearn.feature_selection` 模块中的类可以用来对样本集进行特征选择（feature selection）和降维（dimensionality reduction ），这将会提高估计器的准确度或者增加他们在高维数据集上的性能。
 
 
 .. _variance_threshold:
