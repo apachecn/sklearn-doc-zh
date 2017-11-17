@@ -8,4 +8,4 @@
 
 例如: 翻译有误，格式有误，排版不好，用户体验不好，有更好的 idea ...等等.
 
-麻烦联系项目负责人 `@小瑶 <project-role.html#principal>`_.
+麻烦联系该项目负责人 `@小瑶 <project-role.html#principal>`_.
