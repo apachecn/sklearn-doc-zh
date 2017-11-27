@@ -6,7 +6,7 @@
 
 .. note::
 
-   如果你想为这个项目做出贡献，建议你 :ref:`安装最新版本的开发版本 <install_bleeding_edge>` .
+   如果你想为这个项目做出贡献，建议你 :ref:`安装最新的开发版本 <install_bleeding_edge>` .
 
 
 安装最新版本
@@ -18,7 +18,7 @@ Scikit-learn 要求:
 - NumPy (>= 1.8.2),
 - SciPy (>= 0.13.3).
 
-如果你已经有一个安全的 numpy 和 scipy，安装 scikit-learn 的最简单的方法是使用 ``pip`` ::
+如果你已经有一个安全的 numpy 和 scipy，安装 scikit-learn 最简单的方法是使用 ``pip`` ::
 
     pip install -U scikit-learn
 
@@ -26,21 +26,21 @@ Scikit-learn 要求:
 
     conda install scikit-learn
 
-如果您还没有安装 NumPy 或 SciPy，还可以使用 conda 或 pip 安装这些。
-当使用pip时，请确保使用 *binary wheels*，并且 NumPy 和 SciPy 不会从源重新编译，这可能在使用操作系统和硬件的特定配置（如 Raspberry Pi 上的 Linux）时发生。
-从源代码构建 numpy 和 scipy 可能是复杂的（特别是在 Windows 上），并且需要仔细配置，以确保它们与线性代数程序的优化实现链接。而是使用如下所述的第三方分发。
+如果您还没有安装 NumPy 或 SciPy，还可以使用 conda 或 pip 来安装它们。
+当使用 pip 时，请确保使用了 *binary wheels*，并且 NumPy 和 SciPy 不会从源重新编译，这可能在使用操作系统和硬件的特定配置（如 Raspberry Pi 上的 Linux）时发生。
+从源代码构建 numpy 和 scipy 可能是复杂的（特别是在 Windows 上），并且需要仔细配置，以确保它们与线性代数程序的优化实现链接。而是使用如下所述的第三方发行版。
 
 如果您必须安装 scikit-learn 及其与 pip 的依赖关系，则可以将其安装为 ``scikit-learn[alldeps]``。
 最常见的用例是 ``requirements.txt`` 用作 PaaS 应用程序或 Docker 映像的自动构建过程的一部分的文件。此选项不适用于从命令行进行手动安装。
 
-第三方分发
+第三方发行版
 ==========================
 如果您尚未安装具有 numpy 和 scipy 的 python 安装，建议您通过软件包管理器或通过 python 软件包进行安装。
 这些与 numpy, scipy, scikit-learn, matplotlib 和许多其他有用的科学和数据处理库。
 
 可用选项有:
 
-Canopy and Anaconda 适用于所有支持的平台
+Canopy 和 Anaconda 适用于所有支持的平台
 -----------------------------------------------
 
 `Canopy
