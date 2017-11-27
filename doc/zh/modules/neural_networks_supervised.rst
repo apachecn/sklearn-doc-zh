@@ -1,7 +1,7 @@
 .. _neural_networks_supervised:
 
 ==================================
-神经网络模块（监督的）
+神经网络模型（有监督）
 ==================================
 
 .. currentmodule:: sklearn.neural_network
