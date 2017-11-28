@@ -6,7 +6,7 @@
 
 .. currentmodule:: sklearn.svm
 
-**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`classification（分类） <svm_classification>`, :ref:`regression（回归） <svm_regression>` and  :ref:`outliers detection（异常检测） <svm_outlier_detection>`.
+**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`分类 <svm_classification>`, :ref:`回归 <svm_regression>` and  :ref:`异常检测 <svm_outlier_detection>`.
 
 支持向量机的优势在于:
 
@@ -16,7 +16,7 @@
 
     - 在决策函数（称为支持向量）中使用训练集的子集,因此它也是高效利用内存的.
 
-    - 通用性: 不同的核函数 :ref:`svm_kernels` 与特定的决策函数一一对应.常见的内核已
+    - 通用性: 不同的核函数 :ref:`svm_kernels` 与特定的决策函数一一对应.常见的 kernel 已
     经提供,也可以指定定制的内核.
 
 支持向量机的缺点包括:
@@ -43,9 +43,9 @@
    :align: center
 
 
-:class:`SVC` 和 :class:`NuSVC` 是相似的方法, 但是接受稍许不同的参数设置并且有不同的数学方程(在这部分看 :ref:`svm_mathematical_formulation`). 另一方面, :class:`LinearSVC` 是另一个实现线性核函数的支持向量分类. 记住 :class:`LinearSVC` 不接受关键词 ``kernel``, 因为它被假设为线性的. 它也缺少一些:class:`SVC` 和 :class:`NuSVC` 的成员(members) 比如 ``support_``.
+:class:`SVC` 和 :class:`NuSVC` 是相似的方法, 但是接受稍许不同的参数设置并且有不同的数学方程(在这部分看 :ref:`svm_mathematical_formulation`). 另一方面, :class:`LinearSVC` 是另一个实现线性核函数的支持向量分类. 记住 :class:`LinearSVC` 不接受关键词 ``kernel``, 因为它被假设为线性的. 它也缺少一些 :class:`SVC` 和 :class:`NuSVC` 的成员(members) 比如 ``support_`` .
 
-和其他分类器一样, :class:`SVC`, :class:`NuSVC` 和 :class:`LinearSVC` 将两个数组作为输入:  ``[n_samples, n_features]`` 大小的数组 X 作为训练样本, ``[n_samples]`` 大小的数组y作为类别标签(字符串或者整数)::
+和其他分类器一样, :class:`SVC`, :class:`NuSVC` 和 :class:`LinearSVC` 将两个数组作为输入:  ``[n_samples, n_features]`` 大小的数组 X 作为训练样本, ``[n_samples]`` 大小的数组 y 作为类别标签(字符串或者整数)::
 
 
     >>> from sklearn import svm
@@ -81,7 +81,7 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 多元分类
 --------------------------
 
-:class:`SVC` 和 :class:`NuSVC` 为多元分类实现了 "one-against-one" 的方法 (Knerr et al., 1990) 如果 ``n_class`` 是类别的数量, 那么 ``n_class * (n_class - 1) / 2`` 分类器被重构, 而且每一个从两个类别中训练数据. 为了给其他分类器提供一致的交互, ``decision_function_shape`` 选项允许聚合"one-against-one" 分类器的结果成 ``(n_samples, n_classes)`` 的大小到决策函数::
+:class:`SVC` 和 :class:`NuSVC` 为多元分类实现了 "one-against-one" 的方法 (Knerr et al., 1990) 如果 ``n_class`` 是类别的数量, 那么 ``n_class * (n_class - 1) / 2`` 分类器被重构, 而且每一个从两个类别中训练数据. 为了给其他分类器提供一致的交互, ``decision_function_shape`` 选项允许聚合 "one-against-one" 分类器的结果成 ``(n_samples, n_classes)`` 的大小到决策函数::
 
     >>> X = [[0], [1], [2], [3]]
     >>> Y = [0, 1, 2, 3]
@@ -113,13 +113,13 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 
 参见 :ref:`svm_mathematical_formulation` 查看决策函数的完整描述.
 
-记住 :class:`LinearSVC` 也实现了可选择的多类别策略, 通过使用选项 ``multi_class='crammer_singer'``, 所谓的多元 SVM 由 Crammer 和 Singer 明确表达. 这个方法是一致的, 对于 one-vs-rest 是不正确的. 实际上, one-vs-rest 分类通常收到青睐, 因为结果大多数是相似的, 但是运行时间却显著减少.
+记住 :class:`LinearSVC` 也实现了可选择的多类别策略, 通过使用选项 ``multi_class='crammer_singer'``, 所谓的多元 SVM 由 Crammer 和 Singer 明确表达. 这个方法是一致的, 对于 one-vs-rest 是不正确的. 实际上, one-vs-rest 分类通常受到青睐, 因为结果大多数是相似的, 但是运行时间却显著减少.
 
 对于 "one-vs-rest" :class:`LinearSVC`, 属性 ``coef_`` 和 ``intercept_`` 分别具有 ``[n_class, n_features]`` 和 ``[n_class]`` 尺寸. 系数的每一行符合 ``n_class`` 的许多 one-vs-rest 分类器之一, 并且就以这一类的顺序与拦截器(intercepts)相似.
 
-至于 one-vs-one :class:`SVC`, 属性特征的布局(layout)有少多些复杂. 考虑到有一种线性核函数,``coef_`` 和 ``intercept_`` 的布局(layout)与上文描述成 :class:`LinearSVC` 相似, 除了 ``coef_`` 的形状 ``[n_class * (n_class - 1) / 2, n_features]``, 与许多二元的分类器相似. 0到n的类别顺序是 "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", "1 vs 3", "1 vs n", . . . "n-1 vs n".
+至于 one-vs-one :class:`SVC`, 属性特征的布局(layout)有少多些复杂. 考虑到有一种线性核函数, ``coef_`` 和 ``intercept_`` 的布局(layout)与上文描述成 :class:`LinearSVC` 相似, 除了 ``coef_`` 的形状 ``[n_class * (n_class - 1) / 2, n_features]``, 与许多二元的分类器相似. 0到n的类别顺序是 "0 vs 1", "0 vs 2" , ... "0 vs n", "1 vs 2", "1 vs 3", "1 vs n", . . . "n-1 vs n".
 
-``dual_coef_`` 的形状是 ``[n_class-1, n_SV]``, 这个结构有些难以理解.
+``dual_coef_`` 的 shape 是 ``[n_class-1, n_SV]``, 这个结构有些难以理解.
 对应于支持向量的列与 ``n_class * (n_class - 1) / 2`` "one-vs-one" 分类器相关.
 每一个支持向量用于 ``n_class - 1`` 分类器中.对于这些分类器,每一行的 ``n_class - 1`` 
 条目对应于对偶系数(dual coefficients).
@@ -154,21 +154,14 @@ SVMs 决策函数取决于训练集的一些子集, 称作支持向量. 这些�
 得分和概率
 ------------------------
 
-:class:`SVC` 方法的 ``decision_function`` 给每一个样例每一个类别分
-值(scores)(或者在一个二元类中每一个样例一个分值).
-当构造器(constructor)选项 ``probability`` 设置为 ``True``的时候,
-类成员可能性评估开启.(来自 ``predict_proba`` 和 ``predict_log_proba`` 方法)
-在二元分类中,概率使用Platt scaling进行标准化:在SVM分数上的逻辑回归,在训练集上用额外的交
-叉验证来拟合.在多类情况下,这可以扩展为per Wu et al.(2004)
+:class:`SVC` 方法的 ``decision_function`` 给每一个样例每一个类别分值(scores)(或者在一个二元类中每一个样例一个分值).
+当构造器(constructor)选项 ``probability`` 设置为 ``True`` 的时候, 类成员可能性评估开启.(来自 ``predict_proba`` 和 ``predict_log_proba`` 方法)
+在二元分类中,概率使用 Platt scaling 进行标准化: 在 SVM 分数上的逻辑回归,在训练集上用额外的交叉验证来拟合.在多类情况下,这可以扩展为 per Wu et al.(2004)
 
-不用说,对于大数据集来说,在Platt scaling中进行交叉验证是一项昂贵的操作.
-另外,可能性预测可能与scores不一致,因为scores的"argmax"可能不是可能性的argmax.
-(例如,在二元分类中,
-一个样本可能被标记为一个有可能性的类``predict`` <½ according to ``predict_proba``.)
-Platt的方法也有理论问题.
-如果 confidence scores 必要,但是这些没必要是可能性,
-那么建议设置 ``probability=False``
-并使用 ``decision_function`` 而不是 ``predict_proba``.
+不用说,对于大数据集来说,在 Platt scaling 中进行交叉验证是一项昂贵的操作.
+另外,可能性预测可能与 scores 不一致,因为 scores 的 "argmax" 可能不是可能性的 argmax.
+(例如,在二元分类中,一个样本可能被标记为一个有可能性的类 ``predict`` <½ according to ``predict_proba``.) Platt 的方法也有理论问题.
+如果 confidence scores 必要,但是这些没必要是可能性, 那么建议设置 ``probability=False`` 并使用 ``decision_function`` 而不是 ``predict_proba``.
 
 .. topic:: 参考:
 
@@ -177,14 +170,14 @@ Platt的方法也有理论问题.
  
  
  * Platt
-   `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods（SVMs 的概率输出和与规则化似然方法的比较）"<http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`.
+   `"Probabilistic outputs for SVMs and comparisons to regularized likelihood methods（SVMs 的概率输出和与规则化似然方法的比较）"<http://www.cs.colorado.edu/~mozer/Teaching/syllabi/6622/papers/Platt1999.pdf>`_ .
 
 非均衡问题
 --------------------
 
 这个问题期望给予某一类或某个别样例能使用的关键词 ``class_weight`` 和 ``sample_weight`` 提高权重(importance).
 
-:class:`SVC` (而不是 :class:`NuSVC`) 在 ``fit`` 方法中生成了一个关键词 ``class_weight``. 它是形如``{class_label : value}`` 的字典, value是浮点数大于0的值, 把类 ``class_label`` 的参数``C`` 设置为 ``C * value``.
+:class:`SVC` (而不是 :class:`NuSVC`) 在 ``fit`` 方法中生成了一个关键词 ``class_weight``. 它是形如 ``{class_label : value}`` 的字典, value 是浮点数大于 0 的值, 把类 ``class_label`` 的参数 ``C`` 设置为 ``C * value``.
 
 .. figure:: ../auto_examples/svm/images/sphx_glr_plot_separating_hyperplane_unbalanced_001.png
    :target: ../auto_examples/svm/plot_separating_hyperplane_unbalanced.html
@@ -250,7 +243,7 @@ Platt的方法也有理论问题.
 但类别的 SVM 用于异常检测, 即给予一个样例集, 它会检测这个样例集的 soft boundary 以便给新的数据点分类,
 看它是否属于这个样例集. 生成的类称作 :class:`OneClassSVM`.
 
-这种情况下, 因为它属于非监督学习的一类, 没有类标签, fit方法只会考虑输入数组X,.
+这种情况下, 因为它属于非监督学习的一类, 没有类标签, fit 方法只会考虑输入数组X.
 
 在章节 :ref:`outlier_detection` 查看这个应用的更多细节.
 
@@ -260,7 +253,7 @@ Platt的方法也有理论问题.
    :scale: 75
 
 
-.. topic:: Examples:
+.. topic:: 示例:
 
  * :ref:`sphx_glr_auto_examples_svm_plot_oneclass.py`
  * :ref:`sphx_glr_auto_examples_applications_plot_species_distribution_modeling.py`
@@ -272,7 +265,7 @@ Platt的方法也有理论问题.
 支持向量机是个强大的工具，不过它的计算和存储空间要求也会随着要训练向量的数目增加而快速增加。
 SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支持向量和训练数据的其余部分分离开来。
 在实践中(数据集相关)，会根据 `libsvm`_ 的缓存有多效，在 :math:`O(n_{features} \times n_{samples}^2)` 和 
-:math:`O(n_{features} \times n_{samples}^3)` 之间基于 `libsvm`_ 的缩放操作才会调用这个 QP解析器。
+:math:`O(n_{features} \times n_{samples}^3)` 之间基于 `libsvm`_ 的缩放操作才会调用这个 QP 解析器。
 如果数据是非常稀疏，那 :math:`n_{features}`  就用样本向量中非零特征的平均数量去替换。 
 
 另外请注意，在线性情况下，由 `liblinear`_ 操作的 :class:`LinearSVC` 算法要比由它的 `libsvm`_ 对应的 
@@ -284,26 +277,26 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 
   * **避免数据复制**: 对于 :class:`SVC`， :class:`SVR`， :class:`NuSVC` 和
-    :class:`NuSVR`， 如果数据是通过某些方法而不是用C有序的连续双精度，那它先会调用底层的C命令再复制。
-    您可以通过检查它的 ``flags`` 属性，来确定给定的numpy数组是不是C连续的。
+    :class:`NuSVR`， 如果数据是通过某些方法而不是用 C 有序的连续双精度，那它先会调用底层的 C 命令再复制。
+    您可以通过检查它的 ``flags`` 属性，来确定给定的 numpy 数组是不是 C 连续的。
 
     对于 :class:`LinearSVC` (和 :class:`LogisticRegression
-    <sklearn.linear_model.LogisticRegression>`) 的任何输入，都会以numpy数组形式，被复制和转换为
-    用liblinear内部稀疏数据去表达（双精度浮点型float和非零部分的int32索引）。 
-    如果您想要一个适合大规模的线性分类器，又不打算复制一个密集的C-contiguous双精度numpy数组作为输入，
+    <sklearn.linear_model.LogisticRegression>`) 的任何输入，都会以 numpy 数组形式，被复制和转换为
+    用 liblinear 内部稀疏数据去表达（双精度浮点型 float 和非零部分的 int32 索引）。 
+    如果您想要一个适合大规模的线性分类器，又不打算复制一个密集的 C-contiguous 双精度 numpy 数组作为输入，
     那我们建议您去使用 :class:`SGDClassifier
     <sklearn.linear_model.SGDClassifier>` 类作为替代。目标函数可以配置为和 :class:`LinearSVC`
     模型差不多相同的。
 
   * **内核的缓存大小**: 在大规模问题上，对于 :class:`SVC`, :class:`SVR`, :class:`nuSVC` 和
-    :class:`NuSVR`, 内核缓存的大小会特别影响到运行时间。如果您有足够可用的RAM，不妨把它的 ``缓存大小`` 
-    设得比默认的200(MB)要高，例如为 500(MB) 或者 1000(MB)。
+    :class:`NuSVR`, 内核缓存的大小会特别影响到运行时间。如果您有足够可用的 RAM，不妨把它的 ``缓存大小`` 
+    设得比默认的 200(MB) 要高，例如为 500(MB) 或者 1000(MB)。
 
   * **惩罚系数C的设置**:在合理的情况下， ``C`` 的默认选择为 ``1`` 。如果您有很多混杂的观察数据，
     您应该要去调小它。 ``C`` 越小，就能更好地去正规化估计。
 
-  * 支持向量机算法本身不是用来扩大不变性，所以 **我们强烈建议您去扩大数据量**. 举个例子，对于输入向量X，
-    规整它的每个数值范围为[0, 1]或[-1, +1]，或者标准化它的为均值为0方差为1的数据分布。请注意，
+  * 支持向量机算法本身不是用来扩大不变性，所以 **我们强烈建议您去扩大数据量**. 举个例子，对于输入向量 X，
+    规整它的每个数值范围为 [0, 1] 或 [-1, +1] ，或者标准化它的为均值为0方差为1的数据分布。请注意，
     相同的缩放标准必须要应用到所有的测试向量，从而获得有意义的结果。 请参考章节
     :ref:`preprocessing` ，那里会提供到更多关于缩放和规整。
 
@@ -315,10 +308,10 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
   * 在拟合模型时，底层 :class:`LinearSVC` 操作使用了随机数生成器去选择特征。
     所以不要感到意外，对于相同的数据输入，也会略有不同的输出结果。如果这个发生了，
-    尝试用更小的tol 参数。
+    尝试用更小的 tol 参数。
 
   * 使用由 ``LinearSVC(loss='l2', penalty='l1',
-    dual=False)`` 提供的L1惩罚去产生稀疏解，也就是说，特征权重的子集不同于零，这样做有助于决策函数。
+    dual=False)`` 提供的 L1 惩罚去产生稀疏解，也就是说，特征权重的子集不同于零，这样做有助于决策函数。
     随着增加 ``C`` 会产生一个更复杂的模型（要做更多的特征选择）。可以使用 :func:`l1_min_c` 去计算 ``C`` 的数值，去产生一个"null" 模型（所有的权重等于零）。
 
 
@@ -334,7 +327,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
   * 多项式: :math:`(\gamma \langle x, x'\rangle + r)^d`.
     :math:`d` 是关键词 ``degree``, :math:`r` 指定 ``coef0``。
 
-  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键词 ``gamma``, 必须大于0。
+  * rbf: :math:`\exp(-\gamma \|x-x'\|^2)`. :math:`\gamma` 是关键词 ``gamma``, 必须大于 0。
 
   * sigmoid (:math:`\tanh(\gamma \langle x,x'\rangle + r)`),
     其中 :math:`r` 指定 ``coef0``。
@@ -352,7 +345,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 自定义核
 --------------
 
-您可以自定义自己的核，通过使用python函数作为内核或者通过预计算Gram矩阵。
+您可以自定义自己的核，通过使用python函数作为内核或者通过预计算 Gram 矩阵。
 
 自定义内核的分类器和别的分类器一样，除了下面这几点:
 
@@ -369,7 +362,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 
 您的内核必须要以两个矩阵作为参数，大小分别是
 ``(n_samples_1, n_features)``, ``(n_samples_2, n_features)``
-和返回一个内核矩阵，大小是 ``(n_samples_1, n_samples_2)``.
+和返回一个内核矩阵，shape 是 ``(n_samples_1, n_samples_2)``.
 
 以下代码定义一个线性核，和构造一个使用该内核的分类器例子::
 
@@ -387,7 +380,7 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
 使用 Gram 矩阵
 ~~~~~~~~~~~~~~~~~~~~~
 
-在适应算法中，设置 ``kernel='precomputed'`` 和把X替换为Gram矩阵。
+在适应算法中，设置 ``kernel='precomputed'`` 和把 X 替换为 Gram 矩阵。
 此时，必须要提供在 *所有* 训练矢量和测试矢量中的内核值。 
 
     >>> import numpy as np
@@ -406,11 +399,11 @@ SVM的核心是一个二次规划问题(Quadratic Programming, QP)，是将支�
     >>> clf.predict(gram)
     array([0, 1])
 
-RBF内核参数
+RBF 内核参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-当用 *径向基* (RBF)内核去训练SVM，有两个参数必须要去考虑： ``C`` 惩罚系数和 ``gamma`` 。参数 ``C`` ，
-通用在所有SVM内核，与决策表面的简单性相抗衡，可以对训练样本的误分类进行有价转换。
+当用 *径向基* (RBF) 内核去训练 SVM，有两个参数必须要去考虑： ``C`` 惩罚系数和 ``gamma`` 。参数 ``C`` ，
+通用在所有 SVM 内核，与决策表面的简单性相抗衡，可以对训练样本的误分类进行有价转换。
 较小的 ``C`` 会使决策表面更平滑，同时较高的 ``C`` 旨在正确地分类所有训练样本。 ``Gamma`` 定义了单一
 训练样本能起到多大的影响。较大的 ``gamma`` 会更让其他样本受到影响。
 

@@ -1,35 +1,35 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 ======================================
-Decision Tree Regression with AdaBoost
+使用 AdaBoost 的决策树回归
 ======================================
 
-A decision tree is boosted using the AdaBoost.R2 [1]_ algorithm on a 1D
-sinusoidal dataset with a small amount of Gaussian noise.
-299 boosts (300 decision trees) is compared with a single decision tree
-regressor. As the number of boosts is increased the regressor can fit more
-detail.
+在具有少量高斯噪声的 1D 正弦数据集上使用 AdaBoost.R2 [1]_ 算法来提升决策树。
+将 299 个提升（300 个决策树）与单个决策树回归比较。随着 boosts 的数量增加，回归器可以更多的细节。
 
 .. [1] H. Drucker, "Improving Regressors using Boosting Techniques", 1997.
 
 """
 print(__doc__)
 
-# Author: Noel Dawe <noel.dawe@gmail.com>
+# Author: Noel Dawe <noel.dawe@gmail.com> Joy yx <chinachenyyx@gmail.com>
 #
 # License: BSD 3 clause
 
-# importing necessary libraries
+# 导入一些必要的模块
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import AdaBoostRegressor
 
-# Create the dataset
+# 创建我们所需的数据集
 rng = np.random.RandomState(1)
 X = np.linspace(0, 6, 100)[:, np.newaxis]
 y = np.sin(X).ravel() + np.sin(6 * X).ravel() + rng.normal(0, 0.1, X.shape[0])
 
-# Fit regression model
+# 拟合回归模型
 regr_1 = DecisionTreeRegressor(max_depth=4)
 
 regr_2 = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4),
@@ -38,11 +38,11 @@ regr_2 = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4),
 regr_1.fit(X, y)
 regr_2.fit(X, y)
 
-# Predict
+# 预测数据
 y_1 = regr_1.predict(X)
 y_2 = regr_2.predict(X)
 
-# Plot the results
+# 绘制出我们拟合和预测之后的结果
 plt.figure()
 plt.scatter(X, y, c="k", label="training samples")
 plt.plot(X, y_1, c="g", label="n_estimators=1", linewidth=2)

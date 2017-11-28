@@ -15,7 +15,7 @@
 
 * **Metric functions（指标函数）**: :mod:`metrics` 模块实现了针对特定目的评估预测误差的函数。这些指标在以下部分部分详细介绍 :ref:`classification_metrics`, :ref:`multilabel_ranking_metrics`, :ref:`regression_metrics` 和 :ref:`clustering_metrics` 。
 
-最后， :ref:`dummy_estimators` 用于获取 baseline value of those metrics for random predictions （随机预测的这些指标的基准值）。
+最后， :ref:`dummy_estimators` 用于获取随机预测的这些指标的基准值。
 
 .. seealso::
 
@@ -530,13 +530,13 @@ Jaccard 相似系数 score
 在二分类任务中，术语 ''positive（正）'' 和 ''negative（负）'' 是指 classifier's prediction （分类器的预测），术语 ''true（真）'' 和 ''false（假）'' 是指该预测是否对应于 external judgment （外部判断）（有时被称为 ''observation（观测值）''）。给出这些定义，我们可以指定下表: 
 
 +-------------------+------------------------------------------------+
-|                   |    Actual class(实际类别) (observation（观测值）)                  |
+|                   |    Actual class (observation)                  |
 +-------------------+---------------------+--------------------------+
-|   Predicted class（预测类别） | tp (true positive（真正）)  | fp (false positive（错正）)      |
-|   (expectation （期望值）)   | Correct result（正确结果）      | Unexpected result（意外结果）        |
+|   Predicted class | tp (true positive)  | fp (false positive)      |
+|   (expectation)   | Correct result      | Unexpected result        |
 |                   +---------------------+--------------------------+
-|                   | fn (false negative（错负）) | tn (true negative（真负）)       |
-|                   | Missing result（缺少结果）      | Correct absence of result（正确缺乏结果）|
+|                   | fn (false negative) | tn (true negative)       |
+|                   | Missing result      | Correct absence of result|
 +-------------------+---------------------+--------------------------+
 
 在这种情况下，我们可以定义 precision（精度）, recall（召回） 和 F-measure 的概念: 
@@ -613,17 +613,17 @@ Jaccard 相似系数 score
 然后将 metrics （指标）定义为:
 
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``average（平均）``    | precision（精度）                                                                                                        | Recall（召回）                                                                                                           | F\_beta                                                                                                              |
+|``average``    | Precision                                                                                                        | Recall                                                                                                           | F\_beta                                                                                                              |
 +===============+==================================================================================================================+==================================================================================================================+======================================================================================================================+
-|``"micro（微）"``    | :math:`P(y, \hat{y})`                                                                                            | :math:`R(y, \hat{y})`                                                                                            | :math:`F_\beta(y, \hat{y})`                                                                                          |
+|``"micro"``    | :math:`P(y, \hat{y})`                                                                                            | :math:`R(y, \hat{y})`                                                                                            | :math:`F_\beta(y, \hat{y})`                                                                                          |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``"samples（样本）"``  | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} P(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} R(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} F_\beta(y_s, \hat{y}_s)`                                              |
+|``"samples"``  | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} P(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} R(y_s, \hat{y}_s)`                                                | :math:`\frac{1}{\left|S\right|} \sum_{s \in S} F_\beta(y_s, \hat{y}_s)`                                              |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``"macro（宏）"``    | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} P(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} R(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} F_\beta(y_l, \hat{y}_l)`                                              |
+|``"macro"``    | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} P(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} R(y_l, \hat{y}_l)`                                                | :math:`\frac{1}{\left|L\right|} \sum_{l \in L} F_\beta(y_l, \hat{y}_l)`                                              |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``"weighted（加权）"`` | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| P(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| R(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| F_\beta(y_l, \hat{y}_l)`|
+|``"weighted"`` | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| P(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| R(y_l, \hat{y}_l)`  | :math:`\frac{1}{\sum_{l \in L} \left|\hat{y}_l\right|} \sum_{l \in L} \left|\hat{y}_l\right| F_\beta(y_l, \hat{y}_l)`|
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
-|``None（无）``       | :math:`\langle P(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle R(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle F_\beta(y_l, \hat{y}_l) | l \in L \rangle`                                                            |
+|``None``       | :math:`\langle P(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle R(y_l, \hat{y}_l) | l \in L \rangle`                                                              | :math:`\langle F_\beta(y_l, \hat{y}_l) | l \in L \rangle`                                                            |
 +---------------+------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------+
 
   >>> from sklearn import metrics
@@ -1155,9 +1155,8 @@ regression score（解释的方差回归得分） <https://en.wikipedia.org/wiki
 
 .. topic:: Examples:
 
-  * See :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
-    for an example of mean squared error usage to
-    evaluate gradient boosting regression.
+  * 点击 :ref:`sphx_glr_auto_examples_ensemble_plot_gradient_boosting_regression.py`
+    查看均方误差用于梯度上升（gradient boosting）回归的使用例子。
 
 .. _mean_squared_log_error:
 
@@ -1260,9 +1259,8 @@ R² score, 可决系数
 
 .. topic:: 示例:
 
-  * See :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
-    for an example of R² score usage to
-    evaluate Lasso and Elastic Net on sparse signals.
+  * 点击 :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_and_elasticnet.py`
+    查看关于R²用于评估在Lasso and Elastic Net on sparse signals上的使用.
 
 .. _clustering_metrics:
 

@@ -6,24 +6,24 @@
 
 .. currentmodule:: sklearn.feature_extraction
 
-The :mod:`sklearn.feature_extraction` 模块可用于从包括文本和图像等格式的数据集中提取机器学习算法支持的格式的特征.
+模块 :mod:`sklearn.feature_extraction` 可用于提取符合机器学习算法支持的特征，比如文本和图片。
 
 .. note::
 
-   意特征提取与 :ref:`特征选择` 非常不同：前者包括将任意数据（如文本或图像）转换为可用于机器学习的数值特征。后者是应用于这些特征的机器学习技术。
+   特征特征提取与 :ref:`特征选择` 有很大的不同：前者包括将任意数据（如文本或图像）转换为可用于机器学习的数值特征。后者是将这些特征应用到机器学习中。
 
 .. _dict_feature_extraction:
 
 从字典类型加载特征
 ===========================
 
-该类 :class:`DictVectorizer` 可用于将表示为标准 Python ``dict`` 对象列表的要素数组转换为 scikit-learn 估计器使用的 NumPy/SciPy 表示形式。
+类 :class:`DictVectorizer` 可用于将标准的Python字典（dict）对象列表的要素数组转换为 scikit-learn 估计器使用的 NumPy/SciPy 表示形式。
 
 虽然 Python 的处理速度不是特别快，但 Python 的 ``dict`` 优点是使用方便，稀疏（不需要存储的特征），并且除了值之外还存储特征名称。
 
-:class:`DictVectorizer` 实现了所谓的 "one-of-K" 或 "one-hot" 编码，用于分类（也称为标称，离散）特征。分类功能是 "属性值" 对，其中该值被限制为不排序的可能性的离散列表（例如主题标识符，对象类型，标签，名称...）。
+类 :class:`DictVectorizer` 实现了 "one-of-K" 或 "one-hot" 编码，用于分类（也称为标称，离散）特征。分类功能是 "属性值" 对，其中该值被限制为不排序的可能性的离散列表（例如主题标识符，对象类型，标签，名称...）。
 
-在下文中，"城市" 是一个分类属性，而 "温度" 是传统的数字特征::
+在下面的例子，"城市" 是一个分类属性，而 "温度" 是传统的数字特征::
 
   >>> measurements = [
   ...     {'city': 'Dubai', 'temperature': 33.},
@@ -42,9 +42,9 @@ The :mod:`sklearn.feature_extraction` 模块可用于从包括文本和图像等
   >>> vec.get_feature_names()
   ['city=Dubai', 'city=London', 'city=San Francisco', 'temperature']
 
-:class:`DictVectorizer` 也是对自然语言处理模型中训练序列分类器的有用的表示变换，通常通过提取特定的感兴趣词的特征窗口来工作。
+类 :class:`DictVectorizer` 也是对自然语言处理模型中训练序列分类器的有用的表示变换，通常通过提取围绕感兴趣的特定的词的特征窗口来工作。
 
-例如，假设我们有第一个算法来提取我们想用作训练序列分类器（例如一个块）的补码的语音（PoS）标签。以下 dict 可以是在 "坐在垫子上的猫" 的句子中围绕 "sat" 一词提取的这样一个特征窗口::
+例如，假设我们具有提取我们想要用作训练序列分类器（例如：块）的互补标签的部分语音（PoS）标签的第一算法。以下 dict 可以是在 "坐在垫子上的猫" 的句子，围绕 "sat" 一词提取的这样一个特征窗口::
 
   >>> pos_window = [
   ...     {
@@ -70,33 +70,33 @@ The :mod:`sklearn.feature_extraction` 模块可用于从包括文本和图像等
   >>> vec.get_feature_names()
   ['pos+1=PP', 'pos-1=NN', 'pos-2=DT', 'word+1=on', 'word-1=cat', 'word-2=the']
 
-你可以想象，如果一个文本语料库的每一个单词都提取了这样一个上下文，那么所得的矩阵将会非常宽（许多 one-hot-features），其中绝大部分的大部分时间被重视为零。
+你可以想象，如果一个文本语料库的每一个单词都提取了这样一个上下文，那么所得的矩阵将会非常宽（许多 one-hot-features），其中大部分通常将会是0。
 为了使结果数据结构能够适应内存，该类``DictVectorizer`` 的 ``scipy.sparse`` 默认使用一个矩阵而不是一个 ``numpy.ndarray``。
 
 
 .. _feature_hashing:
 
-特征散列
+特征哈希（相当于一种降维技巧）
 ===============
 
 .. currentmodule:: sklearn.feature_extraction
 
-该类 :class:`FeatureHasher` 是一种高速，低内存向量化器，它使用称为`特征散列 feature hashing <https://en.wikipedia.org/wiki/Feature_hashing>`_ 的技术 ，或 "散列技巧"。
-不像在向量化器中那样构建训练中遇到的特征的哈希表，而是 :class:`FeatureHasher` 将哈希函数应用于特征，以便直接在样本矩阵中确定它们的列索引。
-结果是增加速度和减少内存使用，牺牲可视性; 哈希表不记得输入特性是什么样的，没有 ``inverse_transform`` 办法。
+类 :class:`FeatureHasher` 是一种高速，低内存消耗的向量化方法，它使用了`特征散列 feature hashing <https://en.wikipedia.org/wiki/Feature_hashing>`_ 技术 ，或可称为 "散列法" （hashing trick）的技术。
+代替在构建训练中遇到的特征的哈希表，如向量化所做的那样 :class:`FeatureHasher` 将哈希函数应用于特征，以便直接在样本矩阵中确定它们的列索引。
+结果是以牺牲可检测性为代价，提高速度和减少内存的使用; 哈希表不记得输入特性是什么样的，没有 ``inverse_transform`` 办法。
 
 由于散列函数可能导致（不相关）特征之间的冲突，因此使用带符号散列函数，并且散列值的符号确定存储在特征的输出矩阵中的值的符号。
 这样，碰撞可能会抵消而不是累积错误，并且任何输出要素的值的预期平均值为零。默认情况下，此机制将使用 ``alternate_sign=True`` 启用，对于小型哈希表大小（``n_features < 10000``）特别有用。
 对于大的哈希表大小，可以禁用它，以便将输出传递给估计器，如 :class:`sklearn.naive_bayes.MultinomialNB` 或 :class:`sklearn.feature_selection.chi2` 特征选择器，这些特征选项器可以使用非负输入。
 
-:class:`FeatureHasher` 接受映射（如 Python 的 ``dict`` 及其在 ``collections`` 模块中的变体），``(feature, value)``对或字符串，具体取决于构造函数参数 ``input_type``。
+类 :class:`FeatureHasher` 接受映射（如 Python 的 ``dict`` 及其在 ``collections`` 模块中的变体），使用键值对 ``(feature, value)`` 或字符串，具体取决于构造函数参数 ``input_type``。
 映射被视为 ``(feature, value)`` 对的列表，而单个字符串的隐含值为1，因此 ``['feat1', 'feat2', 'feat3']`` 被解释为 ``[('feat1', 1), ('feat2', 1), ('feat3', 1)]``。
 如果单个特征在样本中多次出现，相关值将被求和（所以 ``('feat', 2)`` 和 ``('feat', 3.5)`` 变为 ``('feat', 5.5)``）。 :class:`FeatureHasher` 的输出始终是 CSR 格式的 ``scipy.sparse`` 矩阵。
 
-在文档分类中可以使用特征散列，但与 :class:`text.CountVectorizer` 不同，:class:`FeatureHasher` 不执行除 Unicode 或 UTF-8 编码之外的任何其他预处理;
+特征散列可以在文档分类中使用，但与 :class:`text.CountVectorizer` 不同，:class:`FeatureHasher` 不执行除 Unicode 或 UTF-8 编码之外的任何其他预处理;
 请参阅下面的哈希技巧向量化大文本语料库，用于组合的 tokenizer/hasher。
 
-例如，考虑需要从 ``(token, part_of_speech)`` 对提取的特征的单词级自然语言处理任务。可以使用 Python 生成器函数来提取功能::
+例如，有一个词级别的自然语言处理任务，需要从 ``(token, part_of_speech)`` 键值对中提取特征。可以使用 Python 生成器函数来提取功能::
 
   def token_features(token, part_of_speech):
       if token.isdigit():
@@ -110,29 +110,29 @@ The :mod:`sklearn.feature_extraction` 模块可用于从包括文本和图像等
           yield "all_uppercase"
       yield "pos={}".format(part_of_speech)
 
-然后，将 ``raw_X``  要被馈送到 ``FeatureHasher.transform`` 可使用被构造::
+然后， ``raw_X``  为了可以传入 ``FeatureHasher.transform`` 可以通过如下方式构造::
 
   raw_X = (token_features(tok, pos_tagger(tok)) for tok in corpus)
 
-并创建一个 hasher::
+并传入一个 hasher::
 
   hasher = FeatureHasher(input_type='string')
   X = hasher.transform(raw_X)
 
-得到一个 ``scipy.sparse`` 矩阵 ``X``。
+得到一个 ``scipy.sparse`` 类型的矩阵 ``X``。
 
-注意使用发生器的理解，它将懒惰引入到特征提取中：令牌只能根据需要从哈希值进行处理。
+注意使用发生器的理解，它将懒惰引入到特征提取中：词令牌（token）只能根据需要从哈希值进行处理。
 
 实现细节
 ----------------------
 
-:class:`FeatureHasher` 使用签名的 32-bit 变体的 MurmurHash3。
-结果（并且由于限制 ``scipy.sparse``），当前支持的功能的最大数量 :math:`2^{31} - 1`.
+类 :class:`FeatureHasher` 使用签名的 32-bit 变体的 MurmurHash3。
+因此导致（并且由于限制 ``scipy.sparse``），当前支持的功能的最大数量 :math:`2^{31} - 1`.
 
-Weinberger等人的散文技巧的原始方法 使用两个单独的哈希函数，:math:`h` 和 :math:`\xi` 分别确定特征的列索引和符号。
-本实现在假设 MurmurHash3 的符号位与其他 bits 无关的情况下工作。
+特征哈希的原始形式源于Weinberger et al，使用两个单独的哈希函数，:math:`h` 和 :math:`\xi` 分别确定特征的列索引和符号。
+现有的实现是基于假设：MurmurHash3的符号位与其他位独立。
 
-由于使用简单的模数将哈希函数转换为列索引，建议使用2的幂作为 ``n_features`` 参数; 否则功能将不会均匀地映射到列。
+由于使用简单的模数将哈希函数转换为列索引，建议使用2次幂作为 ``n_features`` 参数; 否则特征不会均匀的分布到列中。
 
 参考文献：
 Kilian Weinberger，Anirban Dasgupta，John Langford，Alex Smola和Josh Attenberg（2009）。用于大规模多任务学习的特征散列。PROC。ICML。
@@ -158,47 +158,47 @@ MurmurHash3。
 -------------------------------
 
 文本分析是机器学习算法的主要应用领域。
-然而，原始数据，一系列符号不能直接馈送到算法本身，因为它们大多数期望具有固定大小的数字特征向量，而不是具有可变长度的原始文本文档。
+然而，原始数据，符号文字序列不能直接传递给算法，因为它们大多数要求具有固定长度的数字矩阵特征向量，而不是具有可变长度的原始文本文档。
 
-为了解决这个问题，scikit-learn提供了从文本内容中提取数字特征的最常见方法的实用程序，即：
+为解决这个问题，scikit-learn提供了从文本内容中提取数字特征的最常见方法，即：
 
-- **令牌化** 字符串，并为每个可能的令牌提供整数，例如通过使用空格和标点符号作为令牌分隔符。
+- **令牌化（tokenizing）** 对每个可能的词令牌分成字符串并赋予整数形的id，例如通过使用空格和标点符号作为令牌分隔符。
 
-- **统计** 每个文件中的令牌的发生。
+- **统计（counting）** 每个词令牌在文档中的出现次数。
 
-- **标准化** 和加权，在大多数样品/文件中发生的重要性减弱。
+- **标准化（normalizing）** 在大多数的文档 / 样本中，可以减少重要的次令牌的出现次数的权重。。
 
 在该方案中，特征和样本定义如下：
 
 - 每个**单独的令牌发生频率**（归一化或不归零）被视为一个**特征**。
 
-- 给定**文档**的所有令牌频率的向量被认为是多变量**样本**。
+- 给定**文档**中所有的令牌频率向量被看做一个多元sample**样本**。
 
-因此，文档语料库可以由每个文档具有一行的矩阵和在语料库中出现的每个令牌（例如，单词）的一列表示。
+因此，文本的集合可被表示为矩阵形式，每行对应一条文本，每列对应每个文本中出现的词令牌(如单个词)。
 
-我们称**向量化**将文本文档集合转换为数字特征向量的一般过程。
-这种具体的策略（令牌化，计数和归一化）被称为 **Bag of Words** 或 "Bag of n-grams" 表示。
+我们称**向量化**是将文本文档集合转换为数字集合特征向量的普通方法。
+这种特殊思想（令牌化，计数和归一化）被称为 **Bag of Words** 或 "Bag of n-grams" 模型。
 文档由单词出现来描述，同时完全忽略文档中单词的相对位置信息。
 
 
 稀疏
 --------
 
-由于大多数文档通常会使用语料库中使用的单词的非常小的子集，所以得到的矩阵将具有许多特征值，它们是零（通常大于99％）。
+由于大多数文本文档通常只使用文本词向量全集中的一个小子集，所以得到的矩阵将具有许多特征值为零（通常大于99％）。
 
 例如，10,000 个短文本文档（如电子邮件）的集合将使用总共100,000个独特词的大小的词汇，而每个文档将单独使用100到1000个独特的单词。
 
-为了能够将这样的矩阵存储在存储器中，并且还可以加速代数运算 矩阵/向量，实现通常将使用诸如 ``scipy.sparse`` 包中可用的实现的稀疏表示 。
+为了能够将这样的矩阵存储在存储器中，并且还可以加速代数的矩阵/向量运算，实现通常将使用诸如 ``scipy.sparse`` 包中的稀疏实现。
 
 
 常用 Vectorizer 使用
 -----------------------
 
-:class:`CountVectorizer`  在单个类中实现标记化和事件计数::
+类 :class:`CountVectorizer`  在单个类中实现了令牌化和出现频数统计::
 
   >>> from sklearn.feature_extraction.text import CountVectorizer
 
-这个模型有很多参数，但默认值是相当合理的（请参阅 :ref:`参考文档<text_feature_extraction_ref>` 了解详细信息）::
+这个模型有很多参数，但参数的默认初始值是相当合理的（请参阅 :ref:`参考文档<text_feature_extraction_ref>` 了解详细信息）::
 
   >>> vectorizer = CountVectorizer()
   >>> vectorizer                     # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
@@ -209,7 +209,7 @@ MurmurHash3。
           strip_accents=None, token_pattern=...'(?u)\\b\\w\\w+\\b',
           tokenizer=None, vocabulary=None)
 
-让我们用它来标记和计数文本文档的简约语料库的出现::
+让我们使用它来进行简单文本全集令牌化，并统计词频::
 
   >>> corpus = [
   ...     'This is the first document.',
@@ -222,7 +222,7 @@ MurmurHash3。
   <4x9 sparse matrix of type '<... 'numpy.int64'>'
       with 19 stored elements in Compressed Sparse ... format>
 
-默认配置通过提取至少2个字母的字符来标记字符串。可以明确地请求执行此步骤的具体功能::
+初始设定是，令牌化字符串，提取至少两个字母的词默认配置，做这一步的函数可以显式的被调用::
 
   >>> analyze = vectorizer.build_analyzer()
   >>> analyze("This is a text document to analyze.") == (
@@ -242,19 +242,19 @@ analyzer 在拟合期间发现的每个项都被分配一个与所得矩阵中�
          [1, 0, 0, 0, 1, 0, 1, 1, 0],
          [0, 1, 1, 1, 0, 0, 1, 0, 1]]...)
 
-从功能名称到列索引的相反映射存储在 ``vocabulary_`` 矢量化器的 属性中::
+从列标到特征名的反转映射储存在向量化类 vectorizer 的属性  ``vocabulary_`` 中::
 
   >>> vectorizer.vocabulary_.get('document')
   1
 
-因此，在将来的调用转换方法中，在训练语料库中看不到的单词将被完全忽略::
+因此，在将来的调用转换方法中，在训练语料库中未出现的词将被完全忽略::
 
   >>> vectorizer.transform(['Something completely new.']).toarray()
   ...                           # doctest: +ELLIPSIS
   array([[0, 0, 0, 0, 0, 0, 0, 0, 0]]...)
 
-请注意，在上一个语料库中，第一个和最后一个文档具有完全相同的单词，因此以相等的向量编码。
-特别是我们失去了最后一个文件是一个疑问形式的信息。为了保留一些本地的订购信息，除了 1-grams（个别词）之外，我们还可以提取 2-grams 的单词::
+请注意，在上一个语料库中，第一个和最后一个文档具有完全相同的单词，因此被编码成相同的向量。
+特别是最后一个字符是询问形式时我们丢失了他的信息。为了防止词组顺序颠倒，除了提取一元模型 1-grams（个别词）之外，我们还可以提取 2-grams 的单词::
 
   >>> bigram_vectorizer = CountVectorizer(ngram_range=(1, 2),
   ...                                     token_pattern=r'\b\w+\b', min_df=1)
@@ -263,7 +263,7 @@ analyzer 在拟合期间发现的每个项都被分配一个与所得矩阵中�
   ...     ['bi', 'grams', 'are', 'cool', 'bi grams', 'grams are', 'are cool'])
   True
 
-因此，此向量化器提取的词汇量大得多，现在可以解决以本地定位模式编码的模糊::
+矢量化提取的词因此变得很大，同时可以在定位模式时消歧义::
 
   >>> X_2 = bigram_vectorizer.fit_transform(corpus).toarray()
   >>> X_2
@@ -273,7 +273,7 @@ analyzer 在拟合期间发现的每个项都被分配一个与所得矩阵中�
          [1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0],
          [0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1]]...)
 
-特别是 "Is this" 的疑问形式只存在于最后一份文件中::
+特别是 "Is this" 的疑问形式只出现在最后一个文档中::
 
   >>> feature_index = bigram_vectorizer.vocabulary_.get('is this')
   >>> X_2[:, feature_index]     # doctest: +ELLIPSIS
@@ -285,12 +285,12 @@ analyzer 在拟合期间发现的每个项都被分配一个与所得矩阵中�
 Tf–idf 项加权
 ---------------------
 
-在一个大的文本语料库中，一些单词将会非常的出现（例如 "the", "a", "is" 是英文），因此对文档的实际内容没有什么有意义的信息。
-如果我们将直接计数数据直接提供给分类器，那么这些非常频繁的术语将会影响更少更有趣的术语的频率。
+在一个大的文本语料库中，一些单词将出现很多次（例如 "the", "a", "is" 是英文），因此对文档的实际内容没有什么有意义的信息。
+如果我们将直接计数数据直接提供给分类器，那么这些频繁词组会掩盖住那些我们关注但很少出现的词。
 
-为了将计数特征重新加载为适合分类器使用的浮点值，使用 tf-idf 变换是非常常见的。
+为了为了重新计算特征权重，并将其转化为适合分类器使用的浮点值，因此使用 tf-idf 变换是非常常见的。
 
-Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率**: 
+Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**转制文档频率**: 
 :math:`\text{tf-idf(t,d)}=\text{tf(t,d)} \times \text{idf(t)}`.
 
 使用 ``TfidfTransformer`` 的默认设置，``TfidfTransformer(norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=False)`` 术语频率，一个术语在给定文档中出现的次数乘以 idf 组件， 计算为
@@ -302,7 +302,7 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
 
 :math:`v_{norm} = \frac{v}{||v||_2} = \frac{v}{\sqrt{v{_1}^2 + v{_2}^2 + \dots + v{_n}^2}}`.
 
-这最初是用于信息检索开发的术语加权方案（作为搜索引擎结果的排名功能），也在文档分类和聚类中得到很好的利用。
+它源于一个词权重的信息检索方式(作为搜索引擎结果的评级函数)，同时也在文档分类和聚类中表现良好。
 
 以下部分包含进一步说明和示例，说明如何精确计算 tf-idfs 以及如何在 scikit-learn 中计算 tf-idfs， :class:`TfidfTransformer` 并 :class:`TfidfVectorizer` 与定义 idf 的标准教科书符号略有不同
 
@@ -312,7 +312,7 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
 
 :math:`\text{idf}(t) = log{\frac{n_d}{\text{df}(d,t)}} + 1`
 
-该规范化由 :class:`TfidfTransformer` 类实现::
+该归一化由类 :class:`TfidfTransformer` 实现::
 
   >>> from sklearn.feature_extraction.text import TfidfTransformer
   >>> transformer = TfidfTransformer(smooth_idf=False)
@@ -322,7 +322,7 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
 
 有关所有参数的详细信息，请参阅 :ref:`参考文档<text_feature_extraction_ref>`。
 
-让我们举个例子来看看下面的几个例子。第一个术语是100％的时间，因此不是很有趣。另外两个功能只有不到50％的时间，因此可能更具代表性的文件内容::
+让我们以下方的词频为例。第一个次在任何时间都是100％出现，因此不是很有重要。另外两个特征只占不到50％的比例，因此可能更具有代表性::
 
   >>> counts = [[3, 0, 1],
   ...           [2, 0, 0],
@@ -344,7 +344,7 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
          [ 0.47330339,  0.88089948,  0.        ],
          [ 0.58149261,  0.        ,  0.81355169]])
 
-每行标准化为具有单位欧几里得规范:
+每行都被正则化，使其适应欧几里得标准:
 
 :math:`v_{norm} = \frac{v}{||v||_2} = \frac{v}{\sqrt{v{_1}^2 + v{_2}^2 + \dots + v{_n}^2}}`
 
@@ -358,7 +358,7 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
 
 :math:`\text{tf-idf}_{\text{term1}} = \text{tf} \times \text{idf} = 3 \times 1 = 3`
 
-现在，如果我们对文档中剩下的2个术语重复这个计算，我们得到
+现在，如果我们对文档中剩下的2个术语重复这个计算，我们得到:
 
 :math:`\text{tf-idf}_{\text{term2}} = 0 \times log(6/1)+1 = 0`
 
@@ -398,7 +398,7 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
   >>> transformer.idf_                       # doctest: +ELLIPSIS
   array([ 1. ...,  2.25...,  1.84...])
 
-由于 tf-idf 经常用于文本特征，还有一个名为 :class:`TfidfVectorizer` 的类，它将 :class:`CountVectorizer` 
+由于 tf-idf 经常用于文本特征，所以还有一个类 :class:`TfidfVectorizer` ，它将 :class:`CountVectorizer` 
 和 :class:`TfidfTransformer` 的所有选项组合在一个单例模型中::
 
   >>> from sklearn.feature_extraction.text import TfidfVectorizer
@@ -408,12 +408,12 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
   <4x9 sparse matrix of type '<... 'numpy.float64'>'
       with 19 stored elements in Compressed Sparse ... format>
 
-虽然tf-idf标准化通常非常有用，但是可能存在二进制发生标记可能提供更好的特征的情况。
-这可以通过使用 :class:`CountVectorizer` 的 ``二进制`` 参数来实现。 
-特别地，诸如 :ref:`bernoulli_naive_bayes` 的一些估计器明确地模拟离散布尔随机变量。 
-而且，非常短的文本很可能具有嘈杂的 tf-idf 值，而二进制出现信息更稳定。
+虽然tf-idf标准化通常非常有用，但是可能有一种情况是二元变量显示会提供更好的特征。
+这可以使用类 :class:`CountVectorizer` 的 ``二进制`` 参数来实现。 
+特别地，一些估计器，诸如 :ref:`bernoulli_naive_bayes` 显式的使用离散的布尔随机变量。 
+而且，非常短的文本很可能影响 tf-idf 值，而二进制出现信息更稳定。
 
-像往常一样，调整特征提取参数的最佳方法是使用交叉验证的网格搜索，例如通过将特征提取器与分类器进行流水线化:
+通常情况下，调整特征提取参数的最佳方法是使用基于网格搜索的交叉验证，例如通过将特征提取器与分类器进行流水线化:
 
  * 用于文本特征提取和评估的样本管道 :ref:`sphx_glr_auto_examples_model_selection_grid_search_text_feature_extraction.py`
 
@@ -421,34 +421,34 @@ Tf表示**术语频率**，而 tf-idf 表示术语频率乘以**反文档频率*
 解码文本文件
 -------------------
 
-文本由字符组成，但文件由字节组成。这些字节表示根据某些 *编码* 的字符。
-要使用Python中的文本文件，它们的字节必须被 *解码* 为一个称为 Unicode 的字符集。
+文本由字符组成，但文件由字节组成。字节转化成字符依照一定的编码(encoding)方式。
+为了在Python中的使用文本文档，这些字节必须被 *解码* 为 Unicode 的字符集。
 常用的编码方式有 ASCII，Latin-1（西欧），KOI8-R（俄语）和通用编码 UTF-8 和 UTF-16。还有许多其他的编码存在
 
 .. note::
     编码也可以称为 '字符集', 但是这个术语不太准确: 单个字符集可能存在多个编码。
 
-scikit-learn 中的文本功能提取器知道如何解码文本文件，
-但只有当您告诉他们文件的编码时， :class:`CountVectorizer` 才需要一个 ``encoding`` 参数。
-对于现代文本文件，正确的编码可能是 UTF-8，因此它是 default (``encoding="utf-8"``).
+scikit-learn 中的文本提取器知道如何解码文本文件，
+但只有当您告诉他们文件的编码的情况下才行， :class:`CountVectorizer` 才需要一个 ``encoding`` 参数。
+对于现代文本文件，正确的编码可能是 UTF-8，因此它也是默认解码方式 (``encoding="utf-8"``).
 
-如果正在加载的文本实际上并没有使用UTF-8进行编码，则会得到 ``UnicodeDecodeError``. 
-通过将 ``decode_error`` 参数设置为  ``"ignore"`` 或 ``"replace"``, 向量化器可以被解释为解码错误。 
+如果正在加载的文本不是使用UTF-8进行编码，则会得到 ``UnicodeDecodeError``. 
+矢量化的方式可以通过设定 ``decode_error`` 参数设置为  ``"ignore"`` 或 ``"replace"``来避免抛出解码错误。 
 有关详细信息，请参阅Python函数 ``bytes.decode`` 的文档（在Python提示符下键入 ``help(bytes.decode)`` ）。
 
 如果您在解码文本时遇到问题，请尝试以下操作:
 
-- 了解文本的实际编码方式。该文件可能带有标题或 README，告诉您编码，或者可能有一些标准编码，您可以根据文本来自哪里。
+- 了解文本的实际编码方式。该文件可能带有标题或 README，告诉您编码，或者可能有一些标准编码，您可以根据文本的来源来推断编码方式。
 
 - 您可能可以使用 UNIX 命令 ``file`` 找出它一般使用什么样的编码。 Python ``chardet`` 模块附带一个名为 ``chardetect.py`` 的脚本，它会猜测具体的编码，尽管你不能依靠它的猜测是正确的。
 
-- 你可以尝试 UTF-8 并忽略错误。您可以使用 ``bytes.decode(errors='replace')`` 对字节字符串进行解码，以用无意义字符替换所有解码错误，或在向量化器中设置 ``decode_error='replace'``. 这可能会损坏您的功能的有用性。
+- 你可以尝试 UTF-8 并忽略错误。您可以使用 ``bytes.decode(errors='replace')`` 对字节字符串进行解码，用无意义字符替换所有解码错误，或在向量化器中设置 ``decode_error='replace'``. 这可能会损坏您的功能的有用性。
 
 - 真实文本可能来自各种使用不同编码的来源，或者甚至以与编码的编码不同的编码进行粗略解码。这在从 Web 检索的文本中是常见的。Python 包 `ftfy`_ 可以自动排序一些解码错误类，所以您可以尝试将未知文本解码为 ``latin-1``，然后使用 ``ftfy`` 修复错误。
 
-- 如果文本是一个简单的难以整理的编码的混合（20个新闻组数据集的情况），您可以回到简单的单字节编码，如 ``latin-1``。某些文本可能显示不正确，但至少相同的字节序列将始终代表相同的功能。
+- 如果文本的编码的混合，那么它很难整理分类（20个新闻组数据集的情况），您可以把它们回到简单的单字节编码，如 ``latin-1``。某些文本可能显示不正确，但至少相同的字节序列将始终代表相同的功能。
 
-例如，以下代码段使用 ``chardet`` （未附带 scikit-learn，必须单独安装），以找出三个文本的编码。然后，它将文本向量化并打印学习的词汇。此处未显示输出。
+例如，以下代码段使用 ``chardet`` （未附带 scikit-learn，必须单独安装）来计算出编码方式。然后，它将文本向量化并打印学习的词汇（特征）。输出在下方给出。
 
   >>> import chardet    # doctest: +SKIP
   >>> text1 = b"Sei mir gegr\xc3\xbc\xc3\x9ft mein Sauerkraut"
@@ -459,7 +459,7 @@ scikit-learn 中的文本功能提取器知道如何解码文本文件，
   >>> v = CountVectorizer().fit(decoded).vocabulary_    # doctest: +SKIP
   >>> for term in v: print(v)                           # doctest: +SKIP
 
-（根据 ``chardet`` 的版本，可能会遇到第一个错误。）
+（根据 ``chardet`` 的版本，可能会返回第一个值错误的结果。）
 有关 Unicode 和字符编码的一般介绍，请参阅Joel Spolsky的 `绝对最小每个软件开发人员必须了解 Unicode <http://www.joelonsoftware.com/articles/Unicode.html>`_.
 
 .. _`ftfy`: https://github.com/LuminosoInsight/python-ftfy
@@ -470,7 +470,7 @@ scikit-learn 中的文本功能提取器知道如何解码文本文件，
 
 词汇表达方式相当简单，但在实践中却非常有用。
 
-特别是在 **受监督的设置** 中，它可以成功地与快速和可扩展的线性模型组合来训练 **文档分类器**, 例如:
+特别是在 **监督学习的设置** 中，它能够把快速和可扩展的线性模型组合来训练 **文档分类器**, 例如:
 
  * 使用稀疏特征对文本文档进行分类 :ref:`sphx_glr_auto_examples_text_document_classification_20newsgroups.py`
 
@@ -478,7 +478,7 @@ scikit-learn 中的文本功能提取器知道如何解码文本文件，
 
   * 使用k-means聚类文本文档 :ref:`sphx_glr_auto_examples_text_document_clustering.py`
 
-最后，通过放松聚类的硬分配约束，可以通过使用非负矩阵分解（ :ref:`NMF` 或NNMF）来发现语料库的主要主题：
+最后，通过松弛聚类的约束条件，可以通过使用非负矩阵分解（ :ref:`NMF` 或NNMF）来发现语料库的主要主题：
 
   * 主题提取与非负矩阵分解和潜在Dirichlet分配 :ref:`sphx_glr_auto_examples_applications_plot_topics_extraction_with_nmf_lda.py`
 
@@ -539,16 +539,15 @@ N克抢救！而不是构建一个简单的unigrams集合 (n=1)，可能更喜�
 
 上述向量化方案是简单的，但是它存在 **从字符串令牌到整数特征索引的内存映射** （ ``vocabulary_`` 属性），在处理 **大型数据集时会引起几个问题** :
 
-- 语料库越大，词汇量越大，记忆体的使用也越大.
+- 语料库越大，词汇量越大，使用的内存也越大.
 
-- 拟合需要分配大小与原始数据集成正比的中间数据结构.
+- 拟合（fitting）需要根据原始数据集的大小等比例分配中间数据结构的大小.
 
-- 构建单词映射需要完全传递数据集，因此不可能以严格的在线方式来适应文本分类器.
+- 构建词映射需要完整的传递数据集，因此不可能以严格在线的方式拟合文本分类器.
 
-- 具有较大词汇量的 pickling和 un-pickling 矢量化器可能非常慢（通常比 pickling / un-pickling 平坦数据结构慢，比如相同尺寸的 NumPy 阵列）.
+- pickling和un-pickling vocabulary 很大的向量器会非常慢（通常比pickling/un-pickling单纯数据的结构，比如同等大小的Numpy数组）.
 
-- 由于 ``vocabulary_`` 属性必须是具有细粒度同步屏障的共享状态，所以将向量化工作分解为并发子任务是不容易的：
-  从令牌字符串到特征索引的映射取决于每个标记的第一次出现的顺序，因此必须被共享，从而潜在地损害并发工作者的性能，使得它们比顺序变体慢。
+- 将向量化任务分隔成并行的子任务很不容易实现，因为 ``vocabulary_`` 属性要共享状态有一个细颗粒度的同步障碍：从标记字符串中映射特征索引与每个标记的首次出现顺序是独立的，因此应该被共享，在这点上并行worker的性能收到了损害，使他们比串行更慢。
 
 通过组合由 :class:`sklearn.feature_extraction.FeatureHasher` 类实现的 "散列技巧" (:ref:`Feature_hashing`) 和 :class:`CountVectorizer` 的文本预处理和标记化功能，可以克服这些限制。
 
@@ -561,14 +560,11 @@ N克抢救！而不是构建一个简单的unigrams集合 (n=1)，可能更喜�
   <4x10 sparse matrix of type '<... 'numpy.float64'>'
       with 16 stored elements in Compressed Sparse ... format>
 
-您可以看到在矢量输出中提取了16个非零特征令牌：这小于 :class:`CountVectorizer` 先前在同一玩具语料库上提取的19个非零值。
-由于 ``n_features`` 参数的值较低，差异来自哈希函数冲突。
+你可以看到从向量输出中抽取了16个非0特征标记：与之前由CountVectorizer在同一个样本语料库抽取的19个非0特征要少。差异来自哈希方法的冲突，因为较低的n_features参数的值。
 
-在现实世界的设置中, ``n_features`` 参数可以保留为默认值 ``2 ** 20``（大约一百万个可能的功能）。
-如果内存或下游模型大小是选择较低值（例如 ``2 ** 18`` ）的问题，则可能有助于在典型文本分类任务上引入太多额外的冲突。
+在真实世界的环境下，n_features参数可以使用默认值2 ** 20（将近100万可能的特征）。如果内存或者下游模型的大小是一个问题，那么选择一个较小的值比如2 ** 18可能有一些帮助，而不需要为典型的文本分类任务引入太多额外的冲突。
 
-请注意，维度不影响在 CSR 矩阵 (``LinearSVC(dual=True)``, ``Perceptron``, ``SGDClassifier``, ``PassiveAggressive``) 上运行的算法的CPU训练时间，
-但对于使用CSC矩阵的算法(``LinearSVC(dual=False)``, ``Lasso()``, 等).
+注意维度并不影响CPU的算法训练时间，这部分是在操作CSR指标（LinearSVC(dual=True), Perceptron, SGDClassifier, PassiveAggressive），但是，它对CSC matrices (LinearSVC(dual=False), Lasso(), etc)算法有效。
 
 让我们再次尝试使用默认设置::
 
@@ -578,23 +574,23 @@ N克抢救！而不是构建一个简单的unigrams集合 (n=1)，可能更喜�
   <4x1048576 sparse matrix of type '<... 'numpy.float64'>'
       with 19 stored elements in Compressed Sparse ... format>
 
-我们不再得到碰撞，但这是牺牲了更大尺寸的输出空间。当然，这里使用的其他术语可能仍然会相互冲突。
+冲突没有再出现，但是，代价是输出空间的维度值非常大。当然，这里使用的19词以外的其他词之前仍会有冲突。
 
-:class:`HashingVectorizer` 还具有以下限制：
+类 :class:`HashingVectorizer` 还具有以下限制：
 
-- 由于执行映射的哈希函数的单向特性，不可能反转模型（无 ``逆转换`` 方法），也不能访问特征的原始字符串表示。
+- 不能反转模型（没有inverse_transform方法），也无法访问原始的字符串表征，因为，进行mapping的哈希方法是单向本性。
 
-- 它不提供 IDF 权重，因为这将引入模型中的状态。 如果需要， :class:`TfidfTransformer` 可以在管道中附加到它。
+- 没有提供了IDF权重，因为这需要在模型中引入状态。如果需要的话，可以在管道中添加 :class:`TfidfTransformer` 。
 
 使用 HashingVectorizer 执行外核缩放
 ------------------------------------------------------
 
-使用 :class:`HashingVectorizer` 的一个有趣的开发是执行外核 `out-of-core`_ 缩放的能力。 这意味着我们可以从不符合计算机主内存的数据中学习。
+使用 :class:`HashingVectorizer` 的一个有趣的开发是执行外核 `out-of-core`_ 缩放的能力。 这意味着我们可以从无法放入电脑主内存的数据中进行学习。
 
 .. _out-of-core: https://en.wikipedia.org/wiki/Out-of-core_algorithm
 
-实现核心外扩展的策略是将数据以小批量流式传输到估计器。每个小批量使用 :class:`HashingVectorizer` 进行向量化，以保证估计器的输入空间总是具有相同的维度。 
-因此，随时使用的内存量由小批量的大小限制。 虽然使用这种方法可以摄取的数据量没有限制，但从实际的角度来看，学习时间通常受到CPU所花费的时间的限制。
+实现核外扩展的一个策略是将数据以流的方式以一小批提交给评估器。每批的向量化都是用HashingVectorizer这样来保证评估器的输入空间的维度是相等的。因此任何时间使用的内存数都限定在小频次的大小。
+尽管用这种方法可以处理的数据没有限制，但是从实用角度学习时间受到想要在这个任务上花费的CPU时间的限制。
 
 对于文本分类任务中的外核缩放的完整示例，请参阅文本文档的外核分类 :ref:`sphx_glr_auto_examples_applications_plot_out_of_core_classification.py`.
 

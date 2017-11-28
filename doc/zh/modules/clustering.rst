@@ -699,20 +699,20 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
 
 .. _clustering_evaluation:
 
-聚类性能评估
+聚类性能度量
 =====================
 
-评估聚类算法的性能不像 counting the number of errors （计数错误数量）或监督分类算法的精度和调用那样微不足道。
-特别地，任何 evaluation metric （评估度量）不应该考虑到 cluster labels （簇标签）的绝对值，而是如果这个聚类定义类似于 some ground truth set of classes or satisfying some assumption （某些基本真值集合的数据的分离或者满足一些假设），使得属于同一个类的成员更类似于根据某些 similarity metric （相似性度量）的不同类的成员。
+度量聚类算法的性能不是简单的统计错误的数量或计算监督分类算法中的 precision （准确率）和 recall （召回率）。
+特别地，任何 evaluation metric （度量指标）不应该考虑到 cluster labels （簇标签）的绝对值，而是如果这个簇定义类似于某些 ground truth set of classes 或者满足某些假设，使得属于同一个类的成员更类似于根据某些 similarity metric （相似性度量）的不同类的成员。
 
 .. currentmodule:: sklearn.metrics
 
 .. _adjusted_rand_score:
 
-调整后的 Rand index
+调整后的 Rand 指数
 -----------------------
 
-考虑到 the ground truth class 赋值 ``labels_true`` 和相同样本 ``labels_pred`` 的聚类算法分配的知识，**adjusted Rand index** 是一个函数，用于测量两个 assignments （作业）的 **similarity（相似度）** ，忽略 permutations （置换）和 **with chance normalization（使用机会规范化）**::
+考虑到 the ground truth class 赋值 ``labels_true`` 和相同样本 ``labels_pred`` 的聚类算法分配的知识，**adjusted Rand index** 是一个函数，用于测量两个 assignments （任务）的 **similarity（相似度）** ，忽略 permutations （排列）和 **with chance normalization（使用机会规范化）**::
 
   >>> from sklearn import metrics
   >>> labels_true = [0, 0, 0, 1, 1, 1]
@@ -752,15 +752,15 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
 - **Random (uniform) label assignments have a ARI score close to 0.0（随机（统一）标签分配的 ARI 评分接近于 0.0）**
   对于 ``n_clusters`` 和 ``n_samples`` 的任何值（这不是原始的 Rand index 或者 V-measure 的情况）。
 
-- **Bounded range（有界范围） [-1, 1]**: negative values （负值）是坏的 (独立性标签), 类似的聚类有一个 positive ARI （正的 ARI）， 1.0 是完美的匹配得分。
+- **Bounded range（范围是有界的） [-1, 1]**: negative values （负值）是坏的 (独立性标签), 类似的聚类有一个 positive ARI （正的 ARI）， 1.0 是完美的匹配得分。
 
-- **No assumption is made on the cluster structure（对簇的结构没有作出任何假设）**: 可以用于比较聚类算法，例如 k-means，其假定 isotropic blob shapes 与可以找到具有 "folded" shapes 的聚类的 spectral clustering algorithms（频谱聚类算法）的结果。
+- **No assumption is made on the cluster structure（对簇的结构不需作出任何假设）**: 可以用于比较聚类算法，例如 k-means，其假定 isotropic blob shapes 与可以找到具有 "folded" shapes 的聚类的 spectral clustering algorithms（谱聚类算法）的结果。
 
 
 缺点
 ~~~~~~~~~
 
-- 与 inertia 相反，**ARI requires knowledge of the ground truth classes（ARI需要了解 ground truth classes）** ，而在实践中几乎不可用，或者需要人工标注者手动分配（如在监督学习环境中）。
+- 与 inertia 相反，**ARI requires knowledge of the ground truth classes（ARI 需要 ground truth classes 的相关知识）** ，而在实践中几乎不可用，或者需要人工标注者手动分配（如在监督学习环境中）。
 
   然而，ARI 还可以在 purely unsupervised setting （纯粹无监督的设置中）作为可用于 聚类模型选择（TODO）的共识索引的构建块。
 
@@ -773,21 +773,21 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
 数学表达
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-如果 C 是一个 ground truth class assignment （标定过的真实数据类分配）和 K 个簇，就让我们定义 :math:`a` 和 :math:`b` 如:
+如果 C 是一个 ground truth class assignment（任务）， K 是簇的个数，我们定义 :math:`a` 和 :math:`b` 如:
 
 - :math:`a`, 在 C 中的相同集合的与 K 中的相同集合中的元素的对数
 
 - :math:`b`, 在 C 中的不同集合与 K 中的不同集合中的元素的对数
 
-原始的（unadjusted（未调整的）） Rand index 则由下式给出: 
+原始（未经调整）的 Rand index 则由下式给出: 
 
 .. math:: \text{RI} = \frac{a + b}{C_2^{n_{samples}}}
 
-其中 :math:`C_2^{n_{samples}}` 是数据集中可能的 pairs （对）的总数（不排序）。
+其中 :math:`C_2^{n_{samples}}` 是数据集中可能的 pairs （数据对）的总数（不排序）。
 
-然而，RI 评分不能保证 random label assignments （随机标签分配）将获得接近零的值（特别是如果聚类的数量与采样数量相同的数量级）。
+然而，RI 评分不能保证 random label assignments （随机标签任务）将获得接近零的值（特别是如果簇的数量与采样数量相同的数量级）。
 
-为了抵消这种影响，我们可以通过定义 adjusted Rand index （调整后的 Rand index）来 discount 随机标签的预期 RI :math:`E[\text{RI}]` ,如下所示:
+为了抵消这种影响，我们可以通过定义 adjusted Rand index （调整后的 Rand index）来 discount（折现） 随机标签的预期 RI :math:`E[\text{RI}]` ,如下所示:
 
 .. math:: \text{ARI} = \frac{\text{RI} - E[\text{RI}]}{\max(\text{RI}) - E[\text{RI}]}
 
@@ -802,7 +802,7 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
 
 .. _mutual_info_score:
 
-基于 Mutual Information 的分数
+基于 Mutual Information （互信息）的分数
 ------------------------------------
 
 考虑到 ground truth class assignments （标定过的真实数据类分配） ``labels_true`` 的知识和相同样本 ``labels_pred`` 的聚类算法分配， **Mutual Information** 是测量两者 **agreement** 分配的函数，忽略 permutations（排列）。
@@ -862,7 +862,7 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
 缺点
 ~~~~~~~~~
 
-- 与 inertia 相反，**MI-based measures require the knowledge of the ground truth classes（MI-based measures 需要了解 ground truth classes）** ，而在实践中几乎不可用，或者需要人工标注者手动分配（如在监督学习环境中）。
+- 与 inertia 相反，**MI-based measures require the knowledge of the ground truth classes（MI-based measures 需要了解 ground truth classes）** ，而在实践中几乎不可用，或者需要人工标注或手动分配（如在监督学习环境中）。
 
   然而，基于 MI-based measures （基于 MI 的测量方式）也可用于纯无人监控的设置，作为可用于聚类模型选择的 Consensus Index （共识索引）的构建块。
 
@@ -874,7 +874,7 @@ Birch 算法有两个参数，即 threshold （阈值）和 branching factor 分
  * :ref:`sphx_glr_auto_examples_cluster_plot_adjusted_for_chance_measures.py`: 分析数据集大小对随机分配聚类度量值的影响。 此示例还包括 Adjusted Rand Index。
 
 
-数学表达
+数学公式
 ~~~~~~~~~~~~~~~
 
 假设两个标签分配（相同的 N 个对象），:math:`U` 和 :math:`V`。
@@ -912,7 +912,7 @@ mutual information 的期望值可以用 Vinh, Epps 和 Bailey,(2009) 的以下�
    \frac{a_i!b_j!(N-a_i)!(N-b_j)!}{N!n_{ij}!(a_i-n_{ij})!(b_j-n_{ij})!
    (N-a_i-b_j+n_{ij})!}
 
-使用 expected value (期望值), 然后可以使用与 adjusted Rand index 相似的形式来计算调整后的 mutual information:
+使用期望值, 然后可以使用与 adjusted Rand index 相似的形式来计算调整后的 mutual information:
 
 .. math:: \text{AMI} = \frac{\text{MI} - E[\text{MI}]}{\max(H(U), H(V)) - E[\text{MI}]}
 
@@ -997,9 +997,9 @@ Homogeneity（同质性）, completeness（完整性） and V-measure 可以立�
 优点
 ~~~~~~~~~~
 
-- **Bounded scores（有界分数）**: 0.0 是最坏的, 1.0 是一个完美的分数.
+- **Bounded scores（分数是有界的）**: 0.0 是最坏的, 1.0 是一个完美的分数.
 
-- Intuitive interpretation（直觉解释）: 具有不良 V-measure 的聚类可以在 **qualitatively analyzed in terms of homogeneity and completeness（在同质性和完整性方面进行定性分析）** 以更好地感知到作业完成的错误类型。
+- Intuitive interpretation（直观解释）: 具有不良 V-measure 的聚类可以在 **qualitatively analyzed in terms of homogeneity and completeness（在同质性和完整性方面进行定性分析）** 以更好地感知到作业完成的错误类型。
 
 - **No assumption is made on the cluster structure（对簇的结构没有作出任何假设）**: 可以用于比较聚类算法，例如 k-means ，其假定 isotropic blob shapes 与可以找到具有 "folded" shapes 的聚类的 spectral clustering algorithms （频谱聚类算法）的结果。
 
@@ -1009,7 +1009,7 @@ Homogeneity（同质性）, completeness（完整性） and V-measure 可以立�
 
 - 以前引入的 metrics （度量标准）**not normalized with regards to random labeling（并不是随机标记的标准化的）**: 这意味着，根据 number of samples （样本数量），clusters （簇）和 ground truth classes （标定过的真实数据类），完全随机的标签并不总是产生 homogeneity （同质性），completeness（完整性）和 hence v-measure 的相同值。特别是 **random labeling won't yield zero scores especially when the number of clusters is large（随机标记不会产生零分，特别是当集群数量大时）**。
 
-  当样本数量超过一千，簇的数量小于 10 时，可以安全地忽略此问题。**For smaller sample sizes or larger number of clusters it is safer to use an adjusted index such as the Adjusted Rand Index (ARI)（对于较小的样本数量或者较大数量的簇，使用 adjusted index 例如 Adjusted Rand Index (ARI)）**。
+  当样本数量超过 1000，簇的数量小于 10 时，可以安全地忽略此问题。**For smaller sample sizes or larger number of clusters it is safer to use an adjusted index such as the Adjusted Rand Index (ARI)（对于较小的样本数量或者较大数量的簇，使用 adjusted index 例如 Adjusted Rand Index (ARI)）**。
 
 .. figure:: ../auto_examples/cluster/images/sphx_glr_plot_adjusted_for_chance_measures_001.png
    :target: ../auto_examples/cluster/plot_adjusted_for_chance_measures.html
@@ -1027,7 +1027,7 @@ Homogeneity（同质性）, completeness（完整性） and V-measure 可以立�
 数学表达
 ~~~~~~~~~~~~~~~~
 
-Homogeneity（同质性） and completeness（完整性） 的得分由下面公式给出:
+Homogeneity（同质性） 和 completeness（完整性） 的得分由下面公式给出:
 
 .. math:: h = 1 - \frac{H(C|K)}{H(C)}
 
@@ -1062,14 +1062,14 @@ Rosenberg 和 Hirschberg 进一步定义 **V-measure** 作为 **harmonic mean of
 
 .. _fowlkes_mallows_scores:
 
-Fowlkes-Mallows 得分
+Fowlkes-Mallows 分数
 -------------------------
 
-当样本的已标定的真实数据的类别分配已知时，可以使用 Fowlkes-Mallows index （Fowlkes-Mallows 指数）(:func:`sklearn.metrics.fowlkes_mallows_score`) 。Fowlkes-Mallows 得分 FMI 被定义为 geometric mean of the pairwise precision （成对精度）和 recall （召回）的几何平均值:
+当样本的已标定的真实数据的类别分配已知时，可以使用 Fowlkes-Mallows index （Fowlkes-Mallows 指数）(:func:`sklearn.metrics.fowlkes_mallows_score`) 。Fowlkes-Mallows 分数 FMI 被定义为 geometric mean of the pairwise precision （成对的准确率）和 recall （召回率）的几何平均值:
 
 .. math:: \text{FMI} = \frac{\text{TP}}{\sqrt{(\text{TP} + \text{FP}) (\text{TP} + \text{FN})}}
 
-其中的 ``TP`` 是 **True Positive（正确的正）** 的数量（即，真实标签和预测标签中属于相同簇的点对数），``FP`` 是 **False Positive（错误的正）** （即，在真实标签中属于同一簇的点对数，而不在预测标签中），``FN`` 是 **False Negative（错误的负）** 的数量（即，预测标签中属于同一簇的点对数，而不在真实标签中）。
+其中的 ``TP`` 是 **True Positive（真正例）** 的数量（即，真实标签和预测标签中属于相同簇的点对数），``FP`` 是 **False Positive（假正例）** （即，在真实标签中属于同一簇的点对数，而不在预测标签中），``FN`` 是 **False Negative（假负例）** 的数量（即，预测标签中属于同一簇的点对数，而不在真实标签中）。
 
 score （分数）范围为 0 到 1。较高的值表示两个簇之间的良好相似性。
 
@@ -1113,7 +1113,7 @@ score （分数）范围为 0 到 1。较高的值表示两个簇之间的良好
 缺点
 ~~~~~~~~~
 
-- 与 inertia（惯性）相反，**FMI-based measures require the knowledge of the ground truth classes（基于 FMI 的测量方案需要了解已标注的真是数据的类）** ，而在实践中几乎不用，或需要人工标注者的人工分配（如在监督学习的学习环境中）。
+- 与 inertia（习惯）相反，**FMI-based measures require the knowledge of the ground truth classes（基于 FMI 的测量方案需要了解已标注的真是数据的类）** ，而几乎不用于实践和需要人工标注者的手动任务（如在监督学习的学习环境中）。
 
 .. topic:: 参考
 
@@ -1126,20 +1126,20 @@ score （分数）范围为 0 到 1。较高的值表示两个簇之间的良好
 
 .. _silhouette_coefficient:
 
-Silhouette Coefficient
+Silhouette 系数
 ----------------------
 
-如果标注过的真实数据的标签不知道，则必须使用模型本身进行 evaluation （评估）。Silhouette Coefficient (:func:`sklearn.metrics.silhouette_score`) 是一个这样的评估的例子，其中较高的 Silhouette Coefficient 得分与具有更好定义的聚类的模型相关。Silhouette Coefficient 是为每个样本定义的，由两个得分组成:
+如果标注过的真实数据的标签不知道，则必须使用模型本身进行度量。Silhouette Coefficient (:func:`sklearn.metrics.silhouette_score`) 是一个这样的评估的例子，其中较高的 Silhouette Coefficient 得分与具有更好定义的聚类的模型相关。Silhouette Coefficient 是为每个样本定义的，由两个得分组成:
 
 - **a**: 样本与同一类别中所有其他点之间的平均距离。
 
-- **b**: 样本与 *next nearest cluster（下一个最近的簇）* 中的所有其他点之间的平均距离。
+- **b**: 样本与 *下一个距离最近的簇* 中的所有其他点之间的平均距离。
 
-然后将单个样本的 Silhouette Coefficient *s* 给出为:
+然后将单个样本的 Silhouette 系数 *s* 给出为:
 
 .. math:: s = \frac{b - a}{max(a, b)}
 
-给定一组样本的 Silhouette Coefficient 作为每个样本的 Silhouette Coefficient 的平均值。
+给定一组样本的 Silhouette 系数作为每个样本的 Silhouette 系数的平均值。
 
 
   >>> from sklearn import metrics
@@ -1149,7 +1149,7 @@ Silhouette Coefficient
   >>> X = dataset.data
   >>> y = dataset.target
 
-在正常使用情况下，将 Silhouette Coefficient 应用于聚类分析的结果。
+在正常使用情况下，将 Silhouette 系数应用于聚类分析的结果。
 
   >>> import numpy as np
   >>> from sklearn.cluster import KMeans
@@ -1178,7 +1178,7 @@ Silhouette Coefficient
 缺点
 ~~~~~~~~~
 
-- convex clusters（凸集）的 Silhouette Coefficient 通常比其他 cluster （簇）的概念更高，例如通过 DBSCAN 获得的基于密度的 cluster（簇）。
+- convex clusters（凸的簇）的 Silhouette Coefficient 通常比其他类型的 cluster （簇）更高，例如通过 DBSCAN 获得的基于密度的 cluster（簇）。
 
 .. topic:: 示例:
 
@@ -1189,7 +1189,7 @@ Silhouette Coefficient
 Calinski-Harabaz 指数
 --------------------------
 
-如果不知道真实数据的类别标签，则可以使用 Calinski-Harabaz index (:func:`sklearn.metrics.calinski_harabaz_score`) 来评估模型，其中较高的 Calinski-Harabaz 的得分与具有更好定义的聚类的模型相关。
+如果不知道真实数据的类别标签，则可以使用 Calinski-Harabaz 指数 (:func:`sklearn.metrics.calinski_harabaz_score`) 来评估模型，其中较高的 Calinski-Harabaz 的得分与具有更好定义的聚类的模型相关。
 
 对于 :math:`k` 簇，Calinski-Harabaz 得分 :math:`s` 是作为 between-clusters dispersion mean （簇间色散平均值）与 within-cluster dispersion（群内色散之间）的比值给出的:
 
@@ -1225,7 +1225,7 @@ Calinski-Harabaz 指数
 优点
 ~~~~~~~~~~
 
-- 当 cluster （簇）密集且分离较好时，分数更高，这与 cluster（簇）的标准概念有关。
+- 当 cluster （簇）密集且分离较好时，分数更高，这与一个标准的 cluster（簇）有关。
 
 - 得分计算很快
 
@@ -1233,7 +1233,7 @@ Calinski-Harabaz 指数
 缺点
 ~~~~~~~~~
 
-- 凸集的 Calinski-Harabaz index（Calinski-Harabaz 指数）通常高于 cluster （簇） 的其他概念，例如通过 DBSCAN 获得的基于密度的 cluster（簇）。
+- 凸的簇的 Calinski-Harabaz index（Calinski-Harabaz 指数）通常高于其他类型的 cluster（簇），例如通过 DBSCAN 获得的基于密度的 cluster（簇）。
 
 .. topic:: 参考
 

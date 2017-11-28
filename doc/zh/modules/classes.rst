@@ -1,23 +1,20 @@
 =============
-API Reference
+API 参考手册
 =============
 
-This is the class and function reference of scikit-learn. Please refer to
-the :ref:`full user guide <user_guide>` for further details, as the class and
-function raw specifications may not be enough to give full guidelines on their
-uses.
+这是scikit-learn的类和函数手册，篇幅有限不足以详述所有的类和函数指南，更多细节和用法请查阅 :ref:`full user guide <user_guide>` 
 
 
 .. _base_ref:
 
-:mod:`sklearn.base`: Base classes and utility functions
+:mod:`sklearn.base`: 基类和实用函数
 =======================================================
 
 .. automodule:: sklearn.base
     :no-members:
     :no-inherited-members:
 
-Base classes
+基类
 ------------
 .. currentmodule:: sklearn
 
@@ -31,7 +28,7 @@ Base classes
    base.RegressorMixin
    base.TransformerMixin
 
-Functions
+函数
 ---------
 .. currentmodule:: sklearn
 
@@ -46,14 +43,14 @@ Functions
 
 .. _calibration_ref:
 
-:mod:`sklearn.calibration`: Probability Calibration
+:mod:`sklearn.calibration`: 概率检验
 ===================================================
 
 .. automodule:: sklearn.calibration
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`calibration` section for further details.
+**用户指南:** 参阅 :ref:`calibration` 章节来查阅更多相关内容。
 
 .. currentmodule:: sklearn
 
@@ -72,16 +69,16 @@ Functions
 
 .. _cluster_ref:
 
-:mod:`sklearn.cluster`: Clustering
+:mod:`sklearn.cluster`: 聚类
 ==================================
 
 .. automodule:: sklearn.cluster
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`clustering` section for further details.
+**用户指南:** 参阅 :ref:`clustering` 章节来查阅更多内容。
 
-Classes
+类
 -------
 .. currentmodule:: sklearn
 
@@ -99,7 +96,7 @@ Classes
    cluster.MeanShift
    cluster.SpectralClustering
 
-Functions
+函数
 ---------
 .. autosummary::
    :toctree: generated/
@@ -115,16 +112,16 @@ Functions
 
 .. _bicluster_ref:
 
-:mod:`sklearn.cluster.bicluster`: Biclustering
+:mod:`sklearn.cluster.bicluster`: 双向聚类
 ==============================================
 
 .. automodule:: sklearn.cluster.bicluster
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`biclustering` section for further details.
+**用户指南:** 参阅 :ref:`biclustering` 章节获取更多内容。
 
-Classes
+类
 -------
 .. currentmodule:: sklearn.cluster.bicluster
 
@@ -137,14 +134,14 @@ Classes
 
 .. _covariance_ref:
 
-:mod:`sklearn.covariance`: Covariance Estimators
+:mod:`sklearn.covariance`: 协方差估计
 ================================================
 
 .. automodule:: sklearn.covariance
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`covariance` section for further details.
+**用户指南 :** 参阅 :ref:`covariance` 章节来获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -173,14 +170,14 @@ Classes
 
 .. _cross_decomposition_ref:
 
-:mod:`sklearn.cross_decomposition`: Cross decomposition
+:mod:`sklearn.cross_decomposition`: 交叉分解
 =======================================================
 
 .. automodule:: sklearn.cross_decomposition
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`cross_decomposition` section for further details.
+**用户指南:** 参阅 :ref:`cross_decomposition` 章节来获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -195,16 +192,16 @@ Classes
 
 .. _datasets_ref:
 
-:mod:`sklearn.datasets`: Datasets
+:mod:`sklearn.datasets`: 数据集
 =================================
 
 .. automodule:: sklearn.datasets
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`datasets` section for further details.
+**用户指南：** 参阅 :ref:`datasets` 章节来获取更多内容。
 
-Loaders
+数据装载
 -------
 
 .. currentmodule:: sklearn
@@ -242,7 +239,7 @@ Loaders
    datasets.load_wine
    datasets.mldata_filename
 
-Samples generator
+样品生成
 -----------------
 
 .. currentmodule:: sklearn
@@ -275,14 +272,14 @@ Samples generator
 
 .. _decomposition_ref:
 
-:mod:`sklearn.decomposition`: Matrix Decomposition
+:mod:`sklearn.decomposition`: 矩阵分解
 ==================================================
 
 .. automodule:: sklearn.decomposition
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`decompositions` section for further details.
+**用户指南:** 参阅 :ref:`decompositions` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -315,14 +312,14 @@ Samples generator
 
 .. _lda_ref:
 
-:mod:`sklearn.discriminant_analysis`: Discriminant Analysis
+:mod:`sklearn.discriminant_analysis`: 判别分析
 ===========================================================
 
 .. automodule:: sklearn.discriminant_analysis
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`lda_qda` section for further details.
+**用户指南:** 参阅 :ref:`lda_qda` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -335,14 +332,14 @@ Samples generator
 
 .. _dummy_ref:
 
-:mod:`sklearn.dummy`: Dummy estimators
+:mod:`sklearn.dummy`: 虚拟估计器
 ======================================
 
 .. automodule:: sklearn.dummy
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`model_evaluation` section for further details.
+**用户指南:** 参阅 :ref:`model_evaluation` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -359,14 +356,14 @@ Samples generator
 
 .. _ensemble_ref:
 
-:mod:`sklearn.ensemble`: Ensemble Methods
+:mod:`sklearn.ensemble`: 集成方法
 =========================================
 
 .. automodule:: sklearn.ensemble
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`ensemble` section for further details.
+**用户指南：** 参阅 :ref:`ensemble` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -393,7 +390,7 @@ Samples generator
    :template: function.rst
 
 
-partial dependence
+部分依赖
 ------------------
 
 .. automodule:: sklearn.ensemble.partial_dependence
@@ -412,7 +409,7 @@ partial dependence
 
 .. _exceptions_ref:
 
-:mod:`sklearn.exceptions`: Exceptions and warnings
+:mod:`sklearn.exceptions`: 异常和警告
 ==================================================
 
 .. automodule:: sklearn.exceptions
@@ -437,14 +434,14 @@ partial dependence
 
 .. _feature_extraction_ref:
 
-:mod:`sklearn.feature_extraction`: Feature Extraction
+:mod:`sklearn.feature_extraction`: 特征提取
 =====================================================
 
 .. automodule:: sklearn.feature_extraction
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`feature_extraction` section for further details.
+**用户指南：** 参阅 :ref:`feature_extraction` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -455,7 +452,7 @@ partial dependence
    feature_extraction.DictVectorizer
    feature_extraction.FeatureHasher
 
-From images
+图像特征提取
 -----------
 
 .. automodule:: sklearn.feature_extraction.image
@@ -479,7 +476,7 @@ From images
 
 .. _text_feature_extraction_ref:
 
-From text
+文本特征提取
 ---------
 
 .. automodule:: sklearn.feature_extraction.text
@@ -500,14 +497,14 @@ From text
 
 .. _feature_selection_ref:
 
-:mod:`sklearn.feature_selection`: Feature Selection
+:mod:`sklearn.feature_selection`: 特征选择
 ===================================================
 
 .. automodule:: sklearn.feature_selection
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`feature_selection` section for further details.
+**用户指南:** 参阅 :ref:`feature_selection` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -539,14 +536,14 @@ From text
 
 .. _gaussian_process_ref:
 
-:mod:`sklearn.gaussian_process`: Gaussian Processes
+:mod:`sklearn.gaussian_process`: 高斯过程
 ===================================================
 
 .. automodule:: sklearn.gaussian_process
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`gaussian_process` section for further details.
+**用户指南:** 参阅 :ref:`gaussian_process` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -557,7 +554,7 @@ From text
   gaussian_process.GaussianProcessClassifier
   gaussian_process.GaussianProcessRegressor
 
-Kernels:
+核函数
 
 .. autosummary::
   :toctree: generated/
@@ -580,14 +577,14 @@ Kernels:
 
 .. _isotonic_ref:
 
-:mod:`sklearn.isotonic`: Isotonic regression
+:mod:`sklearn.isotonic`: 保序回归
 ============================================
 
 .. automodule:: sklearn.isotonic
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`isotonic` section for further details.
+**用户指南;** 参阅 :ref:`isotonic` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -606,14 +603,14 @@ Kernels:
 
 .. _kernel_approximation_ref:
 
-:mod:`sklearn.kernel_approximation` Kernel Approximation
+:mod:`sklearn.kernel_approximation` 核近似
 ========================================================
 
 .. automodule:: sklearn.kernel_approximation
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`kernel_approximation` section for further details.
+**用户指南:** 参阅 :ref:`kernel_approximation` 获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -628,14 +625,14 @@ Kernels:
 
 .. _kernel_ridge_ref:
 
-:mod:`sklearn.kernel_ridge` Kernel Ridge Regression
+:mod:`sklearn.kernel_ridge` 内核岭回归
 ========================================================
 
 .. automodule:: sklearn.kernel_ridge
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`kernel_ridge` section for further details.
+**用户指南:** 参阅 :ref:`kernel_ridge` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -647,14 +644,14 @@ Kernels:
 
 .. _linear_model_ref:
 
-:mod:`sklearn.linear_model`: Generalized Linear Models
+:mod:`sklearn.linear_model`: 广义线性模型
 ======================================================
 
 .. automodule:: sklearn.linear_model
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`linear_model` section for further details.
+**用户指南:** 参阅 :ref:`linear_model` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -710,14 +707,14 @@ Kernels:
 
 .. _manifold_ref:
 
-:mod:`sklearn.manifold`: Manifold Learning
+:mod:`sklearn.manifold`: 集成学习
 ==========================================
 
 .. automodule:: sklearn.manifold
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`manifold` section for further details.
+**用户指南:** 参阅 :ref:`manifold` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -742,11 +739,10 @@ Kernels:
 
 .. _metrics_ref:
 
-:mod:`sklearn.metrics`: Metrics
+:mod:`sklearn.metrics`: 指标
 ===============================
 
-See the :ref:`model_evaluation` section and the :ref:`metrics` section of the
-user guide for further details.
+参阅 :ref:`model_evaluation` 和 :ref:`metrics` 章节的用户指南获取更多信息。
 
 .. automodule:: sklearn.metrics
    :no-members:
@@ -754,10 +750,9 @@ user guide for further details.
 
 .. currentmodule:: sklearn
 
-Model Selection Interface
+模型选择接口
 -------------------------
-See the :ref:`scoring_parameter` section of the user guide for further
-details.
+参阅 :ref:`scoring_parameter` 章节获取更多内容。
 
 .. autosummary::
    :toctree: generated/
@@ -766,11 +761,10 @@ details.
    metrics.get_scorer
    metrics.make_scorer
 
-Classification metrics
+分类指标
 ----------------------
 
-See the :ref:`classification_metrics` section of the user guide for further
-details.
+参阅 :ref:`classification_metrics` 用户指南章节获取更多内容。
 
 .. autosummary::
    :toctree: generated/
@@ -800,11 +794,10 @@ details.
    metrics.roc_curve
    metrics.zero_one_loss
 
-Regression metrics
+回归度量
 ------------------
 
-See the :ref:`regression_metrics` section of the user guide for further
-details.
+参阅 :ref:`regression_metrics` 用户指南章节获取更多内容。
 
 .. autosummary::
    :toctree: generated/
@@ -817,10 +810,9 @@ details.
    metrics.median_absolute_error
    metrics.r2_score
 
-Multilabel ranking metrics
+多标签排序指标
 --------------------------
-See the :ref:`multilabel_ranking_metrics` section of the user guide for further
-details.
+参阅 :ref:`multilabel_ranking_metrics` 用户指南章节获取更多内容。
 
 .. autosummary::
    :toctree: generated/
@@ -831,11 +823,10 @@ details.
    metrics.label_ranking_loss
 
 
-Clustering metrics
+聚类指标
 ------------------
 
-See the :ref:`clustering_evaluation` section of the user guide for further
-details.
+参阅 :ref:`clustering_evaluation` 用户指南章节获取更多内容
 
 .. automodule:: sklearn.metrics.cluster
    :no-members:
@@ -860,11 +851,10 @@ details.
    metrics.silhouette_samples
    metrics.v_measure_score
 
-Biclustering metrics
+双向聚类指标
 --------------------
 
-See the :ref:`biclustering_evaluation` section of the user guide for
-further details.
+参阅 :ref:`biclustering_evaluation` 用户指南章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -875,10 +865,10 @@ further details.
    metrics.consensus_score
 
 
-Pairwise metrics
+成对度量
 ----------------
 
-See the :ref:`metrics` section of the user guide for further details.
+参阅 :ref:`metrics` 用户指南章节获取更多内容。
 
 .. automodule:: sklearn.metrics.pairwise
    :no-members:
@@ -916,14 +906,14 @@ See the :ref:`metrics` section of the user guide for further details.
 
 .. _mixture_ref:
 
-:mod:`sklearn.mixture`: Gaussian Mixture Models
+:mod:`sklearn.mixture`: 高斯混合模型
 ===============================================
 
 .. automodule:: sklearn.mixture
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`mixture` section for further details.
+**用户指南:** 参阅 :ref:`mixture` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -936,17 +926,17 @@ See the :ref:`metrics` section of the user guide for further details.
 
 .. _modelselection_ref:
 
-:mod:`sklearn.model_selection`: Model Selection
+:mod:`sklearn.model_selection`: 模型选择
 ===============================================
 
 .. automodule:: sklearn.model_selection
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`cross_validation`, :ref:`grid_search` and
-:ref:`learning_curve` sections for further details.
+**用户指南:** 参阅 :ref:`cross_validation`, :ref:`grid_search` 和
+:ref:`learning_curve` 章节获取更多内容。
 
-Splitter Classes
+分离器类
 ----------------
 
 .. currentmodule:: sklearn
@@ -970,7 +960,7 @@ Splitter Classes
    model_selection.StratifiedShuffleSplit
    model_selection.TimeSeriesSplit
 
-Splitter Functions
+分离器函数
 ------------------
 
 .. currentmodule:: sklearn
@@ -982,7 +972,7 @@ Splitter Functions
    model_selection.check_cv
    model_selection.train_test_split
 
-Hyper-parameter optimizers
+超参数优化器
 --------------------------
 
 .. currentmodule:: sklearn
@@ -1003,7 +993,7 @@ Hyper-parameter optimizers
 
    model_selection.fit_grid_point
 
-Model validation
+模型验证
 ----------------
 
 .. currentmodule:: sklearn
@@ -1021,14 +1011,14 @@ Model validation
 
 .. _multiclass_ref:
 
-:mod:`sklearn.multiclass`: Multiclass and multilabel classification
+:mod:`sklearn.multiclass`: 多类和多标签分类
 ===================================================================
 
 .. automodule:: sklearn.multiclass
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`multiclass` section for further details.
+**用户指南:** 参阅 :ref:`multiclass` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1042,14 +1032,14 @@ Model validation
 
 .. _multioutput_ref:
 
-:mod:`sklearn.multioutput`: Multioutput regression and classification
+:mod:`sklearn.multioutput`: 多输出回归和分类
 =====================================================================
 
 .. automodule:: sklearn.multioutput
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`multiclass` section for further details.
+**用户指南:** 参阅 :ref:`multiclass` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1063,14 +1053,14 @@ Model validation
 
 .. _naive_bayes_ref:
 
-:mod:`sklearn.naive_bayes`: Naive Bayes
+:mod:`sklearn.naive_bayes`: 朴素贝叶斯
 =======================================
 
 .. automodule:: sklearn.naive_bayes
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`naive_bayes` section for further details.
+**用户指南:** 参阅 :ref:`naive_bayes` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1085,14 +1075,14 @@ Model validation
 
 .. _neighbors_ref:
 
-:mod:`sklearn.neighbors`: Nearest Neighbors
+:mod:`sklearn.neighbors`: 最近邻
 ===========================================
 
 .. automodule:: sklearn.neighbors
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`neighbors` section for further details.
+**用户指南:** 参阅 :ref:`neighbors` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1121,14 +1111,14 @@ Model validation
 
 .. _neural_network_ref:
 
-:mod:`sklearn.neural_network`: Neural network models
+:mod:`sklearn.neural_network`: 神经网络模型
 =====================================================
 
 .. automodule:: sklearn.neural_network
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`neural_networks_supervised` and :ref:`neural_networks_unsupervised` sections for further details.
+**用户指南:** 参阅 :ref:`neural_networks_supervised` 和 :ref:`neural_networks_unsupervised` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1142,7 +1132,7 @@ Model validation
 
 .. _pipeline_ref:
 
-:mod:`sklearn.pipeline`: Pipeline
+:mod:`sklearn.pipeline`: 管道线
 =================================
 
 .. automodule:: sklearn.pipeline
@@ -1168,14 +1158,14 @@ Model validation
 
 .. _preprocessing_ref:
 
-:mod:`sklearn.preprocessing`: Preprocessing and Normalization
+:mod:`sklearn.preprocessing`: 预处理和正则化
 =============================================================
 
 .. automodule:: sklearn.preprocessing
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`preprocessing` section for further details.
+**用户指南:** 参阅 :ref:`preprocessing` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1216,14 +1206,14 @@ Model validation
 
 .. _random_projection_ref:
 
-:mod:`sklearn.random_projection`: Random projection
+:mod:`sklearn.random_projection`: 随机投影
 ===================================================
 
 .. automodule:: sklearn.random_projection
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`random_projection` section for further details.
+**用户指南:** 参阅 :ref:`random_projection` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1243,14 +1233,14 @@ Model validation
 
 .. _semi_supervised_ref:
 
-:mod:`sklearn.semi_supervised` Semi-Supervised Learning
+:mod:`sklearn.semi_supervised` 办监督学习
 ========================================================
 
 .. automodule:: sklearn.semi_supervised
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`semi_supervised` section for further details.
+**用户指南:** 参阅 :ref:`semi_supervised` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1264,16 +1254,16 @@ Model validation
 
 .. _svm_ref:
 
-:mod:`sklearn.svm`: Support Vector Machines
+:mod:`sklearn.svm`: 支持向量机
 ===========================================
 
 .. automodule:: sklearn.svm
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`svm` section for further details.
+**用户指南:** 参阅 :ref:`svm` 章节获取更多内容。
 
-Estimators
+估计器
 ----------
 
 .. currentmodule:: sklearn
@@ -1296,7 +1286,7 @@ Estimators
 
    svm.l1_min_c
 
-Low-level methods
+初级方法
 -----------------
 
 .. autosummary::
@@ -1312,14 +1302,14 @@ Low-level methods
 
 .. _tree_ref:
 
-:mod:`sklearn.tree`: Decision Trees
+:mod:`sklearn.tree`: 决策树
 ===================================
 
 .. automodule:: sklearn.tree
    :no-members:
    :no-inherited-members:
 
-**User guide:** See the :ref:`tree` section for further details.
+**用户指南:** 参阅 :ref:`tree` 章节获取更多内容。
 
 .. currentmodule:: sklearn
 
@@ -1341,14 +1331,14 @@ Low-level methods
 
 .. _utils_ref:
 
-:mod:`sklearn.utils`: Utilities
+:mod:`sklearn.utils`: 效率
 ===============================
 
 .. automodule:: sklearn.utils
    :no-members:
    :no-inherited-members:
 
-**Developer guide:** See the :ref:`developers-utils` page for further details.
+**开发者指南:** 参阅 :ref:`developers-utils` 页获取更多内容
 
 .. currentmodule:: sklearn
 
@@ -1381,11 +1371,11 @@ Low-level methods
    utils.validation.column_or_1d
    utils.validation.has_fit_parameter
 
-Recently deprecated
+最近弃用
 ===================
 
 
-To be removed in 0.21
+0.21将会移除
 ---------------------
 
 .. autosummary::
@@ -1397,7 +1387,7 @@ To be removed in 0.21
    neighbors.LSHForest
 
 
-To be removed in 0.20
+0.20版本将会移除
 ---------------------
 
 .. autosummary::

@@ -1,11 +1,12 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 ============================
-Nearest Neighbors regression
+最近邻回归
 ============================
 
-Demonstrate the resolution of a regression problem
-using a k-Nearest Neighbor and the interpolation of the
-target using both barycenter and constant weights.
+使用 K-近邻 解决回归问题, 并使用重心和固定权重来对目标做插值法。
 
 """
 print(__doc__)
@@ -17,7 +18,7 @@ print(__doc__)
 
 
 # #############################################################################
-# Generate sample data
+# 生成样本数据
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import neighbors
@@ -27,12 +28,12 @@ X = np.sort(5 * np.random.rand(40, 1), axis=0)
 T = np.linspace(0, 5, 500)[:, np.newaxis]
 y = np.sin(X).ravel()
 
-# Add noise to targets
+# 添加噪声数据
 y[::5] += 1 * (0.5 - np.random.rand(8))
 
 # #############################################################################
-# Fit regression model
-n_neighbors = 5
+# 拟合回归模型
+n_neighbors = 5 # 近邻数量
 
 for i, weights in enumerate(['uniform', 'distance']):
     knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)
@@ -43,7 +44,6 @@ for i, weights in enumerate(['uniform', 'distance']):
     plt.plot(T, y_, c='g', label='prediction')
     plt.axis('tight')
     plt.legend()
-    plt.title("KNeighborsRegressor (k = %i, weights = '%s')" % (n_neighbors,
-                                                                weights))
+    plt.title("KNeighborsRegressor (k = %i, weights = '%s')" % (n_neighbors, weights))
 
 plt.show()

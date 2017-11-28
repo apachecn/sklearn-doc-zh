@@ -33,7 +33,7 @@
   >>> y[0]
   0
 
-在这个 scikit 的特殊示例中，使用 joblib 来替换 pickle (``joblib.dump``＆``joblib.load``) 可能会更有意思, 这对于内部带有大量数组的对象来说更为高效, 通常情况下适合 scikit-learn estimators（预估器）, but can only pickle to the disk and not to a string::
+在这个 scikit 的特殊示例中，使用 joblib 来替换 pickle (``joblib.dump`` & ``joblib.load``) 可能会更有意思, 这对于内部带有大量数组的对象来说更为高效, 通常情况下适合 scikit-learn estimators（预估器）, but can only pickle to the disk and not to a string::
 
   >>> from sklearn.externals import joblib
   >>> joblib.dump(clf, 'filename.pkl') # doctest: +SKIP

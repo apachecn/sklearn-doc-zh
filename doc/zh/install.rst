@@ -6,8 +6,7 @@
 
 .. note::
 
-    If you wish to contribute to the project, it's recommended you
-    :ref:`install the latest development version<install_bleeding_edge>`.
+   如果你想为这个项目做出贡献，建议你 :ref:`安装最新版本的开发版本 <install_bleeding_edge>` .
 
 
 安装最新版本
