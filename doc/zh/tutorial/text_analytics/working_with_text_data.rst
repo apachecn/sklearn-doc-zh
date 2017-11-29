@@ -1,7 +1,7 @@
 .. _text_data_tutorial:
 
 ======================
-使用文本数据
+处理文本数据
 ======================
 
 本指南旨在一个单独实际任务中探索一些主要的 ``scikit-learn`` 工具: 分析关于20 个不同主题的一个文件汇编（新闻组帖子）.
@@ -45,7 +45,7 @@
     % cp -r skeletons work_directory/sklearn_tut_workspace
 
 机器学习算法需要数据.
-进入每一个 ``$TUTORIAL_HOME/data`` 子文件夹，然后运行 ``fetch_data.py`` 脚本（在您已经事先读取它们之后）.
+进入每一个 ``$TUTORIAL_HOME/data`` 子文件夹，然后运行 ``fetch_data.py`` 脚本（需要您先读取这些文件）.
 
 例如::
 
@@ -60,7 +60,7 @@
 该数据集名为 "Twenty Newsgroups".
 下面就是这个数据集的介绍, 来源于 `网站 <http://people.csail.mit.edu/jrennie/20Newsgroups/>`_:
 
-  20 个新闻组数据集是一个近 包括了20,000 个新闻组文件的汇编，（几乎）平均分成了 20 个不同新闻组.
+  20 个新闻组数据集是一个包括近20,000 个新闻组文件的汇编，（几乎）平均分成了 20 个不同新闻组.
   据我们所知，这最初是由 Ken Lang 收集的 ，很可能是为了他的论文 "Newsweeder: Learning to filter netnews," 尽管他没有明确提及这个汇编.
   这20 个新闻组汇编已成为一个流行的数据集，用于机器学习中的文本应用的试验中，如文本分类和文本聚类.
 
@@ -127,7 +127,7 @@
   sci.med
   sci.med
 
-你可以发现所有的样本都被随机打乱（使用了修正的 RNG 种子）: 当你在训练进行整个数据集之前，你只要选取前几个样本来快速训练一个模型的时候以及获得初步结果.这是非常有用的.
+你可以发现所有的样本都被随机打乱（使用了修正的 RNG 种子）: 当你在重新训练整个数据集之前，这样可以帮助你只选取前几个样本来快速训练一个模型以及获得初步结果。
 
 
 从文本文件中提取特征
@@ -160,7 +160,7 @@
 使用 ``scikit-learn`` 来对文本进行分词
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-文本的预处理, 分词以及过滤停词包含在可以构建特征字典和将文本转换成特征向量的高级组件中 ::
+文本的预处理, 分词以及过滤停用词都包含在可以构建特征字典和将文档转换成特征向量的高级组件中 ::
 
   >>> from sklearn.feature_extraction.text import CountVectorizer
   >>> count_vect = CountVectorizer()
@@ -168,7 +168,7 @@
   >>> X_train_counts.shape
   (2257, 35788)
 
-:class:`CountVectorizer` 提供了 N-gram 模型以及连续词模型.
+:class:`CountVectorizer` 提供了 N-gram 模型以及连续字符模型.
 一旦拟合, 向量化程序就会构建一个包含特征索引的字典::
 
   >>> count_vect.vocabulary_.get(u'algorithm')
@@ -191,9 +191,9 @@
 
 使用每个单词出现的次数被除以总共单词出现的次数，这种方法就能避免以上这种潜在的差别：这些新的特征称之为词频（tf）.
 
-基于这词频上的精简提炼的是降低这个文集里出现在很多文档中的单词的比重，因此它会比那些仅出现在一些文档中的单词有更少的信息量.
+在词频的基础上进行改良，缩小在文集里很多文档中出现的单词的比重，因此可以突出那些仅在文集中一小部分文档中出现的单词的信息量.
 
-这种downscaling（降低比重）的方法称为 `tf–idf`_ ，全称为 "Term Frequency times Inverse Document Frequency".
+这种缩小尺度的方法称为 `tf–idf`_ ，全称为 "Term Frequency times Inverse Document Frequency".
 
 .. _`tf–idf`: https://en.wikipedia.org/wiki/Tf–idf
 
@@ -219,7 +219,7 @@
 ---------------------
 
 现在我们有了自己的特征，我们可以训练一个分类器来预测一个帖子所属的类别.
-让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始吧. 该分类器为该任务上提供了一个好的准线.
+让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始吧. 该分类器为该任务提供了一个好的准线.
 ``scikit-learn`` 包含了该分类器的若干变种;最适用在该问题上的变种是多项式分类器::
 
   >>> from sklearn.naive_bayes import MultinomialNB
@@ -275,7 +275,7 @@
 
 如上, 我们模型的精度为 83.4%.
 我们使用线性分类模型 :ref:`支持向量机（SVM） <svm>`, 一种公认的最好的文本分类算法（尽管训练速度没有朴素贝叶斯快）.
-我们改变分类算法只需要在 pipeline（管道）中添加不同的算法即可::
+我们改变分类算法只需要在 Pipeline（管道）中添加不同的算法即可::
 
   >>> from sklearn.linear_model import SGDClassifier
   >>> text_clf = Pipeline([('vect', CountVectorizer()),
@@ -333,7 +333,7 @@
 我们已经接触了类似于 ``TfidfTransformer`` 中 ``use_idf`` 这样的参数 ，分类器有多种这样的参数;
 比如, ``MultinomialNB`` 包含了平滑参数 ``alpha`` 以及 ``SGDClassifier`` 有惩罚参数 ``alpha`` 和设置损失以及惩罚因子（更多信息请使用 python 的 ``help`` 文档）.
 
-而不是调整 chain（链条）的各种组件的参数, 通过构建巨大的网格搜索来寻找最佳参数也是可以的.
+通过构建巨大的网格搜索，而不是调整 chain（链条）的各种组件的参数,来寻找最佳参数.
 我们可以对线性支持向量机使用每个单词或者使用 n-gram, 是否使用 idf, 以及设置从 0.01 到 0.001 的惩罚参数::
 
   >>> from sklearn.model_selection import GridSearchCV
@@ -342,7 +342,7 @@
   ...               'clf__alpha': (1e-2, 1e-3),
   ... }
 
-很明显的可以发现, 如此的搜索是非常耗时的.
+很明显, 如此的搜索是非常耗时的.
 如果我们有多个 cpu 核心可以使用, 通过设置 ``n_jobs`` 参数能够进行并行搜索.
 如果我们将该参数设置为 ``-1``, 该方法会使用机器的所有 cpu 核心::
 
@@ -402,7 +402,7 @@
 练习 1：语言识别
 -----------------------------------
 
-- 请使用自定义的预处理器和 ``CharNGramAnalyzer``，并且使用维基百科中的文章作为训练集，来编写一个文本分类的 pipeline（管道）.
+- 请使用自定义的预处理器和 ``CharNGramAnalyzer``，并且使用维基百科中的文章作为训练集，来编写一个文本分类的 Pipeline（管道）.
 
 - 评估某些测试套件的性能.
 
@@ -414,7 +414,7 @@ ipython command line::
 练习 2：电影评论上的情绪分析
 -----------------------------------------------
 
-- 编写一个文本分类 pipeline（管道）来将电影评论分类为正面的还是负面的.
+- 编写一个文本分类 Pipeline（管道）来将电影评论分类为正面的还是负面的.
 
 - 使用网格搜索来找到最好的参数集.
 
@@ -445,8 +445,8 @@ ipython 命令行::
 
 * 如果对每一篇文章有多个标签，请参考 :ref:`多类别和多标签部分 <multiclass>` _.
 
-* 使用 :ref:`Truncated SVD <LSA>` 解决 `潜在语义分析 <https://en.wikipedia.org/wiki/Latent_semantic_analysis>`_.
+* 使用 :ref:`Truncated SVD <LSA>` 解决 `隐语义分析 <https://en.wikipedia.org/wiki/Latent_semantic_analysis>`_.
 
-* 使用 :ref:`Out-of-core Classification <sphx_glr_auto_examples_applications_plot_out_of_core_classification.py>` 来在没有全部读入数据来进行机器学习.
+* 使用 :ref:`Out-of-core Classification <sphx_glr_auto_examples_applications_plot_out_of_core_classification.py>` 来学习数据，并且不会存入计算机主要内存中.
 
-* 使用 :ref:`Hashing Vectorizer <hashing_vectorizer>` 另一种方案来节省内存 :class:`CountVectorizer` .
+* 使用 :ref:`Hashing Vectorizer <hashing_vectorizer>` 来节省内存，以代替 :class:`CountVectorizer` .
