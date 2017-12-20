@@ -24,7 +24,7 @@
       分类问题的一个例子是手写数字识别，其目的是将每个输入向量分配给有限数目的离散类别之一。
       我们通常把分类视作监督学习的一个离散形式（区别于连续形式），从有限的类别中，给每个样本贴上正确的标签。
 
-    * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_: 
+    * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_:
       如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归*.
       回归问题的一个例子是预测鲑鱼的长度是其年龄和体重的函数。
 
@@ -42,7 +42,7 @@
 加载示例数据集
 --------------------------
 
-`scikit-learn` 提供了一些标准数据集，例如 用于分类的 `iris <https://en.wikipedia.org/wiki/Iris_flower_data_set>`_ 
+`scikit-learn` 提供了一些标准数据集，例如 用于分类的 `iris <https://en.wikipedia.org/wiki/Iris_flower_data_set>`_
 和 `digits <http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits>`_ 数据集
 和 `波士顿房价回归数据集 <http://archive.ics.uci.edu/ml/datasets/Housing>`_ .
 
@@ -53,7 +53,7 @@
   >>> iris = datasets.load_iris()
   >>> digits = datasets.load_digits()
 
-数据集是一个类似字典的对象，它保存有关数据的所有数据和一些元数据。 该数据存储在 ``.data`` 成员中，它是 ``n_samples, n_features`` 数组。 
+数据集是一个类似字典的对象，它保存有关数据的所有数据和一些元数据。 该数据存储在 ``.data`` 成员中，它是 ``n_samples, n_features`` 数组。
 在监督问题的情况下，一个或多个响应变量存储在 ``.target`` 成员中。 有关不同数据集的更多详细信息，请参见 :ref:`专用数据集部分 <datasets>` .
 
 例如，在数字数据集的情况下，``digits.data`` 使我们能够得到一些用于分类的样本特征::
@@ -74,7 +74,7 @@
 
 .. topic:: 数据数组的形状
 
-    数据总是 2D 数组，形状 ``(n_samples, n_features)`` ，尽管原始数据可能具有不同的形状。 
+    数据总是二维数组，形状 ``(n_samples, n_features)`` ，尽管原始数据可能具有不同的形状。
     在数字的情况下，每个原始样本是形状 ``(8, 8)`` 的图像，可以使用以下方式访问::
 
       >>> digits.images[0]
@@ -86,9 +86,9 @@
              [  0.,   4.,  11.,   0.,   1.,  12.,   7.,   0.],
              [  0.,   2.,  14.,   5.,  10.,  12.,   0.,   0.],
              [  0.,   0.,   6.,  13.,  10.,   0.,   0.,   0.]])
-    
+
     该 :ref:`数据集上的简单示例 <sphx_glr_auto_examples_classification_plot_digits_classification.py>` 说明了如何从原始数据开始调整，形成可以在 scikit-learn 中使用的数据。
-    
+
 .. topic:: 从外部数据集加载
 
     要从外部数据集加载，请参阅 :ref:`加载外部数据集 <external_datasets>`.
@@ -96,12 +96,12 @@
 学习和预测
 ------------------------
 
-在数字数据集的情况下，任务是给出图像来预测其表示的数字。 
+在数字数据集的情况下，任务是给出图像来预测其表示的数字。
 我们给出了 10 个可能类（数字 0 到 9）中的每一个的样本，我们在这些类上 *拟合* 一个 `估计器 <https://en.wikipedia.org/wiki/Estimator>`_ ，以便能够 *预测* 未知的样本所属的类。
 
 在 scikit-learn 中，分类的估计器是一个 Python 对象，它实现了 ``fit(X, y)`` 和 ``predict(T)`` 等方法。
 
-估计器的一个例子类 ``sklearn.svm.SVC`` ，实现了 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 。 估计器的构造函数以相应模型的参数为参数，但目前我们将把估计器视为即可::
+估计器的一个例子类 ``sklearn.svm.SVC`` ，实现了 `支持向量分类 <https://en.wikipedia.org/wiki/Support_vector_machine>`_ 。 估计器的构造函数以相应模型的参数为参数，但目前我们将把估计器视为黑箱即可::
 
   >>> from sklearn import svm
   >>> clf = svm.SVC(gamma=0.001, C=100.)
@@ -229,13 +229,13 @@ scikit-learn 估计器遵循某些规则，使其行为更可预测。
     >>> list(clf.predict(iris.data[:3]))  # doctest: +NORMALIZE_WHITESPACE
     ['setosa', 'setosa', 'setosa']
 
-这里，第一个 ``predict()`` 返回一个整数数组，因为在 ``fit`` 中使用了 ``iris.target`` （一个整数数组）。 
+这里，第一个 ``predict()`` 返回一个整数数组，因为在 ``fit`` 中使用了 ``iris.target`` （一个整数数组）。
 第二个 ``predict()`` 返回一个字符串数组，因为 ``iris.target_names`` 是一个字符串数组。
 
 再次训练和更新参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-估计器的超参数可以通过 :func:`sklearn.pipeline.Pipeline.set_params` 方法在实例化之后进行更新。 
+估计器的超参数可以通过 :func:`sklearn.pipeline.Pipeline.set_params` 方法在实例化之后进行更新。
 调用 ``fit()`` 多次将覆盖以前的 ``fit()`` 所学到的参数::
 
   >>> import numpy as np
@@ -291,7 +291,7 @@ scikit-learn 估计器遵循某些规则，使其行为更可预测。
            [0, 0, 0],
            [0, 0, 0]])
 
-这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>` 使目标向量 y 被转化成二维数组的标签表示。在这种情况下， ``predict()`` 返回一个表示相应多重标签预测的 2d 矩阵。
+这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>` 使目标向量 y 被转化成二维数组的标签表示。在这种情况下， ``predict()`` 返回一个表示相应多重标签预测的 二维 矩阵。
 
 请注意，第四个和第五个实例返回全零向量，表明它们不能匹配用来训练中的目标标签中的任意一个。使用多分类输出，类似地可以为一个实例分配多个标签::
 
