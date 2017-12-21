@@ -264,45 +264,40 @@ HLLE算法分为三部分:
      M. Belkin, P. Niyogi, Neural Computation, June 2003; 15 (6):1373-1396
 
 
-Local Tangent Space Alignment
+局部切空间对齐（LTSA）
 =======================================
 
-Though not technically a variant of LLE, Local tangent space alignment (LTSA)
-is algorithmically similar enough to LLE that it can be put in this category.
-Rather than focusing on preserving neighborhood distances as in LLE, LTSA
-seeks to characterize the local geometry at each neighborhood via its
-tangent space, and performs a global optimization to align these local
-tangent spaces to learn the embedding.  LTSA can be performed with function
-:func:`locally_linear_embedding` or its object-oriented counterpart
-:class:`LocallyLinearEmbedding`, with the keyword ``method = 'ltsa'``.
+尽管局部切空间对齐（LTSA）在技术上并不是LLE的变体，但它与LLE足够相近，可以放入这个目录。与LLE算法关注于保持临点距离不同，LTSA寻求通过切空间来描述局部几何形状，并（通过）实现全局最优化来对其这些局部切空间，从而学会嵌入。
+LTSA可执行为函数
+:func:`locally_linear_embedding` 或它的面向对象的对应形式
+:class:`LocallyLinearEmbedding`，附带关键词 ``method = 'ltsa'``。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_009.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
    :align: center
    :scale: 50
 
-Complexity
+复杂度
 -----------------
 
-The LTSA algorithm comprises three stages:
+LTSA算法含三部分:
 
-1. **Nearest Neighbors Search**.  Same as standard LLE
+1. **近邻搜索**。与标准LLE的相同。
 
-2. **Weight Matrix Construction**. Approximately
-   :math:`O[D N k^3] + O[k^2 d]`.  The first term reflects a similar
-   cost to that of standard LLE.
+2. **加权矩阵构造**。大约是
+   :math:`O[D N k^3] + O[k^2 d]`。其中第一项与标准LLE相似。
 
-3. **Partial Eigenvalue Decomposition**. Same as standard LLE
+3. **部分特征值分解**。同于标准LLE。
 
-The overall complexity of standard LTSA is
-:math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[k^2 d] + O[d N^2]`.
+综上，复杂度是
+:math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[k^2 d] + O[d N^2]`。
 
-* :math:`N` : number of training data points
-* :math:`D` : input dimension
-* :math:`k` : number of nearest neighbors
-* :math:`d` : output dimension
+* :math:`N` : 训练集数据点的个数
+* :math:`D` : 输入维度
+* :math:`k` : 最近邻点的个数
+* :math:`d` : 输出的维度
 
-.. topic:: References:
+.. topic:: 参考文献:
 
    * `"Principal manifolds and nonlinear dimensionality reduction via
      tangent space alignment"
@@ -311,28 +306,15 @@ The overall complexity of standard LTSA is
 
 .. _multidimensional_scaling:
 
-Multi-dimensional Scaling (MDS)
+多维尺度分析（MDS）
 ===========================================
 
-`Multidimensional scaling <https://en.wikipedia.org/wiki/Multidimensional_scaling>`_
-(:class:`MDS`) seeks a low-dimensional
-representation of the data in which the distances respect well the
-distances in the original high-dimensional space.
+`多维尺度分析 Multidimensional scaling <https://en.wikipedia.org/wiki/Multidimensional_scaling>`_
+(:class:`MDS`) 寻求数据的低维表示，（低维下的）它的距离保持了在初始高维空间中的距离。
 
-In general, is a technique used for analyzing similarity or
-dissimilarity data. :class:`MDS` attempts to model similarity or dissimilarity data as
-distances in a geometric spaces. The data can be ratings of similarity between
-objects, interaction frequencies of molecules, or trade indices between
-countries.
+一般来说，（MDS）是一种用来分析在几何空间距离相似或相异数据的技术。MDS尝试将相似或相异的数据建模为几何空间距离。这些数据可以是物体间的相似等级，也可是分子的作用频率，还可以是国家简单贸易指数。
 
-There exists two types of MDS algorithm: metric and non metric. In the
-scikit-learn, the class :class:`MDS` implements both. In Metric MDS, the input
-similarity matrix arises from a metric (and thus respects the triangular
-inequality), the distances between output two points are then set to be as
-close as possible to the similarity or dissimilarity data. In the non-metric
-version, the algorithms will try to preserve the order of the distances, and
-hence seek for a monotonic relationship between the distances in the embedded
-space and the similarities/dissimilarities.
+MDS算法有2类：度量和非度量。在scikit-learn中，:class:`MDS`类中二者都有。在度量MDS中，输入相似度矩阵源自度量(并因此遵从三角形不等式)，输出两点之间的距离被设置为尽可能接近相似度或相异度的数据。在非度量版本中，算法尝试保持距离的控制，并因此寻找在所嵌入空间中的距离和相似/相异之间的单调关系。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_010.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -340,33 +322,23 @@ space and the similarities/dissimilarities.
    :scale: 50
 
 
-Let :math:`S` be the similarity matrix, and :math:`X` the coordinates of the
-:math:`n` input points. Disparities :math:`\hat{d}_{ij}` are transformation of
-the similarities chosen in some optimal ways. The objective, called the
-stress, is then defined by :math:`sum_{i < j} d_{ij}(X) - \hat{d}_{ij}(X)`
+设:math:`S`是相似度矩阵，:math:`X`是:math:`n`个输入点的坐标。差异:math:`\hat{d}_{ij}`是以某种最佳方式选择的相似度的转换。然后，通过
+:math:`sum_{i < j} d_{ij}(X) - \hat{d}_{ij}(X)`定义称为应力值(Stress)的对象。
 
 
-Metric MDS
+度量MDS
 ----------------
 
-The simplest metric :class:`MDS` model, called *absolute MDS*, disparities are defined by
-:math:`\hat{d}_{ij} = S_{ij}`. With absolute MDS, the value :math:`S_{ij}`
-should then correspond exactly to the distance between point :math:`i` and
-:math:`j` in the embedding point.
+最简单的度量:class:`MDS`模型称为*绝对MDS（absolute MDS）*，差异由:math:`\hat{d}_{ij} = S_{ij}`定义。对于绝对MDS，值:math:`S_{ij}`应精确地对应于嵌入点的点:math:`i`和:math:`j`之间的距离。
 
-Most commonly, disparities are set to :math:`\hat{d}_{ij} = b S_{ij}`.
+大多数情况下，差异应设置为 :math:`\hat{d}_{ij} = b S_{ij}`。
 
-Nonmetric MDS
+非度量MDS
 -------------------
 
-Non metric :class:`MDS` focuses on the ordination of the data. If
-:math:`S_{ij} < S_{kl}`, then the embedding should enforce :math:`d_{ij} <
-d_{jk}`. A simple algorithm to enforce that is to use a monotonic regression
-of :math:`d_{ij}` on :math:`S_{ij}`, yielding disparities :math:`\hat{d}_{ij}`
-in the same order as :math:`S_{ij}`.
+非度量:class:`MDS`关注数据的排序。如果:math:`S_{ij} < S_{kl}`，则嵌入应执行:math:`d_{ij} < d_{jk}`。这样执行的一个简单算法是在:math:`S_{ij}`上使用:math:`d_{ij}`的单调回归，产生与:math:`S_{ij}`相同顺序的差异:math:`\hat{d}_{ij}`。
 
-A trivial solution to this problem is to set all the points on the origin. In
-order to avoid that, the disparities :math:`\hat{d}_{ij}` are normalized.
+此问题的一个平凡解（a trivial solution）是把所有点设置到原点上。为了避免这种情况，将差异:math:`S_{ij}`标准化。
 
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_mds_001.png
@@ -375,7 +347,7 @@ order to avoid that, the disparities :math:`\hat{d}_{ij}` are normalized.
    :scale: 60
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
   * `"Modern Multidimensional Scaling - Theory and Applications"
     <http://www.springer.com/fr/book/9780387251509>`_
