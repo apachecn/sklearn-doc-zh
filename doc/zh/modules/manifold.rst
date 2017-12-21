@@ -156,43 +156,34 @@ Isomap 的整体复杂度是
 
 关于局部线性嵌入（LLE）的一个众所周知的问题是正则化问题。当邻点（neighbors）的数量多于输入的维度数量时，定义每个局部邻点的矩阵是不满秩的。为解决这个问题，标准的局部线性嵌入算法使用一个任意正则化参数 :math:`r`， 它的取值受局部权重矩阵的迹的影响。虽然可以认为 :math:`r \to 0`，即解收敛于嵌入情况，但是不保证最优解情况下 :math:`r > 0`。此问题说明，在嵌入时此问题会扭曲流形的内部几何形状，使其失真。
 
-One method to address the regularization problem is to use multiple weight
-vectors in each neighborhood.  This is the essence of *modified locally
-linear embedding* (MLLE).  MLLE can be  performed with function
-:func:`locally_linear_embedding` or its object-oriented counterpart
-:class:`LocallyLinearEmbedding`, with the keyword ``method = 'modified'``.
-It requires ``n_neighbors > n_components``.
+解决正则化问题的一种方法是对邻点使用多个权重向量。这就是改进型局部线性嵌入（MLLE）算法的精髓。MLLE可被执行于函数:func:`locally_linear_embedding` ，或者面向对象的副本:class:`LocallyLinearEmbedding`，其中的关键词 ``method = 'modified'``。它需要满足 ``n_neighbors > n_components``.
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_007.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
    :align: center
    :scale: 50
 
-Complexity
+复杂度
 ----------------
 
-The MLLE algorithm comprises three stages:
+MLLE算法分为三部分：
 
-1. **Nearest Neighbors Search**.  Same as standard LLE
+1. **近邻搜索**。与LLE的相同。
 
-2. **Weight Matrix Construction**. Approximately
-   :math:`O[D N k^3] + O[N (k-D) k^2]`.  The first term is exactly equivalent
-   to that of standard LLE.  The second term has to do with constructing the
-   weight matrix from multiple weights.  In practice, the added cost of
-   constructing the MLLE weight matrix is relatively small compared to the
-   cost of steps 1 and 3.
+2. **权重矩阵构造**。大约是
+   :math:`O[D N k^3] + O[N (k-D) k^2]`。该式第一项恰好等于标准LLE算法的复杂度。该式第二项与由多个权重来构造权重矩阵相关。在实践中，（在第二步中）构造MLLE权重矩阵（对复杂度）增加的影响，比第一步和第三步的小。
 
-3. **Partial Eigenvalue Decomposition**. Same as standard LLE
+3. **部分特征值分解**。与LLE的相同。
 
-The overall complexity of MLLE is
+综上，MLLE的复杂度为
 :math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[N (k-D) k^2] + O[d N^2]`.
 
-* :math:`N` : number of training data points
-* :math:`D` : input dimension
-* :math:`k` : number of nearest neighbors
-* :math:`d` : output dimension
+* :math:`N` : 训练集数据点的个数
+* :math:`D` : 输入维度
+* :math:`k` : 最近邻点的个数
+* :math:`d` : 输出的维度
 
-.. topic:: References:
+.. topic:: 参考文献:
 
    * `"MLLE: Modified Locally Linear Embedding Using Multiple Weights"
      <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.70.382>`_
