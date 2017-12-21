@@ -151,18 +151,10 @@ Isomap 的整体复杂度是
      Roweis, S. & Saul, L.  Science 290:2323 (2000)
 
 
-Modified Locally Linear Embedding
+改进型局部线性嵌入（MLLE）
 =========================================
 
-One well-known issue with LLE is the regularization problem.  When the number
-of neighbors is greater than the number of input dimensions, the matrix
-defining each local neighborhood is rank-deficient.  To address this, standard
-LLE applies an arbitrary regularization parameter :math:`r`, which is chosen
-relative to the trace of the local weight matrix.  Though it can be shown
-formally that as :math:`r \to 0`, the solution converges to the desired
-embedding, there is no guarantee that the optimal solution will be found
-for :math:`r > 0`.  This problem manifests itself in embeddings which distort
-the underlying geometry of the manifold.
+关于局部线性嵌入（LLE）的一个众所周知的问题是正则化问题。当邻点（neighbors）的数量多于输入的维度数量时，定义每个局部邻点的矩阵是不满秩的。为解决这个问题，标准的局部线性嵌入算法使用一个任意正则化参数 :math:`r`， 它的取值受局部权重矩阵的迹的影响。虽然可以认为 :math:`r \to 0`，即解收敛于嵌入情况，但是不保证最优解情况下 :math:`r > 0`。此问题说明，在嵌入时此问题会扭曲流形的内部几何形状，使其失真。
 
 One method to address the regularization problem is to use multiple weight
 vectors in each neighborhood.  This is the essence of *modified locally
