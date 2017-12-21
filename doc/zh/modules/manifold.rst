@@ -154,9 +154,9 @@ Isomap 的整体复杂度是
 改进型局部线性嵌入（MLLE）
 =========================================
 
-关于局部线性嵌入（LLE）的一个众所周知的问题是正则化问题。当邻点（neighbors）的数量多于输入的维度数量时，定义每个局部邻点的矩阵是不满秩的。为解决这个问题，标准的局部线性嵌入算法使用一个任意正则化参数 :math:`r`， 它的取值受局部权重矩阵的迹的影响。虽然可以认为 :math:`r \to 0`，即解收敛于嵌入情况，但是不保证最优解情况下 :math:`r > 0`。此问题说明，在嵌入时此问题会扭曲流形的内部几何形状，使其失真。
+关于局部线性嵌入（LLE）的一个众所周知的问题是正则化问题。当邻点（neighbors）的数量多于输入的维度数量时，定义每个局部邻域的矩阵是不满秩的。为解决这个问题，标准的局部线性嵌入算法使用一个任意正则化参数 :math:`r`， 它的取值受局部权重矩阵的迹的影响。虽然可以认为 :math:`r \to 0`，即解收敛于嵌入情况，但是不保证最优解情况下 :math:`r > 0`。此问题说明，在嵌入时此问题会扭曲流形的内部几何形状，使其失真。
 
-解决正则化问题的一种方法是对邻点使用多个权重向量。这就是改进型局部线性嵌入（MLLE）算法的精髓。MLLE可被执行于函数:func:`locally_linear_embedding` ，或者面向对象的副本:class:`LocallyLinearEmbedding`，其中的关键词 ``method = 'modified'``。它需要满足 ``n_neighbors > n_components``.
+解决正则化问题的一种方法是对邻域使用多个权重向量。这就是改进型局部线性嵌入（MLLE）算法的精髓。MLLE可被执行于函数:func:`locally_linear_embedding` ，或者面向对象的副本:class:`LocallyLinearEmbedding`，附带关键词``method = 'modified'``。它需要满足 ``n_neighbors > n_components``.
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_007.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -190,48 +190,40 @@ MLLE算法分为三部分：
      Zhang, Z. & Wang, J.
 
 
-Hessian Eigenmapping
+黑塞特征映射（HE）
 ===========================
 
-Hessian Eigenmapping (also known as Hessian-based LLE: HLLE) is another method
-of solving the regularization problem of LLE.  It revolves around a
-hessian-based quadratic form at each neighborhood which is used to recover
-the locally linear structure.  Though other implementations note its poor
-scaling with data size, ``sklearn`` implements some algorithmic
-improvements which make its cost comparable to that of other LLE variants
-for small output dimension.  HLLE can be  performed with function
-:func:`locally_linear_embedding` or its object-oriented counterpart
-:class:`LocallyLinearEmbedding`, with the keyword ``method = 'hessian'``.
-It requires ``n_neighbors > n_components * (n_components + 3) / 2``.
+黑塞特征映射 (也称作基于黑塞的LLE: HLLE）是解决LLE正则化问题的另一种方法。在每个用于恢复局部线性结构的邻域内，它会围绕一个基于黑塞的二次型展开。虽然其他实现表明它对数据大小缩放较差，但是sklearn实现了一些算法改进，使得在输出低维度时它的损耗可与其他LLE变体相媲美。HLLE可实现为函数
+:func:`locally_linear_embedding`或其面向对象的形式
+:class:`LocallyLinearEmbedding`，附带关键词``method = 'hessian'``。它需满足 ``n_neighbors > n_components * (n_components + 3) / 2``.
+
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_008.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
    :align: center
    :scale: 50
 
-Complexity
+复杂度
 ---------------
 
-The HLLE algorithm comprises three stages:
+HLLE算法分为三部分:
 
-1. **Nearest Neighbors Search**.  Same as standard LLE
+1. **近邻搜索**。与标准LLE的相同。
 
-2. **Weight Matrix Construction**. Approximately
-   :math:`O[D N k^3] + O[N d^6]`.  The first term reflects a similar
-   cost to that of standard LLE.  The second term comes from a QR
-   decomposition of the local hessian estimator.
+2. **权重矩阵构造**. 大约是
+   :math:`O[D N k^3] + O[N d^6]`。其中第一项与标准LLE相似。第二项来自于局部黑塞估计量的一个QR分解。
 
-3. **Partial Eigenvalue Decomposition**. Same as standard LLE
+3. **部分特征值分解**。与标准LLE的相同。
 
-The overall complexity of standard HLLE is
+综上，HLLE的复杂度为
 :math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[N d^6] + O[d N^2]`.
 
-* :math:`N` : number of training data points
-* :math:`D` : input dimension
-* :math:`k` : number of nearest neighbors
-* :math:`d` : output dimension
+* :math:`N` : 训练集数据点的个数
+* :math:`D` : 输入维度
+* :math:`k` : 最近邻点的个数
+* :math:`d` : 输出的维度
 
-.. topic:: References:
+.. topic:: 参考文献个:
 
    * `"Hessian Eigenmaps: Locally linear embedding techniques for
      high-dimensional data" <http://www.pnas.org/content/100/10/5591>`_
