@@ -231,44 +231,32 @@ HLLE算法分为三部分:
 
 .. _spectral_embedding:
 
-Spectral Embedding
+谱嵌入
 =============================
 
-Spectral Embedding is an approach to calculating a non-linear embedding.
-Scikit-learn implements Laplacian Eigenmaps, which finds a low dimensional
-representation of the data using a spectral decomposition of the graph
-Laplacian. The graph generated can be considered as a discrete approximation of
-the low dimensional manifold in the high dimensional space. Minimization of a
-cost function based on the graph ensures that points close to each other on
-the manifold are mapped close to each other in the low dimensional space,
-preserving local distances. Spectral embedding can be  performed with the
-function :func:`spectral_embedding` or its object-oriented counterpart
-:class:`SpectralEmbedding`.
+谱嵌入是计算非线性嵌入的一种方法。scikit-learn执行拉普拉斯特征映射，该映射是用图拉普拉斯的谱分解的方法把数据进行低维表达。这个生成的曲线图可认为是低维流形在高维空间里的离散近似值。基于图的代价函数的最小化确保流形上彼此临近的点被映射后在低维空间也彼此临近，低维空间保持了局部距离。谱嵌入可执行为函数 :func:`spectral_embedding` 或它的面向对象的对应形式 :class:`SpectralEmbedding`.
 
-Complexity
+复杂度
 ----------------
 
-The Spectral Embedding (Laplacian Eigenmaps) algorithm comprises three stages:
+谱嵌入（拉普拉斯特征映射）算法含三部分：
 
-1. **Weighted Graph Construction**. Transform the raw input data into
-   graph representation using affinity (adjacency) matrix representation.
+1. **加权图结构**。把原输入数据转换为用相似（邻接）矩阵表达的曲线图表达形式。
 
-2. **Graph Laplacian Construction**. unnormalized Graph Laplacian
-   is constructed as :math:`L = D - A` for and normalized one as
-   :math:`L = D^{-\frac{1}{2}} (D - A) D^{-\frac{1}{2}}`.
+2. **图拉普拉斯结构**。非规格化的图拉普拉斯是按 :math:`L = D - A` 构造，并按
+   :math:`L = D^{-\frac{1}{2}} (D - A) D^{-\frac{1}{2}}`规格化的。
 
-3. **Partial Eigenvalue Decomposition**. Eigenvalue decomposition is
-   done on graph Laplacian
+3. **部分特征值分解**。在图拉普拉斯上进行特征值分解。
 
-The overall complexity of spectral embedding is
-:math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[d N^2]`.
+综上，谱嵌入的复杂度是
+:math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[d N^2]`。
 
-* :math:`N` : number of training data points
-* :math:`D` : input dimension
-* :math:`k` : number of nearest neighbors
-* :math:`d` : output dimension
+* :math:`N` : 训练集数据点的个数
+* :math:`D` : 输入维度
+* :math:`k` : 最近邻点的个数
+* :math:`d` : 输出的维度
 
-.. topic:: References:
+.. topic:: 参考文献:
 
    * `"Laplacian Eigenmaps for Dimensionality Reduction
      and Data Representation"
