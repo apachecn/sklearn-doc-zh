@@ -12,6 +12,7 @@
 （注：diagonal指每个分量分布有各自不同对角协方差矩阵，spherical指每个分量分布有各自不同的简单协方差矩阵，
 tied指所有分量分布有相同的标准协方差矩阵，full指每个分量分布有各自不同的标准协方差矩阵）
 ，它对数据进行抽样，并且根据数据估计模型。同时包也提供了相关支持，来帮助用户决定合适的分量分布个数。
+*（译注：每一个高斯分布称为一个分量，即component）*
 
  .. figure:: ../auto_examples/mixture/images/sphx_glr_plot_gmm_pdf_001.png
    :target: ../auto_examples/mixture/plot_gmm_pdf.html
@@ -31,19 +32,12 @@ tied指所有分量分布有相同的标准协方差矩阵，full指每个分量
 
   :class:`GaussianMixture` 对象实现了用来拟合高斯混合模型的
   :ref:`期望最大化 <expectation_maximization>` (EM)
-算法。它还可以为多变量模型画置信椭圆，以及计算BIC（Bayesian Information Criterion，贝叶斯信息准则）
+算法。它还可以为多变量模型绘制置信区间，同时计算BIC（Bayesian Information Criterion，贝叶斯信息准则）
 来评估数据中聚类的数量。
-  :meth:`GaussianMixture.fit` 方法提供了从训练集应用高斯混合模型进行机器学习的方法。 
-给定测试集，使用 :meth:`GaussianMixture.predict` 方法，可以预测每个样本最有可能对应的高斯分布分量。
+  :meth:`GaussianMixture.fit` 提供了从训练数据中学习高斯混合模型的方法。 
+给定测试数据，通过使用 :meth:`GaussianMixture.predict` 方法，可以为每个样本分配最有可能对应的高斯分布。
 
-..
-    Alternatively, the probability of each
-    sample belonging to the various Gaussians may be retrieved using the
-    :meth:`GaussianMixture.predict_proba` method.
-
-:class:`GaussianMixture` 自带了选项来限制不同的估计协方差类型：spherical（每个分量分布有各自不同的简单协方差矩阵），
-diagonal（每个分量分布有各自不同对角协方差矩阵），tied（所有分量分布有相同的标准协方差矩阵），或
-full（每个分量分布有各自不同的标准协方差矩阵）。
+:class:`GaussianMixture` 方法中自带了不同的选项来约束不同估类的协方差：spherical，diagonal，tied或full协方差。
 
 .. figure:: ../auto_examples/mixture/images/sphx_glr_plot_gmm_covariances_001.png
    :target: ../auto_examples/mixture/plot_gmm_covariances.html
@@ -52,7 +46,7 @@ full（每个分量分布有各自不同的标准协方差矩阵）。
 
 .. topic:: 示例:
 
-    * 一个在虹膜数据集上用高斯混合模型聚类，请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm_covariances.py` 
+    * 一个利用高斯混合模型在鸢尾花卉数据集（IRIS数据集）上做聚类的协方差实例，请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm_covariances.py` 
 
     * 一个绘制密度估计的例子，请查阅 :ref:`sphx_glr_auto_examples_mixture_plot_gmm_pdf.py`
 
@@ -70,17 +64,15 @@ full（每个分量分布有各自不同的标准协方差矩阵）。
 缺点
 ....
 
-:奇异性: 当每个混合模型没有足够的点时，估算协方差变得困难起来，同时算法会发散并且找具有无穷大似然函数值的解，
+:奇异性: 当每个混合模型没有足够多的点时，估算协方差变得困难起来，同时算法会发散并且找具有无穷大似然函数值的解，
    除非人为地对协方差进行正则化。
    
-:分量分布的数量: 这个算法将会总是用所有它能用的分量（component，每一个高斯分布称为一个分量），
-   所以在没有外部线索的情况下需要留出数据（held-out data，将数据集分为两个互斥的集合，分别是训练集和测试集），
-   或者信息理论标准来决定用多少分量。
+:分量分布的数量: 这个算法将会总是用所有它能用的分量，所以在没有外部线索的情况下需要留存数据或者用信息理论标准来决定用多少分量。
 
 选择经典高斯混合模型中的分量数
 ------------------------------------------------------
 
-BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高效地选择高斯混合的分量数。
+一种高效的方法是利用BIC（贝叶斯信息准则）来选择高斯混合的分量数。
 理论上，它仅当在近似状态下可以恢复正确的分量数（即如果有大量数据可用，并且假设这些数据实际上是一个混合高斯模型独立同分布
 生成的）。注意：使用 :ref:`变分贝叶斯高斯混合 <bgmm>` 可以避免高斯混合模型中分量数目的选择。
 
@@ -115,7 +107,7 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 
 .. _variational_inference:
 
-估计算法: variational inference
+估计算法: 变分推断（variational inference）
 ---------------------------------------------
 
 变分推理是期望最大化（EM）的扩展，它最大化模型证据（包括先验）的下界，而不是数据似然函数。
@@ -124,7 +116,7 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 这避免了期望最大化解决方案中常出现的奇异性，但是也对模型带来了微小的偏差。
 变分方法计算过程通常明显较慢，但通常不会慢到无法使用。
 
-由于它的贝叶斯性质，变分算法比预期最大化（EM）需要更多的超参数（即先验分布中的参数），其中最重要的就是
+由于它的贝叶斯特性，变分算法比预期最大化（EM）需要更多的超参数（即先验分布中的参数），其中最重要的就是
 浓度参数 ``weight_concentration_prior`` 。指定一个低浓度先验（concentration prior)，
 将会使模型将大部分的权重放在少数分量上，其余分量的权重则趋近0。而高浓度先验（concentration prior)将使
 混合模型中的大部分分量都有一定的权重。
@@ -234,13 +226,13 @@ BIC（Bayesian Information Criterion，贝叶斯信息准则）可以用来高�
 一个重要的问题是Dirichlet过程是如何实现用无限的，无限制的簇数，并且结果仍然是一致的。
 本文档不做出完整的解释，但是你可以看这里`stick breaking process
 <https://en.wikipedia.org/wiki/Dirichlet_process#The_stick-breaking_process>`_
-来帮助你理解它。stick breaking（折棍）过程是Dirichlet过程的衍生。我们每次从一个单位长度的
+来帮助你理解它。折棍（stick breaking）过程是狄利克雷过程的衍生。我们每次从一个单位长度的
 stick开始，且每一步都折断剩下的一部分。每次，我们把每个stick的长度关联到落入一组混合的点的比例。
 最后，为了表示无限混合，我们关联最后每个stick的剩下的部分到没有落入其他组的点的比例。
 每段的长度是随机变量，概率与浓度参数（concentration parameter）成比例。较小的浓度值
 将单位长度分成较大的stick段（即定义更集中的分布）。较高的浓度值将生成更小的stick段
 （即增加非零权重的分量数）。
 
-Dirichlet过程的变分推理技术，在对该无限混合模型进行有限近似情形下，仍然可以运用。
+狄利克雷过程的变分推理技术，在对该无限混合模型进行有限近似情形下，仍然可以运用。
 用户不必事先指定想要的分量数，只需要指定浓度参数和混合分量数的上界
 （假定上界高于“真实”的分量数，仅仅影响算法复杂度，而不是实际上使用的分量数）。
