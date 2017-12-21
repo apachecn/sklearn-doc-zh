@@ -363,43 +363,25 @@ MDS算法有2类：度量和非度量。在scikit-learn中，:class:`MDS`类中�
 
 .. _t_sne:
 
-t-distributed Stochastic Neighbor Embedding (t-SNE)
+t分布随机邻域嵌入（t-SNE）
 =====================================================================
 
-t-SNE (:class:`TSNE`) converts affinities of data points to probabilities.
-The affinities in the original space are represented by Gaussian joint
-probabilities and the affinities in the embedded space are represented by
-Student's t-distributions. This allows t-SNE to be particularly sensitive
-to local structure and has a few other advantages over existing techniques:
+t-SNE（:class:`TSNE`）将数据点的相似性转换为概率。原始空间中的相似性表示为高斯联合概率，嵌入空间中的相似性表示为“学生”的t分布。这允许t-SNE对局部结构特别敏感，并且有超过现有技术的一些其它优点:
 
-* Revealing the structure at many scales on a single map
-* Revealing data that lie in multiple, different, manifolds or clusters
-* Reducing the tendency to crowd points together at the center
+* 在一个单一映射上以多种比例显示结构
+* 显示位于多个、不同的流形或聚类中的数据
+* 减轻在中心聚集的趋势
 
-While Isomap, LLE and variants are best suited to unfold a single continuous
-low dimensional manifold, t-SNE will focus on the local structure of the data
-and will tend to extract clustered local groups of samples as highlighted on
-the S-curve example. This ability to group samples based on the local structure
-might be beneficial to visually disentangle a dataset that comprises several
-manifolds at once as is the case in the digits dataset.
+Isomap、LLE和其它变体最适合展开单个连续低维流形，而t-SNE将侧重于数据的局部结构，并倾向于提取聚类的局部样本组，就像S曲线示例中突出显示的那样。这种基于局部结构对样本进行分组的能力可能有助于在视觉上同时解开包括多个流形的数据集，如数字数据集中的情况。
 
-The Kullback-Leibler (KL) divergence of the joint
-probabilities in the original space and the embedded space will be minimized
-by gradient descent. Note that the KL divergence is not convex, i.e.
-multiple restarts with different initializations will end up in local minima
-of the KL divergence. Hence, it is sometimes useful to try different seeds
-and select the embedding with the lowest KL divergence.
+原始空间和嵌入空间中的联合概率的Kullback-Leibler（KL）散度将通过梯度下降而最小化。注意，KL发散不是凸的，即具有不同初始化的多次重新开始将以KL发散的局部最小值结束。因此，尝试不同的开始值并选择具有最低KL散度的嵌入有时是有用的。
 
-The disadvantages to using t-SNE are roughly:
+使用t - SNE的缺点大致如下:
 
-* t-SNE is computationally expensive, and can take several hours on million-sample
-  datasets where PCA will finish in seconds or minutes
-* The Barnes-Hut t-SNE method is limited to two or three dimensional embeddings.
-* The algorithm is stochastic and multiple restarts with different seeds can
-  yield different embeddings. However, it is perfectly legitimate to pick the
-  embedding with the least error.
-* Global structure is not explicitly preserved. This is problem is mitigated by
-  initializing points with PCA (using `init='pca'`).
+* t-SNE的计算成本很高，在百万样本数据集上可能需要几个小时，而PCA将在几秒或几分钟内完成同样工作。
+* Barnes-Hut t-SNE方法仅限于二维或三维嵌入。
+* 该算法是随机的，不同种子的多次重新开始可以产生不同的嵌入。然而，以最小的误差选择嵌入是完全合理的。
+* 未明确保留全局结构。用PCA初始化点(使用`init='pca'`)，可以减轻此问题。
 
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_013.png
@@ -407,33 +389,19 @@ The disadvantages to using t-SNE are roughly:
    :align: center
    :scale: 50
 
-Optimizing t-SNE
+优化t-SNE
 ------------------------
-The main purpose of t-SNE is visualization of high-dimensional data. Hence,
-it works best when the data will be embedded on two or three dimensions.
+t-SNE的主要目的是实现高维数据的可视化。因此，当数据将嵌入到二维或三维时，它效果最好。
 
-Optimizing the KL divergence can be a little bit tricky sometimes. There are
-five parameters that control the optimization of t-SNE and therefore possibly
-the quality of the resulting embedding:
+优化KL发散有时可能有点棘手。有五个参数控制t-SNE的优化，因此可能也控制最终嵌入的质量:
 
-* perplexity
-* early exaggeration factor
-* learning rate
-* maximum number of iterations
-* angle (not used in the exact method)
+* 混乱度
+* 早期增长因子
+* 学习率
+* 最大迭代次数
+* 角度（不在精确方法中使用）
 
-The perplexity is defined as :math:`k=2^(S)` where :math:`S` is the Shannon
-entropy of the conditional probability distribution. The perplexity of a
-:math:`k`-sided die is :math:`k`, so that :math:`k` is effectively the number of
-nearest neighbors t-SNE considers when generating the conditional probabilities.
-Larger perplexities lead to more nearest neighbors and less sensitive to small
-structure. Conversely a lower perplexity considers a smaller number of
-neighbors, and thus ignores more global information in favour of the
-local neighborhood. As dataset sizes get larger more points will be
-required to get a reasonable sample of the local neighborhood, and hence
-larger perplexities may be required. Similarly noisier datasets will require
-larger perplexity values to encompass enough local neighbors to see beyond
-the background noise.
+混乱度（perplexity）定义为:math:`k=2^(S)`，其中:math:`S`是条件概率分布的香农熵。k面色子的混乱度是k，因此k实际上是生成条件概率时t -SNE考虑的最近邻域的个数。混乱度越大导致有越多的近邻域，则对小结构越不敏感。相反地，越低的混乱度考虑越少的邻域，并因此忽略越多的全局信息而越关注局部邻域。当数据集的大小变大时，需要更多的点来获得局部邻域的合理样本，因此可能需要更大的混乱度。类似地，噪声越大的数据集需要越大的混乱度来包含足够的局部邻域，以超出背景噪声。
 
 The maximum number of iterations is usually high enough and does not need
 any tuning. The optimization consists of two phases: the early exaggeration
