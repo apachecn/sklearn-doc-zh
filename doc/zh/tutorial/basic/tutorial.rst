@@ -162,7 +162,7 @@
   >>> y[0]
   0
 
-在scikit的具体情况下，使用 joblib 替换 pickle（ ``joblib.dump`` & ``joblib.load`` ）可能会更有趣，这对大数据更有效，但只能序列化 (pickle) 到磁盘而不是字符串::
+在scikit的具体情况下，使用 joblib 替换 pickle（ ``joblib.dump`` & ``joblib.load`` ）可能会更有趣，这对大数据更有效，但只能序列化 (pickle) 到磁盘而不是字符串变量::
 
   >>> from sklearn.externals import joblib
   >>> joblib.dump(clf, 'filename.pkl') # doctest: +SKIP
@@ -203,7 +203,7 @@ scikit-learn 估计器遵循某些规则，使其行为更可预测。
   >>> X_new.dtype
   dtype('float64')
 
-在这个例子中，``X`` 原本是 ``float32`` ，被 ``fit_transform(X)`` 被转换成 ``float64`` 。
+在这个例子中，``X`` 原本是 ``float32`` ，被 ``fit_transform(X)`` 转换成 ``float64`` 。
 
 回归目标被转换为 ``float64`` ，但分类目标维持不变::
 
@@ -281,7 +281,7 @@ scikit-learn 估计器遵循某些规则，使其行为更可预测。
     >>> classif.fit(X, y).predict(X)
     array([0, 0, 1, 1, 2])
 
-在上述情况下，分类器被使用一个含有多个标签的一维数组训练，因此 ``predict()`` 方法提供相应的多类别预测。分类器也可以通过二进制表示的的标签的二维数组来训练::
+在上述情况下，分类器使用含有多个标签的一维数组训练模型，因此 ``predict()`` 方法可提供相应的多标签预测。分类器也可以通过标签二值化后的二维数组来训练::
 
     >>> y = LabelBinarizer().fit_transform(y)
     >>> classif.fit(X, y).predict(X)
@@ -291,9 +291,9 @@ scikit-learn 估计器遵循某些规则，使其行为更可预测。
            [0, 0, 0],
            [0, 0, 0]])
 
-这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>` 使目标向量 y 被转化成二维数组的标签表示。在这种情况下， ``predict()`` 返回一个表示相应多重标签预测的 二维 矩阵。
+这里，使用 :class:`LabelBinarizer <sklearn.preprocessing.LabelBinarizer>` 将目标向量 y 转化成二值化后的二维数组。在这种情况下， ``predict()`` 返回一个多标签预测相应的 二维 数组。
 
-请注意，第四个和第五个实例返回全零向量，表明它们不能匹配用来训练中的目标标签中的任意一个。使用多分类输出，类似地可以为一个实例分配多个标签::
+请注意，第四个和第五个实例返回全零向量，表明它们不能匹配用来训练中的目标标签中的任意一个。使用多标签输出，类似地可以为一个实例分配多个标签::
 
   >> from sklearn.preprocessing import MultiLabelBinarizer
   >> y = [[0, 1], [0, 2], [1, 3], [0, 2, 3], [2, 4]]
@@ -305,5 +305,5 @@ scikit-learn 估计器遵循某些规则，使其行为更可预测。
          [1, 0, 1, 1, 0],
          [0, 0, 1, 0, 1]])
 
-在这种情况下，用来训练分类器的多个向量被赋予多个标记， :class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>` 被用来二进制化多个标签的二维数组，使之用来训练。
-``predict()`` 函数返回带有多个标记的二维数组作为每个实例的结果。
+在这种情况下，用来训练分类器的多个向量被赋予多个标记， :class:`MultiLabelBinarizer <sklearn.preprocessing.MultiLabelBinarizer>` 用来二值化多个标签产生二维数组并用来训练。
+``predict()`` 函数返回带有多个标签的二维数组作为每个实例的结果。
