@@ -154,7 +154,7 @@ Isomap 的整体复杂度是
 改进型局部线性嵌入（MLLE）
 =========================================
 
-关于局部线性嵌入（LLE）的一个众所周知的问题是正则化问题。当邻点（neighbors）的数量多于输入的维度数量时，定义每个局部邻域的矩阵是不满秩的。为解决这个问题，标准的局部线性嵌入算法使用一个任意正则化参数 :math:`r`， 它的取值受局部权重矩阵的迹的影响。虽然可以认为 :math:`r \to 0`，即解收敛于嵌入情况，但是不保证最优解情况下 :math:`r > 0`。此问题说明，在嵌入时此问题会扭曲流形的内部几何形状，使其失真。
+关于局部线性嵌入（LLE）的一个众所周知的问题是正则化问题。当邻域（neighbors）的数量多于输入的维度数量时，定义每个局部邻域的矩阵是不满秩的。为解决这个问题，标准的局部线性嵌入算法使用一个任意正则化参数 :math:`r`， 它的取值受局部权重矩阵的迹的影响。虽然可以认为 :math:`r \to 0`，即解收敛于嵌入情况，但是不保证最优解情况下 :math:`r > 0`。此问题说明，在嵌入时此问题会扭曲流形的内部几何形状，使其失真。
 
 解决正则化问题的一种方法是对邻域使用多个权重向量。这就是改进型局部线性嵌入（MLLE）算法的精髓。MLLE可被执行于函数:func:`locally_linear_embedding` ，或者面向对象的副本:class:`LocallyLinearEmbedding`，附带关键词``method = 'modified'``。它需要满足 ``n_neighbors > n_components``.
 
@@ -180,7 +180,7 @@ MLLE算法分为三部分：
 
 * :math:`N` : 训练集数据点的个数
 * :math:`D` : 输入维度
-* :math:`k` : 最近邻点的个数
+* :math:`k` : 最近邻域的个数
 * :math:`d` : 输出的维度
 
 .. topic:: 参考文献:
@@ -220,7 +220,7 @@ HLLE算法分为三部分:
 
 * :math:`N` : 训练集数据点的个数
 * :math:`D` : 输入维度
-* :math:`k` : 最近邻点的个数
+* :math:`k` : 最近邻域的个数
 * :math:`d` : 输出的维度
 
 .. topic:: 参考文献个:
@@ -253,7 +253,7 @@ HLLE算法分为三部分:
 
 * :math:`N` : 训练集数据点的个数
 * :math:`D` : 输入维度
-* :math:`k` : 最近邻点的个数
+* :math:`k` : 最近邻域的个数
 * :math:`d` : 输出的维度
 
 .. topic:: 参考文献:
@@ -294,7 +294,7 @@ LTSA算法含三部分:
 
 * :math:`N` : 训练集数据点的个数
 * :math:`D` : 输入维度
-* :math:`k` : 最近邻点的个数
+* :math:`k` : 最近邻域的个数
 * :math:`d` : 输出的维度
 
 .. topic:: 参考文献:
@@ -395,72 +395,35 @@ t-SNE的主要目的是实现高维数据的可视化。因此，当数据将嵌
 
 优化KL发散有时可能有点棘手。有五个参数控制t-SNE的优化，因此可能也控制最终嵌入的质量:
 
-* 混乱度
+* 复杂度
 * 早期增长因子
 * 学习率
 * 最大迭代次数
 * 角度（不在精确方法中使用）
 
-混乱度（perplexity）定义为:math:`k=2^(S)`，其中:math:`S`是条件概率分布的香农熵。k面色子的混乱度是k，因此k实际上是生成条件概率时t -SNE考虑的最近邻域的个数。混乱度越大导致有越多的近邻域，则对小结构越不敏感。相反地，越低的混乱度考虑越少的邻域，并因此忽略越多的全局信息而越关注局部邻域。当数据集的大小变大时，需要更多的点来获得局部邻域的合理样本，因此可能需要更大的混乱度。类似地，噪声越大的数据集需要越大的混乱度来包含足够的局部邻域，以超出背景噪声。
+复杂度（perplexity）定义为:math:`k=2^(S)`，其中:math:`S`是条件概率分布的香农熵。k面色子的复杂度是k，因此k实际上是生成条件概率时t -SNE考虑的最近邻域的个数。复杂度越大导致有越多的近邻域，则对小结构越不敏感。相反地，越低的复杂度考虑越少的邻域，并因此忽略越多的全局信息而越关注局部邻域。当数据集的大小变大时，需要更多的点来获得局部邻域的合理样本，因此可能需要更大的复杂度。类似地，噪声越大的数据集需要越大的复杂度来包含足够的局部邻域，以超出背景噪声。
 
-The maximum number of iterations is usually high enough and does not need
-any tuning. The optimization consists of two phases: the early exaggeration
-phase and the final optimization. During early exaggeration the joint
-probabilities in the original space will be artificially increased by
-multiplication with a given factor. Larger factors result in larger gaps
-between natural clusters in the data. If the factor is too high, the KL
-divergence could increase during this phase. Usually it does not have to be
-tuned. A critical parameter is the learning rate. If it is too low gradient
-descent will get stuck in a bad local minimum. If it is too high the KL
-divergence will increase during optimization. More tips can be found in
-Laurens van der Maaten's FAQ (see references). The last parameter, angle,
-is a tradeoff between performance and accuracy. Larger angles imply that we
-can approximate larger regions by a single point,leading to better speed
-but less accurate results.
+最大迭代次数通常足够高，不需要任何调整。优化分为两个阶段:早期增长阶段和最终优化阶段。在早期增长中，原始空间中的联合概率将通过与给定因子相乘而被人为地增加。越大的因子导致数据中的自然聚类之间的差距越大。如果因子过高，KL发散可能在此阶段增加。通常不需要对其进行调谐。学习率是一个关键参数。如果梯度太低，下降会陷入局部极小值。如果过高，KL发散将在优化阶段增加。可以在Laurens van derMaaten的常见问题解答中找到更多提示(见参考资料)。最后一个参数角度是性能和精度之间的折衷。角度越大意味着我们可以通过单个点来近似的区域越大，从而导致越快的速度，但结果越不准确。
 
 `"How to Use t-SNE Effectively" <http://distill.pub/2016/misread-tsne/>`_
-provides a good discussion of the effects of the various parameters, as well
-as interactive plots to explore the effects of different parameters.
+提供了一个关于各种参数效果的很好的讨论，以及用来探索不同参数效果的交互式绘图。
 
 Barnes-Hut t-SNE
 -------------------------
 
-The Barnes-Hut t-SNE that has been implemented here is usually much slower than
-other manifold learning algorithms. The optimization is quite difficult
-and the computation of the gradient is :math:`O[d N log(N)]`, where :math:`d`
-is the number of output dimensions and :math:`N` is the number of samples. The
-Barnes-Hut method improves on the exact method where t-SNE complexity is
-:math:`O[d N^2]`, but has several other notable differences:
+在此实现的Barnes-Hut t-SNE通常比其他流形学习算法慢得多。优化是很困难的，梯度的计算是:math:`O[d N log(N)]`，其中:math:`d`是输出维数，:math:`N`是样本个数。Barnes-Hut方法在t-SNE复杂度为:math:`O[d N^2]`的精确方法上有所改进，但有其他几个显著区别:
 
-* The Barnes-Hut implementation only works when the target dimensionality is 3
-  or less. The 2D case is typical when building visualizations.
-* Barnes-Hut only works with dense input data. Sparse data matrices can only be
-  embedded with the exact method or can be approximated by a dense low rank
-  projection for instance using :class:`sklearn.decomposition.TruncatedSVD`
-* Barnes-Hut is an approximation of the exact method. The approximation is
-  parameterized with the angle parameter, therefore the angle parameter is
-  unused when method="exact"
-* Barnes-Hut is significantly more scalable. Barnes-Hut can be used to embed
-  hundred of thousands of data points while the exact method can handle
-  thousands of samples before becoming computationally intractable
+* Barnes-Hut实现仅在目标维度为3或更小时才有效。构建可视化时，2D案例是典型的。
+* Barnes-Hut仅适用于密集的输入数据。稀疏数据矩阵只能用精确方法嵌入，或者可以通过密集的低阶投影来近似，例如使用 :class:`sklearn.decomposition.TruncatedSVD`
+* Barnes-Hut是精确方法的近似。近似使用angle作为参数，因此当参数method="exact"时，angle参数无效。
+* Barnes-Hut的拓展性很高。Barnes-Hut可用于嵌入数十万个数据点，而精确方法只能处理数千个样本，再多就很困难了。
 
-For visualization purpose (which is the main use case of t-SNE), using the
-Barnes-Hut method is strongly recommended. The exact t-SNE method is useful
-for checking the theoretically properties of the embedding possibly in higher
-dimensional space but limit to small datasets due to computational constraints.
+出于可视化目的(t-SNE的主要使用情况)，强烈建议使用Barnes-Hut方法。精确的t-SNE方法可用于检验高维空间中嵌入的理论性质，但由于计算约束而仅限于小数据集。
 
-Also note that the digits labels roughly match the natural grouping found by
-t-SNE while the linear 2D projection of the PCA model yields a representation
-where label regions largely overlap. This is a strong clue that this data can
-be well separated by non linear methods that focus on the local structure (e.g.
-an SVM with a Gaussian RBF kernel). However, failing to visualize well
-separated homogeneously labeled groups with t-SNE in 2D does not necessarily
-implie that the data cannot be correctly classified by a supervised model. It
-might be the case that 2 dimensions are not enough low to accurately represents
-the internal structure of the data.
+还要注意，数字label与t-SNE发现的自然聚类大致匹配，而PCA模型的线性2D投影产生标签区域在很大程度上重叠的表示。这是一个强有力的线索，表明该数据可以通过关注局部结构的非线性方法(例如，具有高斯RBF核的SVM)很好地分离。然而，如果不能在二维中用t-SNE来可视化分离良好的均匀标记组，并不一定意味着数据不能被监督模型正确地分类。可能是因为2维不够低，无法准确表示数据的内部结构。
 
 
-.. topic:: References:
+.. topic:: 参考文献:
 
   * `"Visualizing High-Dimensional Data Using t-SNE"
     <http://jmlr.org/papers/v9/vandermaaten08a.html>`_
@@ -475,36 +438,17 @@ the internal structure of the data.
     <https://lvdmaaten.github.io/publications/papers/JMLR_2014.pdf>`_
     L.J.P. van der Maaten.  Journal of Machine Learning Research 15(Oct):3221-3245, 2014.
 
-Tips on practical use
+实用技巧
 ===============================
 
-* Make sure the same scale is used over all features. Because manifold
-  learning methods are based on a nearest-neighbor search, the algorithm
-  may perform poorly otherwise.  See :ref:`StandardScaler <preprocessing_scaler>`
-  for convenient ways of scaling heterogeneous data.
+* 确保对所有特征使用相同的缩放。因为流形学习方法是基于最近邻搜索的，否则算法的性能可能很差。有关缩放异构数据的方便方法，请参阅 :ref:`StandardScaler <preprocessing_scaler>`。
 
-* The reconstruction error computed by each routine can be used to choose
-  the optimal output dimension.  For a :math:`d`-dimensional manifold embedded
-  in a :math:`D`-dimensional parameter space, the reconstruction error will
-  decrease as ``n_components`` is increased until ``n_components == d``.
+* 由每个例程计算的重构误差可用于选择最佳输出维度。对于嵌入在:math:`d`维参数空间中的:math:`d`维流形，重构误差将随着``n_components``的增加而减小，直到``n_components == d``。
 
-* Note that noisy data can "short-circuit" the manifold, in essence acting
-  as a bridge between parts of the manifold that would otherwise be
-  well-separated.  Manifold learning on noisy and/or incomplete data is
-  an active area of research.
+* 注意，噪声数据可以对流形造成“短路”，其实质上充当了一个桥梁，用于连接流形的不同部分，否则（没有这样的“桥梁”）这些流形将被很好地划分开。噪声和/或不完全数据的流形学习是一个活跃的研究领域。
 
-* Certain input configurations can lead to singular weight matrices, for
-  example when more than two points in the dataset are identical, or when
-  the data is split into disjointed groups.  In this case, ``solver='arpack'``
-  will fail to find the null space.  The easiest way to address this is to
-  use ``solver='dense'`` which will work on a singular matrix, though it may
-  be very slow depending on the number of input points.  Alternatively, one
-  can attempt to understand the source of the singularity: if it is due to
-  disjoint sets, increasing ``n_neighbors`` may help.  If it is due to
-  identical points in the dataset, removing these points may help.
+* 某些输入配置可能导致奇异加权矩阵，例如，当数据集中的两个以上点完全相同时，或者当数据被分割成不连续的组时。在这种情况下，``solver='arpack'``将无法找到空空间。解决这一问题的最简单方法是使用``solver='dense'``，它将在一个奇异矩阵上进行，尽管它可能因为输入点的数量而非常缓慢。或者，人们可以尝试理解奇异的来源:如果它是由于不相交的集合，增加``n_neighbors``可能有所帮助；如果是由于数据集中的相同点，则删除这些点可能有所帮助。
 
 .. seealso::
 
-   :ref:`random_trees_embedding` can also be useful to derive non-linear
-   representations of feature space, also it does not perform
-   dimensionality reduction.
+   :ref:`random_trees_embedding` 也可以用于得到特征空间的非线性表示，另外它不用降维。
