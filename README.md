@@ -97,6 +97,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
 * [@夜神月](@qq760514101)（夜神月）
 * [@liyangbit](https://github.com/liyangbit)（Lemon）
+* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
 
 **校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
 * [@FontTian](https://github.com/FontTian)（FontTian）
