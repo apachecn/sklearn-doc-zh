@@ -6,23 +6,23 @@
 
 .. currentmodule:: sklearn
 
-许多应用需要能够判断新观测是否属于与现有观测相同的分布（它是一个非线性的），或者应该被认为是不同的（这是一个异常值）。 通常，这种能力用于清理实际的数据集。 必须做出两个重要的区别：
+许多应用需要能够判断新观测是否属于现有观测的相同分布（它是一个非线性的），或者应该被认为是不同的（这是一个离群点）。 通常，这种能力用于清理实际的数据集。 必须做出两个重要的区别：
 
 :新奇检测:
-  训练数据不被异常值污染，我们有兴趣检测新观察中的异常情况。
+  训练数据不被离群点污染，我们有兴趣检测新观察中的异常情况。
 
 :离群点检测:
-  训练数据包含异常值，我们需要适应训练数据的中心模式，忽略偏差观测值。
+  训练数据包含离群点，我们需要拟合训练数据的中心模式，忽略偏移的观测值。
 
 scikit-learn项目提供了一套可用于新奇和离群点检测的机器学习工具。 该策略是通过数据从无监督的方式学习的对象来实现的::
 
     estimator.fit(X_train)
 
-然后可以使用 `predict` 方法将新观察值作为内在值或异常值排序::
+然后可以使用 `predict` 方法将新观察值作为内在值或离群点排序::
 
     estimator.predict(X_test)
 
-正常被标记为1，而异常值被标记为-1。
+正常被标记为1，而离群点被标记为-1。
 
 新奇检测
 =================
@@ -53,18 +53,18 @@ One-Class SVM 已经由Schölkopf等人采用。 为此目的并在 :ref:`svm` �
 离群点检测
 =================
 
-离群点检测类似于新奇检测，其目的是将正常观察的核心与一些被称为“离群点”的污染物进行分离。 然而，在异常值检测的情况下，我们没有一个干净的数据集代表可用于训练任何工具的常规观察值的群体。
+离群点检测类似于新奇检测，其目的是将正常观察的核心与一些被称为“离群点”的污染物进行分离。 然而，在离群点检测的情况下，我们没有一个干净的数据集代表可用于训练任何工具的常规观察值的群体。
 
 
 椭圆模型适配
 ------------------------------
 
-执行异常值检测的一种常见方式是假设常规数据来自已知分布（例如，数据是高斯分布的）。 从这个假设来看，我们通常试图定义数据的“形状”，并且可以将离散观察值定义为足够远离拟合形状的观测值。
+执行离群点检测的一种常见方式是假设常规数据来自已知分布（例如，数据是高斯分布的）。 从这个假设来看，我们通常试图定义数据的“形状”，并且可以将离散观察值定义为足够远离拟合形状的观测值。
 
 scikit-learn提供了一个对象
 :class:`covariance.EllipticEnvelope` ，它适合于对数据的鲁棒协方差估计，从而将椭圆适配到中央数据点，忽略中央模式之外的点。
 
-例如，假设异构数据是高斯分布的，它将以鲁棒的方式（即不受异常值的影响）来估计非线性位置和协方差。 从该估计得到的马氏距离距离用于得出偏离度量。 这个策略如下图所示。
+例如，假设异构数据是高斯分布的，它将以鲁棒的方式（即不受离群点的影响）来估计非线性位置和协方差。 从该估计得到的马氏距离距离用于得出偏离度量。 这个策略如下图所示。
 
 .. figure:: ../auto_examples/covariance/images/sphx_glr_plot_mahalanobis_distances_001.png
    :target: ../auto_examples/covariance/plot_mahalanobis_distances.html
@@ -87,7 +87,7 @@ scikit-learn提供了一个对象
 Isolation Forest
 ----------------------------
 
-在高维数据集中执行异常值检测的一种有效方法是使用随机森林。
+在高维数据集中执行离群点检测的一种有效方法是使用随机森林。
  :class:`ensemble.IsolationForest` 通过随机选择特征然后随机选择所选特征的最大值和最小值之间的分割值来隔离观察值。
 
 由于递归分区可以由树结构表示，因此隔离样本所需的分裂次数等同于从根节点到终止节点的路径长度。
@@ -109,7 +109,7 @@ Isolation Forest
 
    * 参见 :ref:`sphx_glr_auto_examples_covariance_plot_outlier_detection.py` 将 :class:`ensemble.IsolationForest` 与
      :class:`neighbors.LocalOutlierFactor`,
-     :class:`svm.OneClassSVM` (调整为执行类似异常值检测方法）和基于协方差的异常值检测与协方差的
+     :class:`svm.OneClassSVM` (调整为执行类似离群点检测方法）和基于协方差的离群点检测与协方差的
      :class:`covariance.EllipticEnvelope`.
 
 .. topic:: 参考文献:
@@ -120,13 +120,13 @@ Isolation Forest
 
 局部离群因子(LOF)
 --------------------
-对中等高维数据集执行异常值检测的另一种有效方法是使用局部离群因子（LOF）算法。
+对中等高维数据集执行离群点检测的另一种有效方法是使用局部离群因子（LOF）算法。
 
  :class:`neighbors.LocalOutlierFactor` （LOF）算法计算反映观测值异常程度的分数（称为局部离群因子）。 它测量给定数据点相对于其邻居的局部密度偏差。 这个想法是检测具有比其邻居明显更低密度的样品。
 
 实际上，从k个最近的邻居获得局部密度。 观察的LOF得分等于他的k-最近邻居的平均局部密度与其本身密度的比值：正常情况预期具有与其邻居类似的局部密度，而异常数据 预计本地密度要小得多。
 
-考虑的邻居数（k个别名参数n_neighbors）通常选择1）大于集群必须包含的对象的最小数量，以便其他对象可以是相对于该集群的本地异常值，并且2）小于最大值 靠近可能是本地异常值的对象的数量。 在实践中，这样的信息通常不可用，并且n_neighbors = 20似乎总体上很好地工作。 当异常值的比例高（即大于10％时，如下面的例子），n邻居应该更大（在下面的例子中，n_neighbors = 35）。
+考虑的邻居数（k个别名参数n_neighbors）通常选择1）大于集群必须包含的对象的最小数量，以便其他对象可以是相对于该集群的本地离群点，并且2）小于最大值 靠近可能是本地离群点的对象的数量。 在实践中，这样的信息通常不可用，并且n_neighbors = 20似乎总体上很好地工作。 当离群点的比例高（即大于10％时，如下面的例子），n邻居应该更大（在下面的例子中，n_neighbors = 35）。
 
 LOF算法的优点是考虑到数据集的局部和全局属性：即使在异常样本具有不同基础密度的数据集中，它也能够很好地执行。 问题不在于，样本是如何孤立的，而是与周边邻里有多孤立。
 
@@ -153,7 +153,7 @@ LOF算法的优点是考虑到数据集的局部和全局属性：即使在异�
 One-class SVM 与 Elliptic Envelope 与 Isolation Forest 与 LOF
 -------------------------------------------------------------------------
 
-严格来说，One-class SVM 不是异常检测方法，而是一种新颖性检测方法：其训练集不应该被异常值污染，因为它可能适合它们。 也就是说，高维度的异常值检测或对内容数据的分布没有任何假设是非常具有挑战性的， One-class SVM 在这些情况下给出了有用的结果。
+严格来说，One-class SVM 不是异常检测方法，而是一种新颖性检测方法：其训练集不应该被离群点污染，因为它可能适合它们。 也就是说，高维度的离群点检测或对内容数据的分布没有任何假设是非常具有挑战性的， One-class SVM 在这些情况下给出了有用的结果。
 
 下面的例子说明了当数据越来越少的单峰时，
 :class:`covariance.EllipticEnvelope` 如何降低。
@@ -177,7 +177,7 @@ One-class SVM 与 Elliptic Envelope 与 Isolation Forest 与 LOF
 
    *
       - 对于以和well-centered的非线性模式，
-        :class:`svm.OneClassSVM` 不能受益于inlier群体的旋转对称性。 此外，它适合训练集中存在的异常值。 相反，基于拟合协方差的
+        :class:`svm.OneClassSVM` 不能受益于inlier群体的旋转对称性。 此外，它适合训练集中存在的离群点。 相反，基于拟合协方差的
         :class:`covariance.EllipticEnvelope` 学习一个椭圆，这适合于inlier分布。
         :class:`ensemble.IsolationForest`
         和 :class:`neighbors.LocalOutlierFactor` 表现也好。
@@ -188,7 +188,7 @@ One-class SVM 与 Elliptic Envelope 与 Isolation Forest 与 LOF
         :class:`covariance.EllipticEnvelope` 不适合内部值。 但是，我们可以看到
         :class:`ensemble.IsolationForest`,
         :class:`svm.OneClassSVM` 和 :class:`neighbors.LocalOutlierFactor`
-        在检测这两种模式时遇到困难，而且 :class:`svm.OneClassSVM` 往往会过度复杂：因为它没有 内在模型，它解释了一些区域，偶尔有一些异常值聚集在一起，作为内在的。
+        在检测这两种模式时遇到困难，而且 :class:`svm.OneClassSVM` 往往会过度复杂：因为它没有 内在模型，它解释了一些区域，偶尔有一些离群点聚集在一起，作为内在的。
       - |outlier2|
 
    *
@@ -205,4 +205,4 @@ One-class SVM 与 Elliptic Envelope 与 Isolation Forest 与 LOF
    * 参见 :ref:`sphx_glr_auto_examples_covariance_plot_outlier_detection.py` ，
      :class:`svm.OneClassSVM` （调整为执行异常检测方法）, 
      :class:`ensemble.IsolationForest`, :class:`neighbors.LocalOutlierFactor`
-     和基于协方差的异常值检测协方差的 :class:`covariance.EllipticEnvelope`.
+     和基于协方差的离群点检测协方差的 :class:`covariance.EllipticEnvelope`.
