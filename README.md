@@ -99,6 +99,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@liyangbit](https://github.com/liyangbit)（Lemon）
 
 **校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
+* [@FontTian](https://github.com/FontTian)（FontTian）
 * [@pan8664716](https://github.com/pan8664716)（pan8664716）
 * [@xrj](https://github.com/xrj)（xrj）
 * [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）

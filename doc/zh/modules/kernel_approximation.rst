@@ -8,7 +8,7 @@
 
 .. currentmodule:: sklearn.linear_model
 与 `kernel trick <https://en.wikipedia.org/wiki/Kernel_trick>`_ 相比，近似的进行特征映射更适合在线学习，并能够有效
-减少学习大量数据的开销。标准化使用内核的 svm 不能有效的适用到海量数据，但是使用近似内核映射的方法，对于线性 SVM 来说效果可能更好。
+减少学习大量数据的内存开销。使用标准核技巧的 svm 不能有效的适用到海量数据，但是使用近似内核映射的方法，对于线性 SVM 来说效果可能更好。
 而且，使用 :class:`SGDClassifier` 进行近似的内核映射，使得对海量数据进行非线性学习也成为了可能。
 
 由于近似嵌入的方法没有太多经验性的验证，所以建议将结果和使用精确的内核方法的结果进行比较。
@@ -74,13 +74,12 @@
 
 .. _additive_chi_kernel_approx:
 
-
-可添加的 Chi Squared Kernel
+加性卡方核
 -----------------------------------
 
-可添加的 Chi Squared Kernel 是直方图的核心，通常用于计算机视觉。
+Additive Chi Squared Kernel (加性卡方核)是直方图的核心，通常用于计算机视觉。
 
-这里使用的可添加的 Chi Squared Kernel 给出
+这里使用的 Additive Chi Squared Kernel 给出
 
 .. math::
 
@@ -96,7 +95,7 @@
 
 .. _skewed_chi_kernel_approx:
 
-Skewed Chi Squared Kernel
+Skewed Chi Squared Kernel (偏斜卡方核?暂译)
 -------------------------
 
 skewed chi squared kernel 给出下面公式
@@ -106,7 +105,7 @@ skewed chi squared kernel 给出下面公式
         k(x,y) = \prod_i \frac{2\sqrt{x_i+c}\sqrt{y_i+c}}{x_i + y_i + 2c}
 
 
-它有和幂次方 chi squared kernel 相似的属性，用于计算机视觉.但是允许进行简单的 Monte Carlo 近似 的特征映射。
+它有和 指数卡方核 相似的属性，用于计算机视觉.但是允许进行简单的 蒙特卡洛 近似 的特征映射。
 
 :class:`SkewedChi2Sampler` 的使用和之前描述的 :class:`RBFSampler` 一样.唯一的区别是自由参数，称之为 :math:`c`.
 这种映射和数学细节可以参考 [LS2010]_.
@@ -114,8 +113,8 @@ skewed chi squared kernel 给出下面公式
 
 数学方面的细节
 --------------------
-内核方法像支持向量机，或者标准化 PCA 依赖于重新生产 kernel Hilbert spaces.
-对于任何内核函数 :math:`k` （叫做 Mercer kernel），保证了 :math:`\phi` 进入 Hilbert space:math:`\mathcal{H}` 的映射,例如：
+核技巧 像支持向量机，或者 核化 PCA 依赖于 再生核希尔伯特空间(RKHS)
+对于任何 核函数 :math:`k` （叫做 Mercer kernel），保证了 :math:`\phi` 进入 希尔伯特空间:math:`\mathcal{H}` 的映射,例如：
 
 .. math::
 
@@ -124,10 +123,10 @@ skewed chi squared kernel 给出下面公式
 :math:`\langle \cdot, \cdot \rangle`  是在 Hilbert space 中做内积.
 
 如果一个算法，例如线性支持向量机或者 PCA，依赖于数据集的数量级 :math:`x_i` ，可能会使用 :math:`k(x_i, x_j)` ，
-符合孙发的映射 :math:`\phi(x_i)` . 使用 :math:`k` 的优点在于 :math:`\phi` 永远不会直接计算，允许大量的特征计算（甚至是无线的）.
+符合孙发的映射 :math:`\phi(x_i)` . 使用 :math:`k` 的优点在于 :math:`\phi` 永远不会直接计算，允许大量的特征计算（甚至是无限的）.
 
 kernel 方法的一个缺点是，在优化过程中有可能存储大量的 kernel 值 :math:`k(x_i, x_j)`.
-如果内核化的分类器应用于新的数据 :math:`y_j` ， :math:`k(x_i, y_j)` 需要计算用来做预测，训练集中的 :math:`x_i` 有可能有很多不同的。
+如果使用核函数的分类器应用于新的数据 :math:`y_j` ， :math:`k(x_i, y_j)` 需要计算用来做预测，训练集中的 :math:`x_i` 有可能有很多不同的。
 
 这个子模块的这些类中允许嵌入 :math:`\phi`，从而明确的与 :math:`\phi(x_i)` 一起工作，
 这消除了使用 kernel 的需要和存储训练样本.
