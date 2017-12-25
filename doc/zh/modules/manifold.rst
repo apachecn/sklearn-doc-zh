@@ -57,22 +57,22 @@
 
 .. centered:: |PCA_img| |LDA_img|
 
-流形学习可以被认为是一种将线性框架（如PCA）推广为对数据中非线性结构敏感的尝试。 虽然存在监督变量，但是典型的流形学习问题是无监督的：它从数据本身学习数据的高维结构，而不使用预定的分类。
+流形学习可以被认为是一种将线性框架（如 PCA ）推广为对数据中非线性结构敏感的尝试。 虽然存在监督变量，但是典型的流形学习问题是无监督的：它从数据本身学习数据的高维结构，而不使用预定的分类。
 
 
 .. topic:: 例子:
 
     * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` ,手写数字降维的例子。
 
-    * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_compare_methods.py` ,玩具“S曲线”数据集降维的例子。
+    * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_compare_methods.py` ,玩具 “S曲线” 数据集降维的例子。
 
-以下概述了scikit-learn中可用的流形学习实现
+以下概述了 scikit-learn 中可用的流形学习实现
 
 .. _isomap:
 
 Isomap
 =========
-流形学习的最早方法之一是 Isomap 算法，等距映射(Isometric Mapping)的缩写。 Isomap 可以被视为多维缩放（Multi-dimensional Scaling：MDS）或核主成分分析（Kernel PCA）的扩展。 Isomap 寻求一个较低维度的嵌入，它保持所有点之间的测量距离。 Isomap 可以通过 :class:`Isomap` 对象执行。
+流形学习的最早方法之一是 Isomap 算法，等距映射（Isometric Mapping）的缩写。 Isomap 可以被视为多维缩放（Multi-dimensional Scaling：MDS）或核主成分分析（Kernel PCA）的扩展。 Isomap 寻求一个较低维度的嵌入，它保持所有点之间的测量距离。 Isomap 可以通过 :class:`Isomap` 对象执行。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_005.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -88,10 +88,9 @@ Isomap 算法包括三个阶段:
    对于 :math:`D` 维中 :math:`N` 个点的 :math:`k` 个最近邻，代价约为 :math:`O[D \log(k) N \log(N)]`
 
 2. **最短路径图搜索.**  最有效的已知算法是 Dijkstra 算法或 Floyd-Warshall 算法，其复杂度分别是约
-   :math:`O[N^2(k + \log(N))]` 和 :math:`O[N^3]`.  用户可通过使用 isomap 的 path_method 关键字选择该算法。 如果未指定，则代码尝试为输入数据选择最佳算法。
+   :math:`O[N^2(k + \log(N))]` 和 :math:`O[N^3]` 。 用户可通过使用 isomap 的 path_method 关键字选择该算法。 如果未指定，则代码尝试为输入数据选择最佳算法。
 
-3. **部分特征值分解.**  对应于 :math:`N \times N` isomap核中 :math:`d` 
-   个最大特征值的特征向量，进行嵌入编码。 对于密集求解器，代价约为 :math:`O[d N^2]` 。 通常可以使用ARPACK求解器来减少代价。 用户可通过使用isomap的path_method关键字指定特征求解器。 如果未指定，则代码尝试为输入数据选择最佳算法。
+3. **部分特征值分解.**  对应于 :math:`N \times N` isomap核中 :math:`d` 个最大特征值的特征向量，进行嵌入编码。 对于密集求解器，代价约为 :math:`O[d N^2]` 。 通常可以使用 ARPACK 求解器来减少代价。 用户可通过使用 isomap 的 path_method 关键字指定特征求解器。 如果未指定，则代码尝试为输入数据选择最佳算法。
    
 Isomap 的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[N^2(k + \log(N))] + O[d N^2]`.
