@@ -61,7 +61,7 @@ SGD 通过训练数据来拟合一个线性模型。成员 ``coef_`` 保存模�
     >>> clf.coef_                                         # doctest: +ELLIPSIS
     array([[ 9.9...,  9.9...]])
 
-成员 ``intercept_`` 保存 intercept（截距） （又称作offset（偏移）或bias（偏差））::
+成员 ``intercept_`` 保存 intercept（截距） （又称作 offset（偏移）或 bias（偏差））::
 
     >>> clf.intercept_                                    # doctest: +ELLIPSIS
     array([-9.9...])
@@ -73,12 +73,12 @@ SGD 通过训练数据来拟合一个线性模型。成员 ``coef_`` 保存模�
     >>> clf.decision_function([[2., 2.]])                 # doctest: +ELLIPSIS
     array([ 29.6...])
 
-具体的 loss function(损失函数) 可以通过 ``loss`` 参数来设置。:class:`SGDClassifier` 支持以下的 loss functions(损失函数)：
+具体的 loss function（损失函数） 可以通过 ``loss`` 参数来设置。 :class:`SGDClassifier` 支持以下的 loss functions（损失函数）：
 
-  * ``loss="hinge"``: (soft-margin) linear Support Vector Machine ((软-间隔)线性支持向量机)，
-  * ``loss="modified_huber"``: smoothed hinge loss  (平滑的hinge损失)，
-  * ``loss="log"``: logistic regression (logistic 回归)，
-  * and all regression losses below(以及所有的回归损失)。
+  * ``loss="hinge"``: (soft-margin) linear Support Vector Machine （（软-间隔）线性支持向量机），
+  * ``loss="modified_huber"``: smoothed hinge loss  （平滑的 hinge 损失），
+  * ``loss="log"``: logistic regression （logistic 回归），
+  * and all regression losses below（以及所有的回归损失）。
 
 前两个 loss functions（损失函数）是懒惰的，如果一个例子违反了 margin constraint（边界约束），它们仅更新模型的参数, 这使得训练非常有效率,即使使用了 L2 penalty（惩罚）我们仍然可能得到稀疏的模型结果。
 
@@ -93,12 +93,12 @@ SGD 支持以下 penalties（惩罚）:
 
   * ``penalty="l2"``: L2 norm penalty on ``coef_``.
   * ``penalty="l1"``: L1 norm penalty on ``coef_``.
-  * ``penalty="elasticnet"``: Convex combination of L2 and L1（L2型和L1型的凸组合）;
+  * ``penalty="elasticnet"``: Convex combination of L2 and L1（L2 型和 L1 型的凸组合）;
     ``(1 - l1_ratio) * L2 + l1_ratio * L1``.
 
 默认设置为 ``penalty="l2"`` 。 L1 penalty （惩罚）导致稀疏解，使得大多数系数为零。 Elastic Net（弹性网）解决了在特征高相关时 L1 penalty（惩罚）的一些不足。参数 ``l1_ratio`` 控制了 L1 和 L2 penalty（惩罚）的 convex combination （凸组合）。
 
-:class:`SGDClassifier` 通过利用“one versus all”(OVA)方法来组合多个二分类器，从而实现多分类。对于每一个 :math:`K` 类, 可以训练一个二分类器来区分自身和其他 :math:`K-1` 个类。在测试阶段，我们计算每个分类器的 confidence score（置信度分数）（也就是与超平面的距离），并选择置信度最高的分类。下图阐释了基于 iris（鸢尾花）数据集上的 OVA 方法。虚线表示三个 OVA 分类器; 不同背景色代表由三个分类器产生的决策面。
+:class:`SGDClassifier` 通过利用 “one versus all” （OVA）方法来组合多个二分类器，从而实现多分类。对于每一个 :math:`K` 类, 可以训练一个二分类器来区分自身和其他 :math:`K-1` 个类。在测试阶段，我们计算每个分类器的 confidence score（置信度分数）（也就是与超平面的距离），并选择置信度最高的分类。下图阐释了基于 iris（鸢尾花）数据集上的 OVA 方法。虚线表示三个 OVA 分类器; 不同背景色代表由三个分类器产生的决策面。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_sgd_iris_001.png
    :target: ../auto_examples/linear_model/plot_sgd_iris.html
@@ -146,7 +146,7 @@ Huber 和 epsilon-insensitive 损失函数可用于 robust regression（鲁棒�
 
 .. note:: 由于在截距部分收敛学习速率的差异，稀疏实现与密集实现相比产生的结果略有不同。
 
-在 `scipy.sparse <https://docs.scipy.org/doc/scipy/reference/sparse.html>`_ 支持的格式中，任意矩阵都有对稀疏数据的内置支持方法。但是，为了获得最高的效率，请使用 `scipy.sparse.csr_matrix <http://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_ 中定义的CSR矩阵格式.
+在 `scipy.sparse <https://docs.scipy.org/doc/scipy/reference/sparse.html>`_ 支持的格式中，任意矩阵都有对稀疏数据的内置支持方法。但是，为了获得最高的效率，请使用 `scipy.sparse.csr_matrix <http://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html>`_ 中定义的 CSR 矩阵格式.
 
 .. topic:: 示例:
 
@@ -176,7 +176,7 @@ SGD 主要的优势在于它的高效性，对于不同规模的训练样本，�
 
   * 经验表明，SGD 在处理约 10^6 训练样本后基本收敛。因此，对于迭代次数第一个合理的猜想是 ``n_iter = np.ceil(10**6 / n)``，其中 ``n`` 是训练集的大小。
 
-  * 假如将 SGD 应用于使用 PCA 做特征提取，我们发现通过某个常数 `c` 来缩放特征值是明智的，比如使训练数据的L2 norm 平均值为1。
+  * 假如将 SGD 应用于使用 PCA 做特征提取，我们发现通过某个常数 `c` 来缩放特征值是明智的，比如使训练数据的 L2 norm 平均值为 1。
 
   * 我们发现，当特征很多或 eta0 很大时， ASGD（平均随机梯度下降） 效果更好。
     
