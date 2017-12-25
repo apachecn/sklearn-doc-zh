@@ -25,15 +25,14 @@
    :align: center
    :scale: 60
 
-流形学习是一种减少非线性维度的方法。
-这个任务的算法基于许多数据集的维度只是人为导致的高。
+流形学习是一种非线性降维方法。其算法基于的思想是：许多数据集的维度过高只是由人为导致的。
 
 介绍
 ============
 
-高维数据集可能非常难以可视化。 虽然可以绘制两维或三维数据来显示数据的固有结构，但等效的高维图不太直观。 为了帮助可视化数据集的结构，必须以某种方式减小维度。
+高维数据集会非常难以可视化。 虽然可以绘制两维或三维的数据来显示数据的固有结构，但与之等效的高维图不太直观。 为了帮助数据集结构的可视化，必须以某种方式降低维度。
 
-通过对数据的随机投影来实现降维的最简单方法。 虽然这允许数据结构的一定程度的可视化，但是选择的随机性远远不够。 在随机投影中，数据中更有趣的结构很可能会丢失。
+通过对数据的随机投影来实现降维是最简单的方法。 虽然这样做能实现数据结构一定程度的可视化，但随机选择投影仍有许多有待改进之处。 在随机投影中，数据中更有趣的结构很可能会丢失。
 
 
 .. |digits_img| image:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_001.png
@@ -46,7 +45,7 @@
 
 .. centered:: |digits_img| |projected_img|
 
-为了解决这一问题，设计了一些监督和无监督的线性维数降低框架，如主成分分析（PCA），独立成分分析，线性判别分析等。 这些算法定义了特定的标题来选择数据的“有趣”线性投影。 这些是强大的，但是经常会错过重要的非线性结构的数据。
+为了解决这一问题，一些监督和无监督的线性降维框架被设计出来，如主成分分析（PCA），独立成分分析，线性判别分析等。 这些算法定义了明确的规定来选择数据的“有趣的”线性投影。 它们虽然强大，但是会经常错失数据中重要的非线性结构。
 
 .. |PCA_img| image:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_003.png
     :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -58,22 +57,22 @@
 
 .. centered:: |PCA_img| |LDA_img|
 
-流形可以被认为是将线性框架（如PCA）推广为对数据中的非线性结构敏感的尝试。 虽然存在监督变量，但是典型的流形学习问题是无监督的：它从数据本身学习数据的高维结构，而不使用预定的分类。
+流形学习可以被认为是一种将线性框架（如PCA）推广为对数据中非线性结构敏感的尝试。 虽然存在监督变量，但是典型的流形学习问题是无监督的：它从数据本身学习数据的高维结构，而不使用预定的分类。
 
 
 .. topic:: 例子:
 
     * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_lle_digits.py` ,手写数字降维的例子。
 
-    * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_compare_methods.py` ,玩具“S曲线”数据集的维度降低的一个例子。
+    * 参见 :ref:`sphx_glr_auto_examples_manifold_plot_compare_methods.py` ,玩具“S曲线”数据集降维的例子。
 
-以下概述了scikit学习中可用的流形学习实现
+以下概述了scikit-learn中可用的流形学习实现
 
 .. _isomap:
 
 Isomap
 =========
-流形学习的最早方法之一是 Isomap 算法，等距映射(Isometric Mapping)的缩写。 Isomap 可以被视为多维缩放（Multi-dimensional Scaling：MDS）或 Kernel PCA 的扩展。 Isomap 寻求一个维度较低的嵌入，它保持所有点之间的测量距离。 Isomap 可以与 :class:`Isomap` 对象执行。
+流形学习的最早方法之一是 Isomap 算法，等距映射(Isometric Mapping)的缩写。 Isomap 可以被视为多维缩放（Multi-dimensional Scaling：MDS）或核主成分分析（Kernel PCA）的扩展。 Isomap 寻求一个较低维度的嵌入，它保持所有点之间的测量距离。 Isomap 可以通过 :class:`Isomap` 对象执行。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_005.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -84,22 +83,22 @@ Isomap
 -------------
 Isomap 算法包括三个阶段:
 
-1. **搜索最近的邻居.**  Isomap 使用
-   :class:`sklearn.neighbors.BallTree` 进行有效的邻居搜索。
-   对于 :math:`D` 维中 :math:`N` 个点的 :math:`k` 个最近邻，成本约为 :math:`O[D \log(k) N \log(N)]`
+1. **最近邻搜索.**  Isomap 使用
+   :class:`sklearn.neighbors.BallTree` 进行有效的近邻搜索。
+   对于 :math:`D` 维中 :math:`N` 个点的 :math:`k` 个最近邻，代价约为 :math:`O[D \log(k) N \log(N)]`
 
-2. **最短路径图搜索.**  最有效的已知算法是 Dijkstra 算法，它的复杂度大约是
-   :math:`O[N^2(k + \log(N))]` ，或 Floyd-Warshall 算法，它的复杂度是 :math:`O[N^3]`.  该算法可以由用户使用 isomap 的 path_method 关键字来选择。 如果未指定，则代码尝试为输入数据选择最佳算法。
+2. **最短路径图搜索.**  最有效的已知算法是 Dijkstra 算法或 Floyd-Warshall 算法，其复杂度分别是约
+   :math:`O[N^2(k + \log(N))]` 和 :math:`O[N^3]`.  用户可通过使用 isomap 的 path_method 关键字选择该算法。 如果未指定，则代码尝试为输入数据选择最佳算法。
 
-3. **部分特征值分解.**  嵌入在与 :math:`N \times N` isomap内核的 :math:`d` 
-   个最大特征值相对应的特征向量中进行编码。 对于密集求解器，成本约为 :math:`O[d N^2]` 。 通常可以使用ARPACK求解器来提高这个成本。 用户可以使用isomap的path_method关键字来指定特征。 如果未指定，则代码尝试为输入数据选择最佳算法。
+3. **部分特征值分解.**  对应于 :math:`N \times N` isomap核中 :math:`d` 
+   个最大特征值的特征向量，进行嵌入编码。 对于密集求解器，代价约为 :math:`O[d N^2]` 。 通常可以使用ARPACK求解器来减少代价。 用户可通过使用isomap的path_method关键字指定特征求解器。 如果未指定，则代码尝试为输入数据选择最佳算法。
    
 Isomap 的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[N^2(k + \log(N))] + O[d N^2]`.
 
-* :math:`N` : 训练的数据节点数
+* :math:`N` : 训练数据点的个数
 * :math:`D` : 输入维度
-* :math:`k` : 最近的邻居数
+* :math:`k` : 最近邻的个数
 * :math:`d` : 输出维度
 
 .. topic:: 参考文献:
@@ -113,11 +112,11 @@ Isomap 的整体复杂度是
 局部线性嵌入
 ========================
 
-局部线性嵌入（LLE）寻求保留局部邻域内距离的数据的低维投影。 它可以被认为是一系列局部主成分分析，与整体相比，找到最好的非线性嵌入。
+局部线性嵌入（LLE）通过保留局部邻域内的距离来寻求数据的低维投影。 它可以被认为是一系列的局部主成分分析，与全局相比，找到最优的局部非线性嵌入。
 
 局部线性嵌入可以使用
-:func:`locally_linear_embedding` 函数或其面向对象的副本方法
-:class:`LocallyLinearEmbedding` 执行。
+:func:`locally_linear_embedding` 函数或其面向对象的等效方法
+:class:`LocallyLinearEmbedding` 来实现。
 
 .. figure:: ../auto_examples/manifold/images/sphx_glr_plot_lle_digits_006.png
    :target: ../auto_examples/manifold/plot_lle_digits.html
@@ -129,19 +128,19 @@ Isomap 的整体复杂度是
 
 标准的 LLE 算法包括三个阶段:
 
-1. **搜索最近的邻居**.  参见上述 Isomap 讨论。
+1. **最邻近搜索**.  参见上述 Isomap 讨论。
 
-2. **权重矩阵构造**. :math:`O[D N k^3]`.
-   LLE 权重矩阵的构造涉及每 :math:`N` 个局部邻域的 :math:`k \times k` 线性方程的解
+2. **构造权重矩阵**. :math:`O[D N k^3]`.
+   LLE 权重矩阵的构造包括每个 :math:`N` 局部邻域的 :math:`k \times k` 线性方程的解
 
 3. **部分特征值分解**. 参见上述 Isomap 讨论。
 
 标准 LLE 的整体复杂度是
 :math:`O[D \log(k) N \log(N)] + O[D N k^3] + O[d N^2]`.
 
-* :math:`N` : 训练的数据节点数
+* :math:`N` : 训练数据点的个数
 * :math:`D` : 输入维度
-* :math:`k` : 最近的邻居数
+* :math:`k` : 最近邻的个数
 * :math:`d` : 输出维度
 
 .. topic:: 参考文献:
