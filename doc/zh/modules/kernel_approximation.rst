@@ -113,8 +113,8 @@ skewed chi squared kernel 给出下面公式
 
 数学方面的细节
 --------------------
-核技巧 像支持向量机，或者 核化 PCA 依赖于 再生核希尔伯特空间(RKHS)
-对于任何 核函数 :math:`k` （叫做 Mercer kernel），保证了 :math:`\phi` 进入 希尔伯特空间:math:`\mathcal{H}` 的映射,例如：
+核技巧 像支持向量机，或者 核化 PCA 依赖于 再生核希尔伯特空间（RKHS）
+对于任何 核函数 :math:`k` （叫做 Mercer kernel），保证了 :math:`\phi` 进入 希尔伯特空间 :math:`\mathcal{H}` 的映射，例如：
 
 .. math::
 
