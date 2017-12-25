@@ -36,9 +36,9 @@ Johnson-Lindenstrauss 辅助定理
 支撑随机投影效率的主要理论成果是`Johnson-Lindenstrauss lemma (quoting Wikipedia)
 <https://en.wikipedia.org/wiki/Johnson%E2%80%93Lindenstrauss_lemma>`_:
 
-  在数学中，johnson - lindenstrauss引理是一种将高维的点从高维到低维欧几里得空间的低失真嵌入的方案.
+  在数学中，johnson - lindenstrauss 引理是一种将高维的点从高维到低维欧几里得空间的低失真嵌入的方案。
   引理阐释了高维空间下的一小部分的点集可以内嵌到非常低维的空间，这种方式下点之间的距离几乎全部被保留。
-  内嵌所用到的映射至少符合Lipschitz条件,甚至可以被当做正交投影。
+  内嵌所用到的映射至少符合 Lipschitz 条件,甚至可以被当做正交投影。
 
 有了样本数量，
 :func:`sklearn.random_projection.johnson_lindenstrauss_min_dim` 会保守估计随机子空间的最小大小来保证随机投影导致的变形在一定范围内：
