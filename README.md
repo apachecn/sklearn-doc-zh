@@ -106,6 +106,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@HelloSilicat](https://github.com/HelloSilicat)（Jialiang Pei）
 * [@AnybodyHome](https://github.com/AnybodyHome)（loop）
 * [@RyanZhiNie](https://github.com/RyanZhiNie)（Zhi Nie）
+* [@zehuichen123](https://github.com/zehuichen123)（loveSnowBest）
 * [@pan8664716](https://github.com/pan8664716)（pan8664716）
 * [@xrj](https://github.com/xrj)（xrj）
 * [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）
