@@ -108,6 +108,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@RyanZhiNie](https://github.com/RyanZhiNie)（Zhi Nie）
 * [@zehuichen123](https://github.com/zehuichen123)（loveSnowBest）
 * [@hlxstc](https://github.com/hlxstc)（Jokers）
+* [@NellyLuo](https://github.com/NellyLuo)（NellyLuo）
 * [@pan8664716](https://github.com/pan8664716)（pan8664716）
 * [@xrj](https://github.com/xrj)（xrj）
 * [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）
