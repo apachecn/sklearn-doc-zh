@@ -24,8 +24,8 @@
       分类问题的一个例子是手写数字识别，其目的是将每个输入向量分配给有限数目的离散类别之一。
       我们通常把分类视作监督学习的一个离散形式（区别于连续形式），从有限的类别中，给每个样本贴上正确的标签。
 
-    * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_:
-      如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归*.
+    * `回归 <https://en.wikipedia.org/wiki/Regression_analysis>`_ :
+      如果期望的输出由一个或多个连续变量组成，则该任务称为 *回归* 。
       回归问题的一个例子是预测鲑鱼的长度是其年龄和体重的函数。
 
  * `无监督学习 <https://en.wikipedia.org/wiki/Unsupervised_learning>`_,
@@ -54,7 +54,7 @@
   >>> digits = datasets.load_digits()
 
 数据集是一个类似字典的对象，它保存有关数据的所有数据和一些元数据。 该数据存储在 ``.data`` 成员中，它是 ``n_samples, n_features`` 数组。
-在监督问题的情况下，一个或多个响应变量存储在 ``.target`` 成员中。 有关不同数据集的更多详细信息，请参见 :ref:`专用数据集部分 <datasets>` .
+在监督问题的情况下，一个或多个响应变量存储在 ``.target`` 成员中。 有关不同数据集的更多详细信息，请参见 :ref:`专用数据集部分 <datasets>` 。
 
 例如，在数字数据集的情况下，``digits.data`` 使我们能够得到一些用于分类的样本特征::
 
@@ -91,7 +91,7 @@
 
 .. topic:: 从外部数据集加载
 
-    要从外部数据集加载，请参阅 :ref:`加载外部数据集 <external_datasets>`.
+    要从外部数据集加载，请参阅 :ref:`加载外部数据集 <external_datasets>` 。
 
 学习和预测
 ------------------------
@@ -110,9 +110,9 @@
 
   在这个例子中，我们手动设置 ``gamma`` 值。不过，通过使用 :ref:`网格搜索  <grid_search>` 及 :ref:`交叉验证 <cross_validation>` 等工具，可以自动找到参数的良好值。
 
-我们把我们的估计器实例命名为 ``clf`` ，因为它是一个分类器(classifier)。我们需要它适应模型，也就是说，要它从模型中*学习*。
+我们把我们的估计器实例命名为 ``clf`` ，因为它是一个分类器（classifier）。我们需要它适应模型，也就是说，要它从模型中 *学习* 。
 这是通过将我们的训练集传递给 ``fit`` 方法来完成的。作为一个训练集，让我们使用数据集中除最后一张以外的所有图像。
-我们用 ``[:-1]`` Python 语法选择这个训练集，它产生一个包含 ``digits.data`` 中除最后一个条目(entry)之外的所有条目的新数组 ::
+我们用 ``[:-1]`` Python 语法选择这个训练集，它产生一个包含 ``digits.data`` 中除最后一个条目（entry）之外的所有条目的新数组 ::
 
   >>> clf.fit(digits.data[:-1], digits.target[:-1])  # doctest: +NORMALIZE_WHITESPACE
   SVC(C=100.0, cache_size=200, class_weight=None, coef0=0.0,
@@ -120,7 +120,7 @@
     max_iter=-1, probability=False, random_state=None, shrinking=True,
     tol=0.001, verbose=False)
 
-现在你可以预测新的值，特别是我们可以向分类器询问 ``digits`` 数据集中最后一个图像（没有用来训练的一条实例)的数字是什么::
+现在你可以预测新的值，特别是我们可以向分类器询问 ``digits`` 数据集中最后一个图像（没有用来训练的一条实例）的数字是什么::
 
   >>> clf.predict(digits.data[-1:])
   array([8])
