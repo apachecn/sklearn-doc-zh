@@ -101,6 +101,7 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 
 **校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
 * [@FontTian](https://github.com/FontTian)（FontTian）
+* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
 * [@caopeirui](https://github.com/caopeirui)（Veyron C）
 * [@HelloSilicat](https://github.com/HelloSilicat)（Jialiang Pei）
 * [@AnybodyHome](https://github.com/AnybodyHome)（loop）
