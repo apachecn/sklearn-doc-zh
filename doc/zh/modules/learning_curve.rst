@@ -77,7 +77,7 @@
 
 如果训练得分和验证得分都很低，则估计器是不合适的。如果训练得分高，验证得分低，则估计器过拟合，
 否则估计会拟合得很好。通常不可能有较低的训练得分和较高的验证得分。所有三种情况都可以
-在下面的图中找到，其中我们改变了数字数据集上SVM的参数 :math:`\gamma` 。
+在下面的图中找到，其中我们改变了数字数据集上 SVM 的参数 :math:`\gamma` 。
 
 .. figure:: ../auto_examples/model_selection/images/sphx_glr_plot_validation_curve_001.png
    :target: ../auto_examples/model_selection/plot_validation_curve.html

@@ -4,15 +4,15 @@
 模型持久化
 =================
 
-在训练完scikit-learn模型之后，最好有一种方法来将模型持久化以备将来使用，而无需重新训练。
-以下部分为您提供了有关如何使用pickle来持久化模型的示例。
-在使用pickle序列化时，我们还将回顾一些安全性和可维护性方面的问题。
+在训练完 scikit-learn 模型之后，最好有一种方法来将模型持久化以备将来使用，而无需重新训练。
+以下部分为您提供了有关如何使用 pickle 来持久化模型的示例。
+在使用 pickle 序列化时，我们还将回顾一些安全性和可维护性方面的问题。
 
 
 持久化示例
 -------------------
 
-可以通过使用Python的内置持久化模型将训练好的模型保存在scikit中，它名为 `pickle <https://docs.python.org/2/library/pickle.html>`_::
+可以通过使用 Python 的内置持久化模型将训练好的模型保存在 scikit 中，它名为 `pickle <https://docs.python.org/2/library/pickle.html>`_::
 
   >>> from sklearn import svm
   >>> from sklearn import datasets
@@ -33,38 +33,38 @@
   >>> y[0]
   0
 
-在这个scikit的特殊示例中，使用joblib来替换pickle（``joblib.dump`` & ``joblib.load``）可能会更有意思，这对于内部带有numpy数组的对象来说更为高效，
-通常情况下适合scikit-learn预估器（estimators），但是也只能是pickle到硬盘而不是字符串::
+在这个 scikit 的特殊示例中，使用 joblib 来替换 pickle（``joblib.dump`` & ``joblib.load``）可能会更有意思，这对于内部带有 numpy 数组的对象来说更为高效，
+通常情况下适合 scikit-learn estimators（预估器），但是也只能是 pickle 到硬盘而不是字符串::
 
   >>> from sklearn.externals import joblib
   >>> joblib.dump(clf, 'filename.pkl')
 
-之后你可以使用以下方式回调pickled model可能在另一个 Python 进程中）::
+之后你可以使用以下方式回调 pickled model 可能在另一个 Python 进程中）::
 
   >>> clf = joblib.load('filename.pkl')
 
 .. note::
 
-   ``joblib.dump`` 和 ``joblib.load`` 函数也接收类似file-like的对象而不是文件名。
-   更多有关使用Joblib来持久化数据的信息可以参阅 `这里 <https://pythonhosted.org/joblib/persistence.html>`_.
+   ``joblib.dump`` 和 ``joblib.load`` 函数也接收类似 file-like 的对象而不是文件名。
+   更多有关使用 Joblib 来持久化数据的信息可以参阅 `这里 <https://pythonhosted.org/joblib/persistence.html>`_.
 
 .. _persistence_limitations:
 
 安全性和可维护性的局限性
 --------------------------------------
 
-pickle（和通过扩展的joblib），在安全性和可维护性方面存在一些问题。
+pickle（和通过扩展的 joblib），在安全性和可维护性方面存在一些问题。
 有以下原因，
 
-* 绝对不要使用未经pickle的不受信任的数据，因为它可能会在加载时执行恶意代码。
-* 虽然一个版本的scikit-learn模型可以在其他版本中加载，但这完全不建议并且也是不可取的。
+* 绝对不要使用未经 pickle 的不受信任的数据，因为它可能会在加载时执行恶意代码。
+* 虽然一个版本的 scikit-learn 模型可以在其他版本中加载，但这完全不建议并且也是不可取的。
   还应该了解到，对于这些数据执行的操作可能会产生不同及意想不到的结果。
 
-为了用以后版本的scikit-learn来重构类似的模型, 额外的元数据应该随着pickled model一起被保存：
+为了用以后版本的 scikit-learn 来重构类似的模型, 额外的元数据应该随着 pickled model 一起被保存：
 
 * 训练数据，例如：引用不可变的快照
-* 用于生成模型的python源代码
-* scikit-learn的各版本以及各版本对应的依赖包
+* 用于生成模型的 python 源代码
+* scikit-learn 的各版本以及各版本对应的依赖包
 * 在训练数据的基础上获得的交叉验证得分
 
 这样可以检查交叉验证得分是否与以前相同。
