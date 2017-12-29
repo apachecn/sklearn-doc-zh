@@ -6,15 +6,13 @@
 
 .. currentmodule:: sklearn.linear_model
 
-下面是一组用于回归的方法，其中目标期望值 y是输入变量 x 的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值
-value.
+下面是一组用于回归的方法，其中目标值 y是输入变量 x 的线性组合。 在数学概念中，如果 :math:`\hat{y}` 是预测值.
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
 
-在整个模块中，我们定义向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` 定义 :math:`w_0` 作为 ``intercept_``.
+在整个模块中，我们定义向量 :math:`w = (w_1,..., w_p)` 作为 ``coef_`` ，定义 :math:`w_0` 作为 ``intercept_``.
 
 如果需要使用广义线性模型进行分类，请参阅 :ref:`Logistic_regression` .
-:ref:`Logistic_regression`.
 
 
 .. _ordinary_least_squares:
@@ -22,7 +20,7 @@ value.
 普通最小二乘法
 =======================
 
-:class:`LinearRegression` 适合一个带有系数 :math:`w = (w_1, ..., w_p)` 的线性模型,使得数据集实际观测数据和预测数据（估计值）之间的残差平方和最小。其数学表达式为:
+:class:`LinearRegression` 拟合一个带有系数 :math:`w = (w_1, ..., w_p)` 的线性模型,使得数据集实际观测数据和预测数据（估计值）之间的残差平方和最小。其数学表达式为:
 
 .. math:: \underset{w}{min\,} {|| X w - y||_2}^2
 
@@ -50,7 +48,7 @@ value.
 普通最小二乘法复杂度
 ---------------------------------
 
-该方法使用 X 的奇异值分解来计算最小二乘解。如果 X 是一个 size 为 (n, p) 的矩阵，设 :math:`n \geq p` ，则该方法花费的成本为 :math:`O(n p^2)` 
+该方法使用 X 的奇异值分解来计算最小二乘解。如果 X 是一个 size 为 (n, p) 的矩阵，设 :math:`n \geq p` ，则该方法的复杂度为 :math:`O(n p^2)` 
 
 .. _ridge_regression:
 
@@ -58,7 +56,7 @@ value.
 ================
 
 :class:`Ridge` 回归通过对系数的大小施加惩罚来解决
-:ref:`ordinary_least_squares` (普通最小二乘)的一些问题。 岭系数最小化一个带罚项的残差平方和，
+:ref:`ordinary_least_squares` 的一些问题。 岭系数最小化的是带罚项的残差平方和，
 
 
 .. math::
@@ -66,7 +64,7 @@ value.
    \underset{w}{min\,} {{|| X w - y||_2}^2 + \alpha {||w||_2}^2}
 
 
-其中， :math:`\alpha \geq 0` 是控制收缩量复杂性的参数： :math:`\alpha`, 的值越大，收缩量越大，因此系数对共线性变得更加鲁棒。
+其中， :math:`\alpha \geq 0` 是控制系数收缩量的复杂性参数： :math:`\alpha` 的值越大，收缩量越大，这样系数对共线性的鲁棒性也更强。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ridge_path_001.png
    :target: ../auto_examples/linear_model/plot_ridge_path.html
@@ -74,7 +72,7 @@ value.
    :scale: 50%
 
 
-与其他线性模型一样， :class:`Ridge` 采用 ``fit`` 将采用其 :math:`w` 存储在其 ``coef_`` 成员中::
+与其他线性模型一样， :class:`Ridge` 用 ``fit`` 方法将模型系数 :math:`w` 存储在其 ``coef_`` 成员中::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.Ridge (alpha = .5)
@@ -96,7 +94,7 @@ value.
 岭回归的复杂度
 ----------------
 
-这种方法与 :ref:`ordinary_least_squares` (普通最小二乘方法)的复杂度是相同的.
+这种方法与 :ref:`ordinary_least_squares` 的复杂度是相同的.
 
 .. FIXME:
 .. Not completely true: OLS is solved by an SVD, while Ridge is solved by
@@ -132,13 +130,13 @@ Lasso
 
 The :class:`Lasso` 是估计稀疏系数的线性模型。 它在一些情况下是有用的，因为它倾向于使用具有较少参数值的情况，有效地减少给定解决方案所依赖变量的数量。 因此，Lasso及其变体是压缩感知领域的基础。 在一定条件下，它可以恢复一组非零权重的精确集  (见 :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py`).
 
-在数学上，它由一个线性模型组成，以 :math:`\ell_1` 为准。 其目标函数的最小化是:
+在数学公式表达，它由一个带有 :math:`\ell_1` 先验的正则项的线性模型组成。 其最小化的目标函数是:
 
 .. math::  \underset{w}{min\,} { \frac{1}{2n_{samples}} ||X w - y||_2 ^ 2 + \alpha ||w||_1}
 
 lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法的最小化，其中， :math:`\alpha` 是一个常数， :math:`||w||_1` 是参数向量的 :math:`\ell_1`-norm 范数。
 
-:class:`Lasso` 类的实现使用了 coordinate descent （坐标下降算法）来拟合系数。 查看 :ref:`least_angle_regression` 用于另一个实现::
+:class:`Lasso` 类的实现使用了 coordinate descent （坐标下降算法）来拟合系数。 查看 :ref:`least_angle_regression` ，这是另一种方法::
 
     >>> from sklearn import linear_model
     >>> reg = linear_model.Lasso(alpha = 0.1)
@@ -149,7 +147,7 @@ lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法�
     >>> reg.predict([[1, 1]])
     array([ 0.8])
 
-对于较低级别的任务，同样有用的是:func:`lasso_path`。它能够通过搜索所有可能的路径上的值来计算系数。
+对于较低级别的任务，同样有用的是函数 :func:`lasso_path` 。它能够通过搜索所有可能的路径上的值来计算系数。
 
 .. topic:: 举例:
 
@@ -157,7 +155,7 @@ lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法�
   * :ref:`sphx_glr_auto_examples_applications_plot_tomography_l1_reconstruction.py` (压缩感知：L1先验(Lasso)的断层扫描重建)
 
 
-.. note:: **Feature selection with Lasso(使用 Lasso 进行 Feature 的选择)**
+.. note:: **Feature selection with Lasso(使用 Lasso 进行特征选择)**
 
       由于 Lasso 回归产生稀疏模型，因此可以用于执行特征选择，详见
       :ref:`l1_feature_selection` (基于L1的特征选择).
@@ -172,9 +170,9 @@ lasso estimate 解决了加上罚项 :math:`\alpha ||w||_1` 的最小二乘法�
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: :class:`LassoCV` and :class:`LassoLarsCV`。
-:class:`LassoLarsCV` 是基于下面解释的 :ref:`least_angle_regression`(最小角度回归)算法。
+:class:`LassoLarsCV` 是基于下面解释的 :ref:`least_angle_regression` 算法。
 
-对于具有许多线性回归的高维数据集， :class:`LassoCV` 最常见。 然而，:class:`LassoLarsCV` 在寻找 `alpha` parameter 参数值上更具有优势，而且如果样本数量与特征数量相比非常小时，通常 :class:`LassoLarsCV` 比 :class:`LassoCV` 要快。
+对于具有许多线性回归的高维数据集， :class:`LassoCV` 最常见。 然而，:class:`LassoLarsCV` 在寻找 `alpha` 参数值上更具有优势，而且如果样本数量与特征数量相比非常小时，通常 :class:`LassoLarsCV` 比 :class:`LassoCV` 要快。
 
 .. |lasso_cv_1| image:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_model_selection_002.png
     :target: ../auto_examples/linear_model/plot_lasso_model_selection.html
@@ -190,7 +188,8 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 基于信息标准的模型选择
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-有多种选择时，估计器 :class:`LassoLarsIC` 建议使用 Akaike information criterion （Akaike 信息准则）（AIC）和 Bayes Information criterion （贝叶斯信息准则）（BIC）。 当使用 k-fold 交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
+有多种选择时，估计器 :class:`LassoLarsIC` 建议使用 Akaike information criterion （Akaike 信息准则）（AIC）和 Bayes Information criterion （贝叶斯信息准则）（BIC）。 
+当使用 k-fold 交叉验证时，正则化路径只计算一次而不是k + 1次，所以找到α的最优值是一种计算上更便宜的替代方法。 然而，这样的标准需要对解决方案的自由度进行适当的估计，对于大样本（渐近结果）导出，并假设模型是正确的，即数据实际上是由该模型生成的。 当问题严重受限（比样本更多的特征）时，他们也倾向于打破。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_lasso_model_selection_001.png
     :target: ../auto_examples/linear_model/plot_lasso_model_selection.html
@@ -205,9 +204,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 与 SVM 的正则化参数的比较
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-根据估计器和模型优化的精确目标函数，在 ``alpha`` 和 SVM 的正则化参数之间是等值的,其中
-``C`` 是通过 ``alpha = 1 / C`` 或者 ``alpha = 1 / (n_samples * C)`` 得到的。
-
+``alpha`` 和 SVM 的正则化参数``C`` 之间的等式关系是 ``alpha = 1 / C`` 或者 ``alpha = 1 / (n_samples * C)`` ，并依赖于估计器和模型优化的确切的目标函数。
 .. _multi_task_lasso:
 
 多任务 Lasso
@@ -215,7 +212,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 
  :class:`MultiTaskLasso` 是一个估计多元回归稀疏系数的线性模型： ``y`` 是一个 ``(n_samples, n_tasks)`` 的二维数组，其约束条件和其他回归问题（也称为任务）是一样的，都是所选的特征值。
 
-下图比较了通过使用简单的 Lasso 或 MultiTaskLasso 得到的 W 中非零的位置。 Lasso 估计分散的产生着非零值，而 MultiTaskLasso 的所有列都是非零的。
+下图比较了通过使用简单的 Lasso 或 MultiTaskLasso 得到的 W 中非零的位置。 Lasso 估计产生分散的非零值，而 MultiTaskLasso 的一整列都是非零的。
 
 .. |multi_task_lasso_1| image:: ../auto_examples/linear_model/images/sphx_glr_plot_multi_task_lasso_support_001.png
     :target: ../auto_examples/linear_model/plot_multi_task_lasso_support.html
@@ -248,7 +245,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 .. math:: ||A||_{2 1} = \sum_i \sqrt{\sum_j a_{ij}^2}
 
 
-:class:`MultiTaskLasso` 类中的实现使用了坐标下降作为拟合系数的算法。
+:class:`MultiTaskLasso` 类的实现使用了坐标下降作为拟合系数的算法。
 
 
 .. _elastic_net:
@@ -292,8 +289,8 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 
  :class:`MultiTaskElasticNet` 是一个对多回归问题估算稀疏参数的弹性网络: ``Y`` 是一个二维数组，形状是 ``(n_samples,n_tasks)``。  其限制条件是和其他回归问题一样，是选择的特征，也称为 tasks.。
 
-从数学上来说， 它包含一个用
-:math:`\ell_1` :math:`\ell_2` 先验 and :math:`\ell_2` 先验为正则项训练的线性模型
+从数学上来说， 它包含一个混合的
+:math:`\ell_1` :math:`\ell_2` 先验和 :math:`\ell_2` 先验为正则项训练的线性模型
 目标函数就是最小化:
 
 .. math::
@@ -314,7 +311,7 @@ scikit-learn 通过交叉验证来公开设置 Lasso ``alpha`` 参数的对象: 
 
 最小角回归 (LARS) 是对高维数据的回归算法， 由Bradley Efron, Trevor Hastie, Iain
 Johnstone 和 Robert Tibshirani开发完成。 LARS和逐步回归很像。 在每一步，它寻找与响应最有关联的
-预测。当有很多预测由相同的关联时，它没有继续利用相同的预测，而是在这些预测中找出应该等角的方向。
+预测。当有很多预测有相同的关联时，它没有继续利用相同的预测，而是在这些预测中找出应该等角的方向。
 
 LARS的优点:
 
@@ -327,7 +324,7 @@ LARS的优点:
   - 如果两个变量对响应几乎有相等的联系，则它们的系数应该有相似的增长率。因此这个算法和我们直觉
     上的判断一样，而且还更加稳定。
 
-  - 它也很容易改变，为其他估算器提供解，比如Lasso。
+  - 它很容易修改并为其他估算器生成解，比如Lasso。
 
 LARS的缺点:
 
@@ -363,7 +360,7 @@ LARS Lasso
 
  * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_lars.py`
 
-Lars算法提供了一个可以几乎无代价的给出正则化系数的完整路径，因此常利用函数 :func:`lars_path` 来取回路径。
+Lars算法提供了一个几乎无代价的沿着正则化参数的系数的完整路径，因此常利用函数 :func:`lars_path` 来取回路径。
 
 数学表达式
 ------------------------
@@ -371,7 +368,7 @@ Lars算法提供了一个可以几乎无代价的给出正则化系数的完整�
 该算法和逐步回归非常相似，但是它没有在每一步包含变量，它估计的参数是根据与
 其他剩余变量的联系来增加的。
 
-该算法没有给出一个向量的结果，而是在LARS的解中，对每一个变量进行总体变量的L1正则化后显示的一条曲线。
+在LARS的解中，没有给出一个向量的结果，而是给出一条曲线，显示参数向量的L1范式的每个值的解。
 完全的参数路径存在``coef_path_``下。它的尺寸是 (n_features, max_features+1)。 其中第一列通常是全0列。
 
 .. topic:: 参考文献:
@@ -385,8 +382,8 @@ Lars算法提供了一个可以几乎无代价的给出正则化系数的完整�
 
 正交匹配追踪法（OMP）
 =================================
-:class:`OrthogonalMatchingPursuit(正交匹配追踪法)` 和 :func:`orthogonal_mp(正交匹配追踪)` 
-使用了OMP算法近似拟合了一个带限制的线性模型，该限制限制了模型的非0系数(例：L0范数)。
+ :class:`OrthogonalMatchingPursuit` (正交匹配追踪法)和 :func:`orthogonal_mp` 
+使用了OMP算法近似拟合了一个带限制的线性模型，该限制影响于模型的非0系数(例：L0范数)。
 
 就像最小角回归一样，作为一个前向特征选择方法，正交匹配追踪法可以近似一个固定非0元素的最优
 向量解:
@@ -394,8 +391,7 @@ Lars算法提供了一个可以几乎无代价的给出正则化系数的完整�
 .. math:: \text{arg\,min\,} ||y - X\gamma||_2^2 \text{ subject to } \
     ||\gamma||_0 \leq n_{nonzero\_coefs}
 
-正交匹配追踪法也可以不用特定的非0参数元素个数做限制，而是利用别的特定函数定义其损失函数。
-这个可以表示为:
+正交匹配追踪法也可以针对一个特殊的误差而不是一个特殊的非零系数的个数。可以表示为:
 
 .. math:: \text{arg\,min\,} ||\gamma||_0 \text{ subject to } ||y-X\gamma||_2^2 \
     \leq \text{tol}
@@ -462,15 +458,15 @@ Alpha 在这里也是作为一个变量，通过数据中估计得到.
 贝叶斯岭回归
 -------------------------
 
- :class:`贝叶斯岭回归` 利用概率模型估算了上述的回归问题，其先验参数 :math:`w` 是由以下球面高斯公式得出的：
+ :class:`BayesianRidge` 利用概率模型估算了上述的回归问题，其先验参数 :math:`w` 是由以下球面高斯公式得出的：
 
 .. math:: p(w|\lambda) =
     \mathcal{N}(w|0,\lambda^{-1}\bold{I_{p}})
 
-先验参数 :math:`\alpha` 和 :math:`\lambda` 一般是服从 `gamma 分布 <https://en.wikipedia.org/wiki/Gamma_distribution>` , 这个分布与高斯成共轭先验关系。
+先验参数 :math:`\alpha` 和 :math:`\lambda` 一般是服从 `gamma 分布 <https://en.wikipedia.org/wiki/Gamma_distribution>`__ , 这个分布与高斯成共轭先验关系。
 
-得到的模型一般称为 *贝叶斯岭回归*, 并且这个与传统的 :class:`Ridge` 非常相似。参数 :math:`w`, :math:`\alpha` 和 :math:`\lambda` 是在模型拟合的时候一起被估算出来的。 剩下的超参数就是 gamma 分布的先验了。
-:math:`\alpha` 和 :math:`\lambda` 。  它们通常被选择为 *没有信息量* 。模型参数的估计一般利用 *最大似然对数估计法* 。
+得到的模型一般称为 *贝叶斯岭回归*, 并且这个与传统的 :class:`Ridge` 非常相似。参数 :math:`w`, :math:`\alpha` 和 :math:`\lambda` 是在模型拟合的时候一起被估算出来的。 剩下的超参数就是
+关于:math:`\alpha` 和 :math:`\lambda`  的gamma 分布的先验了。 它们通常被选择为 *无信息先验* 。模型参数的估计一般利用最大 *边缘似然对数估计* 。
 
 默认 :math:`\alpha_1 = \alpha_2 =  \lambda_1 = \lambda_2 = 10^{-6}`.
 
@@ -521,20 +517,19 @@ Alpha 在这里也是作为一个变量，通过数据中估计得到.
 主动相关决策理论 - ARD
 ---------------------------------------
 
- :class:`主动相关决策理论` 和 `贝叶斯岭回归` 非常相似，
+ :class:`ARDRegression` （主动相关决策理论）和 `Bayesian Ridge Regression`_非常相似，
 但是会导致一个更加稀疏的权重 :math:`w` [1]_ [2]_。
-:class:`主动相关决策理论` 提出了一个不同于 :math:`w` 的先验假设。具体来说，就是弱化了高斯分布为球形的假设。
-它采用的是关于 :math:`w` 轴平行的椭圆高斯分布。
+ :class:`ARDRegression` 提出了一个不同的 :math:`w` 的先验假设。具体来说，就是弱化了高斯分布为球形的假设。
+它采用 :math:`w` 分布是与轴平行的椭圆高斯分布。
 
-也就是说，每个权值 :math:`w_{i}` 精确度来自于一个中心在0点，精度为 :math:`\lambda_{i}` 的分布中采样得到的。
+也就是说，每个权值 :math:`w_{i}` 从一个中心在0点，精度为 :math:`\lambda_{i}` 的高斯分布中采样得到的。
 
 .. math:: p(w|\lambda) = \mathcal{N}(w|0,A^{-1})
 
 并且 :math:`diag \; (A) = \lambda = \{\lambda_{1},...,\lambda_{p}\}`.
 
-与 `贝叶斯岭回归` 不同， 每个 :math:`w_{i}` 都有一个标准差 :math:`\lambda_i` 。所有的关于方差的系数
-:math:`\lambda_i`  和由给定的超参数 :math:`\lambda_1` 、 :math:`\lambda_2` 
-由相同的gamma分布。
+与 `Bayesian Ridge Regression`_ 不同， 每个 :math:`w_{i}` 都有一个标准差 :math:`\lambda_i` 。所有 :math:`\lambda_i` 的先验分布
+由超参数 :math:`\lambda_1` 、 :math:`\lambda_2` 确定的相同的gamma分布确定。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ard_001.png
    :target: ../auto_examples/linear_model/plot_ard.html
@@ -566,27 +561,28 @@ ARD 也被称为 *稀疏贝叶斯学习* 或
 logistic 回归
 ===================
 
-logistic 回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，logistic 回归又被称作 logit regression（logit 回归），maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（线性对数分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 将单次试验（single trial）的输出转化并描述为概率。
+logistic 回归，虽然名字里有 "回归" 二字，但实际上是解决分类问题的一类线性模型。在某些文献中，logistic 回归又被称作 logit 回归，maximum-entropy classification(MaxEnt，最大熵分类)，或 log-linear classifier（对数线性分类器）。该模型利用函数 `logistic function <https://en.wikipedia.org/wiki/Logistic_function>`_ 
+将单次试验（single trial）的可能结果输出为概率。
 
-scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了二元（binary）、一对余（one-vs-rest）及多元 logistic 回归，并带有可选的 L1 和 L2 正则化。
+scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了二分类（binary）、一对多分类（one-vs-rest）及多项式 logistic 回归，并带有可选的 L1 和 L2 正则化。
 
-若视为一优化问题，带 L2 罚项的二分类 logistic 回归要最小化以下代价函数（cost function）：
+作为优化问题，带 L2 罚项的二分类 logistic 回归要最小化以下代价函数（cost function）：
 
 .. math:: \underset{w, c}{min\,} \frac{1}{2}w^T w + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-类似地，带 L1 正则的 logistic 回归需要求解下式：
+类似地，带 L1 正则的 logistic 回归解决的是如下优化问题：
 
 .. math:: \underset{w, c}{min\,} \|w\|_1 + C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) .
 
-在 :class:`LogisticRegression` 类中实现了这些求解器: "liblinear", "newton-cg", "lbfgs", "sag" 和 "saga"。
+在 :class:`LogisticRegression` 类中实现了这些优化算法: "liblinear", "newton-cg", "lbfgs", "sag" 和 "saga"。
 
 "liblinear" 应用了坐标下降算法（Coordinate Descent, CD），并基于 scikit-learn 内附的高性能C++库 `LIBLINEAR library <http://www.csie.ntu.edu.tw/~cjlin/liblinear/>`_ 实现。不过CD算法训练的模型不是真正意义上的多分类模型，而是基于 "one-vs-rest" 思想分解了这个优化问题，为每个类别都训练了一个二元分类器。因为实现在底层使用该求解器的 :class:`LogisticRegression` 实例对象表面上看是一个多元分类器。 :func:`sklearn.svm.l1_min_c` 可以计算使用 L1 罚项时 C 的下界，以避免模型为空（即全部特征分量的权重为零）。
 
-"lbfgs", "sag" 和 "newton-cg" solvers （求解器）只支持 L2 罚项，对某些高维数据收敛更快。这些求解器的参数 `multi_class`设为 "multinomial" 即可训练一个真正的多元 logistic 回归 [5]_，其预测的概率比默认的 "one-vs-rest" 设定更为准确。
+"lbfgs", "sag" 和 "newton-cg" solvers （求解器）只支持 L2 罚项，对某些高维数据收敛更快。这些求解器的参数 `multi_class`设为 "multinomial" 即可训练一个真正的多项式 logistic 回归 [5]_，其预测的概率比默认的 "one-vs-rest" 设定更为准确。
 
 "sag" 求解器基于平均随机梯度下降算法（Stochastic Average Gradient descent） [6]_。在大数据集上的表现更快，大数据集指样本量大且特征数多。
 
-"saga" solver [7]_ 是 "sag" 的一类变体，它支持非平滑（non-smooth）的 L1 正则选项 ``penalty="l1"`` 。因此对于稀疏多元 logistic 回归 ，往往选用该求解器。
+"saga" 求解器 [7]_ 是 "sag" 的一类变体，它支持非平滑（non-smooth）的 L1 正则选项 ``penalty="l1"`` 。因此对于稀疏多项式 logistic 回归 ，往往选用该求解器。
 
 一言以蔽之，选用求解器可遵循如下规则:
 
@@ -594,7 +590,7 @@ scikit-learn 中 logistic 回归在 :class:`LogisticRegression` 类中实现了�
 Case                               Solver
 =================================  =====================================
 L1正则                             	"liblinear" or "saga"
-多元损失（multinomial loss）        	"lbfgs", "sag", "saga" or "newton-cg"
+多项式损失（multinomial loss）        	"lbfgs", "sag", "saga" or "newton-cg"
 大数据集（`n_samples`）            	"sag" or "saga"
 =================================  =====================================
 
@@ -618,17 +614,18 @@ L1正则                             	"liblinear" or "saga"
 
 .. topic:: 与 liblinear 的区别:
 
-   当 ``fit_intercept=False`` 、回归得到的 ``coef_`` 以及待预测的数据为零时， :class:`LogisticRegression` 用 ``solver=liblinear``
-   及 :class:`LinearSVC` 与直接使用外部liblinear库预测得分会有差异。这是因为，
+   当 ``fit_intercept=False`` 、拟合得到的 ``coef_`` 或者待预测的数据为零时，用 ``solver=liblinear``的 :class:`LogisticRegression` 
+   或 :class:`LinearSVC` 与直接使用外部liblinear库预测得分会有差异。这是因为，
    对于 ``decision_function`` 为零的样本， :class:`LogisticRegression` 和 :class:`LinearSVC`
    将预测为负类，而liblinear预测为正类。
    注意，设定了 ``fit_intercept=False`` ，又有很多样本使得 ``decision_function`` 为零的模型，很可能会欠拟合，其表现往往比较差。建议您设置 ``fit_intercept=True`` 并增大 ``intercept_scaling``。
 
-.. note:: **利用稀疏 logistic 回归（sparse logisitic regression）进行特征选择**
+.. note:: **利用稀疏 logistic 回归进行特征选择**
 
    带 L1 罚项的 logistic 回归 将得到稀疏模型（sparse model），相当于进行了特征选择（feature selection），详情参见 :ref:`l1_feature_selection` 。
 
- :class:`LogisticRegressionCV` 对 logistic 回归 的实现内置了交叉验证（cross-validation），可以找出最优的参数 C。"newton-cg", "sag", "saga" 和 "lbfgs" 在高维数据上更快，因为采用了热启动（warm-starting）。在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳 C 值。
+ :class:`LogisticRegressionCV` 对 logistic 回归 的实现内置了交叉验证（cross-validation），可以找出最优的参数 C。"newton-cg", "sag", "saga" 和 "lbfgs" 在高维数据上更快，因为采用了热启动（warm-starting）。
+ 在多分类设定下，若 `multi_class` 设为"ovr"，会为每类求一个最佳的C值；若 `multi_class` 设为"multinomial"，会通过交叉熵损失（cross-entropy loss）求出一个最佳 C 值。
 
 .. topic:: 参考文献：
 
@@ -656,7 +653,7 @@ L1正则                             	"liblinear" or "saga"
 Perceptron（感知器）
 ====================
 
-:class:`Perceptron` 是适用于 large scale learning（大规模学习）的一种简单算法。默认地，
+:class:`Perceptron` 是适用于大规模学习的一种简单算法。默认情况下：
 
     - 不需要设置学习率（learning rate）。
 
@@ -767,7 +764,7 @@ RANSAC： 随机抽样一致性算法（RANdom SAmple Consensus）
 
 随机抽样一致性算法（RANdom SAmple Consensus, RANSAC）利用全体数据中局内点（inliers）的一个随机子集拟合模型。
 
-RANSAC是一种非确定性算法，以一定概率输出一个可能的合理结果，依赖于迭代次数（参数 `max_trials` ）。这种算法主要解决线性或非线性回归问题，在计算机视觉摄影测量领域尤为流行。
+RANSAC是一种非确定性算法，以一定概率输出一个可能的合理结果，依赖于迭代次数（参数 `max_trials` ）。这种算法主要解决线性或非线性回归问题，在计算机视觉摄影测绘领域尤为流行。
 
 算法从全体样本输入中分出一个局内点集合，全体样本可能由于测量错误或对数据的假设错误而含有噪点、离群点。最终的模型仅从这个局内点集合中得出。
 
@@ -811,10 +808,10 @@ set）预测。
 
 .. _theil_sen_regression:
 
-Theil-Sen 预估器: 广义中值估计
+Theil-Sen 预估器: 广义中值估计器（generalized-median-based estimator）
 -----------------------------------------------------------------------------------------
 
-:class:`TheilSenRegressor` 估计器：使用中位数在多个维度推广，因此对多维离散值是有帮助，但问题是，随着维数的增加，估计器的准确性在迅速下降。准确性的丢失，导致在高维上的估计值比不上普通的最小二乘法。
+:class:`TheilSenRegressor` 估计器：使用中位数在多个维度泛化，对多元异常值更具有鲁棒性，但问题是，随着维数的增加，估计器的准确性在迅速下降。准确性的丢失，导致在高维上的估计值比不上普通的最小二乘法。
 
 .. topic:: 示例:
 
@@ -828,16 +825,17 @@ Theil-Sen 预估器: 广义中值估计
 算法理论细节
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:class:`TheilSenRegressor` 媲美 :ref:`Ordinary Least Squares (OLS) <ordinary_least_squares>` （普通最小二乘法（OLS））渐近效率和无偏估计。在对比 OLS, Theil-Sen 是一种非参数方法，这意味着它没有对底层数据的分布假设。由于 Theil-Sen 是基于中位数的估计，它是更适合的对损坏的数据。在单变量的设置，Theil-Sen 在一个简单的线性回归，这意味着它可以容忍任意损坏的数据高达 29.3% 的情况下，约 29.3% 的一个崩溃点。
+:class:`TheilSenRegressor` 在渐近效率和无偏估计方面足以媲美 :ref:`Ordinary Least Squares (OLS) <ordinary_least_squares>` （普通最小二乘法（OLS））。与 OLS 不同的是, Theil-Sen 是一种非参数方法，这意味着它没有对底层数据的分布假设。由于 Theil-Sen 是基于中值的估计，它更适合于损坏的数据即离群值。
+在单变量的设置中，Theil-Sen 在简单的线性回归的情况下，其崩溃点大约29.3% ，这意味着它可以容忍任意损坏的数据高达 29.3%。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_theilsen_001.png
    :target: ../auto_examples/linear_model/plot_theilsen.html
    :align: center
    :scale: 50%
 
-在 scikit-learn 中  :class:`TheilSenRegressor` 实施如下的学习推广到多元线性回归模型 [#f1]_ 利用空间中这是一个概括的中位数多维度 [#f2]_ 。
+scikit-learn 中实现的 :class:`TheilSenRegressor` 是多元线性回归模型的推广 [#f1]_ ，利用了空间中值方法，它是多维中值的推广 [#f2]_ 。
 
-在时间复杂度和空间复杂度，根据 Theil-Sen 量表
+关于时间复杂度和空间复杂度，Theil-Sen 的尺度根据
 
 .. math::
     \binom{n_{samples}}{n_{subsamples}}
@@ -859,15 +857,15 @@ Theil-Sen 预估器: 广义中值估计
 Huber 回归
 ------------------------------
 
-:class:`HuberRegressor` 不同，因为它适用于 :class:`Ridge` 损耗的样品被分类为离群值。如果这个样品的绝对误差小于某一阈值，样品就分为一层。
-它不同于 :class:`TheilSenRegressor` 和 :class:`RANSACRegressor` 因为它无法忽略对离群值的影响，但对它们的权重较小。
+:class:`HuberRegressor` 与 :class:`Ridge`不同，因为它对于被分为异常值的样本应用了一个线性损失。如果这个样品的绝对误差小于某一阈值，样品就被分为内围值。
+它不同于 :class:`TheilSenRegressor` 和 :class:`RANSACRegressor` ，因为它没有忽略异常值的影响，并分配给它们较小的权重。
 
 .. figure:: /auto_examples/linear_model/images/sphx_glr_plot_huber_vs_ridge_001.png
    :target: ../auto_examples/linear_model/plot_huber_vs_ridge.html
    :align: center
    :scale: 50%
 
-这个 :class:`HuberRegressor` 最小化损失函数是由
+这个 :class:`HuberRegressor` 最小化的损失函数是：
 
 .. math::
 
@@ -886,11 +884,11 @@ Huber 回归
 
 注意
 -----------------
-:class:`HuberRegressor` 与将损失设置为 `huber` 的 :class:`SGDRegressor` 在以下方面的使用方式上是不同的。
+:class:`HuberRegressor` 与将损失设置为 `huber` 的 :class:`SGDRegressor` 并不相同，体现在以下方面的使用方式上。
 
-- :class:`HuberRegressor` 是标度不变性的. 一旦设置了 ``epsilon`` , 通过不同的值向上或向下缩放 ``X`` 和 ``y`` ，就会跟以前一样对异常值产生同样的键壮性。相比 :class:`SGDRegressor` 其中 ``epsilon`` 在 ``X`` 和 ``y`` 是缩放的时候必须再次设置。
+- :class:`HuberRegressor` 是标度不变性的. 一旦设置了 ``epsilon`` , 通过不同的值向上或向下缩放 ``X`` 和 ``y`` ，就会跟以前一样对异常值产生同样的鲁棒性。相比 :class:`SGDRegressor` 其中 ``epsilon`` 在 ``X`` 和 ``y`` 被缩放的时候必须再次设置。
 
-- :class:`HuberRegressor` 应该更有效地使用在小样本数据，同时 :class:`SGDRegressor` 需要在训练数据的次数来产生相同的键壮性。
+- :class:`HuberRegressor` 应该更有效地使用在小样本数据，同时 :class:`SGDRegressor` 需要一些训练数据的passes来产生一致的鲁棒性。
 
 .. topic:: 示例:
 
@@ -900,7 +898,7 @@ Huber 回归
 
   * Peter J. Huber, Elvezio M. Ronchetti: Robust Statistics, Concomitant scale estimates, pg 172
 
-另外，这个估计是不同于 R 实现的 Robust Regression (http://www.ats.ucla.edu/stat/r/dae/rreg.htm) 因为 R 不实现加权最小二乘实现每个样本上给出多少剩余的基础重量大于某一阈值。
+另外，这个估计是不同于 R 实现的 Robust Regression (http://www.ats.ucla.edu/stat/r/dae/rreg.htm) ，因为 R 实现加权最小二乘，权重考虑到每个样本并基于残差大于某一阈值的量。
 
 .. _polynomial_regression:
 
@@ -919,24 +917,24 @@ Huber 回归
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 x_1 + w_2 x_2 + w_3 x_1 x_2 + w_4 x_1^2 + w_5 x_2^2
 
-（这有时候是令人惊讶的）观察，这还是 *still a linear model* : 看到这个，想象创造一个新的变量
+观察到这 *还是一个线性模型* （这有时候是令人惊讶的）: 看到这个，想象创造一个新的变量
 
 .. math::  z = [x_1, x_2, x_1 x_2, x_1^2, x_2^2]
 
-有了这些数据的重新标记的数据，我们的问题就可以写了。
+有了这些重新标记的数据，我们可以将问题写成
 
 .. math::    \hat{y}(w, x) = w_0 + w_1 z_1 + w_2 z_2 + w_3 z_3 + w_4 z_4 + w_5 z_5
 
-我们看到，导致 *polynomial regression* 是线性模型中的同一类，我们认为以上（即模型是线性 ），可以用同样的方法解决。通过考虑在用这些基函数建立的高维空间中的线性拟合，该模型具有灵活性，可以适应更广泛的数据范围。
+我们看到，所得的 *polynomial regression* 与我们上文所述线性模型是同一类（即关于 :math:`w` 是线性的），因此可以用同样的方法解决。通过用这些基函数建立的高维空间中的线性拟合，该模型具有灵活性，可以适应更广泛的数据范围。
 
-这里是一个例子，应用这个想法，一维数据，使用不同程度的多项式特征:
+这里是一个例子，使用不同程度的多项式特征将这个想法应用于一维数据:
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_polynomial_interpolation_001.png
    :target: ../auto_examples/linear_model/plot_polynomial_interpolation.html
    :align: center
    :scale: 50%
 
-这个图是使用 :class:`PolynomialFeatures` 预创建。该预处理器将输入数据矩阵转换为给定度的新数据矩阵。它可以使用如下::
+这个图是使用 :class:`PolynomialFeatures` 预创建。该预处理器将输入数据矩阵转换为给定度的新数据矩阵。使用方法如下::
 
     >>> from sklearn.preprocessing import PolynomialFeatures
     >>> import numpy as np
@@ -953,7 +951,7 @@ Huber 回归
 
 ``X`` 的特征已经从 :math:`[x_1, x_2]` 转换到 :math:`[1, x_1, x_2, x_1^2, x_1 x_2, x_2^2]`, 并且现在可以用在任何线性模型。
 
-这种预处理可以通过 :ref:`Pipeline <pipeline>` 工具进行简化。可以创建一个表示简单多项式回归的单个对象，并使用如下所示::
+这种预处理可以通过 :ref:`Pipeline <pipeline>` 工具进行简化。可以创建一个表示简单多项式回归的单个对象，使用方法如下所示::
 
     >>> from sklearn.preprocessing import PolynomialFeatures
     >>> from sklearn.linear_model import LinearRegression
@@ -970,9 +968,9 @@ Huber 回归
 
 利用多项式特征训练的线性模型能够准确地恢复输入多项式系数。
 
-在某些情况下，没有必要包含任何单个特征的更高的幂，但只需要在大多数 :math:`d` 不同的特征上相乘的所谓 *interaction features（交互特征）* 。这些可以与设定的 ``interaction_only=True`` 的 :class:`PolynomialFeatures` 得到。
+在某些情况下，没有必要包含任何单个特征的更高的幂，只需要相乘最多 :math:`d` 个不同的特征即可，所谓 *interaction features（交互特征）* 。这些可通过设定 :class:`PolynomialFeatures` 的 ``interaction_only=True`` 得到。
 
-例如，当处理布尔属性， :math:`x_i^n = x_i` 所有 :math:`n` ，因此是无用的；但 :math:`x_i x_j` 代表两布尔合取。这样我们就可以用线性分类器解决异或问题::
+例如，当处理布尔属性，对于所有 :math:`n`  :math:`x_i^n = x_i` ，因此是无用的；但 :math:`x_i x_j` 代表两布尔结合。这样我们就可以用线性分类器解决异或问题::
 
     >>> from sklearn.linear_model import Perceptron
     >>> from sklearn.preprocessing import PolynomialFeatures
