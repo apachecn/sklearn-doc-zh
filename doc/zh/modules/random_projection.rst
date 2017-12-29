@@ -36,9 +36,9 @@ Johnson-Lindenstrauss 辅助定理
 支撑随机投影效率的主要理论成果是`Johnson-Lindenstrauss lemma (quoting Wikipedia)
 <https://en.wikipedia.org/wiki/Johnson%E2%80%93Lindenstrauss_lemma>`_:
 
-  在数学中，Johnson-Lindenstrauss引理是考虑轻度变形(内置点从高维到低维欧式空间)在内的结果.
-  引理阐释了高维空间下的可以小的点集可以内嵌到非常低维的空间，这种方式下点之间的距离几乎全部被保留。
-  内嵌所用到的隐射至少是Lipschitz,而且可以被当做正交投影。
+  在数学中，johnson - lindenstrauss 引理是一种将高维的点从高维到低维欧几里得空间的低失真嵌入的方案。
+  引理阐释了高维空间下的一小部分的点集可以内嵌到非常低维的空间，这种方式下点之间的距离几乎全部被保留。
+  内嵌所用到的映射至少符合 Lipschitz 条件,甚至可以被当做正交投影。
 
 有了样本数量，
 :func:`sklearn.random_projection.johnson_lindenstrauss_min_dim` 会保守估计随机子空间的最小大小来保证随机投影导致的变形在一定范围内：
@@ -49,7 +49,7 @@ Johnson-Lindenstrauss 辅助定理
   >>> johnson_lindenstrauss_min_dim(n_samples=1e6, eps=[0.5, 0.1, 0.01])
   array([    663,   11841, 1112658])
   >>> johnson_lindenstrauss_min_dim(n_samples=[1e4, 1e5, 1e6], eps=0.1)
-  array([ 7894,  9868, 11841])
+  array([ 7894,  9868, 11841])`
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_johnson_lindenstrauss_bound_001.png
    :target: ../auto_examples/plot_johnson_lindenstrauss_bound.html

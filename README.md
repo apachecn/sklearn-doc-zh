@@ -97,8 +97,20 @@ github: <https://github.com/apachecn/scikit-learn-doc-zh/>
 * [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
 * [@夜神月](@qq760514101)（夜神月）
 * [@liyangbit](https://github.com/liyangbit)（Lemon）
+* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
 
 **校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
+* [@FontTian](https://github.com/FontTian)（FontTian）
+* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
+* [@caopeirui](https://github.com/caopeirui)（Veyron C）
+* [@HelloSilicat](https://github.com/HelloSilicat)（Jialiang Pei）
+* [@AnybodyHome](https://github.com/AnybodyHome)（loop）
+* [@RyanZhiNie](https://github.com/RyanZhiNie)（Zhi Nie）
+* [@zehuichen123](https://github.com/zehuichen123)（loveSnowBest）
+* [@hlxstc](https://github.com/hlxstc)（Jokers）
+* [@NellyLuo](https://github.com/NellyLuo)（NellyLuo）
+* [@yuezhao9210](https://github.com/yuezhao9210)（Yue Zhao）
+* [@why2lyj](https://github.com/why2lyj)（Snow Wong）
 * [@pan8664716](https://github.com/pan8664716)（pan8664716）
 * [@xrj](https://github.com/xrj)（xrj）
 * [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）

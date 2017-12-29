@@ -262,44 +262,44 @@
                     <div id="testimonials_carousel" class="carousel slide">
                         <div class="carousel-inner">
                             <div class="active item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/inria.png" class="thumbnail" />
+                              <img src="_images/inria.png" class="thumbnail" />
                               <p>
                               <em>"我们使用 scikit-learn 来支持前沿的基础研究 [...]"</em>
                               </p>
                             </div>
                             <div class="item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/spotify.png" class="thumbnail" />
+                              <img src="_images/spotify.png" class="thumbnail" />
                               <p>
                               <em>"我认为这是迄今为止我看过的最精心设计的ML套件."</em>
                               </p>
                             </div>
                             <div class="item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/change-logo.png" class="thumbnail" />
+                              <img src="_images/change-logo.png" class="thumbnail" />
                               <p>
                               <em>"scikit-learn 的易用性，性能和实现的各种算法已被证明是非常宝贵的 [...]."</em>
                               </p>
                             </div>
                             <div class="item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/evernote.png" class="thumbnail" />
+                              <img src="_images/evernote.png" class="thumbnail" />
                               <p>
                               <em>"对于这些任务，我们依靠 Python 的优秀 scikit-learn 软件包."</em>
                               </p>
                             </div>
                             <div class="item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/telecomparistech.jpg"
+                              <img src="_images/telecomparistech.jpg"
                                    class="thumbnail" />
                               <p>
                               <em>"scikit-learn 的巨大好处是它的快速学习曲线 [...]"</em>
                               </p>
                             </div>
                             <div class="item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/aweber.png" class="thumbnail" />
+                              <img src="_images/aweber.png" class="thumbnail" />
                               <p>
                               <em>"它允许我们做出我们不会完成的所有东西."</em>
                               </p>
                             </div>
                             <div class="item">
-                              <img src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_images/yhat.png" class="thumbnail" />
+                              <img src="_images/yhat.png" class="thumbnail" />
                               <p>
                               <em>"scikit学习使得在任何人都可以访问的Python中进行高级分析."</em>
                               </p>
@@ -325,14 +325,14 @@
               </div>
               <div class="span6">
                  <a class="reference internal" href="about.html#funding" style="text-decoration: none; white-space: nowrap" >
-                       <img id="index-funding-logo-big" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/inria-small.png" title="INRIA">
-                   <img id="index-funding-logo-small" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/google.png" title="Google">
+                       <img id="index-funding-logo-big" src="_static/img/inria-small.png" title="INRIA">
+                   <img id="index-funding-logo-small" src="_static/img/google.png" title="Google">
                    <!--Due to Télécom ParisTech's logo text being smaller, a style has been added to improve readability-->
-                   <img id="index-funding-logo-small" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/telecom.png" title="Télécom ParisTech" style="max-height: 36px">
-                   <img id="index-funding-logo-small" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/FNRS-logo.png" title="FNRS">
-                   <img id="index-funding-logo-small" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/sloan_logo.jpg" title="Alfred P. Sloan Foundation" style="max-height: 36px">
-                   <img id="index-funding-logo-small" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/columbia.png" title="Columbia University" style="max-height: 36px;">
-                   <img id="index-funding-logo-small" src="http://sklearn.static.apachecn.org/doc/cn/0.19.0/_static/img/sydney-stacked.jpeg" title="The University of Sydney" style="max-height: 36px;">
+                   <img id="index-funding-logo-small" src="_static/img/telecom.png" title="Télécom ParisTech" style="max-height: 36px">
+                   <img id="index-funding-logo-small" src="_static/img/FNRS-logo.png" title="FNRS">
+                   <img id="index-funding-logo-small" src="_static/img/sloan_logo.jpg" title="Alfred P. Sloan Foundation" style="max-height: 36px">
+                   <img id="index-funding-logo-small" src="_static/img/columbia.png" title="Columbia University" style="max-height: 36px;">
+                   <img id="index-funding-logo-small" src="_static/img/sydney-stacked.jpeg" title="The University of Sydney" style="max-height: 36px;">
                  </a>
              </div>
              <div class="span3">
