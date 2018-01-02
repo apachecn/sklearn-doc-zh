@@ -9,14 +9,14 @@
 
 .. warning::
 
-    此实现不适用于大规模数据应用。 特别是 scikit-learn 不支持 GPU。如果想要提高运行速度并使用基于 GPU 的实现以及为构建深度学习架构提供更多灵活性的框架，请参阅 :ref:`related_projects`。
+    此实现不适用于大规模数据应用。 特别是 scikit-learn 不支持 GPU。如果想要提高运行速度并使用基于 GPU 的实现以及为构建深度学习架构提供更多灵活性的框架，请参阅 :ref:`related_projects` 。
 
 .. _multilayer_perceptron:
 
 多层感知器
 ======================
 
- **多层感知器(MLP)**是一种监督学习算法，通过在数据集上训练来学习函数 :math:`f(\cdot): R^m \rightarrow R^o`，其中 :math:`m` 是输入的维数，:math:`o` 是输出的维数。 给定一组特征 :math:`X = {x_1, x_2, ..., x_m}` 和标签 :math:`y` ，它可以学习用于分类或回归的非线性函数。 与逻辑回归不同的是，在输入层和输出层之间，可以有一个或多个非线性层，称为隐藏层。 图1 展示了一个具有标量输出的单隐藏层 MLP。
+**多层感知器(MLP)** 是一种监督学习算法，通过在数据集上训练来学习函数 :math:`f(\cdot): R^m \rightarrow R^o`，其中 :math:`m` 是输入的维数，:math:`o` 是输出的维数。 给定一组特征 :math:`X = {x_1, x_2, ..., x_m}` 和标签 :math:`y` ，它可以学习用于分类或回归的非线性函数。 与逻辑回归不同的是，在输入层和输出层之间，可以有一个或多个非线性层，称为隐藏层。 图1 展示了一个具有标量输出的单隐藏层 MLP。
 
 .. figure:: ../images/multilayerperceptron_network.png
    :align: center
@@ -26,7 +26,7 @@
 
 最左层的输入层由一组代表输入特征的神经元 :math:`\{x_i | x_1, x_2, ..., x_m\}` 组成。 每个隐藏层中的神经元将前一层的值进行加权线性求和转换 :math:`w_1x_1 + w_2x_2 + ... + w_mx_m` ，再通过非线性激活函数 :math:`g(\cdot):R \rightarrow R` - 比如双曲正切函数 tanh 。 输出层接收到的值是最后一个隐藏层的输出经过变换而来的。
 
-该模块包含公共属性 ``coefs_`` 和 ``intercepts_``。``coefs_`` 是一系列权重矩阵，其中下标为 :math:`i` 的权重矩阵表示第 :math:`i` 层和第 :math:`i+1` 层之间的权重。 ``intercepts_`` 是一系列偏置向量，其中的下标为 :math:`i` 的向量表示添加到第 :math:`i+1` 层的偏置值。
+该模块包含公共属性 ``coefs_`` 和 ``intercepts_`` 。 ``coefs_`` 是一系列权重矩阵，其中下标为 :math:`i` 的权重矩阵表示第 :math:`i` 层和第 :math:`i+1` 层之间的权重。 ``intercepts_`` 是一系列偏置向量，其中的下标为 :math:`i` 的向量表示添加到第 :math:`i+1` 层的偏置值。
 
 多层感知器的优点:
 
@@ -51,7 +51,7 @@
 
  :class:`MLPClassifier` 类实现了通过 `Backpropagation <http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm>`_ 进行训练的多层感知器（MLP）算法。
 
-MLP 在两个 array 上进行训练:大小为 (n_samples, n_features) 的 array X 储存表示训练样本的浮点型特征向量; 大小为(n_samples,) 的 array y 储存训练样本的目标值（类别标签）::
+MLP 在两个 array 上进行训练:大小为 (n_samples, n_features) 的 array X 储存表示训练样本的浮点型特征向量; 大小为 (n_samples,) 的 array y 储存训练样本的目标值（类别标签）::
 
     >>> from sklearn.neural_network import MLPClassifier
     >>> X = [[0., 0.], [1., 1.]]
@@ -73,7 +73,7 @@ MLP 在两个 array 上进行训练:大小为 (n_samples, n_features) 的 array 
     >>> clf.predict([[2., 2.], [-1., -2.]])
     array([1, 0])
 
-MLP 可以为训练数据拟合一个非线性模型。``clf.coefs_`` 包含了构建模型的权值矩阵::
+MLP 可以为训练数据拟合一个非线性模型。 ``clf.coefs_`` 包含了构建模型的权值矩阵::
 
     >>> [coef.shape for coef in clf.coefs_]
     [(2, 5), (5, 2), (2, 1)]
@@ -88,7 +88,7 @@ MLP 算法使用的是反向传播的方式。 更准确地说，它使用了通
 
 :class:`MLPClassifier` 通过应用 `Softmax <https://en.wikipedia.org/wiki/Softmax_activation_function>`_ 作为输出函数来支持多分类。
 
-此外，该模型支持 :ref:`多标签分类 <multiclass>`，一个样本可能属于多个类别。 对于每个类，原始输出经过 logistic 函数变换后，大于或等于 0.5 的值将进为 1，否则为 0。 对于样本的预测输出，值为 1 的索引位置表示该样本的分类类别::
+此外，该模型支持 :ref:`多标签分类 <multiclass>` ，一个样本可能属于多个类别。 对于每个类，原始输出经过 logistic 函数变换后，大于或等于 0.5 的值将进为 1，否则为 0。 对于样本的预测输出，值为 1 的索引位置表示该样本的分类类别::
 
     >>> X = [[0., 0.], [1., 1.]]
     >>> y = [[0, 1], [1, 1]]
@@ -108,7 +108,7 @@ MLP 算法使用的是反向传播的方式。 更准确地说，它使用了通
     >>> clf.predict([[0., 0.]])
     array([[0, 1]])
 
-更多内容请参阅下面的示例和文档 :meth:`MLPClassifier.fit`。
+更多内容请参阅下面的示例和文档 :meth:`MLPClassifier.fit` 。
 
 .. topic:: 示例:
 
@@ -118,7 +118,7 @@ MLP 算法使用的是反向传播的方式。 更准确地说，它使用了通
 回归
 ==========
 
-:class:`MLPRegressor` 类多层感知器（MLP）的实现，在使用反向传播进行训练时的输出层没有使用激活函数，也可以看作是使用恒等函数(identity function)作为激活函数。 因此，它使用平方误差作为损失函数，输出是一组连续值。
+:class:`MLPRegressor` 类多层感知器（MLP）的实现，在使用反向传播进行训练时的输出层没有使用激活函数，也可以看作是使用恒等函数（identity function）作为激活函数。 因此，它使用平方误差作为损失函数，输出是一组连续值。
 
 :class:`MLPRegressor` 还支持多输出回归，其中一个样本可以有多个目标值。
 
@@ -144,14 +144,14 @@ MLP 算法使用的是反向传播的方式。 更准确地说，它使用了通
 MLP 使用 `Stochastic Gradient Descent（随机梯度下降）(SGD)
 <https://en.wikipedia.org/wiki/Stochastic_gradient_descent>`_,
 `Adam <http://arxiv.org/abs/1412.6980>`_, 或者 `L-BFGS <https://en.wikipedia.org/wiki/Limited-memory_BFGS>`__ 进行训练。
-随机梯度下降(SGD) 使用关于需要适应的一个参数的损失函数的梯度来更新参数，即
+随机梯度下降（SGD） 使用关于需要适应的一个参数的损失函数的梯度来更新参数，即
 
 .. math::
 
     w \leftarrow w - \eta (\alpha \frac{\partial R(w)}{\partial w}
     + \frac{\partial Loss}{\partial w})
 
-其中 :math:`\eta` 是控制训练过程参数更新步长的学习率( learning rate )。 :math:`Loss` 是损失函数( loss function )。
+其中 :math:`\eta` 是控制训练过程参数更新步长的学习率（learning rate）。 :math:`Loss` 是损失函数（loss function）。
 
 更多细节可以在这个文档中找到 `SGD <http://scikit-learn.org/stable/modules/sgd.html>`_ 。
 
@@ -159,12 +159,12 @@ Adam 类似于 SGD，因为它是 stochastic optimizer （随机优化器），�
 
 使用 SGD 或 Adam ，训练过程支持在线模式和小批量学习模式。
 
-L-BFGS 是利用Hessian矩阵来近似函数的二阶偏导数的求解器，它使用Hessian的逆矩阵来近似进行参数更新。 该实现使用 Scipy 版本的 `L-BFGS
+L-BFGS 是利用 Hessian 矩阵来近似函数的二阶偏导数的求解器，它使用 Hessian 的逆矩阵来近似进行参数更新。 该实现使用 Scipy 版本的 `L-BFGS
 <http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html>`_。
 
 如果所选择的方法是 'L-BFGS'，训练过程不支持在线学习模式和小批量学习模式。
 
-复杂性
+复杂度
 ==========
 
 假设有 :math:`n` 个训练样本， :math:`m` 个特征， :math:`k` 个隐藏层，每个包含 :math:`h` 个神经元 - 为简单起见， :math:`o` 个输出神经元。 反向传播的时间复杂度是 :math:`O(n\cdot m \cdot h^k \cdot o \cdot i)` ，其中 :math:`i` 是迭代次数。 由于反向传播具有高时间复杂性，最好以较少数量的隐藏层神经元和较少的隐藏层个数开始训练。
@@ -172,16 +172,16 @@ L-BFGS 是利用Hessian矩阵来近似函数的二阶偏导数的求解器，它
 数学公式
 ========================
 
-给出一组训练样本 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n` ， :math:`y_i \in \{0, 1\}`，一个单隐藏层单神经元 MLP 学习到的函数是 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` ，其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}` 是模型参数.
+给出一组训练样本 :math:`(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)` 其中 :math:`x_i \in \mathbf{R}^n` ， :math:`y_i \in \{0, 1\}` ，一个单隐藏层单神经元 MLP 学习到的函数是 :math:`f(x) = W_2 g(W_1^T x + b_1) + b_2` ，其中 :math:`W_1 \in \mathbf{R}^m` 和 :math:`W_2, b_1, b_2 \in \mathbf{R}` 是模型参数.
 :math:`W_1, W_2` 分别是输入层与隐藏层之间和隐藏层与输出层之间的权重， :math:`b_1, b_2` 分别是隐藏层和输出层的偏置值.
 :math:`g(\cdot) : R \rightarrow R` 是激活函数，默认为双曲正切函数。 具体形式如下，
 
 .. math::
       g(z)= \frac{e^z-e^{-z}}{e^z+e^{-z}}
 
-对于二分类， :math:`f(x)` 经过 logistic 函数 :math:`g(z)=1/(1+e^{-z})` 得到 0 到 1 之间的输出值。 阈值设置为0.5 ，输出大于等于 0.5 的样本分到 positive class （正类），其他的分为 negative class （负类）。
+对于二分类， :math:`f(x)` 经过 logistic 函数 :math:`g(z)=1/(1+e^{-z})` 得到 0 到 1 之间的输出值。 阈值设置为 0.5 ，输出大于等于 0.5 的样本分到 positive class （正类），其他的分为 negative class （负类）。
 
-如果多于两类，则 :math:`f(x)` 本身将是一个大小为(n_classes,)的向量。 它需要经过 softmax 函数而不是 logistic 函数进行变换，具体形式如下，
+如果多于两类，则 :math:`f(x)` 本身将是一个大小为 (n_classes,) 的向量。 它需要经过 softmax 函数而不是 logistic 函数进行变换，具体形式如下，
 
 .. math::
       \text{softmax}(z)_i = \frac{\exp(z_i)}{\sum_{l=1}^k\exp(z_l)}
