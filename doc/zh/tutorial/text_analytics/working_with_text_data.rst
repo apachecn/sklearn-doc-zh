@@ -167,7 +167,7 @@
   >>> X_train_counts.shape
   (2257, 35788)
 
-:class:`CountVectorizer` 支持单词或者连续字符的N-gram 模型的计数。
+:class:`CountVectorizer` 支持单词或者连续字符的 N-gram 模型的计数。
 一旦拟合， 向量化程序就会构建一个包含特征索引的字典::
 
   >>> count_vect.vocabulary_.get(u'algorithm')
@@ -218,7 +218,7 @@
 ---------------------
 
 现在我们有了我们的特征，我们可以训练一个分类器来预测一个帖子所属的类别。
-让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始. 该分类器为该任务提供了一个好的准线（baseline）.
+让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始. 该分类器为该任务提供了一个好的基准（baseline）.
 ``scikit-learn`` 包含了该分类器的若干变种；最适用在该问题上的变种是多项式分类器::
 
   >>> from sklearn.naive_bayes import MultinomialNB
@@ -387,7 +387,7 @@
 
 这时候可以任意更改练习的代码而不会破坏原来的练习指导。
 
-然后启动 ipython 交互环境，并运行以下python脚本::
+然后启动 ipython 交互环境，并运行以下 python 脚本::
 
   [1] %run workspace/exercise_XX_script.py arg1 arg2 arg3
 
@@ -435,7 +435,7 @@ ipython 命令行::
 快速链接
 ------------------
 
-当你完成这个章节时，下面是几个建议来帮助你进一步对scikit-learn的理解:
+当你完成这个章节时，下面是几个建议来帮助你对 scikit-learn 有进一步的理解:
 
 
 * 尝试使用 :class:`CountVectorizer` 类下的 ``analyzer`` 以及 ``token normalisation`` 。
