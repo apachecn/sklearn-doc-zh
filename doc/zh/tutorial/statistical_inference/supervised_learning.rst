@@ -98,7 +98,7 @@ K近邻分类器
     糖尿病数据集包括442名患者的10个生理特征(年龄，性别，体重，血压)，和一年后的疾病级别指标::
 
         >>> diabetes = datasets.load_diabetes()
-        >>> diabetes_X_train = diabetes.data[-20]
+        >>> diabetes_X_train = diabetes.data[:-20]
         >>> diabetes_X_test  = diabetes.data[-20:]
         >>> diabetes_y_train = diabetes.target[:-20]
         >>> diabetes_y_test  = diabetes.target[-20:]
