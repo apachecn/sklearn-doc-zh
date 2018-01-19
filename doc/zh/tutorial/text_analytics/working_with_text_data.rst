@@ -218,7 +218,7 @@
 ---------------------
 
 现在我们有了我们的特征，我们可以训练一个分类器来预测一个帖子所属的类别。
-让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始. 该分类器为该任务提供了一个好的基准（baseline）.
+让我们从 :ref:`朴素贝叶斯 <naive_bayes>` 分类器开始. 该分类器为该任务提供了一个好的准线（baseline）.
 ``scikit-learn`` 包含了该分类器的若干变种；最适用在该问题上的变种是多项式分类器::
 
   >>> from sklearn.naive_bayes import MultinomialNB
@@ -332,7 +332,7 @@
 我们已经接触了类似于 ``TfidfTransformer`` 中 ``use_idf`` 这样的参数 ，分类器也有许多参数；
 比如， ``MultinomialNB`` 包含了平滑参数 ``alpha`` 以及 ``SGDClassifier`` 有惩罚参数 ``alpha`` 和目标函数中的可设置的损失以及惩罚因子（请翻阅该模组说明，或者更多信息请使用 python 的 ``help`` 文档）。
 
-不是调整 chain（链）的各种组件的参数，相反，通过对构建巨大的可能值的网格从而对最佳参数的穷尽搜索是可能的。
+不是调整 chain（链）的各种组件的参数，相反，通过构建巨大的可能值的网格从而对最佳参数的穷尽搜索是可能的。
 我们尝试所有情况的分类器：使用词袋或者二元模型，使用或者不使用 idf ，在线性 SVM 上设置 0.01 或者 0.001 的惩罚参数::
 
   >>> from sklearn.model_selection import GridSearchCV
@@ -347,7 +347,7 @@
 
   >>> gs_clf = GridSearchCV(text_clf, parameters, n_jobs=-1)
 
-网格搜索的操作跟 ``scikit-learn`` 中常见的模型是类似的。
+网格搜索的操作跟 ``scikit-learn`` 中常见的模型的操作是类似的。
 让我们来选择训练集中的一小部分进行搜索来加速计算::
 
   >>> gs_clf = gs_clf.fit(twenty_train.data[:400], twenty_train.target[:400])
@@ -375,7 +375,7 @@
 .. note:
 
   ``GridSearchCV`` 对象也保存了最好的分类器在 ``best_estimator_`` 属性中。
-  在这个例子中，对训练一个仅仅有 400 个文档的子数据集没有什么起多大作用的。
+  在这个例子中，对训练一个仅仅有 400 个文档的子数据集没有起多大作用的。
 
 
 练习
@@ -435,7 +435,7 @@ ipython 命令行::
 快速链接
 ------------------
 
-当你完成这个章节时，下面是几个建议来帮助你进一步对scikit-learn的启发:
+当你完成这个章节时，下面是几个建议来帮助你进一步对scikit-learn的理解:
 
 
 * 尝试使用 :class:`CountVectorizer` 类下的 ``analyzer`` 以及 ``token normalisation`` 。
