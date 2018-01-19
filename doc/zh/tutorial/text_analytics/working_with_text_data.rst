@@ -429,7 +429,7 @@ ipython 命令行::
 
 使用前面的练习结果以及标准库的 ``cPickle``模块，编写一个命令行工具来检测由 ``stdin`` 输入的文本语言。如果输入的文本是英文的话，请评估该文本的极性（积极的还是消极的）。
 
-加分项：该工具对其预测能给出置信水平。
+加分项：该工具对其预测给出置信水平。
 
 
 快速链接
@@ -440,12 +440,12 @@ ipython 命令行::
 
 * 尝试使用 :class:`CountVectorizer` 类下的 ``analyzer`` 以及 ``token normalisation`` 。
 
-* 如果你没有标签，使用 :ref:`聚类 <sphx_glr_auto_examples_text_document_clustering.py>` 来解决你的问题。
+* 如果你没有标签，尝试使用 :ref:`聚类 <sphx_glr_auto_examples_text_document_clustering.py>` 来解决你的问题。
 
 * 如果每篇文章有多个标签，请参考 :ref:`多类别和多标签部分 <multiclass>` _ 。
 
-* 使用 :ref:`Truncated SVD <LSA>` 解决 `隐语义分析 <https://en.wikipedia.org/wiki/Latent_semantic_analysis>`_.
+* 尝试使用 :ref:`Truncated SVD <LSA>` 解决 `隐语义分析 <https://en.wikipedia.org/wiki/Latent_semantic_analysis>`_.
 
-* 使用 :ref:`Out-of-core Classification <sphx_glr_auto_examples_applications_plot_out_of_core_classification.py>` 来学习数据，不会存入计算机的主存储器中。
+* 使用 :ref:`Out-of-core Classification <sphx_glr_auto_examples_applications_plot_out_of_core_classification.py>` 来学习不会存入计算机的主存储器的数据。
 
 * 使用 :ref:`Hashing Vectorizer <hashing_vectorizer>` 来节省内存，以代替 :class:`CountVectorizer` 。
