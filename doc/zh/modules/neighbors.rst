@@ -10,23 +10,23 @@
 
 :mod:`sklearn.neighbors` 提供了 neighbors-based (基于邻居的) 无监督学习以及监督学习方法的功能。
 无监督的最近邻是许多其它学习方法的基础，尤其是 manifold learning (流行学习) 和 spectral clustering (谱聚类)。
-受监督的 neighbors-based (基于邻居的) 学习分为两种： `classification`_ （分类）针对的是具有离散标签的数据，`regression`_ （回归）针对的是具有连续标签的数据。
+neighbors-based (基于邻居的) 监督学习分为两种： `classification`_ （分类）针对的是具有离散标签的数据，`regression`_ （回归）针对的是具有连续标签的数据。
 
-最近邻方法的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。
+最近邻方法背后的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，然后从这些点中预测标签。
 这些点的数量可以是用户自定义的常量（K-最近邻学习），
-页可以根据不同的点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何方式来度量：
+也可以根据不同的点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何度量来衡量：
 standard Euclidean distance（标准欧式距离）是最常见的选择。Neighbors-based（基于邻居的）方法被称为 *非泛化* 机器学习方法，
 因为它们只是简单地"记住"了其所有的训练数据（可能转换为一个快速索引结构，如 :ref:`Ball Tree <ball_tree>` 或 :ref:`KD Tree <kd_tree>`）。
 
-尽管它很简单，但最近邻算法已经成功地适用于很多的分类和回归问题，例如手写数字或卫星图像的场景。
-作为一个 non-parametric（非参数化）方法，它经常成功地应用于决策边界非常不规则的情景下。
+尽管它简单，但最近邻算法已经成功地适用于很多的分类和回归问题，例如手写数字或卫星图像的场景。
+作为一个 non-parametric（非参数化）方法，它经常成功地应用于决策边界非常不规则的分类情景下。
 
 :mod:`sklearn.neighbors` 可以处理 Numpy 数组或 `scipy.sparse` 矩阵作为其输入。
-对于密集矩阵，大多数可能距离的矩阵都是支持的。对于稀疏矩阵，支持搜索任意的 Minkowski 度量。
+对于密集矩阵，大多数可能的距离度量都是支持的。对于稀疏矩阵，支持搜索任意的 Minkowski 度量。
 
-许多学习方法都是依赖最近邻作为核心。
+许多学习路径/方法都是依赖最近邻作为核心。
 一个例子是 :ref:`核密度估计 <kernel_density>` ,
-在 :ref:`密度估计 <density_estimation>` 章节中有更深入的讨论。
+在 :ref:`密度估计 <density_estimation>` 章节中有讨论。
 
 .. _unsupervised_neighbors:
 
@@ -35,7 +35,7 @@ standard Euclidean distance（标准欧式距离）是最常见的选择。Neigh
 
 :class:`NearestNeighbors` （最近邻）实现了 unsupervised nearest neighbors learning（无监督的最近邻学习）。
 它为三种不同的最近邻算法提供统一的接口：:class:`BallTree`, :class:`KDTree`, 还有基于 :mod:`sklearn.metrics.pairwise`
-的 brute-force 算法。选择算法时可通过关键字 ``'algorithm'`` 来控制，
+的 brute-force 算法。算法的选择可通过关键字 ``'algorithm'`` 来控制，
 并必须是 ``['auto', 'ball_tree', 'kd_tree', 'brute']`` 其中的一个。当默认值设置为 ``'auto'``
 时，算法会尝试从训练数据中确定最佳方法。有关上述每个选项的优缺点，参见 `Nearest Neighbor Algorithms`_ 。
 
@@ -81,13 +81,13 @@ standard Euclidean distance（标准欧式距离）是最常见的选择。Neigh
            [ 0.,  0.,  0.,  1.,  1.,  0.],
            [ 0.,  0.,  0.,  0.,  1.,  1.]])
 
-我们的数据集是结构化的，因此附近索引顺序的点就在参数空间附近，从而生成了近似 K-nearest neighbors（K-近邻）的块对角矩阵。
-这种稀疏图在各种情况下都很有用，它利用点之间的空间关系进行无监督学习：特别地可参见 :class:`sklearn.manifold.Isomap`,
+我们的数据集是结构化的，因此按索引顺序的相邻点就在参数空间相邻，从而生成了近似 K-nearest neighbors（K-近邻）的块对角矩阵。
+这种稀疏图在各种的利用点之间的空间关系进行无监督学习的情况下都很有用：特别地可参见 :class:`sklearn.manifold.Isomap`,
 :class:`sklearn.manifold.LocallyLinearEmbedding`, 和 :class:`sklearn.cluster.SpectralClustering`。
 
 KDTree 和 BallTree 类
 ---------------------------
-我们可以使用 :class:`KDTree` 或 :class:`BallTree` 其中一个类来找最近邻。
+另外，我们可以使用 :class:`KDTree` 或 :class:`BallTree` 来找最近邻。
 这是上文使用过的 :class:`NearestNeighbors` 类所包含的功能。
 :class:`KDTree` 和 :class:`BallTree` 具有相同的接口；
 我们将在这里展示使用 :class:`KDTree` 的例子：
@@ -104,7 +104,7 @@ KDTree 和 BallTree 类
            [4, 3],
            [5, 4]]...)
 
-对于近邻搜索中选项的更多信息，包括各种度量距离的查询策略的说明等，请参阅 :class:`KDTree` 和 :class:`BallTree` 类文档。
+对于近邻搜索中选项的更多信息，包括各种距离度量的说明和策略的说明等，请参阅 :class:`KDTree` 和 :class:`BallTree` 类文档。
 关于可用度量距离的列表，请参阅 :class:`DistanceMetric` 类。
 
 .. _classification:
@@ -112,14 +112,14 @@ KDTree 和 BallTree 类
 最近邻分类
 ================================
 
-最近邻分类属于基于实例的学习或非泛化学习：它不会去构造一个泛化的内部模型，而是简单地存储训练数据的实例。
+最近邻分类属于 *基于实例的学习* 或 *非泛化学习* ：它不会去构造一个泛化的内部模型，而是简单地存储训练数据的实例。
 分类是由每个点的最近邻的简单多数投票中计算得到的：一个查询点的数据类型是由它最近邻点中最具代表性的数据类型来决定的。
 
 scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClassifier` 基于每个查询点的 :math:`k` 个最近邻实现，
    其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsClassifier` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
    其中 :math:`r` 是用户指定的浮点数值。
 
-:math:`k` -邻居分类是 :class:`KNeighborsClassifier` 下的两种技术中比较常用的一种。:math:`k` 值的最佳选择是高度数据依赖的：
+:math:`k` -邻居分类是 :class:`KNeighborsClassifier` 下的两种技术中比较常用的一种。:math:`k` 值的最佳选择是高度依赖数据的：
    通常较大的 :math:`k` 是会抑制噪声的影响，但是使得分类界限不明显。
 
    如果数据是不均匀采样的，那么 :class:`RadiusNeighborsClassifier` 中的基于半径的近邻分类可能是更好的选择。
@@ -127,7 +127,7 @@ scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClas
    对于高维参数空间，这个方法会由于所谓的 “维度灾难” 而变得不那么有效。
 
    基本的最近邻分类使用统一的权重：分配给查询点的值是从最近邻的简单多数投票中计算出来的。
-   在某些环境下，最好对邻居进行加权，使得近邻更有利于拟合。可以通过 ``weights`` 关键字来实现。
+   在某些环境下，最好对邻居进行加权，使得更近邻更有利于拟合。可以通过 ``weights`` 关键字来实现。
 默认值 ``weights = 'uniform'`` 为每个近邻分配统一的权重。而 ``weights = 'distance'`` 分配权重与查询点的距离成反比。
 或者，用户可以自定义一个距离函数用来计算权重。
 
@@ -153,12 +153,11 @@ scikit-learn 实现了两种不同的最近邻分类器：:class:`KNeighborsClas
 最近邻回归是用在数据标签为连续变量，而不是离散变量的情况下。分配给查询点的标签是由它的最近邻标签的均值计算而来的。
 
 scikit-learn 实现了两种不同的最近邻回归：:class:`KNeighborsRegressor` 基于每个查询点的 :math:`k` 个最近邻实现，
-其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsRegressor` 基于每个查询点的固定半径 :math:`r` 内的邻居数量实现，
+其中 :math:`k` 是用户指定的整数值。:class:`RadiusNeighborsRegressor` 基于每个查询点的固定半径 :math:`r` 内的邻点数量实现，
 其中 :math:`r` 是用户指定的浮点数值。
 
-基本的最近邻回归使用统一的权重：即，本地领域内的每个邻居点对查询
-点的分类贡献相当。
-在某些环境下，对节点加权可能是有利的，使得附近点对于回归所作出的贡献多于远处点。
+基本的最近邻回归使用统一的权重：即，本地邻域内的每个邻点对查询点的分类贡献一致。
+在某些环境下，对邻点加权可能是有利的，使得附近点对于回归所作出的贡献多于远处点。
 这可以通过 ``weights`` 关键字来实现。默认值 ``weights = 'uniform'`` 为所有点分配同等权重。
 而 ``weights = 'distance'`` 分配的权重与查询点距离呈反比。
 或者，用户可以自定义一个距离函数用来计算权重。
@@ -192,10 +191,10 @@ scikit-learn 实现了两种不同的最近邻回归：:class:`KNeighborsRegress
 暴力计算
 -----------
 
-最近邻的快速计算是机器学习中一个活跃的研究领域。最简单的近邻搜索涉及数据集中所有成对点之间距离的暴力计算：
+最近邻的快速计算是机器学习中一个活跃的研究领域。最简单的近邻搜索的实现涉及数据集中所有成对点之间距离的暴力计算：
 对于 :math:`D` 维度中的 :math:`N` 个样本来说, 这个方法的复杂度是 :math:`O[D N^2]`。
 对于小数据样本，高效的暴力近邻搜索是非常有竞争力的。
-然而，随着样本数 :math:`N` 的增长，暴力方法很快变得不行了。在 :mod:`sklearn.neighbors` 类中，
+然而，随着样本数 :math:`N` 的增长，暴力方法很快变得不切实际了。在 :mod:`sklearn.neighbors` 类中，
 暴力近邻搜索通过关键字 ``algorithm = 'brute'`` 来指定，并通过 :mod:`sklearn.metrics.pairwise` 中的例程来进行计算。
 
 .. _kd_tree:
@@ -211,9 +210,9 @@ K-D 树
 这是对于暴力搜索在大样本数 :math:`N` 中表现的显著改善。
 
 利用这种聚合信息的早期方法是 *KD tree* 数据结构（* K-dimensional tree* 的简写）,
-它将二维 *Quad-trees* 和三维 *Oct-trees 推广到任意数量的维度.
+它将二维 *Quad-trees* 和三维 *Oct-trees* 推广到任意数量的维度.
 KD 树是一个二叉树结构，它沿着数据轴递归地划分参数空间，将其划分为嵌入数据点的嵌套的各向异性区域。
-KD 树的构造非常快：因为只能沿数据轴执行分区, 无需计算 :math:`D`-dimensional 距离。
+KD 树的构造非常快：因为只需沿数据轴执行分区, 无需计算 :math:`D`-dimensional 距离。
 一旦构建完成, 查询点的最近邻距离计算复杂度仅为 :math:`O[\log(N)]` 。
 虽然 KD 树的方法对于低维度 (:math:`D < 20`) 近邻搜索非常快, 当 :math:`D` 增长到很大时,
 效率变低: 这就是所谓的 "维度灾难" 的一种体现。
@@ -232,10 +231,10 @@ KD 树的构造非常快：因为只能沿数据轴执行分区, 无需计算 :m
 Ball 树
 ---------
 
-为了解决 KD 树在高维上效率低下的问题, 开发了 *ball 树* 数据结构.
-其中 KD 树沿笛卡尔轴分割数据, ball 树在沿着一系列的 hyper-spheres 来分割数据.
+为了解决 KD 树在高维上效率低下的问题, *ball 树* 数据结构就被研发出来了.
+其中 KD 树沿卡迪尔轴（即坐标轴）分割数据, ball 树在沿着一系列的 hyper-spheres 来分割数据.
 通过这种方法构建的树要比 KD 树消耗更多的时间,
-但是这种数据结构对于高结构化的数据是非常有效的, 即使在高纬度上也是一样.
+但是这种数据结构对于高结构化的数据是非常有效的, 即使在高维度上也是一样.
 
 ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定义的节点,
    使得节点中的每个点位于由 :math:`r` 和 :math:`C` 定义的 hyper-sphere 内.
@@ -244,7 +243,7 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 .. math::   |x+y| \leq |x| + |y|
 
 通过这种设置, 测试点和质心之间的单一距离计算足以确定距节点内所有点的距离的下限和上限.
-由于 ball 树节点的球形几何, 它可以在高维度上执行 *KD-tree*, 尽管实际的性能高度依赖于训练数据的结构.
+由于 ball 树节点的球形几何, 它在高维度上的性能超出 *KD-tree*, 尽管实际的性能高度依赖于训练数据的结构.
 在 scikit-learn 中, 基于 ball 树的近邻搜索可以使用关键字 ``algorithm = 'ball_tree'`` 来指定,
 并且使用类 :class:`sklearn.neighbors.BallTree` 来计算.
 或者, 用户可以直接使用 :class:`BallTree` 类.
@@ -287,21 +286,21 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 
   在机器学习中往往使用的数据集是非常结构化的, 而且非常适合基于树结构的查询。
 
-* 请求 query point（查询点）的近邻数 :math:`k` 。
+* query point（查询点）所需的近邻数 :math:`k` 。
 
      * *Brute force* 查询时间几乎不受 :math:`k` 值的影响.
      * *Ball tree* 和 *KD tree* 的查询时间会随着 :math:`k` 的增加而变慢.
        这是由于两个影响: 首先, :math:`k` 的值越大在参数空间中搜索的部分就越大.
        其次, 使用 :math:`k > 1` 进行树的遍历时, 需要对内部结果进行排序.
 
-  当 :math:`k` 与  :math:`N` 相比变大时, 在基于树的查询中修剪树枝的能力是减弱的. 在这种情况下, 暴力查询会更加有效.
+  当 :math:`k` 相比  :math:`N` 变大时, 在基于树的查询中修剪树枝的能力是减弱的. 在这种情况下, 暴力查询会更加有效.
 
-   * query points（查询点）数.  ball tree 和 KD Tree 都需要一个构建阶段.
-     在许多查询中分摊时，这种结构的成本可以忽略不计。
-     如果只执行少量的查询, 可是构建成本却占总成本的很大一部分.
-     如果仅需查询很少的点, 暴力方法会比基于树的方法更好.
+* query points（查询点）数.  ball tree 和 KD Tree 都需要一个构建阶段.
+  在许多查询中分摊时，这种结构的成本可以忽略不计。
+  如果只执行少量的查询, 可是构建成本却占总成本的很大一部分.
+  如果仅需查询很少的点, 暴力方法会比基于树的方法更好.
 
-   一般地, ``algorithm = 'auto'`` 选择 ``'kd_tree'`` 如果 :math:`k < N/2`
+一般地, ``algorithm = 'auto'`` 选择 ``'kd_tree'`` 如果 :math:`k < N/2`
 并且 ``'effective_metric_'`` 在 ``'kd_tree'`` 的列表 ``'VALID_METRICS'`` 中.
 它选择 ``'ball_tree'`` 如果 :math:`k < N/2` 并且
 ``'effective_metric_'`` 在 ``'ball_tree'`` 的列表 ``'VALID_METRICS'`` 中.
@@ -309,7 +308,7 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 ``'effective_metric_'`` 不在 ``'kd_tree'`` 或 ``'ball_tree'`` 的列表 ``'VALID_METRICS'`` 中.
 它选择 ``'brute'`` 如果 :math:`k >= N/2`.
 
-这种选择基于以下假设: 查询点的数量与训练点的数量至少相同, 并且 ``leaf_size`` 接近其默认值 ``30``.
+这种选择基于以下假设: 查询点的数量与训练点的数量至少在相同的数量级, 并且 ``leaf_size`` 接近其默认值 ``30``.
 
 ``leaf_size`` 的影响
 -----------------------
@@ -342,7 +341,7 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 该 :class:`NearestCentroid` 分类器是一个简单的算法, 通过其成员的质心来表示每个类。
 实际上, 这使得它类似于 :class:`sklearn.KMeans` 算法的标签更新阶段.
 它也没有参数选择, 使其成为良好的基准分类器.
-然而，它确实受到非凸类的影响，而且当类有显著不同的方差时，假设所有维度的方差都是相等的。
+然而，它确实受到非凸类的影响，即当类有显著不同的方差时。所以这个分类器假设所有维度的方差都是相等的。
 对于没有做出这个假设的更复杂的方法, 请参阅线性判别分析 (:class:`sklearn.discriminant_analysis.LinearDiscriminantAnalysis`)
 和二次判别分析 (:class:`sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis`).
 默认的 :class:`NearestCentroid` 用法示例如下:
@@ -366,7 +365,7 @@ ball 树将数据递归地划分为由质心 :math:`C` 和半径 :math:`r` 定�
 实际上, 每个质心的每个特征的值除以该特征的类中的方差.
 然后通过 ``shrink_threshold`` 来减小特征值.
 最值得注意的是, 如果特定特征值过0, 则将其设置为0.
-实际上，每个质心的特征值，通过该特征类除以方差，再减去shrink_threshold得到。
+实际上，这个方法移除了影响分类器的特征。
 这很有用, 例如, 去除噪声特征.
 
 在以下例子中, 使用一个较小的 shrink 阀值将模型的准确度从 0.81 提高到 0.82.
