@@ -6,7 +6,7 @@
 
 .. currentmodule:: sklearn.svm
 
-**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`分类 <svm_classification>`, :ref:`回归 <svm_regression>` and  :ref:`异常检测 <svm_outlier_detection>`.
+**支持向量机 (SVMs)** 可用于以下监督学习算法 :ref:`分类 <svm_classification>`, :ref:`回归 <svm_regression>` 和  :ref:`异常检测 <svm_outlier_detection>`.
 
 支持向量机的优势在于:
 
