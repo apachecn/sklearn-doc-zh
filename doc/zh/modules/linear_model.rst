@@ -63,7 +63,7 @@
    \underset{w}{min\,} {{|| X w - y||_2}^2 + \alpha {||w||_2}^2}
 
 
-其中， :math:`\alpha \geq 0` 是控制系数收缩量的复杂性参数： :math:`\alpha` 的值越大，收缩量越大，这样系数对共线性的鲁棒性也更强。
+其中， :math:`\alpha \geq 0` 是控制系数收缩量的复杂性参数： :math:`\alpha` 的值越大，收缩量越大，因此系数对共线性的稳定性也更强。
 
 .. figure:: ../auto_examples/linear_model/images/sphx_glr_plot_ridge_path_001.png
    :target: ../auto_examples/linear_model/plot_ridge_path.html
