@@ -9,7 +9,7 @@
 
    :ref:`监督学习 <supervised-learning>` 在于学习两个数据集的联系：观察数据 ``X`` 和我们正在尝试预测的额外变量 ``y`` (通常称“目标”或“标签”)， 而且通常是长度为 ``n_samples`` 的一维数组。
 
-   scikit-learn 中所有监督的 `估计量 <https://en.wikipedia.org/wiki/Estimator>` 都有一个用来拟合模型的 ``fit(X, y)`` 方法，和根据给定的没有标签观察值 ``X`` 返回预测的带标签的 ``y`` 的 ``predict(X)`` 方法。
+   scikit-learn 中所有监督的 `估计量 <https://en.wikipedia.org/wiki/Estimator>`_ 都有一个用来拟合模型的 ``fit(X, y)`` 方法，和根据给定的没有标签观察值 ``X`` 返回预测的带标签的 ``y`` 的 ``predict(X)`` 方法。
 
 .. topic:: 词汇：分类和回归
 
