@@ -259,9 +259,9 @@ GPC 在 XOR 数据集上的举例说明
 iris 数据集上的高斯过程分类（GPC）
 -----------------------------------------------------
 
-该示例说明了用于虹膜数据集的二维版本上各向同性和各向异性RBF核的GPC的预测概率。
-这说明了GPC对多类分类的适用性。
-各向异性RBF内核通过为两个特征维度分配不同的长度尺度来获得稍高的LML（对数边缘似然）。
+该示例说明了用于鸢尾花数据集的二维版本上各向同性和各向异性 RBF 核的 GPC 的预测概率。
+这说明了 GPC 对多类分类的适用性。
+各向异性 RBF 内核通过为两个特征维度分配不同的长度尺度来获得稍高的 LML（对数边缘似然）。
 
 .. figure:: ../auto_examples/gaussian_process/images/sphx_glr_plot_gpc_iris_001.png
    :target: ../auto_examples/gaussian_process/plot_gpc_iris.html
