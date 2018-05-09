@@ -9,7 +9,7 @@ sklearn.model_selection
 
 超参数，即不直接在估计器内学习的参数。在 scikit-learn 包中，它们作为估计器类中构造函数的参数进行传递。典型的例子有：用于支持向量分类器的 ``C`` 、``kernel`` 和 ``gamma`` ，用于Lasso的 ``alpha`` 等。
 
-搜索超参数空间以便获得最好 `交叉验证 <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/cross_validation.html#cross-validation>`_ 分数的方法是可能的而且是值得提倡的。
+搜索超参数空间以便获得最好 `交叉验证 <http://sklearn.apachecn.org/cn/0.19.0/modules/cross_validation.html#cross-validation>`_ 分数的方法是可能的而且是值得提倡的。
 
 通过这种方式，构造估计器时被提供的任何参数或许都能被优化。具体来说，要获取到给定估计器的所有参数的名称和当前值，使用::
 
@@ -23,7 +23,7 @@ sklearn.model_selection
 - 交叉验证方案
 - :ref:`计分函数 <gridsearch_scoring>`
 
-有些模型支持专业化的、高效的参数搜索策略, :ref:`描述如下 <alternative_cv>` 。在 scikit-learn 包中提供了两种采样搜索候选的通用方法:对于给定的值, `GridSearchCV <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV>`_ 考虑了所有参数组合；而 `RandomizedSearchCV <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/generated/sklearn.model_selection.RandomizedSearchCV.html#sklearn.model_selection.RandomizedSearchCV>`_ 可以从具有指定分布的参数空间中抽取给定数量的候选。介绍完这些工具后，我们将详细介绍适用于这两种方法的 :ref:`最佳实践 <grid_search_tips>` 。
+有些模型支持专业化的、高效的参数搜索策略, :ref:`描述如下 <alternative_cv>` 。在 scikit-learn 包中提供了两种采样搜索候选的通用方法:对于给定的值, `GridSearchCV <http://sklearn.apachecn.org/cn/0.19.0/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV>`_ 考虑了所有参数组合；而 `RandomizedSearchCV <http://sklearn.apachecn.org/cn/0.19.0/modules/generated/sklearn.model_selection.RandomizedSearchCV.html#sklearn.model_selection.RandomizedSearchCV>`_ 可以从具有指定分布的参数空间中抽取给定数量的候选。介绍完这些工具后，我们将详细介绍适用于这两种方法的 :ref:`最佳实践 <grid_search_tips>` 。
 
 **注意**，通常这些参数的一小部分会对模型的预测或计算性能有很大的影响，而其他参数可以保留为其默认值。
 建议阅读估计器类的相关文档，以更好地了解其预期行为，可能的话还可以阅读下引用的文献。
@@ -47,19 +47,19 @@ sklearn.model_selection
 
 .. topic:: 示例:
 
-    - 有关在数字数据集上的网格搜索计算示例，请参阅  `基于交叉验证的网格搜索参数估计 <http://sklearn.apachecn.org/doc/cn/0.19.0/auto_examples/model_selection/plot_grid_search_digits.html#sphx-glr-auto-examples-model-selection-plot-grid-search-digits-py>`_。
+    - 有关在数字数据集上的网格搜索计算示例，请参阅  `基于交叉验证的网格搜索参数估计 <http://sklearn.apachecn.org/cn/0.19.0/auto_examples/model_selection/plot_grid_search_digits.html#sphx-glr-auto-examples-model-selection-plot-grid-search-digits-py>`_。
 
-    - 有关来自文本文档特征提取器（n-gram计数向量化器和TF-IDF变换器）的网格搜索耦合参数与分类器（这里是使用具有弹性网格的SGD训练的线性SVM 或L2惩罚）使用 `pipeline.Pipeline` 示例,请参阅  `用于文本特征提取和评估的示例管道 <http://sklearn.apachecn.org/doc/cn/0.19.0/auto_examples/model_selection/grid_search_text_feature_extraction.html#sphx-glr-auto-examples-model-selection-grid-search-text-feature-extraction-py>`_。
+    - 有关来自文本文档特征提取器（n-gram计数向量化器和TF-IDF变换器）的网格搜索耦合参数与分类器（这里是使用具有弹性网格的SGD训练的线性SVM 或L2惩罚）使用 `pipeline.Pipeline` 示例,请参阅  `用于文本特征提取和评估的示例管道 <http://sklearn.apachecn.org/cn/0.19.0/auto_examples/model_selection/grid_search_text_feature_extraction.html#sphx-glr-auto-examples-model-selection-grid-search-text-feature-extraction-py>`_。
 
-    - 有关iris数据集的交叉验证循环中的网格搜索示例, 请参阅  `嵌套与非嵌套交叉验证 <http://sklearn.apachecn.org/doc/cn/0.19.0/auto_examples/model_selection/plot_nested_cross_validation_iris.html#sphx-glr-auto-examples-model-selection-plot-nested-cross-validation-iris-py>`_。
+    - 有关iris数据集的交叉验证循环中的网格搜索示例, 请参阅  `嵌套与非嵌套交叉验证 <http://sklearn.apachecn.org/cn/0.19.0/auto_examples/model_selection/plot_nested_cross_validation_iris.html#sphx-glr-auto-examples-model-selection-plot-nested-cross-validation-iris-py>`_。
 
-    - 有关用于同时评估多个指标的GridSearchCV示例，请参阅  `cross_val_score 与 GridSearchCV 多指标评价的实证研究 <http://sklearn.apachecn.org/doc/cn/0.19.0/auto_examples/model_selection/plot_multi_metric_evaluation.html#sphx-glr-auto-examples-model-selection-plot-multi-metric-evaluation-py>`_。
+    - 有关用于同时评估多个指标的GridSearchCV示例，请参阅  `cross_val_score 与 GridSearchCV 多指标评价的实证研究 <http://sklearn.apachecn.org/cn/0.19.0/auto_examples/model_selection/plot_multi_metric_evaluation.html#sphx-glr-auto-examples-model-selection-plot-multi-metric-evaluation-py>`_。
 
 .. _randomized_parameter_search:
 
 随机参数优化
 =================================
-尽管使用参数设置的网格法是目前最广泛使用的参数优化方法, 其他搜索方法也具有更有利的性能。 `RandomizedSearchCV <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/generated/sklearn.model_selection.RandomizedSearchCV.html#sklearn.model_selection.RandomizedSearchCV>`_ 实现了对参数的随机搜索, 其中每个设置都是从可能的参数值的分布中进行取样。
+尽管使用参数设置的网格法是目前最广泛使用的参数优化方法, 其他搜索方法也具有更有利的性能。 `RandomizedSearchCV <http://sklearn.apachecn.org/cn/0.19.0/modules/generated/sklearn.model_selection.RandomizedSearchCV.html#sklearn.model_selection.RandomizedSearchCV>`_ 实现了对参数的随机搜索, 其中每个设置都是从可能的参数值的分布中进行取样。
 这对于穷举搜索有两个主要优势:
 
 * 可以选择独立于参数个数和可能值的预算
@@ -83,14 +83,14 @@ sklearn.model_selection
         do not allow specifying a random state. Instead, they use the global
         numpy random state, that can be seeded via ``np.random.seed`` or set
         using ``np.random.set_state``. However, beginning scikit-learn 0.18,
-        the `sklearn.model_selection <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/classes.html#module-sklearn.model_selection>`_ module sets the random state provided
+        the `sklearn.model_selection <http://sklearn.apachecn.org/cn/0.19.0/modules/classes.html#module-sklearn.model_selection>`_ module sets the random state provided
         by the user if scipy >= 0.16 is also available.
 
 对于连续参数 (如上面提到的 ``C`` )，指定连续分布以充分利用随机化是很重要的。这样，有助于 ``n_iter`` 总是趋向于更精细的搜索。
 
 .. topic:: 示例:
 
-    * 随机搜索和网格搜索的使用和效率的比较： `有关随机搜索和网格搜索超参数估计的对比 <http://sklearn.apachecn.org/doc/cn/0.19.0/auto_examples/model_selection/plot_randomized_search.html#sphx-glr-auto-examples-model-selection-plot-randomized-search-py>`_
+    * 随机搜索和网格搜索的使用和效率的比较： `有关随机搜索和网格搜索超参数估计的对比 <http://sklearn.apachecn.org/cn/0.19.0/auto_examples/model_selection/plot_randomized_search.html#sphx-glr-auto-examples-model-selection-plot-randomized-search-py>`_
 
 .. topic:: 引用:
 
@@ -109,10 +109,10 @@ sklearn.model_selection
 ------------------------------
 
 默认情况下, 参数搜索使用估计器的评分函数来评估（衡量）参数设置。
-比如 `sklearn.metrics.accuracy_score <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/generated/sklearn.metrics.accuracy_score.html#sklearn.metrics.accuracy_score>`_ 用于分类和 `sklearn.metrics.r2_score <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/generated/sklearn.metrics.r2_score.html#sklearn.metrics.r2_score>`_ 用于回归。
+比如 `sklearn.metrics.accuracy_score <http://sklearn.apachecn.org/cn/0.19.0/modules/generated/sklearn.metrics.accuracy_score.html#sklearn.metrics.accuracy_score>`_ 用于分类和 `sklearn.metrics.r2_score <http://sklearn.apachecn.org/cn/0.19.0/modules/generated/sklearn.metrics.r2_score.html#sklearn.metrics.r2_score>`_ 用于回归。
 对于一些应用, 其他评分函数将会更加适合 (例如在不平衡的分类, 精度评分往往是信息不足的)。
 一个可选的评分功能可以通过评分参数指定给 :class:`GridSearchCV`， :class:`RandomizedSearchCV` 和许多下文将要描述的、专业化的交叉验证工具。
-有关详细信息, 请参阅 `评分参数:定义模型评估规则 <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/model_evaluation.html#scoring-parameter>`_。
+有关详细信息, 请参阅 `评分参数:定义模型评估规则 <http://sklearn.apachecn.org/cn/0.19.0/modules/model_evaluation.html#scoring-parameter>`_。
 
 .. _multimetric_grid_search:
 
@@ -122,17 +122,17 @@ sklearn.model_selection
 ``GridSearchCV`` 和 ``RandomizedSearchCV`` 允许为评分参数指定多个指标。
 
 多指标评分可以被指定为一个预先定义分数名称字符串列表或者是一个得分手名字到得分手的函数或预先定义的记分员名字的映射字典。
-有关详细信息, 请参阅 `多指标评估 <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/model_evaluation.html#multimetric-scoring>`_。
+有关详细信息, 请参阅 `多指标评估 <http://sklearn.apachecn.org/cn/0.19.0/modules/model_evaluation.html#multimetric-scoring>`_。
 
 在指定多个指标时,必须将 ``refit`` 参数设置为要在其中找到 ``best_params_``,并用于在整个数据集上构建 ``best_estimator_`` 的度量标准（字符串）。
 如果搜索不应该 refit, 则设置 ``refit=False``。在使用多个度量值时,如果将 refit 保留为默认值,不会导致结果错误。
 
-有关示例用法, 请参见 `cross_val_score 与 GridSearchCV 多指标评价的实证研究 <http://sklearn.apachecn.org/doc/cn/0.19.0/auto_examples/model_selection/plot_multi_metric_evaluation.html#sphx-glr-auto-examples-model-selection-plot-multi-metric-evaluation-py>`_。
+有关示例用法, 请参见 `cross_val_score 与 GridSearchCV 多指标评价的实证研究 <http://sklearn.apachecn.org/cn/0.19.0/auto_examples/model_selection/plot_multi_metric_evaluation.html#sphx-glr-auto-examples-model-selection-plot-multi-metric-evaluation-py>`_。
 
 复合估计和参数空间
 -----------------------------------------
 
-`管道：链式评估器 <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/pipeline.html#pipeline>`_ 描述了如何使用这些工具搜索参数空间构建链式评估器。
+`管道：链式评估器 <http://sklearn.apachecn.org/cn/0.19.0/modules/pipeline.html#pipeline>`_ 描述了如何使用这些工具搜索参数空间构建链式评估器。
 
 模型选择：开发和评估
 -------------------------------------------
@@ -142,7 +142,7 @@ sklearn.model_selection
 在评估结果模型时, 重要的是在网格搜索过程中未看到的 held-out 样本数据上执行以下操作: 
 建议将数据拆分为开发集 (**development set**,供 ``GridSearchCV`` 实例使用)和评估集(**evaluation set**)来计算性能指标。
 
-这可以通过使用效用函数 `train_test_split <http://sklearn.apachecn.org/doc/cn/0.19.0/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split>`_ 来完成。
+这可以通过使用效用函数 `train_test_split <http://sklearn.apachecn.org/cn/0.19.0/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split>`_ 来完成。
 
 
 并行机制
