@@ -27,7 +27,7 @@
     - 支持向量机不直接提供概率估计,这些都是使用昂贵的五次交叉验算计算的.
       (详情见 :ref:`Scores and probabilities <scores_probabilities>`, 在下文中).
 
-在 scikit-learn 中,支持向量机提供 dense(``numpy.ndarray`` ,可以通过 ``numpy.asarray`` 进行转换) 和 sparse (任何 ``scipy.sparse``) 样例向量作为输出.然而,要使用支持向量机来对 sparse 数据作预测,它必须已经拟合这样的数据.使用 C 代码的 ``numpy.ndarray`` (dense) 或者带有 ``dtype=float64`` 的 ``scipy.sparse.csr_matrix`` (sparse) 来优化性能.
+在 scikit-learn 中,支持向量机提供 dense(``numpy.ndarray`` ,可以通过 ``numpy.asarray`` 进行转换) 和 sparse (任何 ``scipy.sparse``) 样例向量作为输入.然而,要使用支持向量机来对 sparse 数据作预测,它必须已经拟合这样的数据.使用 C 代码的 ``numpy.ndarray`` (dense) 或者带有 ``dtype=float64`` 的 ``scipy.sparse.csr_matrix`` (sparse) 来优化性能.
 
 
 .. _svm_classification:
