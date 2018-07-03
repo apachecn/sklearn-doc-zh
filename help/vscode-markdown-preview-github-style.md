@@ -10,7 +10,7 @@
 如下图所示: ![](img/vscode-markdown-preview-github-style-example-1.png)
 
 ## 修改配置 Markdown 预览为 github 风格
-* 下载 css 文件: [https://github.com/raycon/vscode-markdown-css/blob/master/markdown-github.css](https://github.com/raycon/vscode-markdown-css/blob/master/markdown-github.css) 保存到本地.
+* 下载 css 文件: [https://github.com/raycon/vscode-markdown-style/blob/master/preview/github.css](https://github.com/raycon/vscode-markdown-style/blob/master/preview/github.css) 保存到本地.
 * `文件` --> `首选项` --> `设置`
 * 搜索设置: markdown.styles
 * 找到 `"markdown.styles": [],` 这一行, 如下图所示: ![](img/vscode-setting-markdown-preview-style-1.png)
