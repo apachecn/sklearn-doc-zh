@@ -23,7 +23,7 @@ Visual Studio Code (简称 VS Code / VSC) 是一款免费开源的现代化轻�
 
 傻瓜式操作, 一路下一步就好了。
 
-然后开启一个 cmd 中断, 如图 : 
+然后开启一个 cmd 终端, 如图 : 
 
 ![](img/git-cmd-1.png)
 
