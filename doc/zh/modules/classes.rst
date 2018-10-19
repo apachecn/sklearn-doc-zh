@@ -1233,7 +1233,7 @@ API 参考手册
 
 .. _semi_supervised_ref:
 
-:mod:`sklearn.semi_supervised` 办监督学习
+:mod:`sklearn.semi_supervised` 半监督学习
 ========================================================
 
 .. automodule:: sklearn.semi_supervised
