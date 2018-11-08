@@ -7,14 +7,14 @@
 
 .. currentmodule:: sklearn.model_selection
 
-学习预测函数的参数，并在相同数据集上进行测试是一种错误的做法:  一个仅给出测试用例标签的模型将会获得极高的分数，但对于尚未出现过的数据它则无法预测出任何有用的信息。
+在相同的数据集上学习预测函数的参数并进行测试是一种错误的做法:  
+一个仅给出测试用例标签的模型将会获得极高的分数，但对于尚未出现过的数据它则无法预测出任何有用的信息。
 这种情况称为 **overfitting（过拟合）**.
 为了避免这种情况，在进行（监督）机器学习实验时，通常取出部分可利用数据作为 **test set（测试数据集）** ``X_test, y_test``。
-
 需要强调的是这里说的 "experiment(实验)" 并不仅限于学术（academic），因为即使是在商业场景下机器学习也往往是从实验开始的。
 
-利用 scikit-learn 包中的 :func:`train_test_split` 辅助函数可以很快地将实验数据集划分为任何训练集（training sets）和测试集（test sets）。
-下面让我们载入 iris 数据集，并在此数据集上训练出线性支持向量机::
+利用 scikit-learn 中的 :func:`train_test_split` 辅助函数可以很快地将数据集划分为训练集（training sets）和测试集（test sets）。
+下面让我们载入 iris 数据集，并在此数据集上训练线性支持向量机::
 
   >>> import numpy as np
   >>> from sklearn.model_selection import train_test_split
@@ -25,7 +25,7 @@
   >>> iris.data.shape, iris.target.shape
   ((150, 4), (150,))
 
-我们能快速采样到原数据集的 40% 作为测试集，从而测试（评估）我们的分类器::
+我们能快速地从原始数据集中采样得到训练集，同时将数据集中 40% 的数据作为测试集用于评估我们的分类器::
 
   >>> X_train, X_test, y_train, y_test = train_test_split(
   ...     iris.data, iris.target, test_size=0.4, random_state=0)
@@ -138,10 +138,9 @@ cross_validate 函数和多度量评估
 
 ``cross_validate`` 函数与 ``cross_val_score`` 在下面的两个方面有些不同 -
 
-- 它允许指定多个指标进行评估.
+- 它允许指定多个度量方法（metrics）进行评估。
 
-- 除了测试得分之外，它还会返回一个包含训练得分，拟合次数， score-times （得分次数）的一个字典。 It returns a dict containing training scores, fit-times and score-times in
-  addition to the test score.
+- 它会返回一个字典，除测试得分（test score）外，还包含拟合耗时（fit-times）和评估耗时（score-times），还可选择输出训练得分（training scores）和拟合好的估计器（fitted estimators）。
 
 对于单个度量评估，其中 scoring 参数是一个字符串，可以调用或 None ， keys 将是 - ``['test_score', 'fit_time', 'score_time']``
 
