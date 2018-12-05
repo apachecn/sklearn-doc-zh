@@ -17,5 +17,5 @@ env:
     - GH_UN=jiangzhonglian
     - GH_EMAIL=jiang-s@163.com
     - GH_USER=apachecn
-    - GH_REPO=sklearn-doc-zh
+    - GH_REPO=scikit-learn-doc-zh
     - GH_BRANCH=gh-pages
