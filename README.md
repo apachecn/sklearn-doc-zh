@@ -134,3 +134,20 @@ scikit-learn 是基于 Python 语言的机器学习工具。
 有任何建议反馈, 或想参与文档翻译, 麻烦联系下面的企鹅:
 
 * 企鹅: 1042658081（那伊抹微笑）, 190442212（小瑶）, 529815144（片刻）
+
+## 赞助我们
+
+<img src="http://data.apachecn.org/img/about/donate.jpg" alt="微信&支付宝" />
+
+## **协议**
+
+以各项目协议为准。
+
+ApacheCN 账号下没有协议的项目，一律视为 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)。
+
+## Organization
+
+* ApacheCN 组织资源: <https://github.com/apachecn/home>
+
+> 欢迎任何人参与和完善：一个人可以走的很快，但是一群人却可以走的更远
+
