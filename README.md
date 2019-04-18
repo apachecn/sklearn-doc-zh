@@ -2,6 +2,20 @@
 
 ![](docs/img/scikit-learn-logo.png)
 
+> Special Sponsers
+
+<table>
+      <tbody>
+        <tr>
+          <td align="center" valign="middle">
+            <a href="https://coding.net/?utm_source=ApacheCN&utm_medium=banner&utm_campaign=march2019" target="_blank">
+              <img width="1080" src="http://data.apachecn.org/img/SpecialSponsors/CodingNet.png">
+            </a>
+          </td>
+      </tbody>
+</table>
+
+
 scikit-learn 是基于 Python 语言的机器学习工具。
 
 1. 简单高效的数据挖掘和数据分析工具
