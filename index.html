@@ -67,10 +67,16 @@
       themeColor: '#03a9f4',
       repo: 'apachecn/scikit-learn-doc-zh',
       plugins: [window.docsPlugin],
+      search: {
+        noData: '没有结果',
+        paths: 'auto',
+        placeholder: '搜索',
+      },
     }
   </script>
   
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
   <script>Prism.languages.py = Prism.languages.python</script>
 </body>
