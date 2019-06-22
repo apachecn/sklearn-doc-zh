@@ -40,7 +40,6 @@ scikit-learn 是基于 Python 语言的机器学习工具。
 ## 负责人
 
 * [@loopyme](https://github.com/loopyme)
-* [@飞龙](https://github.com/wizardforcel)
 
 ## 贡献者
 
