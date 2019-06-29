@@ -69,5 +69,5 @@
     *   [选择正确的评估器(estimator.md)](docs/77.md)
     *   [外部资源，视频和谈话](docs/78.md)
 *   [API 参考](https://scikit-learn.org/stable/modules/classes.html)
-*   [常见问题](docs/80.md)
-*   [时光轴](docs/81.md)
+*   [常见问题](docs/63.md)
+*   [时光轴](docs/64.md)
