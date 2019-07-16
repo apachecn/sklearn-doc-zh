@@ -29,6 +29,26 @@ scikit-learn 是基于 Python 语言的机器学习工具。
 +   [在线阅读](http://sklearn.apachecn.org)
 +   [EPUB 格式](https://github.com/apachecn/scikit-learn-doc-zh/raw/dl/scikit-learn%200.19%20%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3.epub)
 
+## 目录
+*   [安装 scikit-learn](docs/79.md)
+*   用户指南
+    *   [1. 监督学习](docs/1.md)
+    *   [2. 无监督学习](docs/19.md)
+    *   [3. 模型选择和评估](docs/29.md?id=_3-模型选择和评估)
+    *   [4.  检验](docs/35.md?id=_4--检验)
+    *   [5. 数据集转换](docs/37.md?id=_5-数据集转换)
+    *   [6. 数据集加载工具](docs/47.md?id=_6-数据集加载工具)
+    *   [7. 使用scikit-learn计算](docs/48.md?id=_7-使用scikit-learn计算)
+*   [使用教程](docs/50.md)
+    *   [使用 scikit-learn 介绍机器学习](docs/51.md)
+    *   [关于科学数据处理的统计学习教程](docs/52.md)
+    *   [处理文本数据](docs/76.md)
+    *   [选择正确的评估器](docs/77.md)
+    *   [外部资源，视频和谈话](docs/78.md)
+*   [API 参考](https://scikit-learn.org/stable/modules/classes.html)
+*   [常见问题](docs/63.md)
+*   [时光轴](docs/64.md)
+
 ## 历史版本
 
 * [scikit-learn (sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
