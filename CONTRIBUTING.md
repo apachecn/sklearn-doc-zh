@@ -4,10 +4,16 @@
 
 小部分格式仍然存在问题，主要是链接和表格。需要大家帮忙找到，并提 PullRequest 来修复。
 
-## 参与翻译 & 发现错误
+## 参与翻译 & 修正错误
 
+翻译待解决的问题 & 对应的解决思路：
+1. 缺少示例的翻译：  用Jupyter notebook跑一遍示例程序，再把介绍和注释翻译成中文，最后生成为md并修复其他文章中对应的链接
+2. 小部分格式和翻译仍然存在问题，需要大家帮忙找到，并提 PullRequest 来修复。
+3. 部分翻译的语言可能不够流畅，需要大家帮忙润色，并提 PullRequest 来优化。
+
+贡献方式：
 1. 在 github 上 fork 该 repository.
-2. 翻译 doc/zh/modules 和 doc/zh/tutorial 下面的 rst 文件即可, 例如, tutorial.rst.
+2. 按照上面提到的解决思路修复对应的问题
 3. 然后, 在你的 github 发起 New pull request 请求.
 4. 工具使用, 可参考下面的内容.
 
