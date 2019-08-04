@@ -2,20 +2,6 @@
 
 ![](docs/img/scikit-learn-logo.png)
 
-> Special Sponsers
-
-<table>
-      <tbody>
-        <tr>
-          <td align="center" valign="middle">
-            <a href="https://coding.net/?utm_source=ApacheCN&utm_medium=banner&utm_campaign=march2019" target="_blank">
-              <img width="1080" src="http://data.apachecn.org/img/SpecialSponsors/CodingNet.png">
-            </a>
-          </td>
-      </tbody>
-</table>
-
-
 scikit-learn 是基于 Python 语言的机器学习工具。
 
 1. 简单高效的数据挖掘和数据分析工具
@@ -30,6 +16,7 @@ scikit-learn 是基于 Python 语言的机器学习工具。
 +   [EPUB 格式](https://github.com/apachecn/scikit-learn-doc-zh/raw/dl/scikit-learn%200.19%20%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3.epub)
 
 ## 目录
+
 *   [安装 scikit-learn](docs/79.md)
 *   用户指南
     *   [1. 监督学习](docs/1.md)
@@ -51,137 +38,55 @@ scikit-learn 是基于 Python 语言的机器学习工具。
 
 ## 历史版本
 
-* [scikit-learn (sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
 * [scikit-learn (sklearn) 0.19 官方文档中文版](https://github.com/apachecn/scikit-learn-doc-zh/tree/0.19.x)
+* [scikit-learn (sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
 
 ## 贡献指南
 
-[请见这里](CONTRIBUTING.md)
+项目当前处于校对阶段，请查看[贡献指南](CONTRIBUTING.md)，并在[整体进度](https://github.com/apachecn/sklearn-doc-zh/issues/352)中领取任务。
 
-## 负责人
+> 请您勇敢地去翻译和改进翻译。虽然我们追求卓越，但我们并不要求您做到十全十美，因此请不要担心因为翻译上犯错——在大部分情况下，我们的服务器已经记录所有的翻译，因此您不必担心会因为您的失误遭到无法挽回的破坏。（改编自维基百科）
 
-* [@loopyme](https://github.com/loopyme)
+## 项目负责人
+
+格式: GitHub + QQ
+
+> 第一期 (2017-09-29)
+
+* [@那伊抹微笑](https://github.com/wangyangting)
+* [@片刻](https://github.com/jiangzhonglian)
+* [@小瑶](https://github.com/chenyyx)
+
+> 第二期 (2019-06-29)
+
+* [@loopyme](https://github.com/loopyme)：3322728009
+* [飞龙](https://github.com/wizardforcel)：562826179
+* [片刻](https://github.com/jiangzhonglian)：529815144
+
+-- 负责人要求: (欢迎一起为 `sklearn 中文版本` 做贡献)
+
+* 热爱开源，喜欢装逼
+* 长期使用 sklearn(至少0.5年) + 提交Pull Requests>=3
+* 能够有时间及时优化页面 bug 和用户 issues
+* 试用期: 2个月
+* 欢迎联系: [片刻](https://github.com/jiangzhonglian) 529815144
 
 ## 贡献者
 
-贡献者可自行编辑如下内容（排名不分先后）.
+[【0.19.X】贡献者名单](https://github.com/apachecn/sklearn-doc-zh/issues/354)
 
-### 0.19.0
-
-**翻译者(人人皆大佬~):**
-
-* [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
-* [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
-* [@chenyyx](https://github.com/chenyyx)（Joy yx）
-* [@survivingME](https://github.com/survivingME)（Trembleguy）
-* [@mtobeiyf](https://github.com/mtobeiyf)（Fing）
-* [@Leon-Jin](https://github.com/Leon-Jin)（Leon晋）
-* [@X1aoFang](https://github.com/X1aoFang)（X1aoFang）
-* [@loverollcat](https://github.com/loverollcat)（loverollcat）
-* [@helloheshee](https://github.com/helloheshee)（helloheshee）
-* [@SkyDreamStart](https://github.com/SkyDreamStart)（SkyDreamStart）
-* [@HazekiahWon](https://github.com/HazekiahWon)（Hazekiah Wang）
-* [@201419](https://github.com/201419)（tree）
-* [@busesese](https://github.com/busesese)（wenyi）
-* [@chrzc](https://github.com/chrzc)（changzhicheng）
-* [@Zoctan](https://github.com/Zoctan)（Zoctan）
-* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
-* [@charleschou520](https://github.com/charleschou520)（charleschou520）
-* [@zhangqiking](https://github.com/zhangqiking)（BigBird）
-* [@mikechengwei](https://github.com/mikechengwei)（Mike）
-* [@wodekwan](https://github.com/wodekwan)（wodekwan）
-* [@sehriff](https://github.com/sehriff)（sehriff）
-* [@Kdotm](https://github.com/Kdotm)（kngines）
-* [@patientman](https://github.com/patientman)（YuanMingLiu）
-* [@DamonDay](https://github.com/DamonDay)（DamonDay）
-* [@cszhangbo](https://github.com/cszhangbo)（cszhangbo）
-* [@XingxGit](https://github.com/XingxGit)（XingxGit）
-* [@KrokYin](https://github.com/KrokYin)（KrokYin）
-* [@yw10](https://github.com/yw10)（Andrew Yao）
-* [@GlassyWu](https://github.com/GlassyWu)（glassy）
-* [@PrivateRookie](https://github.com/PrivateRookie)（PrivateRookie）
-* [@linweijiang](https://github.com/linweijiang)（linweijiang）
-* [@jiaqiangbandongg](https://github.com/jiaqiangbandongg)（jiaqiangbandongg）
-* [@supportingvector](https://github.com/supportingvector)（supportingvector）
-* [@stealthsMrs](https://github.com/stealthsMrs)（stealthsMrs）
-* [@lhwlhw90](https://github.com/lhwlhw90)（lhwlhw90）
-* [@sheepmen](https://github.com/sheepmen)（羊三）
-* [@guohao916](https://github.com/guohao916)（guohao_dm）
-* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
-* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
-* [@夜神月](@qq760514101)（夜神月）
-* [@liyangbit](https://github.com/liyangbit)（Lemon）
-* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
-
-**校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
-
-* [@weiyd](https://github.com/weiyd)（尔了个达）
-* [@FontTian](https://github.com/FontTian)（FontTian）
-* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
-* [@caopeirui](https://github.com/caopeirui)（Veyron C）
-* [@HelloSilicat](https://github.com/HelloSilicat)（Jialiang Pei）
-* [@AnybodyHome](https://github.com/AnybodyHome)（loop）
-* [@RyanZhiNie](https://github.com/RyanZhiNie)（Zhi Nie）
-* [@zehuichen123](https://github.com/zehuichen123)（loveSnowBest）
-* [@hlxstc](https://github.com/hlxstc)（Jokers）
-* [@NellyLuo](https://github.com/NellyLuo)（NellyLuo）
-* [@yuezhao9210](https://github.com/yuezhao9210)（Yue Zhao）
-* [@why2lyj](https://github.com/why2lyj)（Snow Wong）
-* [@pan8664716](https://github.com/pan8664716)（pan8664716）
-* [@xrj](https://github.com/xrj)（xrj）
-* [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）
-* [@marsjhao](https://github.com/marsjhao)（Zhang Junhao）
-* [@tiantian1412](https://github.com/tiantian1412)（tiantian1412）
-* [@sheepmen](https://github.com/sheepmen)（羊三）
-* [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
-* [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
-* [@chenyyx](https://github.com/chenyyx)（Joy yx）
-* [@mikechengwei](https://github.com/mikechengwei)（Mike）
-* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
-* [@busesese](https://github.com/busesese)（wenyi）
-* [@GlassyWu](https://github.com/GlassyWu)（glassy）
-* [@wodekwan](https://github.com/wodekwan)（wodekwan）
-* [@gbyy422990](https://github.com/gbyy422990)（Bin GAO）
-* [@charleschou520](https://github.com/charleschou520)（charleschou520）
-* [@DataMonk2017](https://github.com/DataMonk2017)（Jeremy Zheng）
-* [@Lixu518](https://github.com/Lixu518)（Mysry）
-* [@linxiamen](https://github.com/linxiamen)（YUNCHUAN LIN）
-* [@llcing](https://github.com/llcing)（Mayouji）
-* [@KyrieHee](https://github.com/KyrieHee)（HeYun）
-* [@ziepenn](https://github.com/ziepenn)（ziepenn）
-* [@FAN0521](https://github.com/FAN0521)（FAN0521）
-* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
-* [@shaoyy147](https://github.com/shaoyy147)（Y.Shao）
-* [@Kdotm](https://github.com/Kdotm)（kngines）
-* [@chrzc](https://github.com/chrzc)（changzhicheng）
-* [@ywujudy](https://github.com/ywujudy)（ywujudy）
-* [@污剑客](https://github.com/apachecn)（污剑客）
-* [@爱吹牛逼的小明](https://github.com/apachecn)（爱吹牛逼的小明）
-* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
-* [@Ecauchy](https://github.com/Ecauchy)（Ecauchy）
-
-### 0.18
-
-请参阅: [http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
-
-## 联系方式
-
-**本文档需要人手来维护和更新，如果你有兴趣担任负责人, 请联系下面的企鹅：**
-
-* 529815144（片刻），562826179（飞龙），190442212（小瑶）
-
-## 赞助我们
-
-<img src="http://data.apachecn.org/img/about/donate.jpg" alt="微信&支付宝" />
-
-## **协议**
+## **项目协议**
 
 以各项目协议为准。
 
 ApacheCN 账号下没有协议的项目，一律视为 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)。
 
-## Organization
+## 建议反馈
 
-* ApacheCN 组织资源: <https://github.com/apachecn/home>
+* 在我们的 [apachecn/pytorch-doc-zh](https://github.com/apachecn/sklearn-doc-zh) github 上提 issue.
+* 发邮件到 Email: `apachecn@163.com`.
+* 在我们的 [QQ群-搜索: 交流方式](https://github.com/apachecn/home) 中联系群主/管理员即可.
 
-> 欢迎任何人参与和完善：一个人可以走的很快，但是一群人却可以走的更远
+## 赞助我们
+
+<img src="http://data.apachecn.org/img/about/donate.jpg" alt="微信&支付宝" />
