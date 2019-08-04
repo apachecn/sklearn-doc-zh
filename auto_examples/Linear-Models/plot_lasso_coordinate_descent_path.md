@@ -2,11 +2,11 @@
 # Lasso和Elastic Net(弹性网络)
 
 >翻译者:[@Loopy](https://github.com/loopyme)        
->校验者:未完成校验
+>校验者:[@barrycg](https://github.com/barrycg)
 
 使用坐标下降实现Lasso和Elastic Net(弹性网络)(L1和L2罚项)。
 
-系数可以强制设定为正。
+回归系数可以被强制设定为正。
 
 
 ```python

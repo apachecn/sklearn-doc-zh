@@ -2,9 +2,9 @@
 # Lasso和Elastic Net(弹性网络)在稀疏信号上的表现
 
 >翻译者:[@Loopy](https://github.com/loopyme)        
->校验者:未完成校验
+>校验者:[@barrycg](https://github.com/barrycg)
 
-评价Lasso和弹性网络在手动生成的附加噪声的稀疏信号上的表现。并将估计系数与真实值进行了比较。
+评估了Lasso回归模型和弹性网络回归模型在手动生成的，并附加噪声的稀疏信号上的表现，并将回归系数与真实值进行了比较。
 
 
 ```python
