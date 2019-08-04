@@ -1,40 +1,65 @@
 # 贡献指南
 
-为了使项目更加便于维护，我们将文档格式全部转换成了 Markdown，同时更换了页面生成器。后续维护工作将完全在 Markdown 上进行。
+> 请您勇敢地去翻译和改进翻译。虽然我们追求卓越，但我们并不要求您做到十全十美，因此请不要担心因为翻译上犯错——在大部分情况下，我们的服务器已经记录所有的翻译，因此您不必担心会因为您的失误遭到无法挽回的破坏。（改编自维基百科）
 
-小部分格式仍然存在问题，主要是链接和表格。需要大家帮忙找到，并提 PullRequest 来修复。
+可能有用的链接：
 
-## 参与翻译 & 修正错误
++ [英文官网](https://scikit-learn.org)
++ [中文翻译](https://sklearn.apachecn.org)
 
-翻译待解决的问题 & 对应的解决思路：
-1. 缺少示例的翻译：  用Jupyter notebook跑一遍示例程序，再把介绍和注释翻译成中文，最后生成为md并修复其他文章中对应的链接
-2. 小部分格式和翻译仍然存在问题，需要大家帮忙找到，并提 PullRequest 来修复。
-3. 部分翻译的语言可能不够流畅，需要大家帮忙润色，并提 PullRequest 来优化。
+负责人：
 
-贡献方式：
-1. 在 github 上 fork 该 repository.
-2. 按照上面提到的解决思路修复对应的问题
-3. 然后, 在你的 github 发起 New pull request 请求.
-4. 工具使用, 可参考下面的内容.
+* [@loopyme](https://github.com/loopyme)：3322728009
+* [飞龙](https://github.com/wizardforcel)：562826179
+* [片刻](https://github.com/jiangzhonglian)：529815144
 
-## 工具使用（针对新手）
+## 章节列表
 
-工欲善其事, 必先利其器 ...  
-工具随意, 能达到效果就好.  
-我这里使用的是 `VSCode` 编辑器.  
-简易的使用指南请参阅: [VSCode Windows 平台入门使用指南](help/vscode-windows-usage.md), 介绍了 `VSCode` 与 `github` 一起搭配的简易使用的方法.  
-如果要将 VSCode 的 Markdown 预览风格切换为 github 的风格，请参阅: [VSCode 修改 markdown 的预览风格为 github 的风格](help/vscode-markdown-preview-github-style.md).
+*   [安装 scikit-learn](docs/79.md)
+*   用户指南
+    *   [1. 监督学习](docs/1.md)
+    *   [2. 无监督学习](docs/19.md)
+    *   [3. 模型选择和评估](docs/29.md?id=_3-模型选择和评估)
+    *   [4.  检验](docs/35.md?id=_4--检验)
+    *   [5. 数据集转换](docs/37.md?id=_5-数据集转换)
+    *   [6. 数据集加载工具](docs/47.md?id=_6-数据集加载工具)
+    *   [7. 使用scikit-learn计算](docs/48.md?id=_7-使用scikit-learn计算)
+*   [使用教程](docs/50.md)
+    *   [使用 scikit-learn 介绍机器学习](docs/51.md)
+    *   [关于科学数据处理的统计学习教程](docs/52.md)
+    *   [处理文本数据](docs/76.md)
+    *   [选择正确的评估器](docs/77.md)
+    *   [外部资源，视频和谈话](docs/78.md)
+*   [API 参考](https://scikit-learn.org/stable/modules/classes.html)
+*   [常见问题](docs/63.md)
+*   [时光轴](docs/64.md)
 
-**注意注意注意:**  
 
-为了尽量正规化各顶级项目的翻译，更便于以后的迭代更新，我们在 `scikit-learn` 文档翻译中使用了 `Git` 的分支，具体应用方法请参阅: [使用 Git 分支进行迭代翻译](help/git-branch-usage.md).
+## 流程
 
-## 角色分配
+### 一、认领
 
-目前有如下可分配的角色: 
+首先查看[整体进度](https://github.com/apachecn/sklearn-doc-zh/issues/352)，确认没有人认领了你想认领的章节。
+ 
+然后回复 ISSUE，注明“章节 + QQ 号”（一定要留 QQ）。
 
-* 翻译: 负责文章内容的翻译.
-* 校验: 负责文章内容的校验, 比如格式, 正确度之类的.
-* 负责人: 负责整个 Projcet, 不至于让该 Project 成为垃圾项目, 需要在 sklearn 方面经验稍微丰富点.
+### 二、校对
 
-有兴趣参与的朋友, 可以看看最后的联系方式.
+需要校对：
+
+1.  语法
+2.  术语使用
+3.  文档格式
+
+如果觉得现有翻译不好，重新翻译也是可以的。
+
+### 三、提交
+
+**提交的时候不要改动文件名称，即使它跟章节标题不一样也不要改，因为文件名和原文的链接是对应的！！！**
+
++   `fork` Github 项目
++   将译文放在`docs/1.0`文件夹下
++   `push`
++   `pull request`
+
+请见 [Github 入门指南](https://github.com/apachecn/kaggle/blob/master/docs/GitHub)。
