@@ -2,26 +2,26 @@
 
 ![](docs/img/scikit-learn-logo.png)
 
-> Special Sponsers
-
-<table>
-      <tbody>
-        <tr>
-          <td align="center" valign="middle">
-            <a href="https://coding.net/?utm_source=ApacheCN&utm_medium=banner&utm_campaign=march2019" target="_blank">
-              <img width="1080" src="http://data.apachecn.org/img/SpecialSponsors/CodingNet.png">
-            </a>
-          </td>
-      </tbody>
-</table>
-
-
-scikit-learn 是基于 Python 语言的机器学习工具。
+<center>scikit-learn 是基于 Python 语言的机器学习工具</center>
 
 1. 简单高效的数据挖掘和数据分析工具
 2. 可供大家在各种环境中重复使用
 3. 建立在 NumPy ，SciPy 和 matplotlib 上
 4. 开源，可商业使用 - BSD许可证
+
+<br/>
+<table>
+  <tr align="center">
+    <td><a title="sklearn 0.21.3 中文翻译" href="https://sklearn.apachecn.org/docs/0.21.3" target="_blank"><font size="5">sklearn 0.21.3 中文翻译</font></a></td>
+  </tr>
+  <tr align="center">
+    <td><a title="sklearn 0.19.x 中文翻译" href="https://sklearn.apachecn.org/docs/0.19.x" target="_blank"><font size="5">sklearn 0.19.x 中文翻译</font></a></td>
+  </tr>
+  <tr align="center">
+    <td><a title="sklearn 英文官网" href="https://scikit-learn.org" target="_blank"><font size="5">sklearn 英文官网</font></a></td>
+  </tr>
+</table>
+<br/>
 
 ## 维护地址
 
@@ -30,158 +30,132 @@ scikit-learn 是基于 Python 语言的机器学习工具。
 +   [EPUB 格式](https://github.com/apachecn/scikit-learn-doc-zh/raw/dl/scikit-learn%200.19%20%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3.epub)
 
 ## 目录
-*   [安装 scikit-learn](docs/79.md)
+
+*   [安装 scikit-learn](docs/0.21.3/62.md)
 *   用户指南
-    *   [1. 监督学习](docs/1.md)
-    *   [2. 无监督学习](docs/19.md)
-    *   [3. 模型选择和评估](docs/29.md?id=_3-模型选择和评估)
-    *   [4.  检验](docs/35.md?id=_4--检验)
-    *   [5. 数据集转换](docs/37.md?id=_5-数据集转换)
-    *   [6. 数据集加载工具](docs/47.md?id=_6-数据集加载工具)
-    *   [7. 使用scikit-learn计算](docs/48.md?id=_7-使用scikit-learn计算)
-*   [使用教程](docs/50.md)
-    *   [使用 scikit-learn 介绍机器学习](docs/51.md)
-    *   [关于科学数据处理的统计学习教程](docs/52.md)
-    *   [处理文本数据](docs/76.md)
-    *   [选择正确的评估器](docs/77.md)
-    *   [外部资源，视频和谈话](docs/78.md)
+    *   [1. 监督学习](docs/0.21.3/1.md)
+        * [1.1. 广义线性模型](docs/0.21.3/2.md)
+        * [1.2. 线性和二次判别分析](docs/0.21.3/3.md)
+        * [1.3. 内核岭回归](docs/0.21.3/4.md)
+        * [1.4. 支持向量机](docs/0.21.3/5.md)
+        * [1.5. 随机梯度下降](docs/0.21.3/6.md)
+        * [1.6. 最近邻](docs/0.21.3/7.md)
+        * [1.7. 高斯过程](docs/0.21.3/8.md)
+        * [1.8. 交叉分解](docs/0.21.3/9.md)
+        * [1.9. 朴素贝叶斯](docs/0.21.3/10.md)
+        * [1.10. 决策树](docs/0.21.3/11.md)
+        * [1.11. 集成方法](docs/0.21.3/12.md)
+        * [1.12. 多类和多标签算法](docs/0.21.3/13.md)
+        * [1.13. 特征选择](docs/0.21.3/14.md)
+        * [1.14. 半监督学习](docs/0.21.3/15.md)
+        * [1.15. 等式回归](docs/0.21.3/16.md)
+        * [1.16. 概率校准](docs/0.21.3/17.md)
+        * [1.17. 神经网络模型（有监督）](docs/0.21.3/18.md)
+    *   [2. 无监督学习](docs/0.21.3/19.md)
+        * [2.1. 高斯混合模型](docs/0.21.3/20.md)
+        * [2.2. 流形学习](docs/0.21.3/21.md)
+        * [2.3. 聚类](docs/0.21.3/22.md)
+        * [2.4. 双聚类](docs/0.21.3/23.md)
+        * [2.5. 分解成分中的信号（矩阵分解问题）](docs/0.21.3/24.md)
+        * [2.6. 协方差估计](docs/0.21.3/25.md)
+        * [2.7. 新奇和异常值检测](docs/0.21.3/26.md)
+        * [2.8. 密度估计](docs/0.21.3/27.md)
+        * [2.9. 神经网络模型（无监督）](docs/0.21.3/28.md)
+    * [3. 模型选择和评估](docs/0.21.3/29.md)
+        * [3.1. 交叉验证：评估估算器的表现](docs/0.21.3/30.md)
+        * [3.2. 调整估计器的超参数](docs/0.21.3/31.md)
+        * [3.3. 模型评估: 量化预测的质量](docs/0.21.3/32.md)
+        * [3.4. 模型持久化](docs/0.21.3/33.md)
+        * [3.5. 验证曲线: 绘制分数以评估模型](docs/0.21.3/34.md)
+    * [4.  检验](docs/0.21.3/35.md)
+        * [4.1. 部分依赖图](docs/0.21.3/36.md)
+    * [5. 数据集转换](docs/0.21.3/37.md)
+        * [5.1. Pipeline（管道）和 FeatureUnion（特征联合）: 合并的评估器](docs/0.21.3/38.md)
+        * [5.2. 特征提取](docs/0.21.3/39.md)
+        * [5.3 预处理数据](docs/0.21.3/40.md)
+        * [5.4 缺失值插补](docs/0.21.3/41.md)
+        * [5.5. 无监督降维](docs/0.21.3/42.md)
+        * [5.6. 随机投影](docs/0.21.3/43.md)
+        * [5.7. 内核近似](docs/0.21.3/44.md)
+        * [5.8. 成对的矩阵, 类别和核函数](docs/0.21.3/45.md)
+        * [5.9. 预测目标 (`y`) 的转换](docs/0.21.3/46.md)
+    * [6. 数据集加载工具](docs/0.21.3/47.md)
+        * [6.1. 通用数据集 API](docs/0.21.3/47.md)
+        * [6.2. 玩具数据集](docs/0.21.3/47.md)
+        * [6.3 真实世界中的数据集](docs/0.21.3/47.md)
+        * [6.4. 样本生成器](docs/0.21.3/47.md)
+        * [6.5. 加载其他数据集](docs/0.21.3/47.md)
+    * [7. 使用scikit-learn计算](docs/0.21.3/48.md)
+        * [7.1. 大规模计算的策略: 更大量的数据](docs/0.21.3/48.md)
+        * [7.2. 计算性能](docs/0.21.3/48.md)
+        * [7.3. 并行性、资源管理和配置](docs/0.21.3/48.md)
+*   [教程](docs/0.21.3/50.md)
+    *   [使用 scikit-learn 介绍机器学习](docs/0.21.3/51.md)
+    *   [关于科学数据处理的统计学习教程](docs/0.21.3/52.md)
+        *   [机器学习: scikit-learn 中的设置以及预估对象](docs/0.21.3/53.md)
+        *   [监督学习：从高维观察预测输出变量](docs/0.21.3/54.md)
+        *   [模型选择：选择估计量及其参数](docs/0.21.3/55.md)
+        *   [无监督学习: 寻求数据表示](docs/0.21.3/56.md)
+        *   [把它们放在一起](docs/0.21.3/57.md)
+        *   [寻求帮助](docs/0.21.3/58.md)
+    *   [处理文本数据](docs/0.21.3/59.md)
+    *   [选择正确的评估器(estimator.md)](docs/0.21.3/60.md)
+    *   [外部资源，视频和谈话](docs/0.21.3/61.md)
 *   [API 参考](https://scikit-learn.org/stable/modules/classes.html)
-*   [常见问题](docs/63.md)
-*   [时光轴](docs/64.md)
+*   [常见问题](docs/0.21.3/63.md)
+*   [时光轴](docs/0.21.3/64.md)
 
 ## 历史版本
 
-* [scikit-learn (sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
 * [scikit-learn (sklearn) 0.19 官方文档中文版](https://github.com/apachecn/scikit-learn-doc-zh/tree/0.19.x)
+* [scikit-learn (sklearn) 0.18 官方文档中文版](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
 
 ## 贡献指南
 
-[请见这里](CONTRIBUTING.md)
+项目当前处于校对阶段，请查看[贡献指南](CONTRIBUTING.md)，并在[整体进度](https://github.com/apachecn/sklearn-doc-zh/issues/352)中领取任务。
 
-## 负责人
+> 请您勇敢地去翻译和改进翻译。虽然我们追求卓越，但我们并不要求您做到十全十美，因此请不要担心因为翻译上犯错——在大部分情况下，我们的服务器已经记录所有的翻译，因此您不必担心会因为您的失误遭到无法挽回的破坏。（改编自维基百科）
 
-* [@loopyme](https://github.com/loopyme)
+## 项目负责人
+
+格式: GitHub + QQ
+
+> 第一期 (2017-09-29)
+
+* [@那伊抹微笑](https://github.com/wangyangting)
+* [@片刻](https://github.com/jiangzhonglian)
+* [@小瑶](https://github.com/chenyyx)
+
+> 第二期 (2019-06-29)
+
+* [@loopyme](https://github.com/loopyme)：3322728009
+* [飞龙](https://github.com/wizardforcel)：562826179
+* [片刻](https://github.com/jiangzhonglian)：529815144
+
+-- 负责人要求: (欢迎一起为 `sklearn 中文版本` 做贡献)
+
+* 热爱开源，喜欢装逼
+* 长期使用 sklearn(至少0.5年) + 提交Pull Requests>=3
+* 能够有时间及时优化页面 bug 和用户 issues
+* 试用期: 2个月
+* 欢迎联系: [片刻](https://github.com/jiangzhonglian) 529815144
 
 ## 贡献者
 
-贡献者可自行编辑如下内容（排名不分先后）.
+[【0.19.X】贡献者名单](https://github.com/apachecn/sklearn-doc-zh/issues/354)
 
-### 0.19.0
-
-**翻译者(人人皆大佬~):**
-
-* [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
-* [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
-* [@chenyyx](https://github.com/chenyyx)（Joy yx）
-* [@survivingME](https://github.com/survivingME)（Trembleguy）
-* [@mtobeiyf](https://github.com/mtobeiyf)（Fing）
-* [@Leon-Jin](https://github.com/Leon-Jin)（Leon晋）
-* [@X1aoFang](https://github.com/X1aoFang)（X1aoFang）
-* [@loverollcat](https://github.com/loverollcat)（loverollcat）
-* [@helloheshee](https://github.com/helloheshee)（helloheshee）
-* [@SkyDreamStart](https://github.com/SkyDreamStart)（SkyDreamStart）
-* [@HazekiahWon](https://github.com/HazekiahWon)（Hazekiah Wang）
-* [@201419](https://github.com/201419)（tree）
-* [@busesese](https://github.com/busesese)（wenyi）
-* [@chrzc](https://github.com/chrzc)（changzhicheng）
-* [@Zoctan](https://github.com/Zoctan)（Zoctan）
-* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
-* [@charleschou520](https://github.com/charleschou520)（charleschou520）
-* [@zhangqiking](https://github.com/zhangqiking)（BigBird）
-* [@mikechengwei](https://github.com/mikechengwei)（Mike）
-* [@wodekwan](https://github.com/wodekwan)（wodekwan）
-* [@sehriff](https://github.com/sehriff)（sehriff）
-* [@Kdotm](https://github.com/Kdotm)（kngines）
-* [@patientman](https://github.com/patientman)（YuanMingLiu）
-* [@DamonDay](https://github.com/DamonDay)（DamonDay）
-* [@cszhangbo](https://github.com/cszhangbo)（cszhangbo）
-* [@XingxGit](https://github.com/XingxGit)（XingxGit）
-* [@KrokYin](https://github.com/KrokYin)（KrokYin）
-* [@yw10](https://github.com/yw10)（Andrew Yao）
-* [@GlassyWu](https://github.com/GlassyWu)（glassy）
-* [@PrivateRookie](https://github.com/PrivateRookie)（PrivateRookie）
-* [@linweijiang](https://github.com/linweijiang)（linweijiang）
-* [@jiaqiangbandongg](https://github.com/jiaqiangbandongg)（jiaqiangbandongg）
-* [@supportingvector](https://github.com/supportingvector)（supportingvector）
-* [@stealthsMrs](https://github.com/stealthsMrs)（stealthsMrs）
-* [@lhwlhw90](https://github.com/lhwlhw90)（lhwlhw90）
-* [@sheepmen](https://github.com/sheepmen)（羊三）
-* [@guohao916](https://github.com/guohao916)（guohao_dm）
-* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
-* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
-* [@夜神月](@qq760514101)（夜神月）
-* [@liyangbit](https://github.com/liyangbit)（Lemon）
-* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
-
-**校验者(人人皆大佬~)**（现在还不齐全，贡献者大佬们可随意修改）
-
-* [@weiyd](https://github.com/weiyd)（尔了个达）
-* [@FontTian](https://github.com/FontTian)（FontTian）
-* [@XuJianzhi](https://github.com/XuJianzhi)（XuJianzhi）
-* [@caopeirui](https://github.com/caopeirui)（Veyron C）
-* [@HelloSilicat](https://github.com/HelloSilicat)（Jialiang Pei）
-* [@AnybodyHome](https://github.com/AnybodyHome)（loop）
-* [@RyanZhiNie](https://github.com/RyanZhiNie)（Zhi Nie）
-* [@zehuichen123](https://github.com/zehuichen123)（loveSnowBest）
-* [@hlxstc](https://github.com/hlxstc)（Jokers）
-* [@NellyLuo](https://github.com/NellyLuo)（NellyLuo）
-* [@yuezhao9210](https://github.com/yuezhao9210)（Yue Zhao）
-* [@why2lyj](https://github.com/why2lyj)（Snow Wong）
-* [@pan8664716](https://github.com/pan8664716)（pan8664716）
-* [@xrj](https://github.com/xrj)（xrj）
-* [@qvduoduo1997](https://github.com/qvduoduo1997)（qvduoduo1997）
-* [@marsjhao](https://github.com/marsjhao)（Zhang Junhao）
-* [@tiantian1412](https://github.com/tiantian1412)（tiantian1412）
-* [@sheepmen](https://github.com/sheepmen)（羊三）
-* [@wangyangting](https://github.com/wangyangting)（那伊抹微笑）
-* [@jiangzhonglian](https://github.com/jiangzhonglian)（片刻）
-* [@chenyyx](https://github.com/chenyyx)（Joy yx）
-* [@mikechengwei](https://github.com/mikechengwei)（Mike）
-* [@wangxiancai](https://github.com/wangxiancai)（BWM-蜜蜂）
-* [@busesese](https://github.com/busesese)（wenyi）
-* [@GlassyWu](https://github.com/GlassyWu)（glassy）
-* [@wodekwan](https://github.com/wodekwan)（wodekwan）
-* [@gbyy422990](https://github.com/gbyy422990)（Bin GAO）
-* [@charleschou520](https://github.com/charleschou520)（charleschou520）
-* [@DataMonk2017](https://github.com/DataMonk2017)（Jeremy Zheng）
-* [@Lixu518](https://github.com/Lixu518)（Mysry）
-* [@linxiamen](https://github.com/linxiamen)（YUNCHUAN LIN）
-* [@llcing](https://github.com/llcing)（Mayouji）
-* [@KyrieHee](https://github.com/KyrieHee)（HeYun）
-* [@ziepenn](https://github.com/ziepenn)（ziepenn）
-* [@FAN0521](https://github.com/FAN0521)（FAN0521）
-* [@Daemon-ser](https://github.com/Daemon-ser)（csu_hgq）
-* [@shaoyy147](https://github.com/shaoyy147)（Y.Shao）
-* [@Kdotm](https://github.com/Kdotm)（kngines）
-* [@chrzc](https://github.com/chrzc)（changzhicheng）
-* [@ywujudy](https://github.com/ywujudy)（ywujudy）
-* [@污剑客](https://github.com/apachecn)（污剑客）
-* [@爱吹牛逼的小明](https://github.com/apachecn)（爱吹牛逼的小明）
-* [@JanzenLiu](https://github.com/JanzenLiu)（Janzen_Liu）
-* [@Ecauchy](https://github.com/Ecauchy)（Ecauchy）
-
-### 0.18
-
-请参阅: [http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181](http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030181)
-
-## 联系方式
-
-**本文档需要人手来维护和更新，如果你有兴趣担任负责人, 请联系下面的企鹅：**
-
-* 529815144（片刻），562826179（飞龙），190442212（小瑶）
-
-## 赞助我们
-
-<img src="http://data.apachecn.org/img/about/donate.jpg" alt="微信&支付宝" />
-
-## **协议**
+## **项目协议**
 
 以各项目协议为准。
 
 ApacheCN 账号下没有协议的项目，一律视为 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)。
 
-## Organization
+## 建议反馈
 
-* ApacheCN 组织资源: <https://github.com/apachecn/home>
+* 在我们的 [apachecn/pytorch-doc-zh](https://github.com/apachecn/sklearn-doc-zh) github 上提 issue.
+* 发邮件到 Email: `apachecn@163.com`.
+* 在我们的 [QQ群-搜索: 交流方式](https://github.com/apachecn/home) 中联系群主/管理员即可.
 
-> 欢迎任何人参与和完善：一个人可以走的很快，但是一群人却可以走的更远
+## 赞助我们
+
+<img src="http://data.apachecn.org/img/about/donate.jpg" alt="微信&支付宝" />
