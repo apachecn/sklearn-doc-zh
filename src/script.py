@@ -123,8 +123,8 @@ if __name__ == "__main__":
       '\\n    <div id="gitalk-container"></div>'+
       '\\n    <script type="text/javascript">'+
       '\\n        const gitalk = new Gitalk({'+
-      '\\n        clientID: \\'2e62dee5b9896e2eede6\\','+
-      '\\n        clientSecret: \\'ca6819a54656af0d87960af15315320f8a628a53\\','+
+      '\\n        clientID: \\'c56c649fa375b552e607\\','+
+      '\\n        clientSecret: \\'21401635722aa1b9518d38d5ff1f0f151b4786ca\\','+
       '\\n        repo: \\'sklearn-doc-zh\\','+
       '\\n        owner: \\'apachecn\\','+
       '\\n        admin: [\\'jiangzhonglian\\', \\'wizardforcel\\'],'+
