@@ -1,13 +1,27 @@
 # scikit-learn (sklearn) 官方文档中文版
 
-![](docs/0.21.3/img/scikit-learn-logo.png)
+![](docs/img/scikit-learn-logo.png)
 
-scikit-learn 是基于 Python 语言的机器学习工具。
+<center>scikit-learn 是基于 Python 语言的机器学习工具</center>
 
 1. 简单高效的数据挖掘和数据分析工具
 2. 可供大家在各种环境中重复使用
 3. 建立在 NumPy ，SciPy 和 matplotlib 上
 4. 开源，可商业使用 - BSD许可证
+
+<br/>
+<table>
+  <tr align="center">
+    <td><a title="sklearn 0.21.3 中文翻译" href="https://sklearn.apachecn.org/docs/0.21.3" target="_blank"><font size="5">sklearn 0.21.3 中文翻译</font></a></td>
+  </tr>
+  <tr align="center">
+    <td><a title="sklearn 0.19.x 中文翻译" href="https://sklearn.apachecn.org/docs/0.19.x" target="_blank"><font size="5">sklearn 0.19.x 中文翻译</font></a></td>
+  </tr>
+  <tr align="center">
+    <td><a title="sklearn 英文官网" href="https://scikit-learn.org" target="_blank"><font size="5">sklearn 英文官网</font></a></td>
+  </tr>
+</table>
+<br/>
 
 ## 维护地址
 
