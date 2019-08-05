@@ -43,5 +43,5 @@ for version in $versions;do
     # python3 src/script.py ${version} "index"
 done
 
-rm -rf /opt/apache-tomcat-9.0.17/webapps/test_book
-cp -r _book /opt/apache-tomcat-9.0.17/webapps/test_book
+# rm -rf /opt/apache-tomcat-9.0.17/webapps/test_book
+# cp -r _book /opt/apache-tomcat-9.0.17/webapps/test_book
