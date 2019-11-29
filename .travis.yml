@@ -9,8 +9,6 @@ branches:
 cache:
   directories:
   - node_modules # 依赖缓存的目录
-  - docs/0.19.x/node_modules # 依赖缓存的目录
-  - docs/0.21.3/node_modules # 依赖缓存的目录
 
 install:
  - npm install -g gitbook-cli # 安装编译工具
