@@ -23,8 +23,9 @@ for version in $versions;do
     echo "python3 src/script.py ${version} book"
     python3 src/script.py ${version} "book"
 
-    echo "rm -rf docs/${version}/node_modules/gitbook-plugin-tbfed-pagefooter"
-    rm -rf docs/${version}/node_modules/gitbook-plugin-tbfed-pagefooter
+    echo "cp -r node_modules docs/${version}"
+    rm -rf docs/${version}/node_modules
+    cp -r node_modules docs/${version}
 
     echo "gitbook install docs/${version}"
     gitbook install docs/${version}
