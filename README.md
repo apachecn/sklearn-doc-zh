@@ -27,7 +27,7 @@
 
 +   [Github](https://github.com/apachecn/scikit-learn-doc-zh/)
 +   [在线阅读](http://sklearn.apachecn.org)
-+   [EPUB 格式](https://github.com/apachecn/scikit-learn-doc-zh/raw/dl/scikit-learn%200.19%20%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3.epub)
++   [EPUB 格式](https://github.com/apachecn/sklearn-doc-zh/raw/epub/sklearn_0.21.3_2019_12_13.epub)
 
 ## 目录
 
