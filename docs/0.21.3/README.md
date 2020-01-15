@@ -100,6 +100,7 @@ scikit-learn 是基于 Python 语言的机器学习工具
 
 格式: GitHub + QQ
 
+* [@mahaoyang](https://github.com/mahaoyang)：992635910
 * [@loopyme](https://github.com/loopyme)：3322728009
 * [飞龙](https://github.com/wizardforcel)：562826179
 * [片刻](https://github.com/jiangzhonglian)：529815144
