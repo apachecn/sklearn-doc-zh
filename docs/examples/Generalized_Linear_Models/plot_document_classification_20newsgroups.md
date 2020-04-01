@@ -4,7 +4,7 @@
 >翻译者:[@Loopy](https://github.com/loopyme)        
 >校验者:[@barrycg](https://github.com/barrycg)
 
-这个例子展示了如何使用scikit-learn中的单词包方法，根据主题对文档进行分类。本例使用scipy.sparse中的矩阵来存储特征，并演示各种能够有效处理稀疏矩阵的分类器。
+这个示例展示了如何使用scikit-learn中的单词包方法，根据主题对文档进行分类。本例使用scipy.sparse中的矩阵来存储特征，并演示各种能够有效处理稀疏矩阵的分类器。
 
 本例中使用的数据集是20条新闻组数据集。通过scikit-learn可以自动下载该数据集，并进行缓存。
 

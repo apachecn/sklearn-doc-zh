@@ -6,7 +6,7 @@
 <table>
     <tr align="center">
         <td><a title="sklearn 0.21.3[master] 中文文档" href="https://sklearn.apachecn.org/" target="_blank"><font size="5">sklearn 0.21.3 中文文档</font></a></td>
-        <td><a title="sklearn 0.21.3[master] 中文案例" href="https://sklearn.apachecn.org/docs/examples" target="_blank"><font size="5">sklearn 0.21.3 中文案例</font></a></td>
+        <td><a title="sklearn 0.21.3[master] 中文示例" href="https://sklearn.apachecn.org/docs/examples" target="_blank"><font size="5">sklearn 0.21.3 中文示例</font></a></td>
         <td><a title="sklearn 英文官网" href="https://scikit-learn.org" target="_blank"><font size="5">sklearn 英文官网</font></a></td>
     </tr>
 </table>

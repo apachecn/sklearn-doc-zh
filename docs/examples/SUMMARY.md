@@ -1,4 +1,4 @@
-* 其他例子
+* Miscellaneous 示例
 * 广义线性模型
     * [分类特征稀疏的文本](Generalized_Linear_Models/plot_document_classification_20newsgroups.md)
     * [Lasso和Elastic Net(弹性网络)在稀疏信号上的表现](Generalized_Linear_Models/plot_lasso_and_elasticnet.md)
