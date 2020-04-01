@@ -1,8 +1,8 @@
-# 案例
+# 示例
 
 英文地址: <https://scikit-learn.org/stable/auto_examples/index.html>
 
-## Miscellaneous 案例
+## Miscellaneous 示例
 
 scikit-learn 的 Miscellaneous 和入门示例。
 
@@ -75,7 +75,7 @@ scikit-learn 的 Miscellaneous 和入门示例。
 | ![](img/sphx_glr_plot_compare_cross_decomposition_thumb.png) <br/> [比较交叉分解方法](https://scikit-learn.org/stable/auto_examples/cross_decomposition/plot_compare_cross_decomposition.html#sphx-glr-auto-examples-cross-decomposition-plot-compare-cross-decomposition-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id57) |
 
 
-## 数据集的案例
+## 数据集的示例
 
 有关[`sklearn.datasets`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.datasets "sklearn.datasets")模块的示例。
 
