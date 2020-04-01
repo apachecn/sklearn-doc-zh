@@ -87,27 +87,40 @@
 
 ### 一、认领
 
-首先查看[整体进度](https://github.com/apachecn/sklearn-doc-zh/issues/352)，确认没有人认领了你想认领的章节。
- 
+首先查看[整体进度](https://github.com/apachecn/sklearn-doc-zh/issues/352)，确认没有人认领了你想认领的章节；当然如果你想完善已校对的章节，我们也十分欢迎。
+
 然后回复 ISSUE，注明“章节 + QQ 号”（一定要留 QQ）。
 
 ### 二、校对
 
-需要校对：
+#### 完善方向
 
-1.  语法
-2.  术语使用
-3.  文档格式
+可以完善的方向包括但不限于：
 
-如果觉得现有翻译不好，重新翻译也是可以的。
+1.  中英文符号（Chinese prior）；
+2.  笔误及错误语法；
+3.  术语使用；
+4.  语言润色；
+5.  文档格式；
+6.  如果觉得现有翻译的某些部分不好，重新翻译也是可以的。
+
+#### 关于数学公式
+
+尽管用MathJax等工具插入数学公式是一个好的 manner，但是我们目前并不把它列为 high-priority 的提升方向。我们未来会做的！但是针对于这个问题如果你有好的想法并乐意PR，未来我们会针对于这个新特性做一些改进。
+
+如果你发现公式过期或者错误，请务必按照这种格式进行更新："! + [latex 公式] + (图片地址) "，这样可以保证我们的开发比较高效。此外，不要忘记将新的图片放到 img 文件夹中一并 PR。如果你找不到好的latex公式图片下载地址，可以使用[这个工具](http://latex.codecogs.com/eqneditor/editor.php)。
+
+#### 管理者校对
+
+管理员应当是组织内活跃的参与者，因此可能会从事很多校对工作。我们建议管理员自己不要 merge 自己对于文档修改或者增加新特性的PR，这样其他管理员可以 review 并 double check，提升文档质量。
 
 ### 三、提交
 
 **提交的时候不要改动文件名称，即使它跟章节标题不一样也不要改，因为文件名和原文的链接是对应的！！！**
 
-+   `fork` Github 项目
-+   将译文放在`docs/1.0`文件夹下
-+   `push`
-+   `pull request`
++   `fork` Github 项目并建立你的分支 `branch`（我们强烈建议这样做）；
++   将译文放在 `docs/master` 文件夹下；
++   `commit` 和 `push` 你的修改；
++   `pull request`。
 
-请见 [Github 入门指南](https://github.com/apachecn/kaggle/blob/master/docs/GitHub)。
+如果你还不熟练这个流程，请参阅 [Github 入门指南](https://github.com/apachecn/kaggle/blob/master/docs/GitHub)。
