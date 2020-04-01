@@ -1,29 +1,33 @@
 # <center>scikit-learn (sklearn) 官方文档中文版</center>
 
-![](img/logo/scikit-learn-logo.png)
+<center><img src="img/logo/scikit-learn-logo.png" alt="logo" /></center>
 
-scikit-learn (sklearn) 是基于 Python 语言的机器学习工具
+<br/>
+<table>
+    <tr align="center">
+        <td><a title="sklearn 0.21.3[master] 中文文档" href="https://sklearn.apachecn.org/" target="_blank"><font size="5">sklearn 0.21.3 中文文档</font></a></td>
+        <td><a title="sklearn 0.21.3[master] 中文案例" href="https://sklearn.apachecn.org/docs/examples" target="_blank"><font size="5">sklearn 0.21.3 中文案例</font></a></td>
+        <td><a title="sklearn 英文官网" href="https://scikit-learn.org" target="_blank"><font size="5">sklearn 英文官网</font></a></td>
+    </tr>
+</table>
+<br/>
+
+---
+
+## 介绍
+
+sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 
 1. 简单高效的数据挖掘和数据分析工具
 2. 可供大家在各种环境中重复使用
 3. 建立在 NumPy ，SciPy 和 matplotlib 上
 4. 开源，可商业使用 - BSD许可证
 
-<br/>
-<table>
-  <tr align="center">
-    <td><a title="sklearn 0.21.3[master] 中文文档" href="https://sklearn.apachecn.org/docs/master" target="_blank"><font size="5">sklearn 0.21.3 中文文档</font></a></td>
-    <td><a title="sklearn 0.21.3[master] 中文案例" href="https://sklearn.apachecn.org/docs/examples" target="_blank"><font size="5">sklearn 0.21.3 中文翻译</font></a></td>
-    <td><a title="sklearn 英文官网" href="https://scikit-learn.org" target="_blank"><font size="5">sklearn 英文官网</font></a></td>
-  </tr>
-</table>
-<br/>
+> 维护地址
 
-## 维护地址
-
-+   [Github](https://github.com/apachecn/scikit-learn-doc-zh/)
-+   [在线阅读](http://sklearn.apachecn.org)
-+   [EPUB 格式](https://github.com/apachecn/sklearn-doc-zh/raw/epub/sklearn_0.21.3_2019_12_13.epub)
++ [Github](https://github.com/apachecn/scikit-learn-doc-zh/)
++ [在线阅读](http://sklearn.apachecn.org)
++ [EPUB 格式](https://github.com/apachecn/sklearn-doc-zh/raw/epub/sklearn_0.21.3_2019_12_13.epub)
 
 ## 目录
 
