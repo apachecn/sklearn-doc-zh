@@ -128,6 +128,7 @@
 
 > 第二期 (2019-06-29)
 
+* [@N!no](https://github.com/lovelybuggies)：1352899627
 * [@mahaoyang](https://github.com/mahaoyang)：992635910
 * [@loopyme](https://github.com/loopyme)：3322728009
 * [飞龙](https://github.com/wizardforcel)：562826179
