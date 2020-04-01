@@ -2,7 +2,7 @@
 loginfo() { echo "[INFO] $@"; }
 logerror() { echo "[ERROR] $@" 1>&2; }
 
-versions="0.21.3 0.19.x"
+versions="examples"
 python3 src/init_gitbook.py versions
 python3 src/script.py "home" "book"
 rm -rf node_modules/gitbook-plugin-tbfed-pagefooter
