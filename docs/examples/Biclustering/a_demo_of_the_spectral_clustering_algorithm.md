@@ -1,5 +1,5 @@
 
-# 频谱双聚类算法的演示
+# 频谱双聚类算法演示
 
 > 翻译者：[@N!no](https://github.com/lovelybuggies) 
 > 校验者：待校验
