@@ -2,7 +2,7 @@
 
 英文地址: <https://scikit-learn.org/stable/auto_examples/index.html>
 
-## 杂项示例
+## 其他示例
 
 scikit-learn 的 Miscellaneous 和入门示例。
 
