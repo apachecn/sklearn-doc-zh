@@ -1,5 +1,8 @@
 * 其他示例
 * 双聚类
+    * [频谱共聚算法演示](Biclustering/a_demo_of_the_spectral_co-clustering_algorithm.md)
+    * [频谱双聚类算法演示](Biclustering/a_demo_of_the_spectral_clustering_algorithm.md)
+    * [使用频谱共聚算法对文档进行聚合](Biclustering/biclustering_documents_with_the_spectral_co-clustering_algorithm.md)
 * 校准
 * 分类
 * 多聚类
