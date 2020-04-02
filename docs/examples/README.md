@@ -13,13 +13,13 @@ scikit-learn 的 Miscellaneous 和入门示例。
 | ![](img/sphx_glr_plot_kernel_ridge_regression_thumb.png) <br/> [内核岭回归和SVR的比较](https://scikit-learn.org/stable/auto_examples/plot_kernel_ridge_regression.html#sphx-glr-auto-examples-plot-kernel-ridge-regression-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id10) | ![](img/sphx_glr_plot_kernel_approximation_thumb.png) <br/> [RBF内核的显式特征图逼近](https://scikit-learn.org/stable/auto_examples/plot_kernel_approximation.html#sphx-glr-auto-examples-plot-kernel-approximation-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id11) |
 
 
-## 双集群
+## 双聚类
 
 有关`sklearn.cluster.bicluster`模块的示例。
 
 | | | | |
 | -- | -- | -- | -- |
-| ![](img/sphx_glr_plot_spectral_coclustering_thumb.png) <br/> [频谱共聚算法演示](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html#sphx-glr-auto-examples-bicluster-plot-spectral-coclustering-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id12) | ![](img/sphx_glr_plot_spectral_biclustering_thumb.png) <br/> [频谱二值化算法的演示](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_biclustering.html#sphx-glr-auto-examples-bicluster-plot-spectral-biclustering-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id13) | ![](img/sphx_glr_plot_bicluster_newsgroups_thumb.png) <br/> [使用频谱共同聚类算法对文档进行聚类](https://scikit-learn.org/stable/auto_examples/bicluster/plot_bicluster_newsgroups.html#sphx-glr-auto-examples-bicluster-plot-bicluster-newsgroups-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id14) |
+| ![](img/sphx_glr_plot_spectral_coclustering_thumb.png) <br/> [频谱共聚算法演示](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html#sphx-glr-auto-examples-bicluster-plot-spectral-coclustering-py)[](Biclustering/a_demo_of_the_spectral_co-clustering_algorithm.md) | ![](img/sphx_glr_plot_spectral_biclustering_thumb.png) <br/> [频谱双聚类算法的演示](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_biclustering.html#sphx-glr-auto-examples-bicluster-plot-spectral-biclustering-py)[](Biclustering/a_demo_of_the_spectral_clustering_algorithm.md) | ![](img/sphx_glr_plot_bicluster_newsgroups_thumb.png) <br/> [使用频谱共聚算法对文档进行聚合](https://scikit-learn.org/stable/auto_examples/bicluster/plot_bicluster_newsgroups.html#sphx-glr-auto-examples-bicluster-plot-bicluster-newsgroups-py)[](Biclustering/biclustering_documents_with_the_spectral_co-clustering_algorithm.md) ||
 
 
 ## 校准
@@ -41,7 +41,7 @@ scikit-learn 的 Miscellaneous 和入门示例。
 | ![](img/sphx_glr_plot_lda_qda_thumb.png) <br/> [线性和二次判别分析与协方差椭球](https://scikit-learn.org/stable/auto_examples/classification/plot_lda_qda.html#sphx-glr-auto-examples-classification-plot-lda-qda-py)[](https://scikit-learn.org/stable/auto_examples/index.html#id23) |
 
 
-## 多集群
+## 多聚类
 
 有关[`sklearn.cluster`](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster "sklearn.cluster")模块的示例。
 
