@@ -174,7 +174,7 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 * 个人的建议是: fork -> pull requests 到 `https://github.com/apachecn/sklearn-doc-zh`
 * 那为什么要选择 `ApacheCN` 呢？
 * 因为我们做翻译这事情是觉得开心和装逼，比较纯粹！
-* 你如果喜欢，你可以来参与/甚至负责这个项目，没人任何学历和背景的限制
+* 你如果喜欢，你可以来参与/甚至负责这个项目，没有任何学历和背景的限制
 
 ## 赞助我们
 
