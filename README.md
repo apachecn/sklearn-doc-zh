@@ -23,11 +23,20 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 3. 建立在 NumPy ，SciPy 和 matplotlib 上
 4. 开源，可商业使用 - BSD许可证
 
-> 维护地址
+> 组织构建[网站]
 
-+ [Github](https://github.com/apachecn/scikit-learn-doc-zh/)
-+ [在线阅读](http://sklearn.apachecn.org)
-+ [EPUB 格式](https://github.com/apachecn/sklearn-doc-zh/raw/epub/sklearn_0.21.3_2019_12_13.epub)
++ GitHub Pages(国外): https://sklearn.apachecn.org
++ Gitee Pages(国内): https://apachecn.gitee.io/sklearn
+
+> 第三方站长[网站]
+
++ sklearn 中文文档: http://www.scikitlearn.com.cn
++ 地址A: xxx (欢迎留言，我们完善补充)
+
+> 其他补充
+
++ [官方Github](https://github.com/apachecn/scikit-learn-doc-zh)
++ [EPUB 下载地址](https://github.com/apachecn/sklearn-doc-zh/raw/epub/sklearn_0.21.3_2019_12_13.epub)
 
 ## 目录
 
