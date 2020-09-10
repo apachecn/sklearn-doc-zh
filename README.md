@@ -26,7 +26,7 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 > 组织构建[网站]
 
 + GitHub Pages(国外): https://sklearn.apachecn.org
-+ Gitee Pages(国内): https://apachecn.gitee.io/sklearn
++ Gitee Pages(国内): https://apachecn.gitee.io/sklearn-doc-zh
 
 > 第三方站长[网站]
 
