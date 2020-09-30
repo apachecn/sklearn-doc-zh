@@ -40,6 +40,14 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 
 ## 下载
 
+### Docker
+
+```
+docker pull apachecn0/sklearn-doc-zh
+docker run -tid -p <port>:80 apachecn0/sklearn-doc-zh
+# 访问 http://localhost:{port} 查看文档
+```
+
 ### PYPI
 
 ```
