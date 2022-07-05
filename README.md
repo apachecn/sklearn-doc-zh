@@ -37,6 +37,7 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 
 + [官方Github](https://github.com/apachecn/scikit-learn-doc-zh)
 + [EPUB 下载地址](https://github.com/apachecn/sklearn-doc-zh/raw/epub/sklearn_0.21.3_2019_12_13.epub)
++ [ApacheCN 翻译校对兼职群 713436582](https://jq.qq.com/?_wv=1027&k=VSNtgpjb)
 
 ## 下载
 
