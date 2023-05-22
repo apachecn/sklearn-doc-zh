@@ -30,7 +30,6 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 
 > 第三方站长[网站]
 
-+ sklearn 中文文档: http://www.scikitlearn.com.cn
 + 地址A: xxx (欢迎留言，我们完善补充)
 
 > 其他补充
