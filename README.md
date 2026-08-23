@@ -175,7 +175,7 @@ sklearn-doc-zh <port>
 > 第二期 (2019-06-29)
 
 * [@N!no](https://github.com/lovelybuggies)：1352899627
-* [@mahaoyang](https://github.com/mahaoyang)：992635910
+* [@mahaoyang](https://github.com/mahaoyang)：1863441825
 * [@loopyme](https://github.com/loopyme)：3322728009
 * [飞龙](https://github.com/wizardforcel)：562826179
 * [片刻](https://github.com/jiangzhonglian)：529815144
