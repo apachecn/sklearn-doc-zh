@@ -6,7 +6,7 @@
 <table>
     <tr align="center">
         <td><a title="sklearn 0.21.3[master] 中文文档" href="https://sklearn.apachecn.org/" target="_blank"><font size="5">sklearn 0.21.3 中文文档</font></a></td>
-        <td><a title="sklearn 0.21.3[master] 中文示例" href="https://sklearn.apachecn.org/docs/examples" target="_blank"><font size="5">sklearn 0.21.3 中文示例</font></a></td>
+        <td><a title="sklearn 0.21.3[master] 中文示例" href="https://sklearn.apachecn.org/examples/" target="_blank"><font size="5">sklearn 0.21.3 中文示例</font></a></td>
         <td><a title="sklearn 英文官网" href="https://scikit-learn.org" target="_blank"><font size="5">sklearn 英文官网</font></a></td>
     </tr>
 </table>
@@ -26,7 +26,6 @@ sklearn (scikit-learn) 是基于 Python 语言的机器学习工具
 > 组织构建[网站]
 
 + GitHub Pages(国外): https://sklearn.apachecn.org
-+ Gitee Pages(国内): https://apachecn.gitee.io/sklearn-doc-zh
 
 > 第三方站长[网站]
 
@@ -153,7 +152,6 @@ sklearn-doc-zh <port>
 
 ## 贡献指南
 
-为了不断改进翻译质量，我们特此启动了【翻译、校对、笔记整理活动】，开设了多个校对项目。贡献者校对一章之后可以领取千字2\~4元的奖励。进行中的校对活动请见[活动列表](https://home.apachecn.org/#/docs/activity/docs-activity)。更多详情请联系飞龙（Q562826179，V:wizardforcel）。
 
 
 ## DOCX：开放共享科研记录行动倡议
