@@ -192,7 +192,7 @@ sklearn-doc-zh <port>
 
 ## 建议反馈
 
-* 在我们的 [apachecn/pytorch-doc-zh](https://github.com/apachecn/sklearn-doc-zh) github 上提 issue.
+* 在我们的 [apachecn/sklearn-doc-zh](https://github.com/apachecn/sklearn-doc-zh) github 上提 issue.
 * 发邮件到 Email: `apachecn@163.com`.
 * 在我们的 [QQ群-搜索: 交流方式](https://github.com/apachecn/home) 中联系群主/管理员即可.
 
